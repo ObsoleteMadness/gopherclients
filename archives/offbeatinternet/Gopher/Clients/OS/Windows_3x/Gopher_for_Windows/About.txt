@@ -1,0 +1,15 @@
+Gopher for Windows
+(ver 2.2)
+Freeware
+
+
+One of the earliest Windows Gopher Clients. Selectors are displayed 
+DOS-like using letters rather than icons, making navigation difficult. 
+If the program does not recognize a file type, rather than display it 
+with a "???" icon, it instead does not display the file at all (a very 
+bad design flaw, as this means that some full directories can appear 
+totally devoid of files). Software also adds a "wgopher.ini" file to 
+the 'windows' directory on your hard drive. 
+
+
+

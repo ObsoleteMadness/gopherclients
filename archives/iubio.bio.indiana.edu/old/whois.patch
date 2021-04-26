@@ -1,0 +1,178 @@
+
+This is a patch for the Unix Gopher client, gopher, version 1.01, to
+add a "whois" type.  This type lets the client use whois or finger type 
+phonebooks (a tcp/ip service normally at port 43, or the similar finger
+service at port 79 can be linked here).   The whois type lets gopher users
+look up people's names, e-mail address, etc. at servers which support
+whois or finger.
+
+There have been a few different suggestions of how to implement whois type
+in gopher.  I prefer this approach, where the gopher server advertises
+the whois service by giving the host and port number of that service,
+and it follows well the formula of other gopher types such as cso and telnet.
+For example, the server would have a whois link of this form:
+
+Title=some title for whois service
+Type=w
+Path=
+Host=whois.host.edu
+Port=43     (or whatever true service port at host is)
+
+You can find a gopher link list of whois servers from around the world, 
+probably near where you found this patch, as whois.links.
+
+There are no changes needed to server code.  The following patch changes
+the gopher/gopher.c client, and associated object/ files.  Whois is
+managed as a combination of the A_INDEX (or query) type and the A_FILE
+(text document) type:  the user is prompted for a query string, then
+that is sent to the whois server, which returns a text document with 
+the query answer.
+
+You can apply this patch with Larry Wall's patch program (available at
+many unix ftp sites), in this way, at the directory containing gopher1.01/
+   % patch -p < whois.patch
+
+-- Don Gilbert, software@bio.indiana.edu
+
+diff -bwcr gopher1.01/gopher/gopher.c biogoph1/gopher/gopher.c
+*** gopher1.01/gopher/gopher.c	Mon Jun 22 11:17:30 1992
+--- biogoph1/gopher/gopher.c	Wed Jul 15 19:23:09 1992
+***************
+*** 98,103 ****
+--- 98,133 ----
+  }
+  
+  
++ void 
++ do_whois(ZeGopher)
++   GopherStruct *ZeGopher;
++ {
++      static char inputline[WHOLELINE];
++ 
++      Draw_Status("Searching...");
++      refresh();
++      inputline[0] = '\0';
++      if (CURGetOneOption(CursesScreen, "Name(s) to search for: ", inputline) == -1)
++           return;
++ 
++      if (*inputline == '\0')
++           return;
++      else {
++          GopherStruct *NuGopher;
++ 	   char	nup[256];
++          void	showfile();
++ 
++          Draw_Status("Searching...");
++          refresh();
++          NuGopher= GSnew();
++  	   GScpy(NuGopher,ZeGopher);
++ 	   GSsetPath(NuGopher, inputline);
++          showfile(NuGopher);
++          GSdestroy(NuGopher); 
++          }
++ }
++ 
++ 
+  /*
+   * this procedure just retrieves binary data from the socket and
+   * pumps it into a "play" process.
+***************
+*** 374,392 ****
+  		    break;
+  	       else {
+  		    /*** Underline searched words, except and, or and not ***/
+  		    if (Searchstring != NULL) {
+  			 Boldit(inputline, outputline, Searchstring);
+  		    }
+  		    else
+  			 strcpy(outputline, inputline);
+  		    fputs(outputline, tmpfile);
+  		    fputc('\n', tmpfile);
+  	       }
+  	  }
+! 	  else if (GSgetType(ZeGopher) == A_MIME) {
+  	       if ((inputline[0] == '.') && (inputline[1] == '\0'))
+  		    break;
+  	       else {
+  		    fputs(outputline, tmpfile);
+  		    fputc('\n', tmpfile);
+  	       }
+--- 404,424 ----
+  		    break;
+  	       else {
+  		    /*** Underline searched words, except and, or and not ***/
+  		    if (Searchstring != NULL) {
+  			 Boldit(inputline, outputline, Searchstring);
+  		    }
+  		    else
+  			 strcpy(outputline, inputline);
+  		    fputs(outputline, tmpfile);
+  		    fputc('\n', tmpfile);
+  	       }
+  	  }
+!  	  else if ((GSgetType(ZeGopher) == A_WHOIS)
+! 	       || (GSgetType(ZeGopher) == A_MIME)) {
+  	       if ((inputline[0] == '.') && (inputline[1] == '\0'))
+  		    break;
+  	       else {
++ 		    strcpy(outputline, inputline);
+  		    fputs(outputline, tmpfile);
+  		    fputc('\n', tmpfile);
+  	       }
+***************
+*** 1168,1175 ****
+--- 1199,1210 ----
+  	  break;
+  	  
+       case A_CSO:
+  	  do_cso(ZeGopher);
+  	  break;
++  
++      case A_WHOIS:
++           do_whois(ZeGopher);
++           break;
+  
+         case A_SOUND:
+  	  Draw_Status("Receiving Sound...");
+diff -bwcr gopher1.01/gopher/manager.c biogoph1/gopher/manager.c
+*** gopher1.01/gopher/manager.c	Thu Jun 11 01:03:43 1992
+--- biogoph1/gopher/manager.c	Wed Jul 15 18:12:02 1992
+***************
+*** 120,125 ****
+--- 120,128 ----
+  	     case A_TELNET:
+  	       addstr(" <TEL>");
+  	       break;
++            case A_WHOIS:
++ 	       addstr(" <WHO>");
++              break;
+  	     case A_INDEX:
+  	       addstr(" <?>");
+  	       break;
+
+diff -bwcr gopher1.01/object/GSgopherobj.c biogoph1/object/GSgopherobj.c
+*** gopher1.01/object/GSgopherobj.c	Thu Jun 11 19:20:22 1992
+--- biogoph1/object/GSgopherobj.c	Wed Jul 15 18:09:40 1992
+***************
+*** 216,221 ****
+--- 216,222 ----
+         case A_PCHEX:
+         case A_CSO:
+         case A_INDEX:
++        case A_WHOIS:
+         case A_TELNET:
+         case A_SOUND:
+         case A_UNIXBIN:
+diff -bwcr gopher1.01/object/GSgopherobj.h biogoph1/object/GSgopherobj.h
+*** gopher1.01/object/GSgopherobj.h	Thu Jun 11 19:20:09 1992
+--- biogoph1/object/GSgopherobj.h	Wed Jul 15 18:10:30 1992
+***************
+*** 16,21 ****
+--- 16,22 ----
+  #define A_EVENT     'e'
+  #define A_CALENDAR  'c'
+  #define A_HTML      'h'
++ #define A_WHOIS     'w'
+  #define A_TN3270    'T'
+  #define A_MIME      'M'
+  #define A_EOI	    '.'

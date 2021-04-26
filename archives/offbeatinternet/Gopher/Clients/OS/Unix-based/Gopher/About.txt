@@ -1,0 +1,20 @@
+Gopher
+(ver 3.0.11)
+Freeware
+
+
+The University of Minnesota no longer develops "Gopher", its Gopher+ Curses 
+Client for UNIX machines.  The source code has been taken over by John Goerzen, 
+the owner of quux.org, who has continued to develop Gopher on his own for use 
+under "debian" unix.  
+
+This is the most recent version of Gopher.  The last official UMN version 
+of Gopher (now called "UMN Gopher") was version 2.3.1.  
+
+
+CAUTION: This client improperly tries to access standard Gopher(0) servers 
+as if they were Gopher(+) servers, and therefore the root directory of many 
+Gopher servers will appear empty to this client.  Note that this is the 
+only client known to have this bug.  
+
+

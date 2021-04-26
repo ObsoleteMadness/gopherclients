@@ -1,0 +1,394 @@
+From usenet.ucs.indiana.edu!ux1.cso.uiuc.edu!sdd.hp.com!wupost!rice!riddle Mon Aug 17 20:17:28 EST 1992
+Article: 192 of comp.infosystems.gopher
+Newsgroups: comp.infosystems.gopher
+Path: usenet.ucs.indiana.edu!ux1.cso.uiuc.edu!sdd.hp.com!wupost!rice!riddle
+From: riddle@is.rice.edu (Prentiss Riddle)
+Subject: GopherCon '92 trip report
+Message-ID: <Bt5G8B.Itx@rice.edu>
+Sender: news@rice.edu (News)
+Organization: Ministry of Information, William's Marsh
+Date: Mon, 17 Aug 1992 22:38:35 GMT
+Lines: 380
+
+                       GopherCon '92: Trip report
+                            Prentiss Riddle
+                            riddle@rice.edu
+                                8/17/92
+
+
+      SUMMARY: GopherCon '92 was a small working session of
+      Gopher developers and users.  Focuses included proposed
+      extensions to the Gopher protocol; how to organize the
+      Internet resources available through Gopher in a more
+      usable fashion; Gopher server administration, including
+      security and privacy issues; and the future of Gopher
+      development.  Also announced at the conference was a
+      special offer of NeXT hardware for use as Gopher servers.
+
+
+BACKGROUND: GopherCon '92 took place on August 12th and 13th in Ann
+Arbor, Michigan and was sponsored by CICnet, a regional network in the
+Great Lakes/Midwest area.  It was attended by about 50 people (despite
+an advertised cap of 30) including Gopher developers, CWIS
+administrators, systems programmers, user consultants, and a number of
+librarians.  Almost all were employed by universities or regional
+networks.
+
+OVERVIEW BY THE GOPHER DEVELOPERS: The conference began with an
+overview by Mark McCahill and Farhad Anklesaria, two members of the
+Gopher Team at Minnesota.  I liked their summary of the two initial
+goals for Gopher:
+
+   -- To provide the plumbing for a great CWIS.
+   -- To be "Internet duct tape" for connecting a wide variety of
+   networked services.
+
+Although many of us at the conference tended to be driven by the demand
+for one or the other of these, ultimately they go together nicely.
+
+GOPHER+: The Monday before the conference the GopherTeam at UMinn had
+distributed to the attendees an announcement of a set of proposed
+enhancements to the internet Gopher protocol, called Gopher+.  A
+revised Gopher+ proposal has been announced to comp.infosystems.gopher
+(ftpable from boombox.micro.umn.edu:/pub/gopher/gopher_protocol/Gopher+)
+so I don't want to dwell on the details, but Gopher+ is intended
+to add some of the things the Gopher community has been calling for:
+mechanisms for identifying and contacting data providers and
+maintainers, mechanisms for returning more information from the client
+to the server, and alternative representations of document types (e.g.
+text vs. PostScript).  Gopher+ will be backward-compatible with old
+Gopher: old Gopher clients and servers either do now or can easily be
+modified to ignore extra information in the Gopher+ protocol, and
+Gopher+ clients and servers will continue to work when pointed at old
+Gopher servers.  In the words of McCahill & Anklesaria, "Gopher+ is
+Gopher with a bag taped to the side to hold more".
+
+Gopher+ raises two broad categories of doubt in the minds of many of
+us, which were discussed in almost every session at the conference:
+complexity and security.  Will Gopher+ become so complex that client
+and server software become impractical to write, especially on low-end
+platforms?  ("Will the bag on the side become bigger than the
+Gopher?")  This will only become clear when the Gopher Team at UMinn
+writes some working code.  The security issues, on the other hand, were
+pretty well resolved in extensive discussion (see below).  Overall I
+think we all left the conference feeling optimistic about Gopher+ and
+happy with the backward-compatible development path proposed by the
+Gopher Team.
+
+RELATED TECHNOLOGIES:  Ed Vielmetti of CICnet gave a talk on "what we
+would be gathering to discuss if UMinn had never developed Gopher",
+meaning primarily World-Wide Web (WWW).  WWW was developed for the
+high-energy physics community and serves as a model of what Gopher
+could do if a discipline-oriented virtual community invested in it
+heavily.  WWW is based on SGML (Standard General Markup Language"), an
+ISO standard for marking up text which WWW uses to implement
+hypertext.  SGML is a bear and it is a significant investment of effort
+to properly add a document to WWW, but the result is quite powerful
+(for instance, WWW handles footnotes in hypertext).  The usefulness of
+a markup language of some kind for Gopher came up repeatedly,
+particularly to solve the "large text" problem (a good use of a markup
+language could allow a client to ask for successive chunks of a large
+document rather than the whole thing at once).  It was pointed out that
+WWW servers can point at Gopherspace, and the possibility of using
+Gopher to point at WWWspace was discussed (by presenting an SGML
+document as a Gopher directory, in which text and hypertext references
+would appear as separate items).  Finally, the relative numeric success
+of Gopher over WWW was discussed (there are orders of magnitude more
+Gopher servers than WWW servers out there): Gopher seems to have won
+out primarily because of the ease of entry (it's much harder to put up
+a WWW server than a Gopher server), although another factor may be that
+a hierarchical presentation is more appropriate than hypertext for the
+broad-based audience of a CWIS.
+
+PROTOCOL EXTENSIONS: The Gopher Team had already spoken about their
+proposals for Gopher+, so this was a chance for others in the Gopher
+community to air their own wish lists and local modifications to
+Gopher.
+
+Fred Crowner and Clifford Collins of Ohio State talked about a lot of
+human factors work they had done on their CWIS, primarily through
+enhancements of the Gopher curses client: variable 1- column or
+2-column format, depending on number of items; help by item, rather
+than a single help context; "go words" so users can learn commands
+which allow them to jump directly to commonly used items; mail input by
+the user ("Ask-a-Programmer", "Ask-a- Purchasing-Agent", etc.);
+"chunking" of very large documents (e.g. course catalogs), which proved
+to be a serious hairball and which they would now implement differently
+(probably by breaking a large document into numerous small ones and
+indexing them).  They also put work into making the client more secure
+for unauthenticated users.
+
+Andrew Gilmartin of Brown University added a lot of information to the
+Unix Gopher's link files: author, provider (not the author but the
+person who gave the information to the CWIS administrator),
+administrator, expiration, creation and modification dates, keywords,
+and index type (full, keyword, none, or all).  This closely paralleled
+the proposals for "attributes" in the Gopher+ protocol.  There ensued
+some lively debate about the meaning and necessity of several of these
+attributes, with the librarians particularly emphatic about the
+necessity of maintaining detailed information about the origin of a
+document.  This underscored the necessity of fully defining the
+semantics of important Gopher+ attributes in advance, so clients and
+servers can be written which agree on how to use them.
+
+Lee Brintle from the University of Iowa's "panda" project talked about
+some of their extensive modifications to Gopher: printer selection,
+remote updating of files by data maintainers, scripting (a forth-based
+interpreter in the client to allow massaging of input to and output
+from complex servers such as the geography server), grep-like
+searching of non-WAISified data, and search by title on the current
+level (a la rn and elm).  Panda has evolved into an entirely different
+animal from Gopher (for starters, it is written in C++) and it is not
+clear which of these enhancements may make it back to the mainstream.
+The one Panda feature which seemed to gain everyone's approval was the
+ability to put explanatory text at the top and/or bottom of the screen
+rather than in an "About" file.
+
+RESOURCE DISCOVERY AND NAVIGATION: Or, as librarian Nancy John of the
+University of Illinois at Chicago put it, "collections development,
+cataloging and filing." :-)  There has been much discussion in
+Gopherland at large of how to develop an index of resources in
+Gopherspace, which would then be served out by Archie.  Billy Barron of
+the University of North Texas summarized two competing approaches:
+
+     -- "ls -lR", e.g., automated recursive search of all of
+     Gopherspace: this is easy and gets you everything in Gopherspace,
+     but the quailty of information is low.
+
+     -- Registration: authoritative sites for a particular resource
+     would register the resource, either by putting a "LocalResources"
+     directory out in Gopherspace or by use of a standard "IAFA
+     template" (this could become an "IAFA attribute" in Gopher+).
+     This is more work than the "ls -lR" approach, does not get you
+     everything, but the quality is high.
+
+Billy Barron favors using both approaches and somehow signaling the
+difference to the user.
+
+Tim Howes of the University of Michigan talked about his Gopher to
+X.500 gateway, "Go500gw", which was well received.  It is up and
+running on port 7777 of totalrecall.rs.itd.umich.edu if you want to
+see it in action.
+
+Marie-Christine Mahe of Yale noted that librarians need more than a
+single hierarchical view of Internet connections to libraries
+(alphabetical? geographical? by online catalog type?), so she built a
+searchable index of them.  At returns three items per library ("About",
+".cap" and ".link" files) which may be confusing to users unfamiliar
+with interpreting Gopher guts.  She sees great possibilities for using
+indexes to select libraries based on collection strengths (who'd have
+known that there are great Canadian literature collections in
+Australia?) and lending policies.
+
+Ed Vielmetti talked about the art of finding the grassroots resource
+discovers out there.  Typically an individual will begin to compile "My
+list of agricultural resources on the Internet" and periodically
+distribute it to a few newsgroups or mailing lists.  Over time it grows
+in comprehensiveness and audience.  It may surface in one of the usual
+repositories for such lists (such as the Usenet newsgroup
+news.answers).  The way to put them into Gopherspace is as a directory:
+an "About" file, the text of the full document, and then a collection
+of Gopher links which point to the resources (other Gopher servers,
+ftp sites, telnetable services, newsgroups, etc.) themselves.
+
+E-JOURNALS BOF: I attended the Birds-of-a-Feather session on Electronic
+Journals organized by two collectors of them, Ed Vielmetti of CICnet
+and Billy Barron of UNT.  The question at hand was how to organize the
+collection of an exploding number of journals published
+electronically.  Joel Cooper of Notre Dame pointed out that there is a
+bill before Congress which would essentially put the entire output of
+the Government Printing Office on the Internet, and said that "if we
+don't solve the problem now we'll be buried by it."  Vielmetti and
+Barron outlined a proposal to have volunteer collectors or curators
+take on the responsibility of assembling collections of Gopher links to
+online documents by subject area, possibly starting with the Library of
+Congress subject headings and subdividing as the project grows.
+Librarian Nancy John said she felt like she was "in a library school
+playpen" as she watched non-librarians try to reinvent the wheel.  The
+response from the computer people was that (1) librarians may have
+begun to catalog online documents but they have not put that cataloging
+information into Gopherspace yet, and (2) the Internet is fostering an
+explosion of grassroots publishing, not all of which is of interest to
+library cataloguers.  One much-desired tool would be a Z39.50 interface
+for Gopher, which would allow access to some online catalogs directly
+from Gopherspace.  In the converse direction, Nancy John agreed that if
+Ed Vielmetti would cut a tape of MARC records, she would add citations
+for the E-journals he has collected into OCLC.
+
+HARDWARE OFFER FROM NeXT: One of the few non-university attendees was
+Greg Smedsrud of NeXT, who surprised us on the second day by making a
+special offer.  NeXT has 120 NeXT 040 cubes which they are willing to
+sell to be used as Gopher servers at 70% off list.  There are various
+configurations available, but a 16 Mb/400 Mb cube with NeXTStep 3.0
+would go for about $3200.  There was some discussion of how much
+performance this would mean; Allan Tuchman of UICU said he had a
+similar configuration running as a Gopher server which took
+approximately 100K Gopher connections per day with no problem.  (An
+important distinction was made between a telnet connection to a public
+Gopher client and a Gopher protocol connection; Allan of course meant
+the latter.)  This offer will only be good for the next two weeks.  I
+don't know that it was clear whether the offer extended to everyone in
+Gopherland or only the conference attendees.  Serious inquiries only go
+to gsmed@next.com.
+
+REPORTS FROM THE OTHER BOFS: The "Usability" BOF liked Gopher+,
+suggested "gophernews" or the ability in a client to limit a view to
+only new or changed items.  The "Gopher+/RFC" BOF went into detail on
+the proposed protocol extensions.  Some ideas: more types (archive and
+binary archive and the ability for a client to "peek inside" a .tar.Z
+file on a server), the ability for the client to ask the server for
+specific attributes, and SEE-ALSO, PREVIOUS and NEXT attributes to
+allow items to include links to other items.
+
+The "Distributed Workload" BOF divided the Gopher development job up
+into three main areas: (1) code development, (2) documentation, and (3)
+resource management.  Documentation in particular was agreed to be an
+area where the Gopher community at large could help the UMinn
+Gopher Team.  Andrew Gilmartin (Andrew_Gilmartin@brown.edu) volunteered
+to head up a Gopher documentation effort.  Three areas for enhanced
+documentation which need people to work on them: server installation
+and administration, porting existing Gopher software to new platforms,
+and product development.
+
+SERVER ADMINISTRATION PANEL: A common theme among everyone on the panel
+was the need for some degree of centralization of Gopher administration
+in order to provide a reliable and high-quality CWIS.  This is not to
+say that an institution as large as a university should have only one
+Gopher server: we should look forward to "competing" top-level views,
+perhaps in the form of departmental Gopher servers, but someone
+mandated to bring up a CWIS would not be well advised to pursue the
+"Gopher server on every desktop" model of totally decentralization, if
+only because desktop users tend to turn their machines off and go on
+vacation.
+
+Joel Cooper of Notre Dame reported on his organization's Gopher
+administration methods.  Notre Dame uses its campus-wide Andrew File
+System as the place for individuals to maintain data intended for the
+CWIS.  Each data provider registers with the CWIS administrators and is
+assigned a node in the CWIS data tree (perhaps shared with others).
+Henceforth, anything which the user puts in her ~/gopher directory is
+automatically examined for inclusion in the CWIS.  All documents
+submitted to the CWIS must include a template at the top specifying an
+expiration date, title, and optional keywords.  The collection robot
+adds to this the provider's name, organization, e-mail address, a
+posting date, and, at the bottom of the document, a disclaimer to avoid
+"kill-the-messenger" problems.  All of this information appears
+together with the document text itself in a single file and is visible
+to the Gopher user.  Subdirectories under the provider's ~/gopher
+directory will be mirrored in the CWIS's data tree.  Micro users who do
+not wish to work in an AFS directory can use ftp or a mail interface.
+Mail forgery problems are avoided by a feedback loop: when a document
+is accepted by mail, the provider receives an acknowledgement by return
+mail.  Similarly, documents are expired from the CWIS on the expiration
+date and mailed back to the providers, who are free to extend the
+expiration date and resubmit them.  Notre Dame's CWIS was designed by a
+committee and quality control is ensured by peer review (providers who
+do a bad job managing their Gopherspace are asked to do better).  The
+Notre Dame method has certain limitations (no indexing, no links out
+into Gopherspace, and poor scalability to very large bodies of data)
+but it seems to work well for the majority of Notre Dame's information
+providers.  It has certain site-specific dependencies (AFS, the CSO
+nameserver and the local mailer) but it may be useful as a design model
+for other sites.
+
+Dennis Boone of Michigan State reported on several tools he has
+developed (largely as perl scripts) for Gopher administration.   They
+include his well-known gophertree and gopherls tools and a recently
+released pair of scripts which allow keyword searches of Gopher item
+titles.  His CWIS allows multiple views of the same data to suit
+different needs (topical, organizational and and indexed).
+
+SECURITY AND PRIVACY: This was one of the liveliest sessions at a
+lively conference.  I went into it with concerns about possible
+security problems in Gopher+, but was surprised by something I hadn't
+thought of: the privacy issue raised by the Gopher server's logging
+mechanism.  Gopher logs show what was read at what time from what IP
+address, often sufficient information to point to an individual user.
+While the computer people in the crowd immediately thought of the
+possibly trivializable issue of sexual materials on the net, librarian
+Nancy John pointed out that (1) libraries constantly face subpoenas for
+their user records in court cases involving intellectual property and
+other matters, and (2) this is a serious intellectual freedom issue
+with far-reaching implications.  In addition to subpoenas,
+administrators at state-funded universities must face the fact that
+"everything is FOIAble!" (under the Freedom of Information Act).
+Librarians have responded by retaining detailed user records only until
+materials are returned, then replacing them with general demographic
+information.  A short-term solution for concerned Gopher administrators
+may be to turn off logging.  Long-term, the server may be modified to
+record only a partial IP address or to decouple what is read from what
+site is doing the reading.
+
+The discussion turned to access control.  It was pointed out that
+hostnames are easily forged, so the Gopher mechanism of restricting
+access by hostname or IP address is not perfect.  Wide-area equivalents
+of Kerberos may be coming which will allow real authentication,
+although not everyone was equally optimistic about that.  An important
+distinction was drawn between two levels of authentication: (1)
+licensed data (Clarinet, Medline, etc.) when a reasonable effort at IP
+address authentication or simply asking the user to enter an ID number
+may be sufficient, and (2) sensitive internal data for which only
+Kerberos or some not-yet-Gopherized mechanism is good enough.  The
+second class of data should not yet be served out using Gopher.  A
+complication of authentication for Gopher is that the protocol does not
+maintain a connection for multiple transactions and the server does not
+maintain state between transactions, so authentication can only apply
+to a single transaction.
+
+The security implications of Gopher extensions were a hot topic.  The
+use of the Gopher+ "ASKP" mechanism to ask users for passwords was
+considered quite harmful: it is not really a secure password method and
+it invites spoofing.  The Gopher Team has withdrawn it from the Gopher+
+proposal.  The Gopher+ "ASKF" mechanism, which allows the server to
+request a file to be uploaded from the client with the user's approval,
+was also considered dangerous: a naive user could be fooled into
+authorizing that "/etc/passwd" or other sensitive data be uploaded to
+the server.  Suggestions for making "ASKF" safer included limiting the
+requested file to the current working directory or to some
+predetermined temporary file name.
+
+Next came security concerns involved in running a public Gopher client
+(a Gopher client accessible via telnet or on a public terminal which is
+not tied to a particular user's account).  There have already been
+cases of such Gopher clients being used by system crackers to "launder
+IP addresses".  The Gopher practice of leaving people at the "front
+door" of a telnet site is dangerous (library systems are particularly
+notorious about having crackable systems accessible through the same
+port as the online catalog).  This is ultimately the responsibility of
+the targeted systems, but a responsible public Gopher administrator
+will log connections and participate in the tracing of crackers.  This
+is an area where better documentation is needed: there should be a
+simple document on how to properly set up a public client.
+
+Scripting got delayed till the "open mike", but I'll mention it here:
+it was stressed that any scripting language implemented in a Gopher
+client must not contain hooks for manipulating local files or uploading
+data under the control of the server.  This includes programs
+masquerading as simple data (e.g., clients should interpret PostScript
+only with a "safe" previewer).  One type of scripting which is strongly
+desired is the ability to script telnet or tn3270 sessions (e.g., to
+log into a library without the user having to type "NOTIS" once the
+telnet connection is made).  This is a problem if the communications
+protocol used includes a "send file" ability.  The Gopher Team has not
+yet proposed adding scripting capability to the protocol, but a number
+of independent efforts are pushing in this direction.
+
+REGIONAL COOPERATION: This discussion was mostly of interest to CICnet
+members.  I will say that I was impressed with CICnet's determination
+to provide network services, not just connections.  The work they put
+into GopherCon was strong evidence of this.
+
+FUTURE CONFERENCES: CICnet has indicated its willingness to continue to
+host GopherCons, perhaps every six months, although not always in Ann
+Arbor.  As with this one, they will be small regional conferences with
+a limited number of slots for attendees from outside, essentially by
+invitation only.  They were kind enough to "grandfather in" anyone who
+attended the first conference.  I expect that they will continue to be
+excellent.
+
+-- Prentiss Riddle ("aprendiz de todo, maestro de nada") riddle@rice.edu
+-- Unix Systems Programmer, Office of Networking and Computing Systems
+-- Rice University, POB 1892, Houston, TX 77251 / Mudd 208 / 713-285-5327
+-- Opinions expressed are not necessarily those of my employer.
+
+

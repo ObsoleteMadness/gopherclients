@@ -1,0 +1,12 @@
+In this directory you will find gopher clients and servers for VMS.
+
+The files here are compressed using the ZIP utility.
+UnZip is available at many sites that archive VMS software.
+Try ftp.spc.edu if you don't have a favorite site of your own.
+
+
+Here are the highlights
+
+gopher2.0x.zip		The most current production release of the gopher
+			client.
+

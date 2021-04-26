@@ -1,0 +1,151 @@
+jughead is copyright 1993, University of Utah Computer Center.
+This source may be freely distributed as long as this copyright
+notice remains intact, and distribution is in no way used for any
+monetary gain, by any institution, business, person, or persons.
+
+jughead is a tool for getting menu information from various gopher
+servers, and is an acronym for:
+	Jonzy's Universal Gopher Hierarchy Excavation And Display
+
+jughead was written in ANSI C, developed on an IBM RS6000, and
+should port easily to any ANSI C conformant environment.
+
+It is anticipated this program will be a tool for administrators
+in gopherspace.  If you make any changes to the sources, please
+send me a copy.
+
+Release: version 0.5_beta, released:.
+Modified the code to support a secondary hash table.  The table that
+gets read into memory is much smaller than previously, while the time
+to do the boolean operations and search the tables takes slightly longer, however, I doubt users will notice the difference.
+Note:  This is a major change with the index tables.  When running
+jughead with the -B flag, you no longer direct stdout to a file.
+What happens now is 2 files automaticlly get created, 1 with a ".ix" and
+the other with a ".ih" extention on the file created with the -b option.
+Furthermore when invoking jughead as a search engine with the -S flag
+you only need to give the name of the database file created with the -b 
+flag.
+
+Release: version 0.4_beta, released: April 3, 1993.
+Added support for the 'a', 'A', and 't' options, which print the
+port host number of directories, port, host, the directories, and
+the time required to process a menu or build the index table or
+load the index table into memory respectively.
+Added the code from Mic Kaczmarczik: mic@bongo.cc.utexas.edu, which
+supports an optional -p port flag when running as a search engine.
+When using the -b option the datafile now gets sorted to remove all
+duplicates, and no longer gets written to datafile.sorted.
+The -o and -O flags are now meaningless and may soon disappear.
+
+Release: version 0.3.1_beta, released: March 28, 1993.
+  Fixed a problem using vsprintf compiled on sun.
+
+Release: version 0.3_beta, released: March 28, 1993.
+  Modifications include consolidating various #defines into the
+  Makefile.  Now keeps track of hosts we can't connect to and will
+  not attempt to connect to these hosts again.
+  Added support for compilation on a sun.
+
+Initial release: version 0.2_beta, released: March 25, 1993.
+
+jughead can be acquired via gopher by gophering to gopher.cc.utah.edu
+and looking in:
+   About U of U Gopher
+      Gopher Tools
+         jughead
+            as ReadMe and jughead.VERS.tar.Z
+or via anonymous ftp from ftp.cc.utah.edu in /pub/gopher/GopherTools
+as ReadMe and jughead.VERS.tar.Z, where ".VERS" is the current version.
+
+The file jughead.VERS.tar.Z is a compressed tar file which contains:
+	dirTree.c
+	Makefile
+	jughead.1
+	jughead.c
+	search.c
+	sockets.c
+	dirTree.h
+	tree.c
+	tree.h
+	utils.c
+	utils.h
+
+Create yourself a directory for jughead, which should not be in a
+gopher data directory, and download the file jughead.VERS.tar.Z.
+
+Once you have downloaded jughead.VERS.tar.Z, where "VERS" is the version
+of jughead, the following command will uncompress and untar the files:
+	uncompress -c < jughead.VERS.tar.Z | tar xfv -
+
+To view the man page, prior to running make install you can:
+	make viewman
+
+To make the jughead application you should edit the Makefile and verify
+the following values are correct:
+  THEVERSION      The version of jughead, only edit this if you make changes.
+  THECATCOMMAND   The cat system command, the %s is required.
+  THERMCOMMAND    The rm system command, the %s is required.
+  THESORTCOMMAND  The sort system command, the %s is required.
+  THETMPFILENAME  The location and name of jughead's temporary file.
+  THEPORT2USE     The port to use when jughead is a search engine.
+  DESTDIR         The location of the jughead executable.  You may not want
+		  this to be publicly accessible.
+  DESTMAN         The location of the jughead man page.
+  VARARGS	  Commented out if you have <stdarg.h>.
+  VSPRINTTYPE	  The type vsprintf() returns.
+  PROTOTYPES	  Uncommented if you want to use prototypes.
+  NOWARNINGS	  Uncommented if you don't want to see any compiler warnings.
+  OPTIMIZATION	  Any optimization flags you want to have.
+
+
+Now do a "make", "make all", or "make install" to compile jughead.  If
+you get any compilation errors please inform me of the problem.
+ 
+The steps I did to get jughead running as a server follow:
+ jughead -tb data gopher.cc.utah.edu -x apogee.cc.utah.edu 3000 .utah.edu
+ jughead -tB data
+ jughead -tS data -l data.log &
+
+Create a link file somewhere in your gopher data directory.  Mine looks like:
+  Name=Search all UofU menus using jughead
+  Numb=4
+  Type=7
+  Port=3000
+  Path=
+  Host=gopher.cc.utah.edu
+
+
+There exists a mailing list for discussion about jughead called:
+jughead-news@lists.utah.edu    To get on this mailing list send
+mail to: jughead-news-request@lists.utah.edu
+
+Things still to do:
+  1)	Allow a list of host exceptions, the hosts not to traverse.
+
+  2)	Use the Path field in the link file to specify which database
+	to use, load the database into memory, do the search, and
+	release the memory.  Maybe have this as an option.
+	How about initialy start up with no tables cached in memory,
+	when we receive a query read the appropriate table into memory
+	if there is none, and only release the memory if a new query
+	refers to an alternate database?
+
+  3)	Add the ability to query other jugheads.
+
+  4)	Consolidate the tree.c and dirTree.c files.
+
+  5)	Either reenable or remove support for the -o and -O flags?
+
+  6)	Clean up the code dealing with the hash tables or create a
+	flag that does not utilize the secondary hash table?
+
+  7)	Use vfork() instead of fork() when acting as a search engine
+	to eliminate, as much as possible, any memory duplication.
+
+  8)	Implement a no feed back flag which will give no feed back when
+	building the hash tables, which will make the creation of the
+	hash tables speed up by approximately 20 percent.
+
+Please email source changes, complaints, or suggestions to:
+	Rhett "Jonzy" Jones
+	jonzy@cc.utah.edu

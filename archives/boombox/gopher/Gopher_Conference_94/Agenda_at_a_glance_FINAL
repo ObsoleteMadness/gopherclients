@@ -1,0 +1,124 @@
+=========================================
+APRIL 22: Technical Tutorials and Forums
+----------------------------------------
+
+Morning General Session
+      8:00  Registration
+      9:00  Welcome - Dr. D.R. Riley, Associate V.P. & Associate Provost, 
+                      Academic Affairs, University of Minnesota
+GEN1  9:10  Gopherspace & the State of the Gopher
+            University of Minnesota Internet Gopher Development Team
+     10:15  Break
+GEN2 10:30  Searching Gopherspace with Veronica - Steve Foster
+GEN3 11:15  Archie - Peter Deutsch
+     12:00  Lunch 
+
+
+Afternoon tracks 1:30 - 4:30:
+
+    Room 1: New Gopher Administrators
+    ----------------------------------
+NG1  1:30 - 1:50  Introduction to Gopher Protocol - Dave Johnson
+NG2  1:50 - 2:15  Macintosh and DOS Servers - Dave Johnson
+NG3  2:20 - 3:00  A Gopher Server for VMS: How to Cook your VMS 
+                  Gopher Server - J. Lance Wilkinson          
+NG4  3:05 - 4:00  Unix Server and Client - Paul Lindner
+NG5  4:00 - 4:30 Public Access Clients, Security Issues - Paul Lindner
+
+
+    Room 2: Enhancing Content, Efficiency, Reliability
+    ---------------------------------------------------
+EQ1     o   Information Quality - Anders Gillner 
+EQ2     o   Making Sense of Veronica's Words - Nancy John
+EQ3     o   Quality of Service - Mitra
+        
+    Room 3: Developer Forum
+    ------------------------
+DEV1    An open forum discussion of gopher protocol and development 
+        issues
+
+
+-----------------------------------
+APRIL 23  Cool Gopher Applications
+-----------------------------------
+Morning tracks 9:00 - 12:00.
+
+    Room 1: Cool Gopher Apps (Client, Server, and Service Show & Tell)
+    -------------------------------------------------------------------
+APP1   9:00- 9:30   WinSock Implementation of Asynchronous Gopher+ 
+                    with multiple sessions in Super TCP - John Xu
+APP2   9:35-10:05   America Online's gateway to Gopher - 
+                    GUI gopher at 2400 baud - Mitra
+APP3  10:10-10:40   Gofer = Gopher+ + Token-based Tree Maintenance and  
+                    Much More - Andrew Scherpbier and Mark Boyns
+APP4  10:55-11:25   Gopher Access to Mainframe Based Administrative 
+                   Data and Class Rosters - Robert Cademy
+APP5  11:30-12:00  The AskERIC Virtual Library: A User-Driven 
+                   Service - Nancy Morgan
+   
+
+    Room 2: Even More Cool Gopher Apps
+    ------------------------------------
+APP6   9:00- 9:30  Minuet as a Gopher client - Earl Schleske
+APP7   9:35-10:05  Meet GINA - A face you will love at 
+                   first sight - Keith Vogt
+APP8  10:10-10:40  Blue Skies Gopher - Alan Steremberg
+APP9  10:55-11:25  WSGopher: a Windows Gopher+ client - David Brooks
+APP10 11:30-12:00  Gopher and the Mathematics Archives 
+                   - Larry Husch & Earl Fife
+
+
+    Room 3: Gophers of a Different Color
+    -------------------------------------
+COL1   9:00- 9:30  K-12: Using Gopher as a Learning Resource 
+                   Server - Matthew Stuve
+COL2   9:35-10:05  Service Learning Across the USA: Establishing 
+                   a Service Learning Gopher - Charles Boudreaux
+COL3  10:10-10:40  Children, Youth and Family gopher servers 
+                   - Bob Rubinyi
+COL4  10:55-11:25  Corporate Gophers: Schlumberger and its Information 
+                   GopherSpace - Rich Obrecht
+12:00 Lunch 
+
+Afternoon tracks 1:30 - 3:45
+
+    Room 1: Still More Cool Gopher Apps 
+    ------------------------------------
+APP11  1:30- 2:00  Jughead: A tool to search menus in your local 
+                   gopher menu space - Rhett "Jonzy" Jones
+APP12  2:05- 2:35  Running a Consolidated Gopher and WWW Server 
+                   - Michael Potter
+APP13  2:50- 3:20  Gopher Goes Interactive - embedding Usenet News 
+                   in Gopher - Stephen Trier
+APP14  3:25- 3:55  Growing the MIT Libraries Gopher: subject 
+                   classification and team building - Keith Morgan
+
+  
+    Room 2: Gophers of a Different Color (continued from morning session)
+    ----------------------------------------------------------------------
+COL5  1:30- 2:00  Library and Government Information via Gophers 
+                  Using LC MARVEL - Elizabeth Miller
+COL6  2:05- 2:35  LegiSlate and Gopher - Ed Stawick
+
+
+    Room 2: Server Tools and Maintenance
+    -------------------------------------
+STM1   2:50- 3:20  UNIX Server Construction and Maintenance for 
+                   Mac Users - Michael Fraase
+STM2   3:25- 3:55  Titling Menus with scripts and keystrokes (or 
+                   how to work with .names files and .cap directories) 
+                   - Paul Kramer
+
+    Room 3: Advanced Server Tools and Gateways
+    -------------------------------------------
+ADV1   1:30- 2:00  Gopher to SQL Gateway - Paul Lindner
+ADV2   2:05- 2:35  Gopher to Z39.50 1992 gateway - Danny Iacovou
+ADV3   2:50- 3:20  Current Contents database on Gopher - Bob Alberti
+ADV4   3:25- 3:55  Authentication & X.500 gopher gateway - Frank Grewe
+
+
+------------------------------------------------------------------------
+In addition to the scheduled sessions, rooms are available for informal 
+Birds-Of-a-Feather (BOF) sessions all day Saturday. BOF signups wil be 
+held during day 1 (Friday).
+------------------------------------------------------------------------

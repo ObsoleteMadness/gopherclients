@@ -1,0 +1,2390 @@
+
+%
+% File viegophr.tex
+%
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%+ INTERNET GOPHER, CLIENT & SERVER FOR IBM VM/CMS    (1992-06-19/15:00) +
+%+                                                                       +
+%+ Notes on installation and usage of the `Vienna' VM/CMS GOPHER System. +
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%
+% NOTE: This is not the original version of the document!
+%       Instead, this is the sequenced and stripped version of a
+%       hypertext file.
+%       The linear LaTeX version is provided for your convenience.
+%       For more information about the hypertext version contact the author.
+%       LaTeX is described in: (I'm not sure..)
+%         Leslie Lamport:  LaTeX, A document preparation system
+%         Addison Wesley
+%
+\documentstyle{article}
+\pagestyle{headings}
+
+% pagelayout ---------
+% \topmargin10mm
+% \headheight12mm
+% \headsep5mm
+% \topskip0mm
+% \textheight245mm
+% \textwidth175mm
+% \oddsidemargin17mm
+% \evensidemargin65mm
+% \marginparwidth46mm
+% \marginparsep5mm
+% \marginparpush5mm
+
+%needed???? yes...
+\newfont{\vsmtt}{cmtt8 scaled 1000} % very small type writer
+
+%\makeindex
+
+\begin{document}
+
+
+
+\pagenumbering{roman}
+\thispagestyle{empty}
+\title{VieGOPHER\\---\\A Gopher System for VM/CMS}
+\author{Gerhard Gonter}
+\date{\today}
+\maketitle
+
+\begin{abstract}\footnote{This
+file is still somewhat ... er ... incomplete ... sorry ...}
+The Internet Gopher Protocol provides a simple, yet very effective
+method for distributed document search and retrieval.  This document
+describes usage, installation, maintainance and also some points 
+about the implementation of a Gopher
+system for IBM's operating system VM/CMS, called the VieGOPHER.
+Both, using the client and administrating the server are discussed.
+
+The system can be distributed freely and is dedicated to the community
+of cyberspace.
+\end{abstract}
+
+\pagebreak[4]
+\tableofcontents
+\pagebreak[4]
+\listoftables
+\listoffigures
+\pagebreak[4]
+
+\newcommand{\SUBsection}[1]{\subsection{#1}}
+\newcommand{\SUBsubsection}[1]{\subsubsection{#1}}
+
+% ---------------------------------------------------------------------- 
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+
+
+\section{Introduction}
+
+This document describes an implementation of the Internet GOPHER Server
+and Client protocol for IBM's operating system VM/CMS, known as the
+`Vienna' VM Gopher System or `VieGOPHER'.
+There are things left out and enhancements will follow.  If you find any
+errors or have other suggestion then don't hesitate to contact me on one
+of the addresses given in section \ref{gg.addr} on page \pageref{gg.addr}.
+ 
+The system consists of a client, based on {\sf XEDIT} ({\tt GOPHERC.EXEC}
+together with
+a bunch of {\tt .XEDIT} and {\tt .EXEC} files) and two servers,
+the older one is a simple,
+straight forward, plain vanilla, nothing special, ordinary, single-treaded
+Internet Gopher Server\footnote{not supported anymore} ({\tt GOPHERD.EXEC}),
+the new one ({\tt GOPHERDD.EXEC}) %\index{GOPHERDD.EXEC}
+is just the opposite of that all...  well...  the most interesting feature
+of it is that it is multi-threaded.  This means, it can handle more than
+one connection at the same time and, in fact, the version I currently run
+listens on four ports at the same time and is still able to handle a
+couple of connections simultanously.  Since this server listens on four
+different ports you might suspect that one is the officially assigned
+gopher port (70) and the the other two ports are something else.  This
+assumption is not completely wrong, the server also listens on port 79
+and pretends to be a finger server as well on port 17 and serves out fortune
+cookies.  The service on port 17 is also known as the Quote-of-the-Day
+protocol.  Finger protocol (see \cite{rfc1288})
+and Quote-of-the-Day protocol (see \cite{rfc865})
+are handled by the Gopher Server as a by-product,
+as you may have time to read in the code.
+ 
+In order to run either the server or the client you also need a program
+called {\tt REXTCPIP.MODULE} (by Ken Hornstein).  You can find it on any
+{\sf BITNET LISTSERV} that carries {\sf VM-UTIL}, (e.g. {\sf DEARN}).
+Be sure to use version 1.8.4. or newer.  Section \ref{bugs} gives
+information about modifications that improve the stability of the
+program.  If necessary, a modified version can be obtained from me.
+You also need TCPIP to run either the server or the client.
+The new server can also employ {\tt YWAKEUP.MODULE} to trap messages
+from servicing machines.
+
+Clients running under TCPIP version 2 can take advantage of RXSOCKET
+instead of REXTCPIP.  RXSOCKET is generally more elaborate and
+stable, either version 1 or can be used.
+
+The instability of REXTCPIP is the main weaknes of the server.
+To overcome this problem I work along three paths:
+\begin{enumerate}
+\item   I try to make the REXX code of the server as shock-proof
+        as possible,
+\item   I try to correct some of the problems inherent in
+        REXTCPIP, see section \ref{bugs} for a documentation
+        about some of the patches sofar,
+\item   allowing to select RXSOCKET seems to be the most
+        promising path in the long run.
+\end{enumerate}
+ 
+
+
+\subsection{Features}
+
+\noindent Client:
+\noindent\begin{itemize}
+\item can work with WAIS search gateways
+\item convenient XEDIT interface
+\end{itemize}
+
+\noindent Server:
+\noindent\begin{itemize}
+\item multiple connections
+\item integrated finger server
+\item integrated cookie server
+\item interface for embedded applications
+\end{itemize}
+
+% ---------------------------------------------------------------------- 
+
+
+\subsection{{\sc Rose} installation procedure}
+
+The source code of the programs and the parts of the \LaTeX\ documentation
+are stored together in NED's HYX format --- NED is a MSDOS `hypertexty'
+text editor.  From this source three text files are generated:
+\begin{itemize}
+\item   {\tt VIEGOPHR.PRO(DUCT)} containing the program code,
+\item   {\tt VIEGOPHR.TEX} containing the documentation,
+        (this document)
+\item   {\tt VIEG-PRO.TEX} containing the source code listing.
+\end{itemize}
+
+{\tt VIEGOPHR.PRODUCT} needs to be processed by {\tt ROSE.EXEC}.
+{\sc Rose} is not part of VieGOPHER, however, it was developed
+for it's installation.
+The program can be distributed freely just as the other
+package.  
+
+% To install VieGOPHER using {\sc Rose} these conditions should be met:
+% $\Box$ the files {\tt ROSE.EXEC} and {\tt VIEGOPHR.PRODUCT} in
+% read access on any minidisk.  A read/write minidisk as A with at
+% least XXX free blocks.  If you have the $\Box$ optional file
+% {\tt VIEGOPHR.FIX}, possibly from an earlier experience with {\sc Rose},
+% then you should place it now on minidisk A.  Note:  This file
+% will be changed or created during installation.
+
+\subsubsection{Quick'n'dirty installation}
+
+Appendix \ref{inst.opts} on page \pageref{inst.opts} lists all {\sc Rose}
+prompt texts that will be presented during the installation phase.
+
+\noindent
+Use this checklist to get the system off the ground:
+\begin{itemize}
+\item[1 $\Box$] Put {\tt VIEGOPHR.PRODCUT} and {\tt ROSE.EXEC}
+                on any readable minidisk.
+
+\item[2 $\Box$] Prepare a R/W minidisk with filemode A with at
+                least 2 cylinders (275 blocks with 4096 byte).
+
+\item[3 $\Box$] If you have {\tt VIEGOPHR.FIX} around somewhere,
+                you can place it on minidisk A, but this is not necessary.
+
+\item[4 $\Box$] Start the program generator by entering:
+                {\tt ROSE VIEGOPHR}
+
+\item[5 $\Box$]  Read the options presented by {\sc Rose} and answer the questions
+        appropriately.  In most cases you will want to use the
+        predefined option.  In this case simply enter code 1 or hit
+        the ENTER key.  If you want to change something enter code 3
+        (followed by pressing the ENTER key of course) and then enter
+        the value that you want to use.
+
+\item[6 $\Box$]  After prompting for all options {\sc Rose} will generate all
+        modules and invoke the postinstallation procedure {\tt GOPHINST.EXEC}.
+
+\item[7 $\Box$]  Fetch any missing file that the postinstallion procedure might
+        point out.  If the postinstallation procedure finds
+        inconstencies in your installation, remove the appropriate
+        line from {\tt VIEGOPHR.FIX} and go back to step 4.
+
+\item[8 $\Box$]  Put the file {\tt VIEGOPHR.FIX} at a safe place.  You might want
+        to use it again for a fast re-installation later on.
+
+\item[9 $\Box$]  Place {\tt RXSOCKET.MODULE} and/or {\tt REXTCPIP.MODULE} on minidisk A.
+
+\item[10 $\Box$]  Done!  Your minidisk A should now contain all necessary programs 
+        for the client and server.
+
+\item[11 $\Box$]  If you don't want the server you can remove {\tt GOPHERDD.EXEC}.
+
+\item[12 $\Box$]  If you want to run the server it's time to look through
+        this document ({\tt VIEGOPHR.PS}) now to find out about
+        index files, access groups, etc...
+\end{itemize}
+
+
+
+\section{Client}
+
+% * Client Modules
+% * General Module Layout
+%   * Modules from other Sources
+% * Installation
+%   * Quick Installation
+%     Professional Installation
+%     * (1)
+%     * Fig: Instsec in GOPHER.EXEC
+%     * (2)
+%     * Fig: Instsec in GOPHFTCH.EXEC
+%     * (3)
+% * Files
+% * Global Variables
+%   * User Setup
+%   * temporary variables used by the GOPHER modules
+% * Using the Client
+%   * Fig: Root Index Screen
+%   * temp files
+
+
+
+\subsection{Client Modules}
+
+The client is based on {\sf XEDIT} and {\sf REXTCPIP} or {\sf RXSOCKET}.
+It does not
+require any other non-standard extensions of the operating system, like
+{\sf CMS-PIPES} and should also work with TCP/IP release 1 (the
+REXTCPIP version only).
+
+
+
+
+\subsection{General Module Layout}
+
+ 
+
+
+\subsubsection{Modules from other Sources}
+ 
+The files {\tt REXTCPIP.MODULE} and {\tt RXSOCKET.MODULE}
+alternatively provide the network transport system.
+ 
+TCP/IP must be available to the user; the TCPIP public disk is not
+required unless the user also wants to use TELNET.
+ 
+ 
+
+
+\subsection{Installation}
+
+%   * Quick Installation
+%   * Professional Installation
+%     * (1)
+%     * Fig: Instsec in GOPHER.EXEC
+%     * (2)
+%     * Fig: Instsec in GOPHFTCH.EXEC
+%     * (3)
+
+
+\subsubsection{Quick Installation}
+
+Installing the VieGOPHER client quickly is fairly easy:  Just get the
+distribution package\footnote{see appendix \ref{sources} how to obtain it},
+and follow the installation procedures given in the readme file (or
+in the introduction),
+get {\tt REXTCPIP.MODULE} version 1.8.4 or {\tt RXSOCKET.MODULE},
+put everything on your minidisk, and type {\tt GOPHER}.
+If everything is ok you should get the root menu of the server
+{\tt gopher.wu-wien.ac.at}\footnote{Figure \ref{run.cl1} on page
+\pageref{run.cl1} shows such a menu}, otherwise you have a problem.
+% and you should consider reading the upcomming section about
+% professional installation.
+
+
+
+\SUBsection{Using the Client}
+
+The gopher client is invoked by executing GOPHER.  If everything is set up
+properly, the root menu of your default server should appear within a
+few seconds.  Figure \ref{run.cl1} shows a root menu.  The beginning of
+a menu line contains an item marker, {\tt $<$F$>$} indicates a text file
+and {\tt $<$D$>$} indicates another menu or directory.
+Table \ref{supported.items} lists all item types that are supported
+by this client.  Please note that other servers might also provide
+different item types, these are flagged by a marker of the form
+{\tt $>$}{\sl{x}}{\tt{$<$}}.  A list of other know item types is provided
+in table \ref{supported.items}.
+
+%    * Fig: Root Index Screen
+%    * Programmable Function Keys
+%      * (1)
+%      * Fig: Programmable Function Keys
+%      * (2)
+%    * Bookmarks
+%    * saving items
+%    * Feedback
+%    * Outlook
+%    * temp files
+%    * Supported Item Types
+%    * Tbl: Supported Item Types
+
+
+\begin{figure}
+\caption{Root Index of a Gopher Server}\label{run.cl1}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+ GOPHTMP  TMP0     A1  V 122  Trunc=122 Size=20 Line=1 Col=1 Alt=0
+====>
+<D> WU-Wien Gopher Information Service: Main Menu
+gopher.wu-wien.ac.at:70 <1>                                                  
+<F> About Internet Gopher (gopher.wu-wien.ac.at:70)
+<D> Local Info
+<F> ----------------------------------------------------------------------
+<D> Gophers around the house (Univ. Economics, Vienna)
+<D> Gophers around the place (Austrian Universities)
+<D> Gophers around the world (and other information services)
+<F> ----------------------------------------------------------------------
+<D> Early Music List: archives of EARLYM-L@AEARN.bitnet + rec.music.early
+<D> CERRO: the Central European Regional Research Organization
+<D> WAFE: Widget Athena Frontend
+<D> documents
+<D> services
+<D> external services
+<D> pointers                        (things you might also find elsewhere)
+<D> life, the NET and everything
+<D> The Guide!
+<F> ----------------------------------------------------------------------
+<D> VieGOPHER: VM/CMS Gopher Version
+ 1= Help      2=(altpfs)  3= GoBack  4= Disp->BMK   5= Curs->BMK   6= BMK  
+ 7= PageUP    8= PageDN   9= Save   10=            11= Display    12= Circle
+
+
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+ 
+
+
+\SUBsubsection{Programmable Function Keys}
+
+Basically, the user interface is `pure' {\sf XEDIT} with a customized
+PF-key setting.  How the keys are set up is shown in table \ref{PF.keys}.
+
+
+
+\begin{table}
+\caption{Programmable Function Keys}\label{PF.keys}
+\rule{0mm}{2mm} % see also * setup for the keys
+\begin{center}
+\noindent\begin{tabular}{|l|l|l|}
+\hline
+Key     & Label             & Description\\
+\hline\hline
+PF1     & {\tt Help}        & activate help menu (just for XEDIT)           \\
+PF2     & {\tt (altpfs)}    & assing PF 1-12 with functions of PF 13-24     \\
+PF3     & {\tt GoBack}      & quit the currently displayed item             \\
+PF4     & {\tt Disp-$>$BMK} & save a bookmark for the currently             \\
+        &                   & displayed item                                \\
+\hline
+PF5     & {\tt Curs-$>$BMK} & save a bookmark for the menu item that is in  \\
+        &                   & the line where the cursor currently is        \\
+PF6     & {\tt BMK}         & activate (display) bookmark file as a menu    \\
+PF7     & {\tt PageUP}      & go one page back (up)                         \\
+PF8     & {\tt PageDN}      & go one page forward (down)                    \\
+\hline
+PF9     & {\tt Save}        & save the item that is currently displayed     \\
+PF10    &                   & {\it unassigned yet, reserved ***}            \\
+PF11    & {\tt Display}     & display item of line where cursor is currently\\
+PF12    & {\tt Circle}      & switch to next active item                    \\
+\hline\hline
+PF13    & {\tt First}       & goto first screen if still active             \\
+PF14    & {\tt (basepfs)}   & assign PF 1-12 with base functions            \\
+PF15    & {\tt Exit}        & leave Gopher immediately                      \\
+PF16    &                   & {\it unassigned yet, reserved ***}            \\
+\hline
+PF17    & {\tt Split}       & split the screen                              \\
+PF18    & {\tt Join}        & join screens                                  \\
+PF19    & {\tt PageUP}      & go one page back (up)                         \\
+PF20    & {\tt PageDN}      & go one page forward (down)                    \\
+\hline
+PF21    & {\tt ShowRing}    & show active items in XEDIT ring               \\
+PF22    &                   & {\it unassigned yet, reserved ***}            \\
+PF23    & {\tt Setup}       & Setup some parameters for using Gopher        \\
+PF24    & {\tt Execute}     & execute command                               \\
+\hline\hline
+ENTER   &                   & display item of line where cursor currently is\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+PF24 triggers execution of general editor commands just like the ENTER
+key would do during a normal XEDIT session while the ENTER key has the
+same function as PF11, that is displaying the selected item.
+Activating the {\tt Display} function will make the
+Gopher client fetch the item described by the line of the menu where
+the cursor is currently in, the result is then displayed as a new XEDIT
+file. The file containing the menu is then still active, each fetched
+item adds another file to a so-called XEDIT file ring.
+
+Leaving a file with the {\tt GoBack} function ({\tt PF3}) causes that file
+to be removed from the editor ring and XEDIT will select another file from
+the ring for display.
+
+This kind of behaviour might lead the user to a tree-like view of the
+data space.  In reality --- whatever that term means --- is the user
+confronted with a quite chaotic, only partially tree like data space.
+One of the main features of the gopher protocol is the ability to point
+to other servers.  Thus most servers point to the central node in the
+world-wide gopher network, {\tt boombox.micro.umn.edu}, this server also
+maintains a list of other known gopher servers.  The result is a circle
+of servers pointing to each other, back and forth.
+
+
+
+\SUBsubsection{File Ring}
+
+The XEDIT file ring and the insertion and deletion strategy work like
+Ariadne's Thread.  However, the {\tt Circle} function allows the user
+to activate the next file in the editor file ring without quitting the
+current file.  The function {\tt ShowRing} (PF20) gives you a list of
+items in the XEDIT ring, you can select any item by placing the cursor
+in the appropriate line and pressing ENTER or PF11.  All in all, the
+XEDIT ring system is a perfect way to loose orientation in the
+Gopher-maze...  What was it that I wanted to explain now?  Ah yes,
+bookmarks!
+
+
+
+\SUBsubsection{Bookmarks ({\tt BMK})}
+
+After exploring Gopher Space for a while you will realize, that an
+enormous quantity of information is out there.  But where exactly
+did you see that particular piece of invaluable information?  You could
+write down it's `coordinates'.  By the way, coordinates in Gopher Space
+are three components that are found in a normal Gopher directory or menu:
+server name, port number and selector string.  The item type is useful
+for your client to know how a particular item should be presented, the
+fifth component of a directory is only of interest for the user, it is
+the so-called `display string' or name and should give you a clue about
+what you can expect from a particular item.
+
+VieGOPHER, like most other Gopher clients, allows you to take notes about
+the coordinates of an item you found.  This is usually called a bookmark,
+because it leads you back to the place where you found the information
+and is not a reproduction of the information itself.
+You can either take a bookmark for the item that is currently displayed
+(PF4) or you could request that the item which is in the menu line of the
+cursor should be transfered to the bookmark list (PF5).  The list of your
+bookmarks is stored in a file named {\tt GOPHER.BOOKMARK} and can be
+activated by pressing PF6 (the BMK function).  The bookmark file is then
+read and the file is added to the XEDIT file ring.
+
+\noindent Notes:
+\begin{itemize}
+\item   Save the bookmark file after modifying (editing) it using
+        the FILE command.
+\item   Be careful about activating and editing the bookmark file
+        and taking more bookmarks while the bookmark file is still
+        active in the XEDIT file ring.
+\item   Save bookmarks for WAIS search items from the menu.
+\end{itemize}
+
+
+
+\SUBsubsection{Saving items to a file}
+
+Text items can be stored in local files for later processing or printing.
+This is done by pressing PF9 (save) when displaying the text item
+of interest.  The text will be appended to the file {\tt GOPHER.SAVEFILE},
+together with a short header listing the gopher coordinates of the item.
+  Of course, the XEDIT commands {\tt SAVE}, {\tt FILE},
+and {\tt PUT} can be entered on the command line as normal.
+
+
+
+\SUBsubsection{Telnet}
+
+VieGOPHER supports the telnet types 8 for `normal' telnet and T for
+Telnet 3270.  IBM's {\tt TELNET.MODULE} is able to handle both types,
+so the client will call this program by default.
+
+It may be desireable,
+however, to configure another program to handle type 8 or type T
+sessions.  This can be done either at configuration time by specifying
+appropriate values for the ROSE-variables {\tt CL\_TELNET\_8} and
+{\tt CL\_TELNET\_T}.
+
+The user can overide this selections by assigning the programs he
+desires to the global variables {\tt TELNET-8} and {\tt TELNET-T},
+both are in the group {\tt GOPHER}.
+
+Please note, the ROSE-variables and the global variables must specify
+the complete name of the desired program.  For example, a user would
+use VieGOPHER's SETUP function or
+enter the following command to setup Arty Ecock's VT100 telnet emulator
+for `normal' telnet sessions:
+
+\begin{verbatim}
+GLOBALV SELECT GOPHER SETLP TELNET-8 TNVT100 EXEC
+\end{verbatim}
+
+
+
+\SUBsection{Supported Item Types}
+
+Table \ref{supported.items} list all currently supported item
+types.  Please be aware, some servers know item types that this
+client will not be able to process, other item types (like {\tt w})
+are not yet standardized and might be interpreted differently by
+the server on one side and the client on the other side.
+
+
+
+% Links: * edindex (type code overview)
+\begin{table}
+\caption{Supported Item Types}\label{supported.items}
+\rule{0mm}{2mm}
+\begin{minipage}{\textwidth}
+\begin{center}
+\begin{tabular}{|c|c|l|cl|}\hline
+type & marker & short           &\multicolumn{2}{l|}{actions on activation}\\
+\hline\hline
+0    & \verb/<F>/& File            & $\circ$ & retrieve                        \\
+     &        &                 & $\circ$ & display as plain text           \\
+\hline
+1    & \verb/<D>/& Directory       & $\circ$ & retrieve                        \\
+     &        &                 & $\circ$ & display as directory            \\
+\hline
+2    & \verb/CSO/    & CSO Phonebook\footnote{under construction,
+  limited support is provided} & $\circ$ & retrieve \\
+     &        &                 & $\circ$ & display as plain text           \\
+\hline
+7    & \verb/<S>/& search          & $\circ$ & prompt for search string        \\
+     &        &                 & $\circ$ & submit search selector to
+                               server\footnote{compatible with WAIS gateway}\\
+     &        &                 & $\circ$ & display result as directory     \\
+\hline
+w    & \verb/<S>/& search          & $\circ$ & prompt for search string        \\
+     &        &                 & $\circ$ & submit search selector to server\\
+     &        &                 & $\circ$ & display result as file          \\
+\hline
+8    & \verb/<T>/& Telnet          & $\circ$ & display selector string as a    \\
+     &        &                 &         & clue for logging in             \\
+     &        &                 & $\circ$ & start telnet session            \\
+\hline
+T    & \verb/<T>/& Telnet 3270\footnote{Type={\tt T} is now officially declared
+as 3270 telnet mode.  By default, types 8 and T are handled the same way as
+normal telnet, but this can be configured either at installation time or
+as a user setup option.}        & $\circ$ & display selector string as a    \\
+     &        &                 &         & clue for logging in             \\
+     &        &                 & $\circ$ & start telnet session            \\
+\hline
+i    & \verb/***/    & info            & & (no action on activation) \\
+%%%%%%%%%%%%%%%%%%% neither <B> nor <H> are currently used %%%%%%%%%%%%
+%%% \hline
+%%% B    & \verb/<B>/& BSS             & $\circ$ & retrieve                        \\
+%%%     &        &                 & $\circ$ & display as
+%%% file\footnote{sending the data to a file without displaying should be
+%%% implemented; transparent decoding would be a useful option} \\
+%%% \hline
+%%% H    & \verb/<H>/& Hypertext       & $\circ$ & retrieve                        \\
+%%%      &        &                 & $\circ$ & display as ordinary 
+%%%                file\footnote{hypertext information is not evaluated
+%%% by this client yet}    \\
+\hline
+\end{tabular}
+\end{center}
+\end{minipage}
+\end{table}
+
+
+
+\SUBsection{Global Variables}
+
+  The client uses two different types of global variables, permanent
+  ones, for storing setup parameters, in the file {\tt LASTING.GLOBALV}
+  and temporary ones in memory.
+ 
+ 
+
+
+\SUBsubsection{User Setup}
+
+Table \ref{clglv} on page \pageref{clglv} lists all the
+global variables that are used by the client.
+They are in the group GOPHER in the file {\tt LASTING.GLOBALV}
+and can be modified with the SETUP function built into the
+client (PF23: {\tt Setup}) or by calling the program GOPHSTP.
+
+%%% this part is obsolete already ... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%\noindent {\bf Attention:}
+%%% {\tt HOST}, {\tt ITYPE} and {\tt SEL}
+%%%     need to be set, accessed and modified using
+%%%     {\tt GLOBALVV.EXEC} since they will usually contain mixed
+%%%     case strings which can't be handled with GLOBALV.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\begin{table}
+\caption{Permanent Global Variables for the Client}\label{clglv}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}
+\hline  % --------------------------------------------------------------------
+% {\tt  KEEP\footnote{this feature is not fully implemented yet.}       } 
+%                    & define, if items should be kept and how long         \\
+% {\tt  ~~=ALL     } & keep all items                                       \\
+% {\tt  ~~=SESSION } & keeps items only during a session                    \\
+% {\tt  ~~={\sl{(none)}}} & don't keep any items [Default]                  \\
+% \hline % -------------------------------------------------------------------
+{\tt HOST}      & name of the GOPHER server to be accessed at startup       \\
+                & [Default: {\tt gopher.wu-wien.ac.at}]                     \\
+\hline % ---------------------------------------------------------------------
+{\tt PORT}      & port of the GOPHER server                                 \\
+                & [Default: {\tt 70}]                                       \\
+\hline % ---------------------------------------------------------------------
+{\tt ITYPE}     & item type of the first item to be fetched                 \\
+                & [Default: {\tt 1} ({\sl directory})]                      \\
+\hline % ---------------------------------------------------------------------
+{\tt SEL}       & selector string of the first item to be fetched           \\
+                & [Default: {\sl text}\footnote{set during installation
+                  as a ROSE definition}]                                    \\
+\hline % ---------------------------------------------------------------------
+{\tt DNAME}     & name of the startup menu                                  \\
+                & [Default: {\sl none}]                                     \\
+\hline % ---------------------------------------------------------------------
+{\tt BOOKMARK}  & name of the bookmark file                                 \\
+                & [Default: {\tt GOPHER BOOKMARK A}]                        \\
+\hline % ---------------------------------------------------------------------
+{\tt SAVEFILE}  & name of the file where items may be saved                 \\
+                & [Default: {\tt GOPHER SAVEFILE A}]                        \\
+\hline % ---------------------------------------------------------------------
+{\tt INFOLEVEL} & level of verbosity, amount of function key description    \\
+                & [Default: {\tt 5}]                                        \\
+\hline % ---------------------------------------------------------------------
+{\tt TELNET-8}  & name of the telnet program for items of {\tt Type=8}      \\
+                & [Default: {\tt TELNET MODULE}]                            \\
+\hline % ---------------------------------------------------------------------
+{\tt TELNET-T}  & name of the telnet program for items of {\tt Type=T}      \\
+                & [Default: {\tt TELNET MODULE}]                            \\
+\hline % ---------------------------------------------------------------------
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+ 
+
+
+\SUBsubsection{temporary variables}
+ 
+  Table \ref{clglv-t} on page \pageref{clglv-t} lists the client's
+  temporary global variables,
+  %%% they are in the group GOPHER in the special format 
+  %%% file {\tt LASTING.GLOBALXV}.
+  the CMS program GLOBALV keeps them in main memory.
+  %%% The Gopher program will purge this file
+  %%% at the end of every session.
+  These variables can not be accessed directly.
+
+
+\begin{table}
+\caption{Temporary Global Variables for the Client}\label{clglv-t}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}\hline 
+{\tt  TMPCNT     } & number of the last item fetched (0..??)\\
+\hline
+{\tt  GHOST      } & host, port, type and selector of the last item fetched\\
+\hline
+{\tt  GI1:{\sl{$<$ty$>$}}  } &  directory entry of the item held in 
+                                file {\tt GOPHTMP.}{\sl{$<$ty$>$}}\\
+{\tt  GI2:{\sl{$<$ty$>$}}  } &  {\sl $<$ty$>$} is the file type of the
+                                XEDIT file in the ring\\ \hline
+{\tt  L{\sl{$<$ty$>$}}     } &  screen information for active item in
+                                XEDIT ring\\ 
+\hline
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+\rule{0mm}{5mm}
+
+%%%\noindent {\bf Attention:}
+%%% {\tt GHOST}, {\tt GI1:}{\sl{$<$ty$>$}} and
+%%%     {\tt GI2:}{\sl{$<$ty$>$}}
+%%%     are set, accessed and modified by the client modules
+%%%     using {\tt GLOBALXV.EXEC} since they will usually contain mixed case
+%%%     strings, possibly even longer than 256 bytes, which can't be handled
+%%%     with GLOBALV or GLOBALVV.
+%%%{\tt  L{\sl{$<$ty$>$}}} is handled using GLOBALV.
+
+
+
+\SUBsection{Files}
+
+  There are no files read in normal operation.  For direct access without
+  TCP/IP, the local fetching option ({\tt CL\_USE\_LOCALFETCH}) must be
+  turned on and all the files visible to the server must also be visible
+  to the client, especially the selector file, the group file, and the
+  root index.
+ 
+
+
+\subsection{Calling {\tt GOPHFTCH.EXEC}}
+
+The heart of the VieGOPHER client, the item fetcher {\tt GOPHFTCH.EXEC}
+is a program of it's own right and can be embedded in other applications
+as well.  It's calling formats are:\\
+\rule{0mm}{1mm}
+
+\begin{center}\begin{tabular}{l|l|}\cline{2-2}
+1. & \verb#GOPHFTCH ofn oft ofm[(fm_opt] type host port path#     \\ \cline{2-2}
+2. & \verb#GOPHFTCH ofn oft ofm[(fm_opt] FILE ifn ift ifm#        \\ \cline{2-2}
+3. & \verb#GOPHFTCH ofn oft ofm[(fm_opt] PULL#                    \\ \cline{2-2}
+%%%%%%%%%  & \verb#fm_opt := PUSH | QUEUE | XEDIT# \\ \cline{2-2}
+\end{tabular}\end{center}
+
+\rule{0mm}{3mm}
+
+In the first format, all Gopher coordinates are specified on the
+command line, the second format requires GOPHFTCH to read the coordinates
+from the specified file and the third format tells GOPHFTCH that the
+coordinates can be pulled from the stack.
+
+
+\verb#ofn oft ofm# specifies the file where the fetched data should be
+written to, unless {\tt fm\_opt} forces the data to be processed otherwise.
+
+\verb#fm_opt#, the filemode options, can be either empty,
+{\tt PUSH}, {\tt QUEUE} or {\tt XEDIT}.\\
+\rule{0mm}{1mm}
+
+\begin{tabular}{|l|l|}\hline
+Option     & Description \\ \hline \hline
+           & The empty filemode option indicates that the data should\\
+           & indeed be written to the specified outout file. \\ \hline
+{\tt PUSH} & indicates that the data will be pushed to the stack. \\ \hline
+{\tt QUEUE}& indicates that the data will be queued on the stack. \\ \hline
+{\tt XEDIT}& indicates that incoming data should immediately be written\\
+           & to the file being edited with XEDIT. \\ \hline
+\end{tabular}
+
+\rule{0mm}{3mm}
+
+\noindent
+Please note:
+\begin{itemize}
+\item   there must be no space between the output filemode, the
+        bracket and the actual filemode option!
+\item   Please note also, a valid filename for writing must be
+        specified in all cases!
+\end{itemize}
+
+\begin{figure}
+\caption{Format of the data on the stack for options
+{\tt PUSH} and {\tt QUEUE}} \label{stack.format}
+\begin{center}
+\fbox{\parbox{8cm}{%
+{\tt TOP}\\
+{\tt -}{\sl complete text line}\\
+{\tt +}{\sl beginning of a long text line}\\
+{\tt +}{\sl more of the long text line}\\
+{\tt -}{\sl end of the long text line}\\
+{\tt -}{\sl another short text line}\\
+{\tt END}%
+}}\end{center}
+\end{figure}
+
+\noindent
+{\sl type} specifies the type of the item to be fetched and controls
+the way how GOPHFTCH will process the data.\\
+{\sl host} specifies the internet address of the Gopher server's host.\\
+{\sl port} specifies the TCP port number where the Gopher server listens.\\
+{\sl path} specifies the selector string which GOPHFTCH will send to
+the server to request an item.\\
+{\sl ifn ift ifm}\ specifies the input file where the necessary Gopher
+coordinates can be found.
+
+\begin{figure}
+\caption{Format of the Gopher coordinates on file for the FILE-method}
+\begin{center}\fbox{\parbox{8cm}{\sl type\\host\\port\\path}}\end{center}
+\end{figure}
+
+\begin{figure}
+\caption{Format of the Gopher coordinates on the stack for the PULL-method}
+\begin{center}\fbox{\parbox{8cm}{%
+{\tt TYPE=}{\sl type}\\
+{\tt HOST=}{\sl host}\\
+{\tt PORT=}{\sl port}\\
+{\tt PATH=}{\sl path}\\
+{\tt HTAP=}{\sl path}\\
+{\tt END}%
+}}\end{center}
+\end{figure}
+
+Long path-strings can be segmented into a series of {\tt PATH=} or
+{\tt HTAP=} records.  {\tt PATH=} segments are put at the end of
+the path string, while {\tt HTAP=} segments are put at the beginning
+of the path string.  The {\tt END} record must be present to tell
+GOPHFTCH when to stop reading from the stack.
+
+
+
+\section{Server}
+ 
+% * Modules
+%   * GOPHERDD.EXEC
+%   * Modules from other Sources
+%   Installation
+%   * (1)
+%   * Fig: Instsec in GOPHERDD.EXEC
+%   * (2)
+% * Files
+%   * GOPHERD.SELECTOR
+%   * GOPHERD.GROUPS
+%   * GOPHERD.INDEX
+%   * Format of an Index File
+% * Global Variables
+%   * Tbl: Global Variables
+
+
+\subsection{Server Modules}
+
+%   * GOPHERDD.EXEC
+%   * Modules from other Sources
+
+
+\subsubsection{Multi-Threaded Multi-Protocol Daemon}
+ 
+The file {\tt GOPHERDD.EXEC} resembles the main module of the server.
+This program will also call the modules {\tt FINGERXX.EXEC} to generate
+the response for finger queries and {\tt COOKIE.EXEC} to generate
+short text messages from a cookie base.
+ 
+ 
+
+
+\subsubsection{Modules from other Sources}
+
+For managing TCP connections, the file {\tt REXTCPIP.MODULE} is used,
+trapping control messages from servicing VMs is implemented using
+{\tt YWAKEUP.MODULE} or IBM's standard WAKEUP method.
+ 
+TCP/IP must be available to the server, however, access to the TCPIP
+public disk is not necessary.
+ 
+ 
+
+
+\subsection{Installation}
+ 
+  The files {\tt GOPHERD.EXEC}\footnote{This program is now obsolete;
+  it is still distributed in the package to provide the interested
+  reader with some in-depth information.} as well as {\tt GOPHERDD.EXEC}
+  have an installation
+  section where local parameters should be configured at installation
+  time using ROSE.
+  There are the definitions of the ports where the servers listen
+  and the files that are used by the server modules.
+  Figure \ref{conf.gopherdd} shows an example.
+ 
+
+
+\begin{figure}
+\caption{ROSE Installation section in
+{\tt GOPHERDD.EXEC}}\label{conf.gopherdd}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+/* to be configured at installation time by ROSE:  - - - - - - - - - - */
+if logfile=''      then logfile=      #<LOGFILE>#;
+if selectorfile='' then selectorfile= #<SELECTORFILE>#;
+if groupfile=''    then groupfile=    #<GROUPFILE>#;
+if rootindex=''    then rootindex=    #<ROOTINDEX>#;
+if gopherport=''   then gopherport=   #<GOPHER_PORT>#;
+if fingerport=''   then fingerport=   #<FINGER_PORT>#;
+if cookieport=''   then cookieport=   #<COOKIE_PORT>#;
+if sreport=''      then sreport=      #<SRE_PORT>#;
+/* - - - - - - - - - - - - - - - - - - -  end of configuration section */
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+
+
+\subsubsection{Virtual Machines}
+  The setup used at {\sf awiwuw11.wu-wien.ac.at} is this:  
+  the virtual machine {\bf GOPHER} has all the programs on it's minidisk 191,
+  accessed as A.  This disk is public to all users.
+  Data files are stored on various disks.
+  The VM also has a link to GOPHERD.191 as I.
+
+  The VM {\bf GOPHERD} has a link to GOPHER.191 as minidisk B (read-only)
+  and all the necessary data disks of GOPHER and other VMs.
+  The server module GOPHERDD is started from the profile\footnote{A sample
+  profile is shown in section \ref{prof.GOPHERD}.}.  GOPHERD can be forced
+  and auto-logged by the VM TCPIP and is currently also forced and
+  auto-logged by the VM VMUTIL four times a day.
+
+  Allowing TCPIP to control GOPHERD requires an entry in the file
+  PROFILE TCPIP.  Figure \ref{PROFILE.TCPIP} on page \pageref{PROFILE.TCPIP}
+  shows an excerpt of that file, listing relevant entries.
+  Please note that GOPHERD is mentioned in the AUTOLOG section once and
+  three times in the PORT section, where the statements for port
+  17 (Quote) and 79 (Finger) are flagged with NOAUTOLOG.  It's not
+  clear if it could cause problems when one virtual machine
+  has more than one autolog-controlled ports and sofar this setup
+  did not reveal any shortcoming.
+
+\begin{figure}\label{PROFILE.TCPIP}
+\caption{Excerpt from PROFILE TCPIP}
+...\\
+...
+\begin{verbatim}
+AUTOLOG
+  FTPSERVE  PASSWD     ; FTP Server
+  GOPHERD   PASSWD     ; Gopher, Finger and Quote Server
+  LPSERVE   PASSWD     ; LP Server
+\end{verbatim}
+...\\
+...
+\begin{verbatim}
+ENDAUTOLOG
+
+PORT
+  17 TCP GOPHERD   NOAUTOLOG ; Quote Server
+  20 TCP FTPSERVE  NOAUTOLOG ; FTP Server
+  21 TCP FTPSERVE            ; FTP Server
+  23 TCP INTCLIEN            ; TELNET Server
+  25 TCP SMTP                ; SMTP Server
+  53 TCP NAMESRV             ; Domain Name Server
+  53 UDP NAMESRV             ; Domain Name Server
+  70 TCP GOPHERD             ; Gopher Server
+  79 TCP GOPHERD   NOAUTOLOG ; Finger Server
+ 109 TCP POP2                ; Post Office Protocol Version 2
+\end{verbatim}
+...\\
+...
+\end{figure}
+
+
+
+\subsection{Files}
+
+%   * GOPHERD.GROUPS
+%   * GOPHERD.DSKGRP
+%   * GOPHERD.SELECTOR
+%   * GOPHERD.EAI
+%   * GOPHERD.INDEX
+%   * Format of an Index File
+
+The server processes a number of files to obtain vital information
+for it's operation.  Purpose and format of these files is described
+in the following sections.
+
+\begin{tabular}{|l|l|} \hline
+\tt GOPHERD.GROUPS    & privileged IP addresses, access groups \\ \hline
+\tt GOPHERD.DSKGRP    & list of public data disks \\ \hline
+\tt GOPHERD.SELECTOR  & known selector strings \\ \hline
+\tt GOPHERD.EAI       & embedded application interface \\ \hline
+\tt GOPHERD.INDEX     & main (or root) index \\ \hline
+\end{tabular}
+
+
+
+\subsubsection{{\tt GOPHERD.GROUPS}}\label{groupfile}
+ 
+  This file defines the known access group names and lists the
+  privileged IP addresses that are contained in a group.
+  Records have the form...\\
+\rule{0mm}{1mm}
+
+\begin{center} 
+    \fbox{\sl group ({\tt\symbol{32}}addr)+}
+\end{center}
+
+\rule{0mm}{3mm}
+
+\noindent Example 1:\\ \rule{0mm}{1mm}
+
+\begin{center}
+%\fbox{\parbox{8cm}{
+\begin{verbatim}
+* File GOPHERD GROUPS
+*
+* list of know groups
+gg       137.208.
+wu-wien  137.208.
+edvz     137.208.16.
+schnurli 137.208.16.39
+\end{verbatim}
+%}}
+\end{center}
+
+\rule{0mm}{5mm}
+
+\noindent where $\ldots$\\ \rule{0mm}{1mm}
+
+\noindent\begin{tabular}{|lcl|}\hline
+137.208.       &$\ldots$& is the network address of the Univ. of Economics. \\
+137.208.16.    &$\ldots$& is the sub network of the computer center.        \\
+137.208.16.10  &$\ldots$& is the author's PC                                \\
+\hline\end{tabular}
+
+\rule{0mm}{5mm}
+
+\noindent NOTES:
+\begin{itemize}
+\item   The group {\tt *} is not defined in {\tt GOPHERD.GROUPS}.
+        Files refering to group names will use {\tt *} to indicate that
+        something is available to everyone on the Internet.
+\item   There is a dot ({\tt .}) after subnet addresses and
+        that there is no dot after a completely specified host address.
+\end{itemize}
+
+
+
+\subsubsection{{\tt GOPHERD.DSKGRP}}\label{dskgrpfile}
+
+The disk groups file associates file modes (minidisks) with access groups,
+as defined in the previously.  This allows the server to quickly decide
+if files with a certain file mode can be delivered to a client,
+depending on the client's Internet address.
+
+\noindent Format of a disk group file\footnote{For an example
+see appendix \ref{example GOPHERD.DSKGRP}.}:\\
+\begin{center}
+\fbox{{\sl disk priority groupnames}}
+\end{center}
+An entry line starting with {\tt *}\ or {\tt \#}\ is comment
+and ignored.
+
+\noindent {\sl disk} is the file mode for the particular disk.
+Please note, {\tt X1} is not treated the same as {\tt X2} etc.
+
+\noindent {\sl priority} when scanning the entries during a run-down,
+the file with the highest priority is delivered.  Only files of
+priorities larger than 0 are sent out at all.
+
+\noindent {\sl groupnames} is a list of group names defined in the group
+file (see \ref{groupfile}).
+
+
+
+\subsubsection{{\tt GOPHERD.SELECTOR}}\label{selectorfile}
+
+  This file lists all known selector strings (path names)
+  together with associated access group names,
+  owner authentication codes, and finally the file name.
+  The server checks the requested item in the selector list
+  and sends out the contents of the
+  associated file if the file has no access restrictions.
+  Records have the form...\\
+\rule{0mm}{1mm}
+
+\begin{center}
+   \fbox{\sl fn.ft.fm ~~~ owner ~~~ group ~~~ selector}
+\end{center}
+
+\rule{0mm}{3mm}
+
+\noindent where\\ \rule{0mm}{2mm}
+
+\noindent\begin{tabular}{|l|l|}\hline
+  fn          & file name\\
+  ft          & file type\\
+              & * indicates that the file type is taken from the\\
+              & selector string.  This is used to reduce the number\\
+              & of entries in the selector file and to have less\\
+              & administrative overhead when installing new files.\\
+  fm          & file mode\\
+  owner       & a short string identifying the owner of the item\\
+              & * for the general public\\
+  group       & a group name defined in GOPHERD.GROUPS or\\
+              & * for the general public group\\
+  selector    & any text string used as selector\\ \hline
+\end{tabular}
+
+\rule{0mm}{5mm}
+ 
+\noindent  NOTES:
+\begin{itemize}
+\item   Don't use characters in the selector string which are difficult
+        to be processed in the command line.
+\item   Group names, owner names as well as selector strings are case
+        sensitive.
+\item   Owner names have currently no real meaning and are ignored
+\item   Note the dotted notation for file names.
+\item   Include the file mode in the filename field.
+\end{itemize}
+ 
+
+
+\subsubsection{{\tt GOPHERD.EAI}}\label{eaifile}
+
+(info is coming up later, remind me... )
+
+Format of the path string (selector):\\
+{\tt EAI-}{\sl handle}\fbox{{\tt TAB}}{\sl key-term}
+
+The file \fbox{{\tt GOPHERD.EAI}} defines a relationship between
+a selector handle, a privilege group declaration and a method
+to call the embedded application.  The format of such a file is:
+
+  \fbox{{\sl handle}\rule{3mm}{0mm}{\sl reserved}\rule{3mm}{0mm}
+        {\sl group}\rule{3mm}{0mm}{\sl calling sequence}}
+
+The calling sequence resembles a command line for calling the
+embedded application.  It can contain templates that will be
+replaced with specific parameters by the gopher server before
+executing the command line.  These are currently defined templates:
+
+\noindent\begin{center}
+\begin{tabular}{|l|l|}\hline
+template        & replacement                             \\ \hline\hline
+{\tt @kw}       & key term as delivered in the selector         \\ \hline
+{\tt @fn}       & filename for the output file                  \\ \hline
+{\tt @ft}       & filetype for the output file                  \\ \hline
+{\tt @fm}       & filemode for the output file                  \\ \hline
+\end{tabular}
+\end{center}
+
+
+
+
+\subsubsection{{\tt GOPHERD.INDEX}}\label{rootindex}
+ 
+  This file is the main index (root index), it is sent out whenever
+  an empty selector string comes in.
+ 
+ 
+
+
+\subsubsection{Format of an Index File}
+
+  The server does not distinguish between index files and any other
+  text file, therefore, index files are implicitly just text files that
+  have the directory structure as defined in \cite{gophprot}.
+  Thus, all records in an index file have the form...\\
+\rule{0mm}{1mm}
+
+  \fbox{\sl type display {\tt TAB} selector {\tt TAB} host {\tt TAB} port}
+ 
+\rule{0mm}{3mm}
+
+\noindent
+\begin{tabular}{lcl}
+type    & $\ldots$ & document item type (see table
+                     \ref{supported.items} on page
+                     \pageref{supported.items} for list)          \\
+display & $\ldots$ & string displayed in the index                \\
+selector& $\ldots$ & string sent to server by the client          \\
+        &          & to retrieve the document\\
+host    & $\ldots$ & host address of the server                   \\
+port    & $\ldots$ & port number of the server                    \\
+\end{tabular}
+
+\rule{0mm}{3mm}
+
+\noindent NOTES:
+\begin{itemize}
+\item  The blanks in the line above are only used for readability,
+       they will not be found in an index file.
+\item  The {\tt TAB} character has hex code {\tt `05'x}
+       in EBCDIC ({\tt 0x09} in ASCII).
+\item  The server sends an index file (like any other file) without any
+       filtering.
+\end{itemize}
+ 
+
+
+\subsection{Global Variables}
+ 
+  Global variables are used to define a couple of parameters for the
+  server, they are set and accessed using GLOBALV and are found in the
+  group GOPHER in {\tt LASTING.GLOBALV}.  Table \ref{srvglv} on page
+  \pageref{srvglv} lists all relevant global variables for the
+  multi-threaded server daemon.
+
+
+
+\subsection{Hooks in the Server Code}
+
+The GOPHERDD server code provides a number of hooks.  A server
+administrator can install programs that are called by the server
+under certain conditions.
+
+\subsubsection{GSH\_REAC EXEC}
+Executed after an REACCESS event, triggered either by a
+SYS-REACCESS request from the gopher server or by a SYS-REACCESS
+message.
+
+\subsubsection{GSH\_WAIT EXEC}
+Execute some commands after n seconds of idle waiting.
+
+
+
+\begin{table}
+\caption{Global Variables for the Server}\label{srvglv}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}\hline
+{\tt LOGFILE}       &   defines the name of the logfile file\\
+                    &   (default: {\tt GOPHERD.LOG})\\  \hline
+{\tt ROOTINDEX}     &   defines the name of the file with the \\
+                    &   main menu (also called root index)\\
+                    &   (see section \ref{rootindex}
+                        on page \pageref{rootindex}) \\
+                    &   (default: {\tt GOPHERD.INDEX})\\  \hline
+ 
+{\tt SELECTORFILE}  &   defines the name of the selector file\\
+                    &   (see section \ref{selectorfile})
+                        on page \pageref{selectorfile}) \\
+                    &   (default: {\tt GOPHERD.SELECTOR})\\  \hline
+ 
+{\tt GROUPFILE}     &   defines the name of the group definition file\\
+                    &   (see section \ref{groupfile}
+                        on page \pageref{groupfile}) \\
+                    &   (default: {\tt GOPHERD.GROUPS})\\  
+\hline
+{\tt EAIFILE}       &   defines the name of the embedded application    \\
+                    &   handle file (see section \ref{eaifile}          \\
+                    &   (default: {\tt GOPHERD.EAI})                    \\
+\hline
+{\tt DSKGRPFILE}    &   defines the name of the disk group definition   \\
+                    &   file (see section \ref{dskgrpfile}              \\
+                    &   (default: {\tt GOPHERD.DSKGRP})                 \\
+\hline
+
+{\tt GOPHERPORT}& defines the TCP/IP port the daemon listens\\
+                & to perform 
+GOPHER protocol\footnote{see \cite{gophprot}} connections\\
+                & (default: port 70) \\ \hline
+ 
+{\tt FINGERPORT}& defines the TCP/IP port the daemon listens\\
+                & to perform 
+FINGER protocol\footnote{see \cite{rfc1288}} connections\\
+                & (default: port 79) \\ \hline
+ 
+{\tt COOKIEPORT}& defines the TCP/IP port the daemon listens\\
+                & to perform 
+Quote-of-the-Day protocol\footnote{see \cite{rfc865}} connections\\
+                & (default: port 17) \\ \hline
+ 
+{\tt SREPORT}  & defines the TCP/IP port the daemon listens\\
+                & to perform 
+SRE protocol\footnote{no documentation on SRE is currently 
+available} connections\\
+                & (default: port 150)\\ \hline
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+
+
+\subsection{The Gopher Server in Action}
+
+\begin{itemize}
+\item   interpreting the selector string
+        \begin{itemize}
+        \item   {\tt FILE-*}
+        \item   {\tt SPEC-*}
+        \item   {\tt SYS-*}
+        \item   {\tt EA-*}
+        \item   selector evaluation
+        \item   :from:to notation
+        \end{itemize}
+\item   LOG-file (+ example)
+\end{itemize}
+
+
+
+
+% -----------------------------------------------------------------------
+\section{Server Administration Support Programs}
+
+% * Index Editor
+% * User Posting
+
+
+
+\subsection{Index Editor}
+
+The Index Editor provides an interactive tool for modifying index files.
+The program is, as usual, set up as a XEDIT macro, the function keys are
+defined in table \ref{EDINDEX} on page \pageref{EDINDEX}.
+It consists of the following modules:
+\begin{itemize} 
+\item  {\tt EDINDEX.EXEC}:  the editor for INDEX files\\
+\item  {\tt EDINDEX.XEDIT}: screen mask for INDEX files
+\end{itemize}
+
+% -----------
+\begin{table}
+\caption{Programmable Function Keys in {\tt EDINDEX}}\label{EDINDEX}
+\rule{0mm}{2mm}
+\begin{center}
+\noindent\begin{tabular}{|l|l|l|}
+\hline
+Key     & Label             & Description\\
+\hline\hline
+PF1     &                   &                                               \\
+PF2     & {\tt append}      & append a new record and copy data             \\
+PF3     & {\tt quit}        & quit the editor indexer                       \\
+PF4     & {\tt clear}       & erase information form current record         \\
+\hline
+PF5     & {\tt insert}      & insert a new record and copy data             \\
+PF6     & {\tt delete}      & delete a record                               \\
+PF7     & {\tt back}        & display previous record                       \\
+PF8     & {\tt next}        & display next record                           \\
+\hline
+PF9     &                   &                                               \\
+PF10    &                   &                                               \\
+PF11    &                   &                                               \\
+PF12    &                   &                                               \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+\subsection{Server Scanner}
+
+The file {\tt GOPHSCAN.EXEC} is a program that can scan a specified server
+for all it's menus.  It can be used for testing the server, or to get a
+master index for that server.  The program can also scan several servers
+in one session, for instance all servers on campus to get a master index
+for the complete campus.
+
+{\tt GOPHSCAN} will only scan those servers, that are specified on
+invocation, so it will {\bf not} wade through all gopher space the minute
+it is started.  However, even small servers turn out to have a lot of data,
+so it might be possible, that one run leads to an enormous amount of data.
+
+The program was invented for providing a seperate program with data for an
+experimental `on-campus Veronica'.  The other program is not finished yet
+and will be released as a seperate package, eventually.
+
+
+
+
+\section{Spin-Off Programs}
+
+% * Remote User Information Protocol: (FINGER)
+%   * FINGERXX.EXEC
+%   * FINGER.EXEC
+% * COOKIE
+
+
+\subsection{Remote User Information Protocol: (FINGER)}
+
+%   * FINGERXX.EXEC
+%   * FINGER.EXEC
+
+
+
+\subsubsection{{\tt FINGERXX.EXEC}}
+ 
+  This program prepares the data for a user information query and writes
+  it either to a file or the console.  The program is normally either
+  called by {\tt GOPHERDD.EXEC} to process a FINGER query or 
+  a {\tt SPEC-FINGER} request
+  from the Gopher server.  {\tt FINGERXX.EXEC} is usually not
+  invoked by the user directly.  The implementation
+  of the output preparation module tried to fulfill all
+  requirements of RFC1288 \cite{rfc1288}
+  and it can now be said that it is compliant to this standard.
+ 
+\noindent User information has several options and consists of several parts:
+
+\begin{enumerate} 
+\item empty query string (\{C\} query)\\
+     The program returns the list of all logged in virtual machines.
+     RFC1288 specifies that a finger server ``MUST at least provide the
+     full name'' of all online users.  The full name of the owner of a
+     virtual machine is looked up in the file
+     {\tt LOCAL.NAMES} using NAMEFIND.
+ 
+\item in-depth status of a specified user (\{U\}\{C\} query)\\
+     The program tries to return following information components:
+
+\begin{enumerate}
+\item user log-on status:\\
+        RFC1288 requires: ``An answer MUST include at least the full name
+        of the user.''  The program returns the userid, full name,
+        terminal number and the phone number (local extension), provided
+        that this information can be found in the lookup files.
+ 
+\item a user information file: {\tt FINGERID.}{\sl{userid}}\\
+        The contents of this file is returned
+        without filtering, it will reside on one of the Gopher service
+        machine's public disks so that the GOPHERDD daemon as well as any
+        user invoking FINGER has read access to the file.
+ 
+\item information from a phone book file: {\tt PHONEBK.NAMES}
+\end{enumerate}
+
+\item phone book lookup: a string containing blanks\\
+     This query type is interpreted as a full name (which is invalid as
+     a userid under VM/CMS) that has to be looked up in the phone book.
+     Any phone book entry matching the query string will be returned.
+ 
+\item phone number query: {\tt \#}{\sl{number}}\\
+     This query type is interpreted as a phone number that has to be
+     looked up in the phone book.  Any phone book entry matching the
+     query string will be returned.
+\end{enumerate}
+
+  Full names are contained in the file {\tt LOCAL.NAMES}, it is looked up
+  using NAMEFIND.\\
+\rule{0mm}{2mm}
+
+\begin{tabular}{|l|l|}\hline
+\multicolumn{2}{|l|}{The following fields are required to be present}\\ \hline
+  {\tt :nick. }    &   the userid of the virtual machine\\
+  {\tt :name. }    &   the name of the virtual machine's owner\\
+\hline
+\end{tabular}
+
+\rule{0mm}{5mm}
+
+  The phone book is a file named {\tt PHONEBK.NAMES} which is processed using
+  NAMEFIND.\\
+\rule{0mm}{2mm}
+
+\begin{tabular}{|l|l|}\hline
+\multicolumn{2}{|l|}{The following fields are required to be present}\\ \hline
+  {\tt :nick. }     & any unambigous string\\
+  {\tt :name. }     & the user's full name\\
+  {\tt :cnt.  }     & contents: list of all other field tags\\
+\hline\hline
+\multicolumn{2}{|l|}{The following fields are present at my installation}\\
+\hline
+  {\tt :phone. }    & the user's phone number\\
+  {\tt :fname. }    & the user's first name\\
+\hline
+\end{tabular}
+
+\rule{0mm}{5mm}
+
+\noindent Notes:
+\begin{itemize}
+\item  A {\tt /W} token as defined in RFC1288 is
+     ignored and a message indicating
+     the absence of verbose information is appended to the output.
+\item  Finger forwarding is actively refused by returning the message:
+     ``Finger forwarding service is denied'' as defined in RFC1288.
+\end{itemize}
+ 
+
+
+\subsubsection{{\tt FINGER.EXEC}}
+ 
+  This program is a spin-off product of the FINGER protocol
+  implementation in GOPHERDD and interfaces {\tt FINGERXX.EXEC} for local and
+  remote user information queries.  The program can contact finger
+  servers on remote hosts and display the resulting information on the
+  console.
+ 
+ 
+
+
+\subsection{Quote-of-the-Day Protocol: (COOKIE or FORTUNE)}
+ 
+  The program {\tt COOKIE.EXEC} is called by {\tt GOPHERDD.EXEC}
+  to produce a short text file used as a fortune cookie served by the
+  Quote-of-the-Day protocol \cite{rfc865} server.
+  The program can also be invoked by the user directly and displays the
+  message at the user's console.
+ 
+  Two files are used, {\tt FORTUNE.TXT} which holds the fortune texts and
+  {\tt FORTUNE.IDX} which lists the beginning and end record numbers of
+  all messages in the cookie database.  Any user invoking COOKIE needs
+  read access to these files, consequently, these files will be held
+  on the Gopher service machine's public disk.
+ 
+\noindent A couple of modifications seem to be appropriate:
+\begin{itemize}
+\item different cookie bases with different type of contents might be a
+     nice idea.
+\end{itemize}
+
+\noindent Notes:
+\begin{itemize}
+\item  The server is RFC865 compliant but listens only on TCP port 17
+     and not on a corresponding UDP port.
+\end{itemize}
+ 
+ 
+
+
+
+% -----------------------------------------------------------------------
+\section{Known and Exterminated Bugs}\label{bugs}
+
+% * REXTCPIP.MODULE: TCPopen() timing
+%   * Fig: REXTCPIP.ASSEMBLE Fix 1
+% * REXTCPIP.MODULE: TCPclose() hanging
+%   * Fig: REXTCPIP.ASSEMBLE Fix 2
+% * REXTCPIP.MODULE: GetIPAddr() name resolution
+%   * Fig: TCPIP.DATA Fix 3
+% * viegophr.tex: loop
+
+
+\subsection{{\tt REXTCPIP.MODULE}: {\tt TCPopen()} timing}
+
+    For some reason, the VM client could not talk to the VM server, if
+    both were on the same machine.  This was a problem intrinsic to the
+    original version of REXTCPIP, it is discussed here and a fix is
+    presented in figure \ref{fix4} later on.
+
+    What happened exactly, when the orginal versions were used:
+\begin{itemize}
+\item When the client opens a TCP connection to the server, the server
+      changes its status from {\sl listening} at the port to 
+      {\sl receiving},
+      the connection status is then `{\tt Connected}' (Just as wanted).
+\item However, the client's TCPOPEN call doesn't return so the
+      client program hangs and the server's connection status is
+      never changing.
+      The single-threaded server could not handle other requests
+      during that time, for the multi-threaded server, however,
+      this wasn't really a problem, just a bit more of overhead.
+\item If the client is finally killed and the TCB (TCP control block)
+      gets removed
+      by the system (this can be triggerd by calling NETSTAT on the
+      client's VM) the TCP connection on the server side breaks down
+      and the single-threaded server returns to the listen status and
+      behaves normally again, the multi-threaded server simply eliminates
+      that particular connection.
+\end{itemize}
+    One solution for
+    this problem was to allow the local client to access the
+    servers mini disk(s) directly.  Consequently, local connections
+    with direct access to the server's files
+    did not use TCPIP at all.  I was a bit lazy implementing all
+    system and special functions of the GOPHERDD-server in the client
+    so some of these will not work.
+
+This kind of behaviour was finally identfied as a waiting problem 
+intrinsic to
+    {\tt REXTCPIP.MODULE}.  The function {\tt TCPopen()} waits for a
+    {\em change} of the TCPIP machines control flag for the TCP connection.
+    The flag indicates the presence of an established connection.
+    The code assumes that a connection is not established without any
+    noticable delay, but, in fact, the connection is established almost
+    immediately and the control flag does not change anymore.  Due to that,
+    this wait call will result in a loop waiting endlessly.
+    Figure \ref{fix4} describes a fix for this problem where the wait
+    macro is skipped for local connections.  As of now this worked fine.
+
+
+
+\begin{figure}
+\caption{{\tt REXTCPIP.ASSEMBLE} Fix 4}\label{fix4}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+*
+* Wait for the connect notificatione
+*
+WOPENTOP EQU  *
+         OI   COMMFLAG,WAITFLAG+CONSTFLG Get new wait flag
+         CLC  BLSOCKAD,BFSOCKAD
+         BE   GGA
+         WAIT PSW=WAITPSW,OLDPSW=WOPSW Wait on it
+*        BE GGA
+* GOODWILL EQU  *
+*
+* Got a response ... check it
+*
+GGA      EQU  *
+         CLC  BCONN,CONNNUM            Our connection number?
+         BNE  WOPENTOP                 If not, continue on wait
+         L    R3,BVADB                 Get new state
+*
+* Return a code based on connection status.
+*
+         C    R3,=A(TRYOPEN)           Is connection still watiting?
+         BE   WOPENTOP                 Go wait some more
+*
+         C    R3,=A(NOEXIST)           Connection exist still?
+         BNE  GOODCONN                 If so, we got a good connetion
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+
+
+\subsection{{\tt REXTCPIP.MODULE}: {\tt TCPclose()} hanging}
+
+% (Server hangs when connection is not closed propperly by other side)
+% (fix see figure \ref{fix2})
+
+{\tt REXTCPIP} used to wait for the other side to {\em propperly} close the
+connection before the program closed the connection and control data
+structures itself.  In some case this caused the server to hang because
+the client wasn't either able to close the connection or didn't implment
+the protocol carefully enough.  A fix in {\tt REXTCPIP.ASSEMBLE} as shown
+in figure \ref{fix2} allows the server to close the connection without
+waiting for the client.
+
+
+
+\begin{figure}
+\caption{{\tt REXTCPIP.ASSEMBLE} Fix 2}\label{fix2}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+*
+* Wait for connection change record
+*
+TOPCWAIT EQU  *
+         OI   COMMFLAG,WAITFLAG+CONSTFLG   Wait for conn stat update
+         WAIT PSW=WAITPSW,OLDPSW=WOPSW Wait for event
+*
+* Return the code given in RETCODE, and get rid of connection record
+*
+CLOSERET EQU  *
+*        CLI  DCONNSTA,CONNCLOS        Is the connection closed?
+*        BE   FINISHCL                 If so, then leave
+*        CLI  DCONNSTA,NOEXIST         Is the connection gone?
+*        BNE  TOPCWAIT                 if so, then leave
+* Waiting is nice, but it caused more troubles than it is worth (GG)
+FINISHCL EQU  *
+         L    R8,NEXTCONR              Get next connection record
+         ST   R8,0(R10)                Remove that link
+         L    R2,DLBUFANC              Get pointer to rec buffer
+         DMSFRET DWORDS=MAXBYTES/8,LOC=0(R2)  Release rec buffer
+         DMSFRET DWORDS=CONRLEND,LOC=0(R9)  Drop storage
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+
+
+\subsection{{\tt REXTCPIP.MODULE}: {\tt GetIPAddr()} name resolution}
+\label{bug.fdns}
+ 
+The function {\tt GetIPAddr()} in {\tt REXTCPIP.MODULE}
+ands over most of the work to the nameserver and returns whatever
+he first nameserver comes up with.
+
+The NAMESRV virtual machine might not deliver the correct IP-address as
+expected, sometimes the lookup would simply fail and no IP-address
+would be returned at all.
+Apparently, the function {\tt GetIPAddr()} together with NAMESRV are
+quite `case sensitive' so that the function returns different
+IP-addresses for various upper/lower case combinations of a
+given host name.
+
+\noindent  Examples:\\
+\begin{itemize}
+\item (done second week of March 1992)\\
+\begin{tabular}{|lcl|}\hline
+  {\tt   ganymed.wu-wien.ac.at } & $\Longrightarrow$ & failed \\
+  {\tt   GANYMED.WU-Wien.AC.AT } & $\Longrightarrow$ & 137.208.5.2 \\
+  {\tt   GANYMED.WU-WIEN.AC.AT } & $\Longrightarrow$ & failed \\
+  {\tt   Ganymed.WU-Wien.AC.AT } & $\Longrightarrow$ & failed \\
+  {\tt   uicvm.uic.edu         } & $\Longrightarrow$ & 128.248.2.50 \\
+  {\tt   uicvm.UIC.EDU         } & $\Longrightarrow$ & 128.248.???.??? \\
+\hline\end{tabular}
+
+\item (done third week of March 1992)\\
+\begin{tabular}{|lcl|}\hline
+  {\tt   ganymed.wu-wien.ac.at } & $\Longrightarrow$ & 137.208.5.2 \\
+  {\tt   GANYMED.WU-Wien.AC.AT } & $\Longrightarrow$ & failed \\
+  {\tt   GANYMED.WU-WIEN.AC.AT } & $\Longrightarrow$ & failed \\
+  {\tt   Ganymed.WU-Wien.AC.AT } & $\Longrightarrow$ & failed \\
+  {\tt   uicvm.uic.edu         } & $\Longrightarrow$ & failed \\
+  {\tt   UICVM.UIC.EDU         } & $\Longrightarrow$ & 128.248.2.50 \\
+\hline\end{tabular}
+\end{itemize}
+ 
+  As you can see from these examples, this situation was unsatisfying and
+  so FDNS was created to provide a quick hack to
+  circumvent {\tt GetIPAddr()}.
+ 
+  After several days of discussion\footnote{with Ken Hornstein and
+  Alan Flavel} and testing the following solution
+  was found:  removing the entry {\tt NSINTERADDR 14.0.0.0} from the file
+  {\tt TCPIP.DATA} and providing an entry pointing to a UNIX nameserver,
+  as shown in figure \ref{fix3}, works reliably.
+ 
+  Please note also that this problem can't be solved by simply
+  translating the host name either to lower case or to upper case!
+ 
+  Maybe it's possible to find even better solutions for this problem,
+  if you do, please drop me a line.  In my oppinion, improving
+  {\tt GetIPAddr()} is the most promising path to take.
+ 
+
+
+\begin{figure}
+\caption{{\tt TCPIP.DATA}: defining the name server}\label{fix3}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+;
+; NSINTERADDR specifies the internet address of the name server.
+; LOOPBACK (14.0.0.0) is the default value (your local name server).
+; If a name server will not be used, then do not code an NSINTERADDR
+; statement (Comment out the NSINTERADDR line below).  This will cause
+; all names to be resolved via site table lookup.
+;
+; NSINTERADDR  14.0.0.0
+NSINTERADDR  137.208.3.4
+NSINTERADDR  137.208.3.5
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+
+
+\subsection{{\tt viegophr.tex}: loop}\label{viegophr.bug}
+  The list of known bugs in {\tt viegophr.tex} contains a
+  non-terminating loop.
+  (See \cite{viegophr.tex}, section \ref{viegophr.bug}.)
+
+% -------------------- 
+
+
+\section{(misc)}
+ 
+% * Wishes
+% * Notes
+% * Acknowledgements
+
+
+\subsection{Wishes}
+
+\begin{itemize}
+\item Please report any bugs you find and feel free to make
+    suggestions for improvements etc...
+
+\item Send me email if you've installed either the server or the client
+    and tell me if you wish to receive updates.
+
+%%% \item Job offers are welcome.
+\end{itemize}
+
+
+
+
+\subsection{Notes}
+ 
+\begin{itemize}
+\item The center of Gopher Space is {\tt gopher.micro.umn.edu}, the
+      FTP archive is {\tt boombox.micro.umn.edu}.
+
+\item There exists a different implementation for VM, sometimes refered to
+      as the `Rice' VM Gopher System.  RXSOCKET and PIPES are requiered
+      for this one.  For information about this system contact Rick Troth,
+      his email address is {\tt TROTH@RICEVM1.bitnet}.
+ 
+%%\item Apparently, another VM/CMS Gopher Server/Client was implemented.
+%%      This one uses RXSOCKET and PIPES too.  No further details are
+%%      known about it.
+ 
+\item A Gopher server running under MVS also exists.  (mvs.udel.edu)
+      The author is Steve Bacher, his email address is
+      {\tt seb1525@mvs.draper.com}.
+ 
+\item The news group {\tt comp.infosystems.gopher}
+      (in former times {\tt alt.gopher})
+      exists for discussion of Gopher in general,
+      the Bitnet Listserv mailing list {\tt VMGOPHER@PUCC.bitnet}
+      was created for discussion of Gophers running on VM.
+
+\item Gopher has a couple of close or not so close relatives:
+\begin{itemize}
+\item {\bf CWIS}: Campuswide Information Systems\\
+      ... some of them are Gophers in disguise, others would like to be.
+\item {\bf Gopher+}:\\
+      Other Gophers think he's a snob, but he is not $\ldots$\\
+      ... he's just a bit more sophisticated than the ordinary
+      ones!\footnote{details can be found in \cite{gophplus}.}
+\item {\bf PANDA}:\\
+      ... a special breeding of Gophers that is now domestified in Iowa.
+      The home of panda is {\tt panda.uiowa.edu}.  Some Gophers are
+      in fact cross-breedings of the archaic Gopher generation and
+      Pandas (e.g. VieGOPHER).
+\item {\bf WAIS}: Wide Area Information Server\\
+      ... a quite powerful information retrieval package that is often
+      used as the search engine of choice in Gopher Space.
+      WAIS-world has it's center in
+      {\tt quake.think.com} \footnote{a lot of useful information about WAIS,
+      e.g. \cite{WAIS1} can be found there}.
+      A very good introduction can be found in \cite{WAIS.intro}.
+\item {\bf WWW}: World-Wide Web\\
+      Internet-wide distributed hypertext system based on the
+      HTTP protocol.  (Hypertext transport protocol)
+%%%\item {\bf RCP}: Remote Cluster Protocol\\
+%%%      The networked extension of Tylman Susato's NED based
+%%%      open hypertext system.
+\end{itemize}
+
+\end{itemize}
+ 
+
+
+\subsection{Acknowledgements}
+ 
+\begin{itemize}
+\item The Gopher Team of the University of Minnesota\\
+      {\tt (gopher@micro.umn.edu)}\\
+      The simple things prove always to be the best, great job!
+ 
+\item Ken Hornstein\\
+      {\tt (kxh105@psuvm.psu.edu)}\\
+      Without his {\bf REXTCPIP} neither the client nor the server
+      would exist at all.
+
+\item Arthur Ecock (City University of New York, CUNY)\\
+      {\tt (eckcu@cunyvm.cuny.edu)}\\
+      Let's hope more programs are designed, implemented and
+      documented in such an excellent way like {\bf RXSOCKET}.
+ 
+% \item Jeanette L. Jones (University of Illinois, Chicago)\\
+%       {\tt (u25177@uicvm.uic.edu)}\\
+%       She translated my `somewhat english' version of this document into
+%       comprehensive english.
+ 
+\item Alan J. Flavell (University of Glasgow)\\
+      {\tt (sy07@i1.ph.gla.ac.uk)}\\
+      His suggestions were used to improve the code and to clean up
+      some of the major irregularities.
+ 
+\item Mary Posey (University of Maryland, UMCP)\\
+      {\tt (mposey@umdacc.umd.edu)}\\
+      She spent an enormous amount of time and energie to point out and
+      remove inconsistencies in the code.
+
+\item John Sroka (San Jose State University)\\
+      {\tt (sroka@sjsuvm1.sjsu.edu)}\\
+      Help?  He wrote the help text, I just took it :)).
+
+\item ... and finally, this girl in Chicago for reminding me who the
+      audience is.
+\end{itemize} 
+
+
+
+\section{Implementation Notes}
+ 
+This section gives informal notes about VieGOPHER, e.g.
+some variables and details of the servers and client modules.
+Neither completeness nor usefulness for any purpose can be assumed.
+ 
+% * GOPHERDD.EXEC
+%   * variables
+%   * slot types and ports
+%   * status codes for a slot
+%   * other variables
+ 
+
+
+\subsection{Discussion: Why are things the way they are?}
+
+
+
+\subsubsection{Client: writing files to disk temporarily}
+
+I was asked more than once why the client writes files received from
+the server to disk first, reads it into editor memory and then discards
+the disk file.  Alan Flavel suggested that {\tt GOPHFTCH.EXEC}
+should push lines to the stack, wrapped into {\sf XEDIT} red tape.
+At this point, finally, this shortcoming is more or less
+resolved.\footnote{If you want more backgroud information about the
+way VieGOPHER operates in certain situations, please drop me a line...}
+
+\noindent
+There were several reasons why the file write method was used:\\
+{\bf First:}  the client started as a single module that had to
+fetch items and store them to disk.  This was initially the only
+purpose of {\tt GOPHFTCH.EXEC}.  Later, as interactive XEDIT
+support was added, the implementation of {\tt GOPHFTCH.EXEC}
+remained more or less intact.\\
+{\bf Second:}  there are in fact items in Gopher Space that have
+record sizes of more than 256 bytes, e.g. directories from
+WAIS-to-Gopher gateways sometimes deliver records in the range
+of 600 bytes per line.  A record on the stack can only be
+255 byte long, so using the stack for holding incoming data
+items requires a method for breaking up long lines.  This fact
+should explain the format of data on the stack described in
+figure \ref{stack.format} on page \pageref{stack.format}.
+
+\rule{0mm}{5mm}
+
+The current implementation of VieGOPHER features another method
+of bringing data to the screen.  In a typical gopher session, the
+fetcher module {\tt GOPHFTCH.EXEC} is called with the {\tt XEDIT} file mode
+option.  This option allows the fetcher to transfer data directly to
+XEDIT data buffer and commands XEDIT to refresh the screen after the
+first couple of lines in order to bring the data to screen as fast as
+possible.  For long files this has the effect that a user can
+read the first screen while the rest of the file is still being transfered.
+
+Unfortunately, this version still does not feature an interrupt method
+or a transparent interaction method, so the user is required to wait
+until the data transfer is finally over.  During the transfer, XEDIT
+displays the number of lines transfered sofar in the message area.
+
+For transfering index files that originate from a type 7 search,
+the write - read - erase method is used as described before.  The
+reason for doing so originates from the fact that WAIS searches ---
+these generate type 7 indexes --- can produce enourmously long
+selector strings (paths).  This compromise allows to circumvent problems
+with extremely long lines which otherwise makes it impossibly to
+successfully process incoming data.
+
+%{\bf Conclusion:}  Even when I know that  passing data via disk
+%is not so  optimal I'll have to leave things as they are right
+%now, because eliminating this behaviour would cost a considerable
+%amount of energy which I think should be better spent at more
+%problematic spots in or around VieGOPHER for now.
+%Appendix \ref{to-do} at page \pageref{to-do} lists more things than
+%I would like to find there.
+
+%{\bf P.S.:}  If someone is able and willing to provide code
+%for a better approach, it will be appreciated.
+
+
+
+
+\subsection{{\tt GOPHERDD.EXEC}}
+ 
+The multi-threaded server handles several connections by using a number
+of so-called slots and a number of variables where information for each
+slot is recorded.  All slots are checked and serviced periodically.  The
+server starts by posting a LISTEN call for one or more different ports
+and assinging the status for LISTEN to these slots.  When a connection
+on a port is established the server immediately assigns a new slot for
+that server type and post's the next listen call on the same port.
+Periodically, the program checks which slot it has to serve and
+eventually if a service is finished and the slot's status is changed
+to UNASSIGNED.  If a connection crashes or behaves in some strange way
+the slot status is changed to dead and is not serviced any longer.
+A recovery strategy for the case of severe problems is currently in
+design.
+
+
+%   * variables
+%   * slot types and ports
+%   * status codes for a slot
+%   * other variables
+
+
+\subsubsection{variables describing information about a slot}
+\noindent\begin{tabular}{|l|l|}\hline
+   {\tt mtmax  }    & number of used slots \\
+   {\tt mtact  }    & number of slot currently served \\ \hline
+
+   {\tt mtgcn. }    & connection number \\
+   {\tt mtsta. }    & slot status (see below) \\
+   {\tt mtprt. }    & port number assigned for the slot \\
+   {\tt mttyp. }    & type of the slot and consequently the service: \\
+   {\tt mtfad. }    & foreign address of the connection \\
+   {\tt mtsel. }    & selector string received for the slot \\
+   {\tt mtsel1.}    & prefix selector string for EXTRA slots \\
+   {\tt mtsel2.}    & postfix selector string for EXTRA slots \\
+   {\tt mtmsg. }    & message to be sent \\
+   {\tt mtfil. }    & file to be sent \\
+   {\tt mtrec. }    & records of the file sent sofar \\
+   {\tt mtsiz. }    & last number of record to be sent \\
+   {\tt mtttw. }    & maximum time to wait \\
+\hline\end{tabular}
+ 
+
+
+\subsubsection{slot types and ports}
+   The following slot types define the service they are providing.
+   Port numbers are officially assigned ones.
+
+\noindent\begin{tabular}{|l|r|l|}\hline
+   type     & port   &  notes \\
+\hline\hline
+   GOPHER   & 70     &  the `ordinary' Gopher server \\
+   FINGER   & 79     &  a Finger server \\
+   COOKIE   & 17     &  a Quote-of-the-Day server \\
+   SRE      & 150    &  (experimental) \\
+\hline\end{tabular}
+ 
+
+
+\subsubsection{status codes for a slot}
+\noindent\begin{tabular}{|l|l|l|}\hline
+   0    & {\tt UNASSIGNED }  & the slot is unused \\
+\hline
+   1    & {\tt DEAD       }  & a connection crashed on that slot \\
+\hline
+   1000 & {\tt LISTEN     }  & a LISTEN call is posted to the TCPIP system \\
+\hline
+   1001 & {\tt LISTEN} again & after Trying to open resume with \\
+        &                    & post-processing of Listen \\
+\hline
+   1005 & {\tt Trying...}    & after Listening a connection was\\
+        &                    & coming up slowly, the status changed\\
+        &                    & to {\tt Trying to open} \\
+\hline
+   1010 & {\tt GET-SELECTOR} & a selector string is expected on the now \\
+        &                    & established connection \\
+\hline
+   1020 & {\tt TRANSFER   }  & a file transfer is in progress \\
+\hline
+   1090 & {\tt CLOSING    }  & the connection is in the process of closing \\
+\hline
+   2000 & {\tt SRE LISTEN }  & wait for a SRE connection \\
+\hline\end{tabular}
+
+
+
+
+\subsubsection{other variables}
+\noindent\begin{tabular}{|l|l|}\hline
+  {\tt  deadcount } &  number of dead slots \\
+\hline\end{tabular}
+
+
+
+\begin{appendix}
+
+% * Sample Installation
+% * Packing List
+% * files with configuration
+% * Sample Applications
+% * Authors Address
+% * Obtaining the Package
+
+
+\section{Sample Installation}
+
+% * Virtual Machines, etc.
+% * Profile of GOPHERD
+% * GOPHERD.SELECTOR
+% * GOPHERD.GROUPS
+% * GOPHERD.INDEX
+
+
+\subsection{Virtual Machines, etc.}
+
+
+
+\subsection{Profile of the virtual machine GOPHERD}\label{prof.GOPHERD}
+\begin{small}
+\begin{verbatim}
+/* ------------------------------------------------------------------- */
+/* PROFILE EXEC for GOPHERD@AWIWUW11.bitnet                            */
+/*                                                                     */
+/* 1992 05 05                                                          */
+/* ------------------------------------------------------------------- */
+logfile='GOPHERD LOGFILE'
+chief='GOPHER'
+ 
+/* Act 1: do whatever might be useful */
+'TERM HILIGHT ON'
+'DTRIPF NOPAN'          /* who knows what this is good for? */
+'TERM ESCAPE OFF'
+ 
+/* Act 2: Log everything that happens */
+'SPOOL CONS START'
+'SPOOL CONS TO' chief
+ 
+/* Act 3: Prepare the stage for the next show */
+'SENDFILE' logfile chief
+'ERASE' logfile
+ 
+/* Act 4: link necessary disks */
+parse value diagrc(8?,'LINK GOPHER 191 201 RR') with CPRc .
+'ACCESS 201 B'
+parse value diagrc(8?,'LINK TCPMAINT 592 197 RR') with CPRc .
+'ACCESS 197 X'
+ 
+/* Act 5: run the server now */
+'GOPHERDD'              /* start the *MULTI THREADED* server now ... */
+ 
+/* Act 6: finale? nobody knows .... */
+\end{verbatim}
+\end{small}
+
+
+
+\subsection{\tt GOPHERD.SELECTOR}
+\begin{small}
+\begin{verbatim}
+* File GOPHERD SELECTOR
+*
+* list of known items
+*
+* 1992 03 04: <Gerhard.Gonter@wu-wien.ac.at>
+* -----------------------------------------------------------------------
+* root directory *****
+ABOUT.GOPHER.B      gg * about
+LOCAL.INDEX.B       gg * local
+WUGOPHER.INDEX.B    gg * wu
+ATGOPHER.INDEX.B    gg * austria
+OTHER.INDEX.B       gg * others
+EUROPE.INDEX.B      gg * EUROPE.INDEX
+VMGOPHER.INDEX.B    gg * VM Gopher
+DOCUMENT.INDEX.B    gg * documents
+SERVICES.INDEX.B    gg * services
+POINTERS.INDEX.B    gg * pointers
+NETINFO0.INDEX.B    gg * net info
+BSS.INDEX.B         gg * bss stuff
+PROMARE.*.B         gg * PROMARE.INDEX
+WAISES-1.INDEX.B    gg * WAISes (everything)
+* VM Client & Server software directory *****
+VMGOPHER.STATUS.B   gg * VMGOPHER.STATUS
+VMGOPHER.DOC.B      gg * VMGOPHER.DOC
+VMGOPHER.IMPLEMEN.B gg * VMGOPHER.IMPLEMEN
+GOPHERD.EXEC.B      gg * GOPHERD.EXEC
+GOPHERDD.EXEC.B     gg * GOPHERDD.EXEC
+GOPHER.EXEC.B       gg * GOPHER.EXEC
+GOPHER.XEDIT.B      gg * GOPHER.XEDIT
+XG.EXEC.B           gg * XG.EXEC
+GOPHFTCH.EXEC.B     gg * GOPHFTCH.EXEC
+GOPHXFTC.XEDIT.B    gg * GOPHXFTC.XEDIT
+GOPHXBMC.XEDIT.B    gg * GOPHXBMC.XEDIT
+GOPHXBMI.XEDIT.B    gg * GOPHXBMI.XEDIT
+GOPHXBMS.XEDIT.B    gg * GOPHXBMS.XEDIT
+GOPHXSVI.XEDIT.B    gg * GOPHXSVI.XEDIT
+GOPHXQIT.XEDIT.B    gg * GOPHXQIT.XEDIT
+GOPHSRCH.XEDIT.B    gg * GOPHSRCH.XEDIT
+EDINDEX.EXEC.B      gg * EDINDEX.EXEC
+EDINDEX.XEDIT.B     gg * EDINDEX.XEDIT
+GLOBALVV.EXEC.B     gg * GLOBALVV.EXEC
+GLOBALXV.EXEC.B     gg * GLOBALXV.EXEC
+FDNS.EXEC.B         gg * DNS.EXEC
+FDNS.IN.B           gg * FDNS.IN
+VMGOPHSF.EXEC.B     gg * VMGOPHSF.EXEC
+* test index: WRITE PUBLIC ***************************
+TEST.INDEX.B         * * test
+***AUTOMATIC***
+FORTUNE.TXT.B       gg * FORTUNE.TXT
+\end{verbatim}
+\end{small}
+
+
+
+\subsection{\tt GOPHERD.INDEX}
+\begin{vsmtt}
+\begin{verbatim*}
+0About Internet Gopher%about%awiwuw11.wu-wien.ac.at%70
+1Local Info%local%awiwuw11.wu-wien.ac.at%70
+1Gophers around the house%wu%awiwuw11.wu-wien.ac.at%70
+1Gophers around the place%austria%awiwuw11.wu-wien.ac.at%70
+1Gophers around the world%others%awiwuw11.wu-wien.ac.at%70
+1documents%documents%awiwuw11.wu-wien.ac.at%70
+1services%services%awiwuw11.wu-wien.ac.at%70
+1external services%1/.exser.ind%olymp.wu-wien.ac.at%70
+1life, the NET and everything%net info%awiwuw11.wu-wien.ac.at%70
+1The Guide!%1/.guide.ind%olymp.wu-wien.ac.at%70
+1VieGOPHER: VM/CMS Gopher Version%VM Gopher%awiwuw11.wu-wien.ac.at%70
+1Test: use at your own risk%test%awiwuw11.wu-wien.ac.at%70
+1Hypertext Documents  (Items are Type=H)%1/.hyx%olymp.wu-wien.ac.at%70
+\end{verbatim*}
+\end{vsmtt}
+
+\noindent Note: {\tt \%} represents the TAB character, hex code
+{\tt `05'x} in EBCDIC ({\tt 0x09} in ASCII).
+
+
+% -----------------------------------------------------------------------
+
+
+\subsection{\tt GOPHERD.GROUPS}
+\begin{small}
+\begin{verbatim}
+* File GOPHERD GROUPS
+*
+* list of know groups
+*
+* 1992 03 10: <Gerhard.Gonter@wu-wien.ac.at>
+* -----------------------------------------------------------------------
+gg       137.208.
+wu-wien  137.208.
+edvz     137.208.16.
+schnurli 137.208.16.39
+\end{verbatim}
+\end{small}
+
+
+
+\subsection{\tt GOPHERD.DSKGRP}\label{example GOPHERD.DSKGRP}
+\begin{small}
+\begin{verbatim}
+* File GOPHERD DSKGRP
+*
+* list of known disk groups
+*
+* 1992 05 25: <Gerhard.Gonter@wu-wien.ac.at>
+* -----------------------------------------------------------------------
+B1      1       *
+C1     10       umdacc schnurli
+D2     12       wu-wien
+E1      0       *
+\end{verbatim}
+\end{small}
+
+\noindent Comments:
+\begin{itemize}
+\item B1 is a public disk.
+\item C1 is available to groups {\tt umdacc} and {\tt schnurli} only.
+\item D2 is available to group {\tt wu-wien} alone.
+\item E1 is unavailable because it has priority 0.
+\end{itemize}
+
+
+
+\subsection{\tt GOPHERD.EAI}\label{example GOPHERD.EAI}
+\begin{small}
+\begin{verbatim}
+* FILE GOPHERD EAI
+*
+* embedded application definition
+*
+* 1993-05-25
+\end{verbatim}
+\end{small}
+
+
+\section{Resource Guide}
+
+
+
+%\pagebreak[1]
+\subsection{Packing List}
+
+The core of the VieGOPHER package consists of a number of modules that
+are grouped in four sub-packages.  You should receive all modules in
+just one distribution file, arranged as a ROSE product file.  The table
+below lists all modules, describes briefly what they do and what sub-package
+they belong to.\\
+\rule{0mm}{2mm}
+
+\noindent\begin{footnotesize}
+\begin{tabular}{|l||c|c|c|c|c||l|} \hline
+file name               &SRV&CL&SUP&EXT&OBS&description                     \\
+\hline\hline
+{\tt COOKIE.EXEC      } & X &  &   & X &   &produce a cookie message        \\
+{\tt EDINDEX.EXEC     } &   &  & X &   &   &edit Gopher index files         \\
+{\tt EDINDEX.XEDIT    } &   &  & X &   &   &mask for editing Gopher index   \\
+%%% {\tt FDNS.EXEC        } &   &X &   &   & X &`Faked' DNS resolver            \\
+%%% {\tt FDNS.IN          } &   &X &   &   & X &support for FDNS                \\
+{\tt FINGER.EXEC      } &   &  &   & X &   &client interface for Finger     \\
+{\tt FINGERXX.EXEC    } & X &  &   & X &   &Finger response generator       \\
+\hline
+%%% {\tt GLOBALVV.EXEC    } &   &X & X &   & X &augmented GLOBALV               \\
+%%% {\tt GLOBALXV.EXEC    } &   &X &   &   & X &augmented GLOBALV (diff. format)\\
+%%% \hline
+{\tt GOPHCHRL.EXEC    } &   &  & X &   &   &check READERLIST for posted items\\
+{\tt GOPHINST.EXEC    } &   &  & X &   &   &postinstaller calle by Rose\\
+{\tt GOPHER.EXEC      } &   &X &   &   &   &client main module              \\
+{\tt GOPHER.XEDIT     } &   &X &   &   &   &setup for client main module    \\
+%%% {\tt GOPHERD.EXEC     } & X &  &   &   & X &server, single-threaded         \\
+{\tt GOPHERDD.EXEC    } & X &  &   &   &   &server, multi-threaded          \\
+{\tt GOPHFTCH.EXEC    } &   &X &   &   &   &item fetcher                    \\
+{\tt GOPHRING.XEDIT   } &   &X &   &   &   &present XEDIT ring list on screen\\
+%%% {\tt GOPHRNG2.XEDIT   } &   &X &   &   &   &setup for XEDIT ring presentation\\
+{\tt GOPHRNG3.XEDIT   } &   &X &   &   &   &display selected item from ring\\
+{\tt GOPHSCAN.EXEC    } &   &  & X &   &   &scan a (group of) gopher server(s)\\
+{\tt GOPHSCRN.XEDIT   } &   &X &   &   &   &screen splitting and joining    \\
+{\tt GOPHSRCH.XEDIT   } &   &X &   &   &   &mask for entering search string \\
+{\tt GOPHSTOR.EXEC    } &   &  & X &   &   &store posted items              \\
+\hline
+{\tt GOPHXBMC.XEDIT   } &   &X &   &   &   &save a bookmark (cursor)        \\
+{\tt GOPHXBMI.XEDIT   } &   &X &   &   &   &save a bookmark (displayed item)\\
+{\tt GOPHXBMS.XEDIT   } &   &X &   &   &   &show bookmarks                  \\
+{\tt GOPHXFTC.XEDIT   } &   &X &   &   &   &fetch selected item             \\
+{\tt GOPHXQIT.XEDIT   } &   &X &   &   &   &leave displayed item            \\
+{\tt GOPHXSVI.XEDIT   } &   &X &   &   &   &save displayed item             \\
+\hline
+%%% {\tt VMGOPHSF.EXEC    } &   &  & X &   & X &send Gopher package (sendfile)  \\
+{\tt XG.EXEC          } &   &X &   &   &   &call XEDIT, Gopher style        \\
+%%% {\tt VIEGOPHR.TEX     } & X &X & X & X &   & this file                      \\
+\hline
+\end{tabular}
+\end{footnotesize}
+
+
+
+% -----------------------------------------------------------------------
+\subsection{Obtaining the Package}\label{sources}
+
+The VieGOPHER package can be obtained from a number of sources:
+\begin{enumerate}
+\item from the FTP server of the University of Minnesota (Gopher Central):\\
+      {\tt boombox.micro.umn.edu:/pub/gopher/Vienna\_CMS/} or\\
+      {\tt boombox.micro.umn.edu:/pub/gopher/VieGOPHER/}
+\item from the Gopher server of the University of Economics in Vienna:
+      \begin{verbatim}
+      Name=VieGOPHER: VM/CMS version
+      Path=VM Gopher
+      Type=1
+      Host=awiwuw11.wu-wien.ac.at
+      Port=70
+      \end{verbatim}
+\item from the FTP server of the University of Economics in Vienna:\\
+      {\tt ftp.wu-wien.ac.at:/pub/src/VieGOPHER/}
+\end{enumerate}
+
+
+
+\subsection{Obtaining Third-Party Modules}
+
+The following table gives a very brief overview over third-party modules,
+what they do and which sub-packages they are used for.  Source files and
+documentation are not necessary for running the VieGOPHER system.\\
+\rule{0mm}{2mm}
+
+\noindent\begin{footnotesize}
+\begin{tabular}{|l||c|c|c|c|c||l|} \hline
+file name               &SRV&CL&SUP&EXT&OBS&description                     \\
+\hline\hline
+{\tt REXTCPIP.MODULE  } & X &X &   & X &   &TCP/IP transport package        \\
+{\tt REXTCPIP.ASSEMBLE} &   &  &   &   &   &+ source                        \\
+{\tt REXTCPIP.MEMO    } &   &  &   &   &   &+ description                   \\
+\hline
+{\tt RXSOCKET.MODULE  } &   &X &   &   &   &TCP/IP transport package        \\
+{\tt REXXWAIT.MODULE  } &   &  &   &   &   &general event handler           \\
+\hline
+{\tt YWAKEUP.MODULE   } & X &  &   &   &   &trapping messages               \\
+{\tt YWAKEUP.HELPCMS  } &   &  &   &   &   &+ description                   \\
+\hline
+\end{tabular}
+\end{footnot                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

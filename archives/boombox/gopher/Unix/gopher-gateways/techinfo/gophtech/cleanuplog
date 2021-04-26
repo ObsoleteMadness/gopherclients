@@ -1,0 +1,21 @@
+#!/bin/csh -fv
+
+set mail = /usr/ucb/mail
+set debuglog = "$1"
+# 
+#set whocares = murphy@dccs
+#
+
+if ("$debuglog" == "") then
+	echo "Usage: $0 <logfilename>"
+	exit -1
+endif
+
+grep -s :FatalError "$debuglog"
+if ("$status" == 0) then
+    $mail -s "Gopher TechInfo Gateway Log" $whocares < $debuglog
+endif
+
+rm -f $debuglog
+touch $debuglog
+chown daemon $debuglog

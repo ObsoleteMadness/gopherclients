@@ -1,0 +1,174 @@
+
+FILE viegophr.que(stion)
+
+Questions for VieGOPHER users (client and server)
+
+written:       1993-05-23
+latest update: 1993-05-29
+
+-------------------------------------------------------------------------
+
+Please invest a few minutes to answer the questions in this file and
+send everything back to <Gerhard.Gonter@wu-wien.ac.at> at your earliest
+convenience.  It shall help to improve VieGOPHER for the benefit of
+the networking community.  Don't hesitate to add comments...
+
+Thank you for your cooperation.
+
+P.S: If it's more convenient for you, I can also be reached by FAX:
+     +43/1/31336/702  That's in Vienna, Austria, (Europe)
+
+-------------------------------------------------------------------------
+Installed programs
+
+Please specify version number(s) and date(s) of installed packages.
+
+[_] Server GOPHERD.EXEC         version: ________
+[_] Server GOPHERDD.EXEC        version: ________
+[_] Client, using:
+    [_] REXTCPIP                version: ________
+    [_] RXSOCKET                version: ________
+
+
+-------------------------------------------------------------------------
+Method of distribution
+
+Where did you get the package from?
+
+[_] direct (SENDFILE via Bitnet from author)
+[_] FTP from boombox.micro.umn.edu (Gopher central)
+[_] FTP from olymp.wu-wien.ac.at
+[_] FTP from awiwuw11.wu-wien.ac.at
+[_] other, please specify
+
+
+-------------------------------------------------------------------------
+Installation
+
+For installation I used:
+
+[_] the pre-installed version as found in the distribution package
+
+[_] ROSE
+    Was installation with ROSE
+    [_] easy
+    [_] ok
+    [_] difficult
+    [_] a pain
+    [_] ___________
+    and why?
+
+[_] in additon to ROSE, also the post-installation procedure
+    was it:
+    [_] useful
+    [_] useless
+    [_] ___________
+    and why?
+
+
+-------------------------------------------------------------------------
+Documentation (form)
+
+Which versions of the documentation files did you have access to?
+[_] text only version
+[_] HYX file (NED hypertext)
+[_] LaTeX file
+[_] DVI file with a viewer
+[_] DVI file and printed
+[_] Postscript file with a viewer
+[_] Postscript file and printed
+
+Any comment about the form of docs?
+
+
+-------------------------------------------------------------------------
+Documentation (contents)
+
+I know the documentation is everything but complete.  Is there anything
+that is especially problematic and needs earliest attention?
+
+
+-------------------------------------------------------------------------
+Source Listing
+
+Did you print out/use a source listing?
+[_] HYX file (NED hypertext)
+[_] printed the individual files
+[_] printed the PRODUCT file
+[_] printed vieg-pro.tex
+[_] printed vieg-pro.ps
+
+Any comment about the form of the source listings?
+
+Was the listing of any use?
+
+
+-------------------------------------------------------------------------
+Modifications
+
+Did you modify parts of the system and if so, please explain.
+[_] in the server
+
+
+[_] in the client
+
+
+-------------------------------------------------------------------------
+Switching
+
+Would you prefer to use Rice Gopher instead and if so, why?
+
+
+-------------------------------------------------------------------------
+Most wanted enhancements in the client
+
+What features would you like to see in future releases of the client?
+
+[_] a search function
+    (PF-key to activate XEDIT's already existing search function)
+[_] file transfer
+[_] ___________
+
+
+-------------------------------------------------------------------------
+Most wanted enhancements in the server
+
+What features would you like to see in future releases of the server?
+
+[_] a full text search engine like WAIS
+[_] a search engine to find gopher items on some (local) server
+    (something like VERONICA or JUGHEAD)
+[_] ___________
+
+
+-------------------------------------------------------------------------
+Connectivity
+
+Which sources of information about Gopher and VM Gophers in particular
+do you use?
+
+[_] subscribed VMGOPHER
+[_] actively use VMGOPHER
+[_] comp.infosystems.gopher
+[_] gopher-news@boombox.micro.umn.edu
+[_] direct mail
+[_] other: ____________
+
+
+-------------------------------------------------------------------------
+Role of Server
+
+What is the role of your server, if it's actually used?
+
+[_] not used
+[_] non-relavant side-server
+[_] secondary server
+[_] primary server
+
+
+-------------------------------------------------------------------------
+You
+
+Please include your name and email address and if possible, other
+information about yourself, e.g. position in your organization.
+

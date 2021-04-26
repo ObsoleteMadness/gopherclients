@@ -1,0 +1,30 @@
+Welcome!
+
+This directory contains Draft 5 (September '92) of the Gopher+
+protocol document. Gopher+ is a set of proposed enhancements to
+the old Gopher protocol.
+
+This directory also contains the Gopher+ attribute registry document.
+
+Changes since Draft 4:
+	Emphasized: NO default representation for Image, Movie, and Sound types
+	Changed: Type characters for Image, Movie, Sound were "I", "M", "S"
+		 which have been changed to ":", ";", "<".
+		 Original chars were in-use in greater or lesser extents...
+
+The document is available in numerous formats.  It was originally
+created in MacWrite II, formatted for the LaserWriter.  It is
+best viewed in this format, if you have the capability.
+
+
+Gopher+.MacWriteII.hqx     Gopher+ for MacWrite II.
+Gopher+.ps                 Postscript Version (generated on NeXT).
+Gopher+.rtf                Rich Text Version.
+Gopher+.Word.hqx           Microsoft Word for Mac version.
+Gopher+.WP4.2-PC           Word Perfect version (PC).
+Gopher+.Word-PC            Microsoft Word for the PC.
+Gopher+.text               Text version.
+
+Gopher-Protocol.MacWriteII.hqx  Original Gopher Protocol document.
+
+Gopher+AttributeRegistry   The registry of Gopher+ attributes in text format.

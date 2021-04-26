@@ -1,0 +1,85 @@
+---------------------------------------------------------------------------
+    ______    __   __                                ______     ______ 
+    \ \ \ \  |_ | | _|    _ _ __   ___ _ __         /  ____)   / / / / 
+     \ \ \ \  | `-' | \  / | '_ \ / _ \ '__) ,---.  | | ___   / / / / 
+     / / / /  | ,-. |\ \/ /| |_) |  __/ |    `---'  | |__/ |  \ \ \ \ 
+    /_/_/_/  |__| |__|\  / | .__/ \___|_|           \______|   \_\_\_\
+                      /_/  |_|                            
+
+---------------------------------------------------------------------------
+
+What is Hyper-G?
+
+In short, Hyper-G is a distributed hypermedia information system
+designed for maintaining large quantities of documents and links. The
+server stores hyperlinks in a separate database, enabling consistency
+checking and navigational aids such as link maps. There are many more
+interesting features which I cannot possibly mention here.
+
+A Hyper-G server is accessible using both WWW (try for example URL
+http://hgiicm.tu-graz.ac.at) and Gopher clients. However, to fully
+exploit its potential, you need a Hyper-G client. Two such clients are
+available as alpha versions: Harmony (for UNIX/X11) and Amadeus (for
+PC/MS-Windows), as well as a VT100 terminal-mode interface.
+
+More detailed information on Hyper-G can be found under
+
+              http://hyperg.iicm.tu-graz.ac.at/hyperg
+			  
+The software itself is under			  
+
+			  ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G
+
+in the following subdirectories:
+
+    Server           Hyper-G Server Installation Script
+    UnixClient       VT100 client for UNIX - installation script
+    Harmony          Harmony (the UNIX/X11 client)
+    Document-Viewers Stand alone document viewers of Harmony
+    Amadeus          Amadeus (the PC/Windows client)
+    VRweb            VRweb (free VRML browser for Hyper-G, Mosaic & Gopher)
+    doc              Documentation on Hyper-G (mainly PostScript)
+    talk             some slides & illustrations that we use for Hyper-G talks
+
+NOTE: This directory is mirrored daily (nightly) to:
+
+  (Australia)   ftp://ftp.cinemedia.com.au/pub/Hyper-G
+  (Austria)     ftp://ftp.tu-graz.ac.at/pub/Hyper-G
+  (Czech Rep.)  ftp://sunsite.mff.cuni.cz/Net/Infosystems/Hyper-G
+  (Germany)     ftp://elib.ZIB-Berlin.DE/pub/InfoSystems/Hyper-G
+                ftp://ftp.ask.uni-karlsruhe.de/pub/infosystems/Hyper-G
+  (Italy)       ftp://ftp.esrin.esa.it/pub/Hyper-G
+  (New Zealand) ftp://cs.auckland.ac.nz/pub/Hyper-G
+  (Portugal)    ftp://ftp.ua.pt/pub/infosystems/www/Hyper-G
+  (Spain)       ftp://ftp.etsimo.uniovi.es/pub/Hyper-G
+  (Sweden)      ftp://ftp.sunet.se/pub/Networked.Information.Retrieval/Hyper-G
+  (UK)          ftp://unix.hensa.ac.uk/mirrors/Hyper-G
+  (USA)         ftp://ftp.ncsa.uiuc.edu/Hyper-G
+                ftp://ftp.utdallas.edu/pub/Hyper-G
+
+There is a mailing list for information and discussion about Hyper-G.
+The developers and maintainers of the system inform the list about new
+contents and features, and are in turn interested in user feedback
+(such as problem reports, suggestions, wishes, and complaints).
+ 
+Since the list is unmoderated, please avoid sending junk mail and
+auto-replies to the list!
+ 
+To subscribe or unsubscribe, send mail to "listproc@iicm.tu-graz.ac.at"
+with the following message body:
+ 
+                    subscribe hyper-g <your name>
+or   
+                         unsubscribe hyper-g
+
+
+----------------------------------------------------------------------------
+Frank M. Kappe                                     fkappe@iicm.tu-graz.ac.at
+Institute for Information Processing and Computer Supported New Media (IICM)
+                   Graz University of Technology, Austria
+Voice: ++43/316/832551-22                               Fax: ++43/316/824394
+----------------------------------------------------------------------------
+
+              
+
+

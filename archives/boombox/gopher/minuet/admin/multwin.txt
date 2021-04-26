@@ -1,0 +1,67 @@
+ ============================================
+   Minuet and Multiple Users    ( WINDOWS )
+ ============================================
+
+As e-mail becomes more popular, we are seeing more worksites where many 
+people in the office have to share the same computer.
+
+What do you need to do to have many users of Minuet on the same computer
+without placing multiple copies of Minuet on the hard disk? And how can
+you do this using Windows?
+
+1.  Establish a DIRECT internet connection for the computer.  (See
+    separate instructions for using a SLIP connection.)
+
+2.  Register the computer with networking services for BOOTP service.
+    This will allow for the automatic set-up of required 
+    networking configuration parameters (namely: IP, Net Mask,
+    Name Servers, and Gateways).
+    
+3.  Include C:\MINUET in the path statement.
+
+
+To Set Up Each User
+-------------------
+1.  Assign a unique 3-letter ID code to each user.  
+    A user's initials work well for this purpose.  For example, 
+       Mortimer A. Snerd  ---> MAS
+       Jane B. Doe        ---> JBD
+
+2.  Start Windows and make a new Program Item.
+    
+       select File/New/Program Item
+
+3.  In the Description field enter a name including the assigned
+    ID code:
+
+       Minuet HisOrHerInitials
+  
+    for example:
+
+       Minuet MAS
+
+4.  In the Command Line enter the following:
+
+       c:\minuet\minuet /p=c:\mail\HisOrHerInitials
+
+    for example:
+
+       c:\minuet\minuet /p=c:\mail\MAS
+
+5.  The user starts Minuet from the new Windows icon.
+
+    Minuet will automatically establish a separate subdirectory for 
+    the user in C:\MAIL\.
+
+6.  Set up Minuet as usual. That is, fill in the E-Mail Address
+    and Password fields in the "Setup/User" dialog box.
+    NOTE:  Leave the Subdirectory for mail field EMPTY.
+
+7.  Each time you want to run Minuet, use your Windows icon.
+        
+To set up a second user, make a new Windows Program Item (steps 2,3,4
+above) with the name or initials of the second user. Start Minuet with
+the new Windows icon. (A new subdirectory is automatically created.)
+Go to the Setup/User menu in Minuet and set up the E-Mail Address and
+Password as usual. That's all there is to it!
+

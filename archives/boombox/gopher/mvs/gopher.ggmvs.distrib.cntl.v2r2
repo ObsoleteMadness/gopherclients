@@ -1,0 +1,1400 @@
+//JOBNAME JOB ACCOUNT,'NAME'
+//*------------------------------------------------------------------*/
+//*                                                                  */
+//* Copyright (c) The Charles Stark Draper Laboratory, Inc., 1993    */
+//*                                                                  */
+//* This software is provided on an "AS IS" basis. All warranties,   */
+//* including the implied warranties of merchantability and fitness, */
+//* are expressly denied.                                            */
+//*                                                                  */
+//* Provided this copyright notice is included, this software may    */
+//* be freely distributed and not offered for sale.                  */
+//*                                                                  */
+//* Changes or modifications may be made and used only by the maker  */
+//* of same, and not further distributed. Such modifications should  */
+//* be mailed to the author for consideration for addition to the    */
+//* software and incorporation in subsequent releases.               */
+//*                                                                  */
+//*------------------------------------------------------------------*/
+//*
+//*    GOPHER - MVS Gopher Client and Server
+//*
+//*  Version: 2  Release: 2
+//*
+//* Author: Steve Bacher <seb@draper.com>
+//*
+//* Date: 7 Aug 1993
+//*
+//*-------------------------------------------------------------------
+//*
+//* This job creates the distribution libraries (PDS's).
+//*
+//* Run this JCL to create the PDS's, after customizing to suit.
+//* (Obviously, put in a good JOB statement first.)
+//* To customize the JCL, change the defaults on the //MDLOAD PROC
+//* statement to your liking, particularly the PREFIX default.
+//* You might also want to change the final qualifiers of the PDS's
+//* created - to do this, find the // EXEC MDLOAD statements and
+//* change the value of the TO parameter.
+//*
+//* See the $$README file (of the CNTL PDS, first in this stream)
+//* for the rest of the installation instructions.
+//*
+//MDLOAD PROC CLS='*',BS='6160',U='3380',V='',
+//      TRK1='60',TRK2='10',DIR='35',RLSE='RLSE',
+//      PREFIX='GOPHER.INSTALL.'
+//*
+//IEBUPDTE EXEC PGM=IEBUPDTE,PARM=NEW
+//SYSPRINT DD SYSOUT=&CLS
+//SYSUT2 DD DISP=(NEW,CATLG,DELETE),DSN=&PREFIX.&TO,
+//  DCB=(RECFM=FB,LRECL=80,BLKSIZE=&BS),
+//  SPACE=(TRK,(&TRK1,&TRK2,&DIR),&RLSE),UNIT=&U,VOL=SER=&V
+//*
+//  PEND
+//*
+//CNTL     EXEC MDLOAD,BS='6160',TRK1='10',TRK2='1',TO='CNTL'
+//SYSIN    DD   DATA,DLM='?!'
+./ ADD NAME=$$README
+ 
+------------------------------------------------------------------------
+ 
+ Copyright (c) The Charles Stark Draper Laboratory, Inc., 1992, 1993
+ 
+ MVS Gopher Server originally by Shawn Hart (Univ. of Delaware).
+ 
+ This software is provided on an "AS IS" basis.  All warranties,
+ including the implied warranties of merchantability and fitness,
+ are expressly denied.
+ 
+ Provided this copyright notice is included, this software may
+ be freely distributed and not offered for sale.
+ 
+ Changes or modifications may be made and used only by the maker
+ of same, and not further distributed.  Such modifications should
+ be mailed to the author for consideration for addition to the
+ software and incorporation in subsequent releases.
+ 
+------------------------------------------------------------------------
+ 
+ MVS Gopher Client
+ 
+ Original Author:          Steve Bacher  <seb@draper.com>
+ 
+ MVS Gopher Server
+ 
+ Original Author:          Shawn Hart    <shawn.hart@mvs.udel.edu>
+ 
+ Various enhancements and customizations to both the client and the
+ server have been contributed by:
+ 
+    Steve Bacher   <seb@draper.com>
+    Lou Joseph     <cwmy5c@irishmvs.cc.nd.edu>
+    Denis DeLaRoca <csp1dwd@mvs.oac.ucla.edu>
+    Dwight Cook    <sysdc@uokmvsa.backbone.uoknor.edu>
+    Rachna Agrawal <rachna@clemson.clemson.edu>
+ 
+------------------------------------------------------------------------
+ 
+ Contents of PDS's belonging to Gopher distribution:
+ 
+ Member     PDS Type    Description
+ 
+ $$README   CNTL        This file
+ $CHANGES   CNTL        Changes since the last release
+ ACCESS     CNTL        Sample server access file
+ ALLOAD     CNTL        JCL to allocate GOPHER load and object libraries
+ COMPILE    CNTL        JCL to compile C sources for client and server
+ GOPHERD    CNTL        JCL to run the GOPHER server in batch (No TSO)
+ GOPHERT    CNTL        JCL to run the GOPHER server in batch (w. TSO)
+ HELP       CNTL        TSO Help for Gopher client
+ INSTALLC   CNTL        How to install the GOPHER MVS client
+ INSTALLS   CNTL        How to install the GOPHER MVS server
+ LINKC      CNTL        JCL to linkedit object into client load module
+ LINKS      CNTL        JCL to linkedit object into server load modules
+ MENU       CNTL        Initial Gopher server menu
+ PARMS      CNTL        Sample Gopher startup parameters
+ GOPHER     CLIST       Exec by which users invoke the Gopher client
+ NNMFIUCV   CLIST       Exec to check for multiple socket applications
+ HOSTNAME   CLIST       Sample "hostname" command for REXX feature
+ TSOHELP    CLIST       Sample REXX exec for Gopher TSO HELP menu hole
+ GGM...     PANEL       ISPF regular panels
+ GG...      H           C headers for compilation
+ GG...      C           C source for compilation
+ ABOUT...   ABOUT       "About This Gopher" text
+ 
+--------------------------------------------------------------------
+ 
+Where to Go from Here:
+ 
+ To install the GOPHER MVS client, read member INSTALLC.
+ 
+ To install the GOPHER MVS server, read member INSTALLS.
+ 
+Note:
+ 
+ You may install only the client, only the server, or both the
+ client and the server.  It is purely up to what your needs are.
+ 
+--------------------------------------------------------------------
+ 
+ Questions?  Comments?  Suggestions?  Gripes?  Please email to...
+ 
+ Steve Bacher      <seb@draper.com>
+ 
+./ ADD NAME=$CHANGES
+Changes:
+ 
+ 10 Jul 93 - Version 2 Release 2
+ 
+             Remote FTP Gateway
+             Configurable GOPHERRC: domain and telnet may be specified
+             Object-code-only distribution for those without C compilers
+             Improvements to TSO GOPHER exec for users without XPROC
+              or without C runtime in linklist
+             DD:ddname(member) works now for nested PDS member
+              references, making installing the ABOUT PDS simpler
+ 
+ 20 Mar 93 - Version 2 Release 1
+ 
+             Improved browse function
+             Printing support
+             Bookmark support
+             New commands: PRT, INFO, MENU, BOOKMARK
+             Configurable startup parameter file
+             Ability to run multiple servers on same MVS
+ 
+ 07 Dec 92 - Customizations to support SNS/TCPAccess
+ 
+ 19 Oct 92 - Improvements in initial startup and GOPHERRC customization
+ 
+./ ADD NAME=ACCESS
+!
+! Format of entries:
+!
+! filename (fully qualified, all uppercase, no quotes)
+! can be "DD:DDNAME" or "EXEC:EXECNAME"
+!
+! followed by names of hosts which are authorized to access the data.
+! If no host name list is present, all hosts are authorized
+!
+! You may specify the same file name more than once, if you need
+! more lines to put host names on.
+!
+! Individual PDS members must be specified separately.  A PDS without
+! a member name establishes access only to the PDS directory.
+!
+! Note that the default directory MUST be in this table.
+!
+! Also note that in the case of EXECs, the EXEC must live in the
+! library allocated to GGEXEC in the Gopher server JCL.
+!
+! *** ANY DATA SET REFERENCED BY ANY EXEC IN THAT LIBRARY IS FULLY
+! *** ACCESSIBLE TO GOPHER REGARDLESS OF THIS TABLE!  USE THIS TABLE
+! *** TO GOVERN CONTROL TO THE EXEC ITSELF!!!
+ 
+!
+! below is default directory spec, which MUST be in this table
+!
+DD:GGGOPHER
+ 
+!
+! Use the following for "About This Gopher".
+! Free free to specify the name of your MVS client host(s)
+! for information pertinent to MVS only.  mvs1 and mvs2 are examples.
+!
+DD:GGABOUT
+DD:GGABOUT(ABOUT)
+DD:GGABOUT(ABOUTC)                                mvs1 mvs2
+DD:GGABOUT(ABOUTCD)                               mvs1 mvs2
+DD:GGABOUT(ABOUTCF)                               mvs1 mvs2
+DD:GGABOUT(ABOUTCO)                               mvs1 mvs2
+DD:GGABOUT(ABOUTCQ)                               mvs1 mvs2
+DD:GGABOUT(ABOUTCS)                               mvs1 mvs2
+DD:GGABOUT(ABOUTCSC)                              mvs1 mvs2
+DD:GGABOUT(ABOUTCSL)                              mvs1 mvs2
+DD:GGABOUT(ABOUTCSM)                              mvs1 mvs2
+DD:GGABOUT(ABOUTCSR)                              mvs1 mvs2
+DD:GGABOUT(ABOUTCSW)                              mvs1 mvs2
+DD:GGABOUT(ABOUTCSX)                              mvs1 mvs2
+DD:GGABOUT(ABOUTCX)                               mvs1 mvs2
+DD:GGABOUT(ABOUTS)                                mvs1 mvs2
+DD:GGABOUT(ABOUTSA)                               mvs1 mvs2
+DD:GGABOUT(ABOUTSP)                               mvs1 mvs2
+DD:GGABOUT(ABOUTW)
+DD:GGABOUT(FAQ)
+ 
+!
+! Here's how to do REXX execs.  Note - no arguments, only exec names
+!
+EXEC:CHECKLST                     client1 client2 mvs
+EXEC:WAISDIR
+EXEC:WAISLIST
+EXEC:WAISSRCH
+ 
+ANY.PUBLIC.SEQ.DS
+ANY.SEMI.PUBLIC.SEQ.DS            goodclient1 goodclient2
+ANY.SEMI.PUBLIC.SEQ.DS            goodclient3 goodclient4
+ 
+! PDS without member name provides access to directory only
+! All member names must be explicitly listed to be accessible.
+ 
+ANY.PUBLIC.PDS
+ANY.PUBLIC.PDS(MEMBER1)
+ANY.PUBLIC.PDS(MEMBER2)
+ANY.PUBLIC.PDS(MEMBER3)
+ANY.PUBLIC.PDS(MEMBER4)
+ 
+ 
+ANY.SEMI.PUBLIC.PDS               goodclient1 goodclient2
+ANY.SEMI.PUBLIC.PDS               goodclient3 goodclient4
+ANY.SEMI.PUBLIC.PDS(MEMBER1)      goodclient1
+ANY.SEMI.PUBLIC.PDS(MEMBER2)      goodclient2
+ANY.SEMI.PUBLIC.PDS(MEMBER3)      goodclient3
+ANY.SEMI.PUBLIC.PDS(MEMBER4)      goodclient4
+ 
+./ ADD NAME=ALLOAD
+//JOBNAME  JOB ACCOUNT,'NAME'
+//*                                                                  */
+//* Copyright (c) The Charles Stark Draper Laboratory, Inc., 1992    */
+//*                                                                  */
+//* This software is provided on an "AS IS" basis.  All warranties,  */
+//* including the implied warranties of merchantability and fitness, */
+//* are expressly denied.                                            */
+//*                                                                  */
+//* Provided this copyright notice is included, this software may    */
+//* be freely distributed and not offered for sale.                  */
+//*                                                                  */
+//* Changes or modifications may be made and used only by the maker  */
+//* of same, and not further distributed.  Such modifications should */
+//* be mailed to the author for consideration for addition to the    */
+//* software and incorporation in subsequent releases.               */
+//*                                                                  */
+//*
+//* Allocate GOPHER load and object libraries before install
+//*
+//GGALLOC PROC U='3380',V=''
+//*
+//IEFBR14  EXEC PGM=IEFBR14
+//ALLOCDD  DD   DISP=(NEW,CATLG,DELETE),DSN=&LIB,
+//         DCB=(RECFM=&RF,LRECL=&LR,BLKSIZE=&BS),
+//         SPACE=(&BS,(&PRI,&SEC,&DIR)),UNIT=&U,VOL=SER=&V
+//*
+//         PEND
+//*
+//* The ALLOCL step allocates the load library from which the
+//* executable program will be run.  If you intend to place the
+//* executable into an existing library, you can skip this step.
+//* Otherwise, the name must match the name used on the LOADLIB
+//* parameter of the GGLINK procedure in the COMPILE JCL.
+//*
+//* If you want separate libraries for the client and the server,
+//* just duplicate this step and give the LIB's different names.
+//*
+//* The ALLOCO step allocates the object library into which the
+//* source modules will be compiled.  This library is required
+//* for the compile and link steps, but is not required for run
+//* time execution.  However, you may wish to keep the object
+//* library around in case there are fixes for which you will be
+//* recompiling individual Gopher source modules.
+//*
+//ALLOCL   EXEC GGALLOC,PRI=50,SEC=50,DIR=35,RF=U,LR=,BS=6233,
+//         LIB='GOPHER.LOAD'
+//ALLOCO   EXEC GGALLOC,PRI=50,SEC=50,DIR=35,RF=FB,LR=80,BS=2960,
+//         LIB='GOPHER.INSTALL.OBJ'
+//*
+./ ADD NAME=COMPILE
+//JOBNAME  JOB ACCOUNT,'NAME'
+//*                                                                  */
+//* Copyright (c) The Charles Stark Draper Laboratory, Inc., 1992    */
+//*                                                                  */
+//* This software is provided on an "AS IS" basis.  All warranties,  */
+//* including the implied warranties of merchantability and fitness, */
+//* are expressly denied.                                            */
+//*                                                                  */
+//* Provided this copyright notice is included, this software may    */
+//* be freely distributed and not offered for sale.                  */
+//*                                                                  */
+//* Changes or modifications may be made and used only by the maker  */
+//* of same, and not further distributed.  Such modifications should */
+//* be mailed to the author for consideration for addition to the    */
+//* software and incorporation in subsequent releases.               */
+//*                                                                  */
+//*********************************************************************
+//*
+//* Compile some or all GOPHER C/370 sources to make the SYSLIN input
+//* to the linkedit of the executable Gopher load module(s).
+//*
+//GGCC   PROC MEMBER=,
+//            SRCLIB='GOPHER.INSTALL.C',         GOPHER C source PDS
+//            HDRLIB='GOPHER.INSTALL.H',         GOPHER C headers PDS
+//            OBJLIB='GOPHER.INSTALL.OBJ',       GOPHER object library
+//            COMMHDR='TCPIP.COMMMAC',           C/370 TCP/IP headers
+//            C370HDR='SYS1.EDCHDRS',            C/370 standard headers
+//            SYSMSGS='SYS1.EDCMSGS',            C/370 messages file
+//            SYSMSGM='EDCMSGE',                 C/370 message member
+//            VIOUNIT=VIO,                       Temporary disk unit
+//            OUTCLAS='*',                          SYSOUT class
+//            CPARMS='SOURCE EXPMAC NOAGGR NOXREF', Compile parameters
+//            TEST=TEST                             TEST or NOTEST
+//*
+//CCOMP     EXEC PGM=EDCCOMP,PARM='MARGINS(1,72) &TEST &CPARMS'
+//SYSMSGS   DD DISP=SHR,DSN=&SYSMSGS(&SYSMSGM)
+//SYSIN     DD DISP=SHR,DSN=&SRCLIB(&MEMBER)
+//SYSLIN    DD DISP=OLD,DSN=&OBJLIB(&MEMBER)
+//SYSLIB    DD DISP=SHR,DSN=&COMMHDR
+//          DD DISP=SHR,DSN=&C370HDR
+//USERLIB   DD DISP=SHR,DSN=&HDRLIB
+//SYSPRINT  DD SYSOUT=&OUTCLAS
+//SYSCPRT   DD SYSOUT=&OUTCLAS
+//SYSUT1    DD DSN=&&SYSUT1,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//   SPACE=(32000,(30,30)),DCB=(RECFM=FB,LRECL=80,BLKSIZE=3200)
+//SYSUT4    DD DSN=&&SYSUT4,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//   SPACE=(32000,(30,30)),DCB=(RECFM=FB,LRECL=80,BLKSIZE=3200)
+//SYSUT6    DD DSN=&&SYSUT6,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//   SPACE=(32000,(30,30)),DCB=(RECFM=FB,LRECL=3200,BLKSIZE=12800)
+//SYSUT7    DD DSN=&&SYSUT7,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//   SPACE=(32000,(30,30)),DCB=(RECFM=FB,LRECL=3200,BLKSIZE=12800)
+//SYSUT8    DD DSN=&&SYSUT8,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//   SPACE=(32000,(30,30)),DCB=(RECFM=FB,LRECL=3200,BLKSIZE=12800)
+//SYSUT9    DD DSN=&&SYSUT9,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//   SPACE=(32000,(30,30)),DCB=(RECFM=VB,LRECL=137,BLKSIZE=882)
+//SYSUT10   DD SYSOUT=&OUTCLAS
+//*
+//         PEND
+//*
+//GGCLIENT EXEC GGCC,MEMBER=GGCLIENT
+//GGMALLOC EXEC GGCC,MEMBER=GGMALLOC
+//GGMCLRTX EXEC GGCC,MEMBER=GGMCLRTX
+//GGMCONN  EXEC GGCC,MEMBER=GGMCONN
+//GGMCSO   EXEC GGCC,MEMBER=GGMCSO
+//GGMDBM   EXEC GGCC,MEMBER=GGMDBM
+//GGMDFAIL EXEC GGCC,MEMBER=GGMDFAIL
+//GGMDIR   EXEC GGCC,MEMBER=GGMDIR
+//GGMDISC  EXEC GGCC,MEMBER=GGMDISC
+//GGMDISPL EXEC GGCC,MEMBER=GGMDISPL
+//GGMDSOPT EXEC GGCC,MEMBER=GGMDSOPT
+//GGMDUMP  EXEC GGCC,MEMBER=GGMDUMP
+//GGMESRVR EXEC GGCC,MEMBER=GGMESRVR
+//GGMFREEM EXEC GGCC,MEMBER=GGMFREEM
+//GGMFTP   EXEC GGCC,MEMBER=GGMFTP
+//GGMGETDS EXEC GGCC,MEMBER=GGMGETDS
+//GGMGETM  EXEC GGCC,MEMBER=GGMGETM
+//GGMGOFOR EXEC GGCC,MEMBER=GGMGOFOR
+//GGMGSRVL EXEC GGCC,MEMBER=GGMGSRVL
+//GGMIERR  EXEC GGCC,MEMBER=GGMIERR
+//GGMIGET  EXEC GGCC,MEMBER=GGMIGET
+//GGMINFO  EXEC GGCC,MEMBER=GGMINFO
+//GGMISPF  EXEC GGCC,MEMBER=GGMISPF
+//GGMIVGET EXEC GGCC,MEMBER=GGMIVGET
+//GGMIVPUT EXEC GGCC,MEMBER=GGMIVPUT
+//GGMMENU  EXEC GGCC,MEMBER=GGMMENU
+//GGMMTFER EXEC GGCC,MEMBER=GGMMTFER
+//GGMOUTS  EXEC GGCC,MEMBER=GGMOUTS
+//GGMOUTTX EXEC GGCC,MEMBER=GGMOUTTX
+//GGMPMSG  EXEC GGCC,MEMBER=GGMPMSG
+//GGMPROC  EXEC GGCC,MEMBER=GGMPROC
+//GGMSOCKT EXEC GGCC,MEMBER=GGMSOCKT
+//GGMSOPT  EXEC GGCC,MEMBER=GGMSOPT
+//GGMTNET  EXEC GGCC,MEMBER=GGMTNET
+//GGMTSO   EXEC GGCC,MEMBER=GGMTSO
+//GGMTYPE  EXEC GGCC,MEMBER=GGMTYPE
+//GGMUNALC EXEC GGCC,MEMBER=GGMUNALC
+//GGMVIEW  EXEC GGCC,MEMBER=GGMVIEW
+//GGMVTX   EXEC GGCC,MEMBER=GGMVTX
+//GGMWAIS  EXEC GGCC,MEMBER=GGMWAIS
+//GGMWHOIS EXEC GGCC,MEMBER=GGMWHOIS
+//GGMXTX   EXEC GGCC,MEMBER=GGMXTX
+//GGSERVER EXEC GGCC,MEMBER=GGSERVER
+//GGSTASK  EXEC GGCC,MEMBER=GGSTASK
+//*
+./ ADD NAME=GOPHERD
+//GOPHERD  PROC MODULE=GGSERVER,
+//         STEPLIB='GOPHER.LOAD',
+//         EXECLIB='GOPHER.EXEC',
+//         ACCESS='GOPHER.ACCESS',
+//         ABOUT='GOPHER.ABOUT',
+//         MENU='GOPHER.MENU',
+//         PARMS='GOPHER.PARMS',
+//         VIO=SYSVIO,
+//         STDERR='*',
+//         STDOUT='*',
+//         GPARM=
+//*
+//*********************************************************************
+//*                                                                   *
+//* GOPHER daemon, by Shawn Hart (U.Del.) and Steve Bacher (D.Lab.)   *
+//*                                                                   *
+//* Straight batch (no TSO access)                                    *
+//*                                                                   *
+//*********************************************************************
+//*
+//GOPHERD  EXEC PGM=&MODULE,PARM='&GPARM'
+//STEPLIB  DD   DISP=SHR,DSN=&STEPLIB
+//GGEXEC   DD   DISP=SHR,DSN=&EXECLIB
+//SYSTSPRT DD   UNIT=&VIO,SPACE=(TRK,(100,100)),RECFM=VBA,LRECL=255
+//SYSERR   DD   SYSOUT=&STDERR
+//SYSPRINT DD   SYSOUT=&STDOUT
+//SYSTSIN  DD   DUMMY
+//SYSIN    DD   DUMMY
+//GGDEBUG  DD   SYSOUT=*
+//GGABOUT  DD   DISP=SHR,DSN=&ABOUT
+//GGACCESS DD   DISP=SHR,DSN=&ACCESS
+//GGGOPHER DD   DISP=SHR,DSN=&MENU
+//GGPARMS  DD   DISP=SHR,DSN=&PARMS
+./ ADD NAME=GOPHERT
+//GOPHERD  PROC MODULE=GGSERVER,
+//         STEPLIB='GOPHER.LOAD',
+//         EXECLIB='GOPHER.EXEC',
+//         ACCESS='GOPHER.ACCESS',
+//         ABOUT='GOPHER.ABOUT',
+//         MENU='GOPHER.MENU',
+//         PARMS='GOPHER.PARMS',
+//         VIO=SYSVIO,
+//         STDERR='*',
+//         STDOUT='*',
+//         GPARM=
+//*
+//*********************************************************************
+//*                                                                   *
+//* GOPHER daemon, by Shawn Hart (U.Del.) and Steve Bacher (D.Lab.)   *
+//*                                                                   *
+//*********************************************************************
+//*
+//GOPHERD  EXEC PGM=IKJEFT01,DYNAMNBR=128,REGION=8M,
+//         PARM='&MODULE &GPARM'
+//STEPLIB  DD   DISP=SHR,DSN=&STEPLIB
+//GGEXEC   DD   DISP=SHR,DSN=&EXECLIB
+//SYSTSPRT DD   UNIT=&VIO,SPACE=(TRK,(100,100)),RECFM=VBA,LRECL=255
+//SYSERR   DD   SYSOUT=&STDERR
+//SYSPRINT DD   SYSOUT=&STDOUT
+//SYSTSIN  DD   DUMMY
+//SYSIN    DD   DUMMY
+//GGDEBUG  DD   SYSOUT=*
+//GGABOUT  DD   DISP=SHR,DSN=&ABOUT
+//GGACCESS DD   DISP=SHR,DSN=&ACCESS
+//GGGOPHER DD   DISP=SHR,DSN=&MENU
+//GGPARMS  DD   DISP=SHR,DSN=&PARMS
+./ ADD NAME=HELP
+)F Function -
+ 
+ GOPHER is a distributed document delivery service, or, more generally,
+ a networked information retrieval service.  It allows you to access
+ numerous types of data on various hosts in a transparent fashion.
+ GOPHER presents you with a hierarchical display of information sources
+ which are accessed via a client/server communications link.
+ 
+ There are GOPHER clients for all common hardware platforms.  The MVS
+ version runs as an ISPF dialog application.
+ 
+ When you use the GOPHER client, information about your use of GOPHER
+ is stored in a data set called GOPHERRC.  If you don't have one,
+ GOPHER will create it for you.
+ 
+ You can save Gopher information in bookmark files.  See the
+ help for operand BOOKMARK for details.
+ 
+ For more information on customizing your GOPHER environment, get
+ into Gopher and select "About This GOPHER".
+ 
+)I GOPHLOC          - local GOPHER help goes in member GOPHLOC
+ 
+)X Syntax -
+ 
+   %GOPHER
+              LOCAL
+              BOOKMARK(datasetname)
+              SERVER(hostname)
+              PATH(pathname)
+              PORT(portnumber)
+              DESCRIPTION(text)
+              FORCE
+              DEBUG
+              TEST
+ 
+   Required:  none
+ 
+)O Operands -
+ 
+))LOCAL
+ 
+              Specify LOCAL if you want to enter GOPHER in "serverless"
+              mode - i.e. start up with your private GOPHER menu.
+              Specifying LOCAL accomplishes two things:
+ 
+               (1) It sets the server to "-", meaning local access.
+                   Therefore, you must also provide a path, either
+                   via the PATH operand or via a "localmenu:" spec
+                   in your GOPHERRC file.
+ 
+               (2) It allows you to use GOPHER even if there are
+                   other TCP/IP socket applications active elsewhere
+                   in your TSO session.  However, it will not allow
+                   you to connect to any GOPHER servers, even if you
+                   have a local menu item that points to one.
+ 
+              For information on how to set up GOPHER menus, get into
+              GOPHER and select "About This Gopher".
+ 
+))BOOKMARK(datasetname)
+ 
+              The name of a data set containing Gopher bookmarks,
+              using normal TSO data set naming conventions.
+ 
+              You can create bookmarks in GOPHER by using the "B"
+              selection code next to a menu item, or by using the
+              BOOKMARK command while browsing an entry.  GOPHER will
+              append an entry for the selected item to the end of
+              the data set that you specify when asked.
+ 
+              To access this bookmark in a Gopher session, you can use
+              the MENU command from any Gopher menu display, or you can
+              start Gopher with a specific bookmark file.
+ 
+))SERVER(hostname)
+ 
+              The host name (or IP address) of a Gopher server.
+              If this is not given, GOPHER looks in your GOPHERRC
+              to find what server to connect to.  If it can't find
+              an appropriate specification, you will have to enter
+              a server name on the startup panel.
+ 
+              A server name of a single minus sign (-) is a special
+              case, signifying local (serverless) access to your
+              own private GOPHER data.  In this case, you must tell
+              GOPHER where your menu is, either via the PATH operand
+              or in the GOPHERRC file.
+ 
+))PATH(pathname)
+ 
+              The path name to be passed to the Gopher server, or
+              used in local access as your initial menu.  Although
+              the exact interpretation of the pathname string varies
+              depending on the server, both the MVS server and the
+              local GOPHER access feature interpret the pathname
+              as the FULLY QUALIFIED WITHOUT QUOTES name of an MVS
+              data set containing a gopher menu.  For information
+              about the format of a gopher menu, see operand MENU.
+ 
+))PORT(portnumber)
+ 
+              You should never need to specify this field unless
+              someone has set up a special kind of Gopher server that
+              requires a unique port number.  In such a case, you
+              would generally use this along with the SERVER operand.
+ 
+))DESCRIPTION(text)
+ 
+              A text string giving the heading to be displayed for
+              the initial directory of Gopher goodies.  Normally
+              either the Gopher server or the Gopher client will
+              have a default value for this, or you can specify
+              a description of your liking in your GOPHERRC file.
+              You can also use this to override the description
+              generated when you use the BOOKMARK operand to start up.
+ 
+))FORCE
+ 
+              GOPHER tries to determine if there is a TCP/IP socket
+              application active elsewhere in your TSO environment
+              before starting up, to prevent TCP/IP errors.  If it
+              tells you that there is another client active but in
+              truth there is none and you know it, you can use the
+              FORCE keyword to make GOPHER proceed whether it finds
+              this to be the case or not.
+ 
+              Using the LOCAL operand is one way to avoid this entire
+              scenario.  However, that won't allow you to access any
+              Gopher servers on the network.
+ 
+))DEBUG
+ 
+              Set debugging mode on.  You must preallocate a file to
+              ddname GGDEBUG for this to work.  This can be allocated
+              to the terminal or a log file.  When debug mode is on,
+              messages describing memory allocation and deallocation
+              and GOPHER queries sent are dumped to the debug file.
+ 
+))TEST
+ 
+              Activate C/370 interactive test (INSPECT).  GOPHER must
+              have been compiled with the TEST option for this to be
+              effective.  Note that you can also issue the TEST command
+              inside GOPHER to get to INSPECT, again provided that
+              GOPHER was compiled with the TEST option.
+ 
+./ ADD NAME=INSTALLC
+ 
+ Directions for Installing the GOPHER MVS Client
+ 
+ Assuming the PDS's have been created:
+ 
+ 1. Customize the ALLOAD, COMPILE and LINKC JCL members to reflect your
+ local conventions.  Note:  If you intend to place the executable into
+ an existing library, you can suppress that part of the ALLOAD JCL.
+ The name of the data set created must match across both members.
+ 
+ 2. Customize the GGUSER header file as shown by the comments therein.
+ Note in particular the defines for your TCP/IP and your C compiler.
+ There are changes to the linkedit JCL that are related to these.
+ 
+ 3. If you are running ISPF Version 2 or earlier, edit the GOPHER panels
+ whose names begin "GGMP...".  These are popups, and will not work
+ under ISPF Version 2 unless you change the )BODY line.  Remove the
+ WINDOW(...) parameter from the )BODY line of each panel so that the
+ line just says )BODY or )BODY EXPAND(``), as the case may be.
+ 
+ 4. Customize the GOPHER exec to define the names of the MVS libraries
+ to contain the panel and load library members.  The load library must
+ be the one specified in the ALLOAD JCL, if you are creating it anew.
+ Observe the comments relating to the use of LIBDEF and ISPF APPLIDs.
+ 
+ It is in the GOPHER exec that you will also customize the name of the
+ default Gopher server.  Note that the user's GOPHERRC file gets built
+ from the contents of this exec.
+ 
+ You may configure the GOPHER exec to use XPROC to parse the operands
+ given to it by the TSO user.  If you don't have XPROC, you should get
+ it, because the user can take advantage of all the power of TSO CLIST
+ style parsing if you do.  The GOPHER exec contains some code that
+ emulates full TSO parsing, but it isn't as robust or flexible as true
+ XPROC parsing.  You can get XPROC via USC's "MVS network server" code
+ distribution service.  For more information about this, send an email
+ message to SERVICE@MVSA.USC.EDU - or SERVICE@USCMVSA, which will
+ normally give better results if you have a BITNET (NJE) return address.
+ 
+ Note that if you install one of the REXX execs, you must also install
+ the NNMFIUCV exec in the same library.  This exec implements a rude
+ check for an existing TCP/IP socket application (e.g. another GOPHER)
+ in a different PIE MultiTSO session.  It prevents your users from
+ crashing TCP/IP, so it is highly recommended that you make use of it.
+ 
+ If the C/370 runtime library is not in the link list or otherwise
+ available to ISPF at execution time, you may arrange for it to be
+ allocated via LIBDEF in the GOPHER exec by setting "crunlibs".
+ 
+ Now, to install:
+ 
+ 5. Submit the ALLOAD JCL to allocate the load library from which the
+ executable program will be run, as well as the object library in which
+ the compiled object modules will be stored.
+ 
+ 6. Submit the COMPILE JCL to compile all the C sources and create the
+ required object modules in the object library built in the above step.
+ Note that this compiles all the modules for both the client and the
+ server.  If you are installing both, you need not repeat this step.
+ 
+ 7. Submit the LINKC JCL to create the executable Gopher load module
+ from the object modules created in the above step.  This will create
+ or replace the load module GGCLIENT.
+ 
+ Note:  The linkedit must complete with a return code of zero.  If not,
+ don't use the resultant load module.  Check the libraries you specified
+ on the link step to see what went wrong.
+ 
+ In the future, if you have to recompile individual modules, you can use
+ the same JCL to compile only those modules, and the link will include
+ the new modules in the existing executable load module.  To do this,
+ you must retain the object library built above.
+ 
+ *********************************************************************
+ 
+ IMPORTANT:  If you are running TCP/IP V2R2 or higher on MVS, you must
+ change the following library names in the compile and link JCL:
+ 
+   TCPIP.COMMMAC   should be changed to  TCPIP.SEZACMAC
+   TCPIP.COMMTXT   should be changed to  TCPIP.SEZACMTX
+ 
+ If you are using SNS/TCPAccess, use these library names, or
+ whatever names are defined at your installation:
+ 
+   TCPIP.COMMMAC   should be changed to  SNSTCP.V110.H
+   TCPIP.COMMTXT   should be changed to  SNSTCP.V110.CILIB
+ 
+ If you are using SAS/C, change CEESTART to MAIN in the linkedit
+ ENTRY control statement.
+ 
+ *********************************************************************
+ 
+ Note:  If you have defined C370V1 in the GGUSER header file, you must
+ also include the system linklist load library or libraries containing
+ ISPLINK, ISPEXEC and IKJEFF18 when linking.  Otherwise you may delete
+ the lines from the linkedit JCL that reference them.
+ 
+ Note:  You need not include the PASCAL libraries or the AMPZMVSB
+ module if you are using TCP/IP Version 2 or higher, in which case
+ you must also define TCPIPV2 in the GGUSER headerfile.
+ 
+ 8. Copy all the members of the panel PDS into the ISPF panel library
+ specified in the GOPHER exec.
+ 
+ 9. Copy the help member (HELP) from the CNTL PDS into your local TSO
+ HELP library under the name GOPHER.  You may also create an additional
+ HELP member called GOPHLOC containing information local to your site,
+ if you wish.
+ 
+ 10. Create the "About This Gopher" PDS from the ABOUT PDS.  This has
+ all the text users should see when they select the "About This Gopher"
+ item from the MVS client.  It also contains all the documentation you
+ need about setting up the client and the server, as well as creating
+ menus and REXX execs for use with MVS Gopher.  You may have already
+ done this as part of the server install, but it should also be
+ available from the client in "local" (serverless) mode, so that is
+ why I mention it here.
+ 
+--------------------------------------------------------------------
+ 
+ Note:  Make sure that the C/370 run time library is available,
+ either in the system link list or in the ISPLLIB concatenation,
+ before attempting to run GOPHER.  See above under customization
+ of the GOPHER exec.
+ 
+./ ADD NAME=INSTALLS
+ 
+ Directions for Installing the GOPHER MVS Server
+ 
+ Assuming the PDS's have been created:
+ 
+ 1. Customize the ALLOAD, COMPILE and LINKS JCL members to reflect your
+ local conventions.  Note:  If you intend to place the executable into
+ an existing library, you can suppress that part of the ALLOAD JCL.
+ The name of the data set created must match across both members.
+ 
+ 2. Customize the GGUSER header file as shown by the comments therein.
+ Note in particular the defines for your TCP/IP and your C compiler.
+ There are changes to the linkedit JCL that are related to these.
+ 
+ Now, to install:
+ 
+ 3. Submit the ALLOAD JCL to allocate the load library from which the
+ executable program will be run, as well as the object library in which
+ the compiled object modules will be stored.
+ 
+ 6. Submit the COMPILE JCL to compile all the C sources and create the
+ required object modules in the object library built in the above step.
+ Note that this compiles all the modules for both the client and the
+ server.  If you are installing both, you need not repeat this step.
+ 
+ 5. Submit the LINKS JCL to create the executable Gopher load modules
+ from the object modules created in the above step.  This will create
+ or replace the load modules GGSERVER and GGSTASK.
+ 
+ Note:  The linkedit must complete with a return code of zero.  If not,
+ don't use the resultant load module.  Check the libraries you specified
+ on the link step to see what went wrong.
+ 
+ In the future, if you have to recompile individual modules, you can use
+ the same JCL to compile only those modules, and the link will include
+ the new modules in the existing executable load module.  To do this,
+ you must retain the object library built above.
+ 
+ 
+ *********************************************************************
+ 
+ IMPORTANT:  If you are running TCP/IP V2R2 or higher on MVS, you must
+ change the following library names in the compile and link JCL:
+ 
+   TCPIP.COMMMAC   should be changed to  TCPIP.SEZACMAC
+   TCPIP.COMMTXT   should be changed to  TCPIP.SEZACMTX
+ 
+ If you are using SNS/TCPAccess, use these library names, or
+ whatever names are defined at your installation:
+ 
+   TCPIP.COMMMAC   should be changed to  SNSTCP.V110.H
+   TCPIP.COMMTXT   should be changed to  SNSTCP.V110.CILIB
+ 
+ If you are using SAS/C, change CEESTART to MAIN in the linkedit
+ ENTRY control statement.
+ 
+ *********************************************************************
+ 
+ Note:  If you have defined C370V1 in the GGUSER header file, you must
+ also include the system linklist load library containing IKJEFF18
+ when linking.  Otherwise you may delete the line from the linkedit
+ JCL that references it.
+ 
+ Note:  You need not include the PASCAL libraries or the AMPZMVSB
+ module if you are using TCP/IP Version 2 or higher, in which case
+ you must also define TCPIPV2 in the GGUSER headerfile.
+ 
+ 6. Create the "About This Gopher" PDS from the ABOUT PDS.  This has
+ all the text users should see when they select the "About This Gopher"
+ item from the MVS client.  It also contains all the documentation you
+ need about setting up the client and the server, as well as creating
+ menus and REXX execs for use with MVS Gopher.  You may have already
+ done this as part of the client install.
+ 
+ Note that member MENU contains the line PATH=DD:GGABOUT(ABOUT).  This
+ works now (it didn't use to), so there is no need to change it as long
+ as you have the GGABOUT DD statement in your server JCL pointing to
+ your ABOUT PDS (see below).
+ 
+ 7. Create your Gopher access file.  See the instructions in the
+ "About This Gopher" PDS, member ABOUTSA, for a description of the
+ format.  A sample member is in member ACCESS of this CNTL PDS.
+ 
+ 8. Create your Gopher startup parameter file.  This is not required,
+ but may be used to change compiled-in defaults.  See the PARMS member
+ for a default.
+ 
+ 9. Allocate a PDS to hold Gopher REXX execs.  This is not required.
+ See the TSOHELP exec in the clist library of the distribution for a
+ sample application.
+ 
+ 10. Create the MVS Gopher started task JCL from either of the samples
+ given in GOPHERD and GOPHERT.  The GOPHERT is recommended so that you
+ can use REXX execs that issue TSO commands, but you may not want to
+ use this for security reasons.  Either way, customize liberally.
+ 
+ Started task parameters:
+ 
+ MODULE=GGSERVER            the Gopher server load module in STEPLIB
+ STEPLIB='GOPHER.LOAD'      the load library containing the above
+ EXECLIB='GOPHER.EXEC'      the PDS containing server REXX execs
+ ACCESS='GOPHER.ACCESS'     the installation access file (sequential)
+ ABOUT='GOPHER.ABOUT'       the PDS containing "About This Gopher" info
+ MENU='GOPHER.MENU'         the initial gopher menu (sequential)
+ PARMS='GOPHER.PARMS'       the server startup file (sequential)
+ GPARM=                     the server EXEC parms (e.g. -d for debug)
+ 
+ Note: if you specify GPARM='-D', a GGDEBUG DD must be included.
+ 
+ You are strongly recommended to create 2 started tasks:  one for
+ non-REXX requests with MTFTASKS set to 8, and one for REXX requests
+ with MTFTASKS set to 1 (because of TSO/E multitasking bugs).
+ Give each a different port number in the GGPARMS configuration file
+ allocated to it.  See sample below.
+ 
+ 11. Add the name of the Gopher server started task (the name as it
+ appears in SYS1.PROCLIB, not necessarily "GOPHER") to the MVS TCPIP
+ profile data set (or have your MVS TCP/IP system programmer do it).
+ In the examples below, let's say you've called it GOPHSRV.  Add this
+ in 2 places:
+ 
+   (a) under AUTOLOG, so that TCP/IP will start the Gopher server
+       automatically (a la inetd for unix) when a client connects.
+       Just add the name to the list (e.g. GOPHSRV).
+ 
+   (b) under PORT, so nobody can spoof the Gopher port.  The format
+       here is:   70 TCP GOPHSRV
+ 
+ Repeat both for whatever number of Gopher server started tasks you
+ create (with different port numbers).
+ 
+--------------------------------------------------------------------
+ 
+ Note:  Make sure that the C/370 run time library is available,
+ either in the system link list or in the STEPLIB concatenation,
+ before attempting to run GOPHER.
+ 
+--------------------------------------------------------------------
+ 
+Following is an example of how to define two Gopher servers.
+ 
+'SYS1.PROCLIB(GOPHSRV)' - the primary gopher server (port 70)
+                          will not run any REXX execs
+ 
+//GOPHERD  PROC MODULE=GGSERVER,
+//         STEPLIB='GOPHER.LOAD',
+//         ACCESS='GOPHER.ACCESS(ACCESS)',
+//         PARMS='GOPHER.ACCESS(PARMS)',
+//         MENU='GOPHER.ACCESS(MENU)',
+//         STDERR='*',
+//         STDOUT='*',
+//         GPARM=
+//*
+//GOPHERD  EXEC PGM=&MODULE,PARM='&GPARM'
+//STEPLIB  DD   DISP=SHR,DSN=&STEPLIB
+//SYSERR   DD   SYSOUT=&STDERR
+//SYSPRINT DD   SYSOUT=&STDOUT
+//SYSIN    DD   DUMMY
+//GGDEBUG  DD   SYSOUT=*
+//GGACCESS DD   DISP=SHR,DSN=&ACCESS
+//GGPARMS  DD   DISP=SHR,DSN=&PARMS
+//GGGOPHER DD   DISP=SHR,DSN=&MENU
+ 
+'SYS1.PROCLIB(GOPHSRV2)' - the secondary gopher server (port 1570)
+                           will run REXX execs
+ 
+//GOPHERD2 PROC MODULE=GGSERVER,
+//         STEPLIB='GOPHER.LOAD',
+//         EXECLIB='GOPHER.EXEC',
+//         ACCESS='GOPHER.ACCESS(ACCESS2)',
+//         PARMS='GOPHER.ACCESS(PARMS2)',
+//         MENU='GOPHER.ACCESS(MENU2)',
+//         VIO=VIO,
+//         STDERR='*',
+//         STDOUT='*',
+//         GPARM=
+//*
+//GOPHERD2 EXEC PGM=IKJEFT01,DYNAMNBR=128, PARM='&MODULE &GPARM'
+//STEPLIB  DD   DISP=SHR,DSN=&STEPLIB
+//SYSEXEC  DD   DISP=SHR,DSN=&EXECLIB  /* needed for %-invoked execs */
+//GGEXEC   DD   DISP=SHR,DSN=&EXECLIB
+//SYSTSPRT DD   UNIT=&VIO,SPACE=(TRK,(100,100)),RECFM=VBA,LRECL=255
+//SYSERR   DD   SYSOUT=&STDERR
+//SYSPRINT DD   SYSOUT=&STDOUT
+//SYSTSIN  DD   DUMMY
+//SYSIN    DD   DUMMY
+//GGDEBUG  DD   SYSOUT=*
+//GGACCESS DD   DISP=SHR,DSN=&ACCESS
+//GGPARMS  DD   DISP=SHR,DSN=&PARMS
+//GGGOPHER DD   DISP=SHR,DSN=&MENU
+ 
+'GOPHER.ACCESS(PARMS)' - startup parameters used by the primary server
+ 
+mtftasks  8    (this is the default)
+port      70   (this is the default too)
+ 
+'GOPHER.ACCESS(PARMS2)'- startup parameters used by the secondary server
+ 
+mtftasks  1       Force single threading to prevent TSO burpages
+port      1570    Must be different from primary server's port
+ 
+-----------------------------------------------------------------------
+ 
+I have not included members ACCESS, ACCESS2, MENU and MENU2, but you
+will find samples elsewhere in this distribution.  ACCESS and ACCESS2
+can be the same, except that you don't need the REXX execs to be in
+ACCESS since ACCESS can't run REXX execs.  MENU and MENU2 should be
+the same, since you may want to configure various Gopher clients
+on other machines to try both MVS servers, but it's up to you.
+ 
+./ ADD NAME=LINKC
+//JOBNAME  JOB ACCOUNT,'NAME'
+//*                                                                  */
+//* Copyright (c) The Charles Stark Draper Laboratory, Inc., 1992    */
+//*                                                                  */
+//* This software is provided on an "AS IS" basis.  All warranties,  */
+//* including the implied warranties of merchantability and fitness, */
+//* are expressly denied.                                            */
+//*                                                                  */
+//* Provided this copyright notice is included, this software may    */
+//* be freely distributed and not offered for sale.                  */
+//*                                                                  */
+//* Changes or modifications may be made and used only by the maker  */
+//* of same, and not further distributed.  Such modifications should */
+//* be mailed to the author for consideration for addition to the    */
+//* software and incorporation in subsequent releases.               */
+//*                                                                  */
+//*********************************************************************
+//*
+//* Linkedit an executable Gopher load module.
+//*
+//GGLINK PROC LOADLIB='GOPHER.LOAD',             Executable load library
+//            OBJLIB='GOPHER.INSTALL.OBJ',       Input object PDS
+//            PLIBASE='SYS1.PLIBASE',            PL/1   link library
+//            EDCBASE='SYS1.SEDCBASE',           C/370  link library
+//            IBMBASE='SYS1.SIBMBASE',           PL/1+C common library
+//            COMMTXT='TCPIP.COMMTXT',           TCP/IP link library
+//            VIOUNIT=VIO,                       Temporary disk unit
+//            OUTCLAS='*',                          SYSOUT class
+//            LPARMS='LIST,LET,MAP',                Linkedit parameters
+//            TEST=TEST                             TEST or NOTEST
+//*
+//LKED      EXEC PGM=IEWL,PARM='AMODE(31),&TEST,&LPARMS'
+//SYSPRINT  DD SYSOUT=&OUTCLAS
+//SYSLIB    DD DISP=SHR,DSN=&PLIBASE
+//          DD DISP=SHR,DSN=&EDCBASE
+//          DD DISP=SHR,DSN=&IBMBASE
+//          DD DISP=SHR,DSN=&COMMTXT
+//SYSLMOD   DD DISP=SHR,DSN=&LOADLIB
+//SYSUT1    DD DSN=&&SYSUT1,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//          SPACE=(32000,(30,30))
+//*
+//         PEND
+//*
+//*
+//* Link GOPHER load module. Like SMP/E, expect return code 8 when
+//* doing this from scratch.  Additional one-or-two-module links
+//* will just replace the corresponding parts of the load module.
+//*
+//GGLINK EXEC GGLINK
+//LKED.SYSLIN DD DISP=SHR,DSN=&OBJLIB(GGCLIENT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMALLOC)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMCLRTX)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMCONN)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMCSO)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDBM)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDFAIL)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDIR)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDISC)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDISPL)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDSOPT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDUMP)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMESRVR)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMFREEM)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMFTP)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMGETDS)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMGETM)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMGOFOR)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMGSRVL)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMIERR)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMIGET)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMINFO)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMISPF)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMIVGET)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMIVPUT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMMENU)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMMTFER)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMOUTS)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMOUTTX)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMPMSG)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMPROC)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMSOCKT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMSOPT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMTNET)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMTSO)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMTYPE)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMUNALC)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMVIEW)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMVTX)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMWAIS)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMWHOIS)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMXTX)
+//            DD *
+ ENTRY   CEESTART
+ NAME    GGCLIENT(R)
+/*
+./ ADD NAME=LINKS
+//JOBNAME  JOB ACCOUNT,'NAME'
+//*                                                                  */
+//* Copyright (c) The Charles Stark Draper Laboratory, Inc., 1992    */
+//*                                                                  */
+//* This software is provided on an "AS IS" basis.  All warranties,  */
+//* including the implied warranties of merchantability and fitness, */
+//* are expressly denied.                                            */
+//*                                                                  */
+//* Provided this copyright notice is included, this software may    */
+//* be freely distributed and not offered for sale.                  */
+//*                                                                  */
+//* Changes or modifications may be made and used only by the maker  */
+//* of same, and not further distributed.  Such modifications should */
+//* be mailed to the author for consideration for addition to the    */
+//* software and incorporation in subsequent releases.               */
+//*                                                                  */
+//*********************************************************************
+//*
+//* Linkedit an executable Gopher load module.
+//*
+//GGLINK PROC LOADLIB='GOPHER.LOAD',             Executable load library
+//            OBJLIB='GOPHER.INSTALL.OBJ',       Input object PDS
+//            PLIBASE='SYS1.PLIBASE',            PL/1   link library
+//            EDCBASE='SYS1.SEDCBASE',           C/370  link library
+//            IBMBASE='SYS1.SIBMBASE',           PL/1+C common library
+//            COMMTXT='TCPIP.COMMTXT',           TCP/IP link library
+//            VIOUNIT=VIO,                       Temporary disk unit
+//            OUTCLAS='*',                          SYSOUT class
+//            LPARMS='LIST,LET,MAP',                Linkedit parameters
+//            TEST=TEST                             TEST or NOTEST
+//*
+//LKED      EXEC PGM=IEWL,PARM='AMODE(31),&TEST,&LPARMS'
+//SYSPRINT  DD SYSOUT=&OUTCLAS
+//SYSLIB    DD DISP=SHR,DSN=&PLIBASE
+//          DD DISP=SHR,DSN=&EDCBASE
+//          DD DISP=SHR,DSN=&IBMBASE
+//          DD DISP=SHR,DSN=&COMMTXT
+//SYSLMOD   DD DISP=SHR,DSN=&LOADLIB
+//SYSUT1    DD DSN=&&SYSUT1,UNIT=&VIOUNIT,DISP=(NEW,DELETE),
+//          SPACE=(32000,(30,30))
+//*
+//         PEND
+//*
+//* Link GOPHER server subtask module.
+//*
+//GGLINK EXEC GGLINK
+//LKED.SYSLIN DD DISP=SHR,DSN=&OBJLIB(GGSTASK)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMALLOC)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDFAIL)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMDUMP)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMFTP)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMGSRVL)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMIERR)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMISPF)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMIVPUT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMOUTS)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMPMSG)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMPROC)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMSOCKT)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMTSO)
+//            DD DISP=SHR,DSN=&OBJLIB(GGMUNALC)
+//            DD *
+ INCLUDE SYSLIB(IUCVFORC)
+ INCLUDE SYSLIB(EDCMTFS)
+ ENTRY   CEESTART
+ NAME    GGSTASK(R)
+/*
+//*
+//* Link GOPHER server main module.
+//*
+//GGLINKS EXEC GGLINK
+//LKED.SYSLIN DD DISP=SHR,DSN=&OBJLIB(GGMMTFER)
+//            DD DISP=SHR,DSN=&OBJLIB(GGSERVER)
+//            DD *
+ ENTRY   CEESTART
+ NAME    GGSERVER(R)
+/*
+./ ADD NAME=MENU
+gopher_menu
+ 
+TYPE=FILE
+NAME=About This Gopher
+PATH=DD:GGABOUT(ABOUT)
+HOST=+
+END
+ 
+TYPE=FILE
+NAME=TSO HELP (Sample Illustrating the REXX Interface)
+PATH=EXEC:TSOHELP
+HOST=+
+END
+ 
+TYPE=DIRECTORY
+NAME=Library/Information Services
+PATH=SYS0008.GOPHER.LIBRARY(LIBRS)
+HOST=MVS.UDEL.EDU
+END
+ 
+TYPE=TELNET
+NAME=UDINFO - University of Delaware Information
+HOST=UDINFO.UDEL.EDU
+END
+ 
+TYPE=DIRECTORY
+NAME=Network and System Services Computer Systems
+PATH=SYS0008.GOPHER.DIR(UDTELNET)
+HOST=MVS.UDEL.EDU
+END
+ 
+TYPE=DIRECTORY
+NAME=Weather Across the Country
+PATH=1/Weather
+HOST=mermaid.micro.umn.edu
+PORT=150
+END
+ 
+TYPE=DIRECTORY
+NAME=Other Gopher and Information Servers
+PATH=1/Other Gopher and Information Servers
+HOST=gopher.micro.umn.edu
+END
+ 
+TYPE=DIRECTORY
+NAME=How to use BITNET LISTSERV Servers
+PATH=SYS0008.GOPHER.DIR(LISTSERV)
+HOST=MVS.UDEL.EDU
+END
+ 
+TYPE=DIRECTORY
+NAME=University of Delaware Newspapers
+PATH=SYS0008.GOPHER.DIR(PAPERS)
+HOST=MVS.UDEL.EDU
+END
+ 
+/*
+./ ADD NAME=PARMS
+!
+! MVS Gopher Sample Startup Parameter File
+!
+! All entries in this file have the format:   variable value comments
+!
+! These are the possible values and their default settings:
+!
+! mtftasks 1    Number of concurrent subtasks to handle client requests
+! port     70   The TCP port number by which clients connect
+! qlength  20   Queue length for TCP server listen function
+! timeout  60   Connection timeout specified when socket is closed
+! domain   .DRAPER.COM     The suffix to be appende to bald host names
+ 
+mtftasks 1    Number of concurrent subtasks to handle client requests
+port     70   The TCP port number by which clients connect
+qlength  20   Queue length for TCP subtask creation
+timeout  60   Connection timeout specified when socket is closed
+ 
+./ ENDUP
+?!
+//ABOUT    EXEC MDLOAD,BS='6160',TRK1='5',TRK2='1',TO='ABOUT'
+//SYSIN    DD   DATA,DLM='?!'
+./ ADD NAME=ABOUT
+gopher_menu
+ 
+TYPE=FILE
+NAME=What Is Gopher?
+PATH=(ABOUTW)
+HOST=+
+END
+ 
+TYPE=FILE
+NAME=Gopher FAQ (Frequently Asked Questions) List
+PATH=(FAQ)
+HOST=+
+END
+ 
+TYPE=DIRECTORY
+NAME=Using The Gopher MVS Client
+PATH=(ABOUTC)
+HOST=+
+END
+ 
+TYPE=DIRECTORY
+NAME=Administering the Gopher MVS Server
+PATH=(ABOUTS)
+HOST=+
+END
+ 
+ 
+./ ADD NAME=ABOUTC
+gopher_menu
+ 
+TYPE=FILE
+NAME=Overview - Using Gopher on MVS
+PATH=(ABOUTCO)
+HOST=+
+END
+ 
+TYPE=FILE
+NAME=Directory Mode - Viewing a Gopher Directory
+PATH=(ABOUTCD)
+HOST=+
+END
+ 
+TYPE=FILE
+NAME=File Mode - Browsing a Gopher File
+PATH=(ABOUTCF)
+HOST=+
+END
+ 
+TYPE=FILE
+NAME=Index Mode - Executing a Gopher Query
+PATH=(ABOUTCQ)
+HOST=+
+END
+ 
+TYPE=DIRECTORY
+NAME=Customizing Your Gopher Startup
+PATH=(ABOUTCS)
+HOST=+
+END
+ 
+ 
+./ ADD NAME=ABOUTCD
+Directory Mode - Viewing a Gopher Directory
+ 
+When you are viewing a Gopher directory, you may perform any of the
+following actions:
+ 
+ * Scroll up and down via the normal ISPF UP and DOWN commands or PFK's
+ 
+ * Type one of the following letters to the left of a menu item:
+ 
+   S - Select the item for viewing or processing
+   E - Extract the contents of the item to a file
+   P - Print the contents of the item to a system printer
+   B - Save the entry as a bookmark (in a bookmark file)
+   D - Delete this entry from the bookmark file *** not yet supported **
+   Q - Display the item as a file, even if it isn't ("Query")
+   I - Display the internal Information of the menu item
+ 
+ * Enter one of the following commands on the command line:
+ 
+   MENU - load a data set containing Gopher menu entries (e.g. bookmark)
+   OPTions - set client processing options
+   QUIT - exit Gopher entirely
+ 
+   or any standard ISPF command.
+ 
+Note:  Currently, in order to use the E or P selection code, you must
+       choose the item via S or Q first.
+ 
+When you select an item, what happens next depends on the type of the
+item you have selected.
+ 
+For a File type, you are placed in browse mode on the data.
+ 
+For a Directory type, you get another Gopher directory.
+ 
+For an Index type, you see a panel asking you to enter a search string
+of some kind, after which a Gopher directory of results appears.
+ 
+For a TELNET type, a telnet session is started, for which you must
+enter a login name at the appropriate time.
+ 
+For a TN3270 type, a tn3270 session is started, for which you must
+enter a login name at the appropriate time.
+ 
+For a CSO type, you are placed in a phonebook lookup session.
+ 
+./ ADD NAME=ABOUTCF
+Browse Mode - Viewing a File in Gopher
+ 
+When you are viewing a Gopher file, you are placed in "browse mode".
+This is very similar to normal ISPF data set browse, except that:
+ 
+ * In addition to most browse commands, you may issue any of the
+   following commands:
+ 
+   EXT or EXTRACT   - copy the current contents to a file
+   PRT or PRNT      - print the current data to SYSOUT.
+   BOOK or BOOKMARK - Save the entry as a bookmark (in a bookmark file).
+   INFO             - Display the internal Information for this item
+   OPTions          - Set Gopher client processing options
+   QUIT - terminates Gopher entirely.
+ 
+   Note that PRT is different from PRINT, which is a built-in ISPF
+   command that prints the current physical screen image.
+ 
+ * The following ISPF browse commands are the only ones that are
+   ***not*** supported under GOPHER:
+ 
+  HEX
+  BROWSE
+  SUBMIT
+  LOCATE .label
+  .<string> (to assign a label)
+  FIND P'generic-string'
+  DISPLAY CC/NOCC
+ 
+./ ADD NAME=ABOUTCO
+The following is modified from Allan Tuchman's XGOPHER help.
+ 
+Gopher on MVS is an ISPF dialog interface to the Gopher
+information delivery system from the University of Minnesota.
+ 
+The initial panel asks you to specify the name of the Gopher server
+host.  Normally you leave the other input fields alone.
+ 
+You may also specify a hostname of "-", which means that you want
+to use your own private Gopher data without going through a server.
+When you do this, you must provide the path name to your private
+top-level menu (data set name, FULLY QUALIFIED, WITHOUT QUOTES).
+ 
+Assuming that the top-level path points to a valid Gopher menu,
+the initial display will show the top level directory of
+gopher information available.  Selecting an item from this
+list will fetch the contents of a file, subdirectory, or
+other information.  The directory display may be updated to
+show the new subdirectory.
+ 
+To select an item, type "S" in front of it and press ENTER.
+This puts you into ISPF BROWSE mode on the text of the item.
+You may also type "Q" in front of an item to see it in text format
+even if it is a directory.  If you have retrieved an item, you may
+type "E" in front of it to extract it into a file - but you may
+do this more easily via the EXTract command from within BROWSE.
+ 
+Type "I" in front of the item to view the internal menu information.
+This is sometimes helpful if you are not sure why you are having
+trouble accessing an item.
+ 
+Type "B" in front of the item to save it in a bookmark file.  You will
+be prompted to supply the name of a bookmark data set; the default is
+GOPHER.BOOKMARK under your TSO prefix.  You may retrieve bookmarks at a
+later date by typing "MENU GOPHER.BOOKMARK" - or whatever data set name
+you used - or you can put a pointer to the bookmark data set in your
+private Gopher menu (for which you need to learn how to hack your
+GOPHERRC file).
+ 
+Some gopher file types are not supported by the current client.
+These will not appear on your menus.  Furthermore, you may not
+be permitted to access some items, depending upon the server
+and the host from which you are trying to access them.  These
+restrictions do not apply to local mode, where y                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

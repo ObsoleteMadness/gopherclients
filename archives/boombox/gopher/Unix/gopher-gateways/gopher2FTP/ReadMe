@@ -1,0 +1,190 @@
+This distribution is somewhat obsolete.  This functionality is
+bundled with the Unix server.
+
+-----------------------------
+
+
+
+In this distribution is a small C daemon called g2fd.c.  This is third
+incarnation of a Gopher to FTP gateway.  Running this daemon on a UNIX
+box gives folks running gopher clients access to all that good stuff
+available out there for anonymous ftp.
+
+Previous versions were prototypes written in Perl.  The prototype got
+so popular that gopher folks going out to get stuff via ftp were
+swamping the unix box that was running the gopher-to-ftp daemon. This
+version is much more efficient and has reasonably portable (ha!) load
+limiting code.  This version has no logging code...  we'll get round to
+that by and by.
+
+The principle is this: the gopher client connects to the g2fd daemon
+and tells it what the name of the ftp site is, (and perhaps what file
+it wishes to retrieve from there).  The daemon connects to the remote
+host, retrieves a directory listing (or file) via anonymous ftp, and
+returns it to the gopher client.  Of course all this happens without
+any new knowledge by the gopher client.
+
+
+The daemon assumes a nice healthy unixy ftp server at the ftp end...
+that is to say it is probably not going to work with funky IBM or
+TOPS-20 ftp implementations.  This is left as an exercise for the
+hacker...  er... reader.
+
+The daemon is designed to be run by inetd as a TCP daemon.
+The easiest way to explain how to set it up and how it works
+is to use an example.
+
+Let us assume that we want to run a gopher to FTP gateway on a machine
+called hell.micro.umn.edu at port 70.  If you already have a regular
+gopher server running at port 70 (the sanctioned gopher port), on
+hell.micro.umn.edu you can run g2fd at some other high numbered
+unreserved port; try something over 3000?
+
+1.  Edit the parameters (marked lines right after the #includes).
+in g2fd.c for your
+local configuration; in this case change the marked lines as follows:
+
+/*==============Local parameters to be edited in===============*/
+#define	LOCALHOST	"hell.micro.umn.edu"	/* This host's domain name */
+#define	LOCALPORT	70			/* This daemon's port */
+#define MAXLOAD		8.0			/* For load limit if > 1 */ 
+#define	FTP		"/usr/ucb/ftp"		/* To invoke ftp */
+#define	UPTIME		"/usr/ucb/uptime"	/* To check loadavg.  Ick. */
+#define	LIST		"/tmp/gftpL+"		/* Temp list file prefix */
+#define	DATA		"/tmp/gftpD+"		/* Temp data file prefix */
+/*=============================================================*/
+
+The MAXLOAD parameter specifies how high the load average on the
+host can get before the daemon will refuse new connections.
+
+You might also check to find the whereabouts of ftp and uptime
+(use "whereis ftp" or poke around) and specify the full pathname.
+
+The LIST and DATA  strings specify where the daemon is to stash 
+temporary files; leave the + on the end.  In this example, temp
+files will be placed in /tmp.
+
+2.  Compile the daemon:
+
+	make g2fd
+
+
+3.  Become root and place the g2fd file someplace nice (like
+/usr/local/bin or /usr/etc or wherever you place stuff like this);
+assume we put it in /usr/local/bin.  Make it owned by root and
+executable:
+
+    chown root g2fd
+    chmod 755 g2fd
+
+
+4.  Update /etc/services by adding the following line to the
+/etc/services file (note it's a tab between g2fd and 70):
+
+    g2fd	70/tcp
+
+
+For SUNs running yp, you'll also want to do a make services:
+    cd /var/yp
+    make services
+
+5. Now update /etc/inetd.conf or /etc/servers:
+For SunOS 4.0 or BSD 4.3 systems add the following line to
+/etc/inetd.conf:
+
+g2fd	stream	tcp	nowait	root	/usr/local/bin/g2fd	%A
+
+For Ultrix systems, (which we haven't tested under!)
+add the following line to /etc/inetd.conf:
+
+g2fd	stream	tcp	nowait	/usr/local/bin/g2fd
+
+For A/UX or SunOS 3.5 add a line to /etc/servers:
+
+g2fd	tcp	/usr/local/bin/g2fd
+
+Note tabs between fields.
+
+6.  Kill and restart the inetd daemon whatever the prescribed way
+to do that on your machine.
+
+7.  You can confirm that g2fd is running now at port 70 by
+telneting to hell.micro.umn.edu at port 70. Test it out by
+typing 
+	boombox.micro.umn.edu@/pub/
+
+This funky path means "return the directory listing from the
+/pub/ directory from boombox.micro.umn.edu."
+It should respond by returning the /pub/ ftp directory at
+boombox.micro.umn.edu.
+
+8.  Now make some links from a regular gopher server to the g2fd
+service.  On a unix server, a link could look like this (on a 
+Mac server, do the functional equivalent using Gopher's Helper):
+
+	Name=boombox:  Home of POPmail and Gopher Central.
+	Type=1
+	Port=70
+	Path=boombox.micro.umn.edu@/pub/
+	Host=hell.micro.umn.edu
+
+And you're all set.
+
+What happens is that the user sees the full Name (as always), say
+"boombox: Home of POPmail and Gopher Central".  It would appear as
+a directory (or folder icon on a Mac).  If selected (double-clicked
+on a Mac), the client would open a connection to hell.micro.umn.edu
+at port 70.  The g2fd daemon would accept.  The client would
+then send it the selector string "boombox.micro.umn.edu@/pub/".  The
+daemon would interpret this as "Go out to boombox.micro.umn.edu
+via anonymous ftp and get a listing of the pub directory."  The
+daemon would return this listing to the client in nice gopher
+format.  And everything else happens by magic as you would expect.
+
+To the client it looks just like any other gopher-type directory.  The
+script does assume that files ending in .hqx are BinHex files and gives
+them the type 4.  It also makes rash assumptions about the plethora of
+DOS binary files (.zip et. al.), and maps them all to a type 5.  The
+client can decide what to do with them based on the .xxx extension that
+most seem to carry. Finally, it gives tar and Z files a filetype of 9.
+And 9 is a new gopher item type (actually the only one we've allocated
+since we set up standards for the protocol.  All other files are given
+normal type 0: that is text.
+
+If your client is capable of handling binary types then it can allow
+type 5 and/or type 9 in directory listings.  It should be prepared to
+do things based just on the extensions (.xxx) of the files that the
+user requests.  In particular, it will need to just read from the
+connection until the server closes the connection when sending a binary
+file.  So there will be no concluding period, and obviously lines are
+meaningless.
+
+WATCH OUT: The script has no way of knowing for sure that a file at an
+ftp site is binary (other than educated guesses based on the suffix of
+the filename), so when it presents gopherized listings, it must show
+these files too.  When a client attempts to retrieve a file, the script
+can peek into the file and make a much more educated guess as to
+whether it contains text.  So it should prevent a client from
+transferring totally gonzo binary.  
+
+It would probably be wise to place caution ReadMe files out there for
+the users.  Also, if possible good gopher administrators would place
+the link all the way inside the "pub" or whatever directory at the
+server end.  We really don't want users fumbling around inside the bin
+or etc directories and attempting to suck down binary files.
+
+Once more: the binary question is still open and we need to resolve
+that one yet.
+
+All credit for this great and simple idea should go to Craig Rice
+(cdr@stolaf.edu).  Thanks Craig.
+
+The previous Perl script was much enhanced by John Ladwig.
+
+Suggestions or bug reports for this daemon are welcome...
+
+The capabilities of this daemon will probably get rolled into
+the main gopher daemon in the next release.
+
+FXA.
+

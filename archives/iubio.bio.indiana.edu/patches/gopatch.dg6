@@ -1,0 +1,67 @@
+Patch #:	gopatch.dg6
+Type:		bug fix 
+Priority:	medium
+Summary:	Support old error message format for gopher- clients
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg6
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.h
+File:		gopher2.012/gopherd/gopherd.c
+File:		gopher2.012/gopherd/serverutil.c
+
+
+*** gopher2.012/gopherd/gopherd.h	Mon Jun 14 17:23:02 1993
+--- go212dg/gopherd/gopherd.h	Wed Mar 30 09:43:04 1994
+***************
+*** 66,71 ****
+--- 66,72 ----
+  #endif
+  
+  extern int errno;
++ extern int IsGplus;  /* +dgg need for error GplusError to G- clients */
+  
+  #include "String.h"
+
+
+*** gopher2.012/gopherd/gopherd.c	Tue Mar  8 12:11:16 1994
+--- go212dg/gopherd/gopherd.c	Wed Mar 30 12:41:05 1994
+***************
+*** 335,340 ****
+--- 335,342 ----
+  extern double maxload;
+  int Process_Side();
+  
++ extern int IsGplus = FALSE; /* +dgg global set in gopherd */
++ 
+  #include "STAarray.h"
+  #include "STRstring.h"
+  #include "Sockets.h"
+***************
+*** 984,989 ****
+--- 987,993 ----
+       setgid(Ggid);
+       setuid(Guid);
+  
++     IsGplus = CMDisGplus(cmd); /* +dgg: need for error, others could use */
+      if (CMDisAskitem(cmd)) {
+  	  FILE *retrfile;
+  
+
+
+*** gopher2.012/gopherd/serverutil.c	Tue Mar  8 10:56:09 1994
+--- go212dg/gopherd/serverutil.c	Wed Mar 30 09:42:34 1994
+***************
+*** 209,214 ****
+--- 209,218 ----
+       char outputline[256];
+       int i;
+   
++ /* +dgg patch -- error to g- clients must be g- form: */
++       if (!IsGplus)
++         sprintf(outputline, "0%s\t\terror.host\t1\r\n", text);
++       else
+       sprintf(outputline, "--1\r\n%d %s <%s>\r\n0%s\t\t\t\r\n", 
+  	     errclass, GDCgetAdmin(Config),
+  	     GDCgetAdminEmail(Config), text);
+

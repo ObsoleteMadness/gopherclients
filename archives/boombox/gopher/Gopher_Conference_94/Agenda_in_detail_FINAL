@@ -1,0 +1,410 @@
+=========================================
+APRIL 22: Technical Tutorials and Forums
+----------------------------------------
+
+Morning General Session
+      8:00  Registration
+      9:00  Welcome - Dr. D.R. Riley, Associate V.P. & Associate Provost, 
+                      Academic Affairs, University of Minnesota
+
+GEN1  9:10  Gopherspace & the State of the Gopher
+            University of Minnesota Internet Gopher Development Team
+A look at where we came from and where we are going. How Gopher fits 
+together with other internet services, how Internet services will evolve
+over the next year, new user interface metaphors for Gopher clients, and 
+significant recent developments in Gopher technology. Meet the new,
+improved U of M gopher development team.
+
+     10:15  Break
+
+GEN2 10:30  Searching Gopherspace with Veronica - Steve Foster 
+How veronica has evolved in the last year. A fascinating rundown of the
+numbers on the growth in GopherSpace, and a survey of the most-wanted words
+in GopherSpace.  Steve Foster, co-creator of veronica, will discuss making
+your gopher server veronica-friendly by using options to control indexing, 
+and by using prebuilt index files. How ( and why ) to run and register your 
+own veronica server. He will also discuss some future directions for veronica,
+including plans for simplified regional and country indexes, and progress on
+more-efficient servers. Finally, in BEYOND THE ABSTRACT  he will discuss  
+possibilities for improved index capabilities using Gopher+ attributes.  
+
+GEN3 11:15  Archie - Peter Deutsch
+Archie isn't just for anonymous ftp anymore! The latest release
+of the Archie system provides a fully supported service for indexing 
+gopherspace. New features for this release include a direct gopher 
+interface onto the entire archie system, as well as the new indexed 
+collection of gopher menu items. In this presentation, Archie co-creator 
+Peter Deutsch presents an overview of the Archie system architecture, 
+details of the gopher gathering and distribution components, as well as 
+a discussion of initial implementation experience. Also covered will be 
+details on registering your site with archie, preparing prebuilt indexed 
+files, as well as an overview and discussion of the Bunyip gang's future
+plans for the furry rodent (yes, Bunyip is going to be doing Gopher+,
+attributes and other stuff, too).  
+
+     12:00   Lunch 
+
+
+Afternoon tracks 1:30 - 4:30:
+
+    Room 1: New Gopher Administrators
+    ----------------------------------
+NG1  1:30 - 1:50  Introduction to Gopher Protocol - Dave Johnson
+A quick overview of the Gopher and Gopher+ protocols. The intended 
+audience is new server administators who need to understand enough 
+of the gopher protocol to test their servers and clients. 
+
+NG2  1:50 - 2:15  Macintosh and DOS Servers - Dave Johnson
+How to select hardware and software to set up a Gopher server 
+running on a PC (PC-DOS) or a Macintosh (Macintosh OS). Full text 
+searching on MacOS gopher servers.  
+
+NG3  2:20 - 3:00  A Gopher Server for VMS: How to Cook your VMS 
+                  Gopher Server - J. Lance Wilkinson          
+History of the VMS Gopher Server, followed by a tutorial on 
+installation of the VMS Gopher Server, version 1.2VMS-1, will 
+be presented. The intended audience is VMS system managers who 
+are about to, or have just become, GopherMeisters.
+
+NG4  3:05 - 4:00  Unix Server and Client - Paul Lindner
+Selecting hadware for running the Unix gopherd server. 
+Configuring and installing gopherd and the Unix gopher clients.
+
+NG5  4:00 - 4:30 Public Access Clients, Security Issues - Paul Lindner
+How to set up a public access vt-100 telnet client while keeping the
+cheese and crackers to a minimum. Security issues with running a Unix
+gopher server.    
+
+    Room 2: Enhancing Content, Efficiency, Reliability
+    ---------------------------------------------------
+EQ1     o   Information Quality - Anders Gillner 
+EQ2     o   Making Sense of Veronica's Words - Nancy John
+EQ3     o   Quality of Service - Mitra
+The quality of information and organization of gopherspace is
+crucial to providing users with a useful information system. In this
+session, the quality and reliability issues of Gopher are discussed
+from three perspectives. This session will look at conceptual models
+for information quality/organization, how to give the users what they
+want (and some ways of determining what users want and like) and
+operational issues for making gopherspace more robust and reliable.
+        
+    Room 3: Developer Forum
+    ------------------------
+DEV1    An open forum discussion of gopher protocol and development 
+        issues including:
+            Gopher+ protocol document
+            Attribute Registry
+            New Data Types
+            Gopher and URLs and URNs
+        and a presentation called
+            if (GView==Interactive_Image_Format) free (WWW); 
+        by Alan Steremberg. This presentation covers the technology 
+        behind Blue Skies, an interactive graphical gopher client. The 
+        Interactive Image Format, a way of assigning hot regions to 
+        graphics, will be discussed and proposed as the official GView 
+        standard. Developers will receive sample IIF files, source code 
+        to parse and manipulate IIF files and data structures, and 
+        source code to decode GIF images. 
+
+
+
+-----------------------------------
+APRIL 23  Cool Gopher Applications
+-----------------------------------
+Morning tracks 9:00 - 12:00.
+
+    Room 1: Cool Gopher Apps (Client, Server, and Service Show & Tell)
+    -------------------------------------------------------------------
+APP1   9:00- 9:30   WinSock Implementation of Asynchronous Gopher+ 
+                    with multiple sessions in Super TCP - John Xu
+A Windows Gopher+ client that supports asynchronous multiple sessions.
+
+APP2   9:35-10:05   America Online's gateway to Gopher - 
+                    GUI gopher at 2400 baud - Mitra
+Pandora Systems has built an interface between AOL and the internet 
+that allows AOL's users to access the resources available through WAIS 
+and Gopher. Since AOL can be installed on a minimal machine, with a 
+2400 baud modem with almost no documentation, this represents 
+a huge step in making Gopher available to the non-technical population.
+
+APP3  10:10-10:40   Gofer = Gopher+ + Token-based Tree Maintenance and  
+                    Much More - Andrew Scherpbier and Mark Boyns
+Would you like to maintain your gopher server with a gopher client? 
+We will present the Gopher Maintenance Protocol (GMP) which allows 
+users to maintain their own Gopher trees without intervention of a 
+Gopher administrator. GMP consists of basic extensions to the Gopher+ protocol 
+which we hope to be adopted in future versions of Gopher+.  
+A brand new Gopher+/GMP client and server have been developed at 
+SDSU in C++. This project, code named Gofer, has produced a 
+high performance/low maintenance gopher implementation.
+
+APP4  10:55-11:25 Gopher Access to Mainframe Based Administrative 
+                  Data and Class Rosters - Robert Cademy
+Do you have a lot of data on a mainframe that you want users to be 
+able to access on their desktop workstations with tools they already 
+have? Using Gopher+ Ask blocks that's just what we've done at SDSU.  
+We import class roster information from our administrative mainframe 
+onto a Unix server and allow faculty to request their rosters, via 
+Gopher, in text or spreadsheet format, for Macintosh, PC, or other 
+systems. Issues such as ease-of-use, format type, electronic delivery, 
+and security will be discussed. 
+
+APP5  11:30-12:00  The AskERIC Virtual Library: A User-Driven 
+                   Service - Nancy Morgan
+The AskERIC Service is a user-based approach to providing educational 
+information services and resources through the Internet. The 
+organization and development of resources for the AskERIC Virtual 
+Library, a Gopher/FTP site of selected resources for education and 
+general interest, is driven by the questions and comments received 
+by users of AskERIC.
+   
+
+    Room 2: Even More Cool Gopher Apps
+    ------------------------------------
+APP6   9:00- 9:30  Using Minuet as a PC-DOS Gopher client 
+                   - Earl Schleske
+Minuet is an integrated client that supports Gopher+, Netnews, 
+ftp, telnet, and SMTP/POP for e-mail. The most amazing part of 
+Minuet is that this single applications runs on 512K PC-DOS 
+systems. Sites that want to support internet access without
+requiring user upgrades will want to consider Minuet.
+
+APP7   9:35-10:05  Meet GINA - A face you will love at 
+                   first sight - Keith Vogt
+A Graphical Interface for Network Access designed for easy access 
+to the Internet. A client/server interface for Mac/Windows that 
+provides email, conferences (usnet groups), and information (ftp, 
+telnet and gopher integrated) with easy point and click operation. 
+Developed primarily for K-12 classroom use with usenet group 
+selection capability.
+
+APP8  10:10-10:40  Blue Skies Gopher - Alan Steremberg
+Forecast: Blue Skies, chance of large rodents. Blue Skies is an 
+interactive graphical gopher client and an extremely powerful 
+data visualization tool. The University of Michigan Weather 
+Underground gopher servers has interactive images which
+allow the user to point at part of the image for further 
+information. For example, selecting a city on a weather map would 
+give the current conditions for that city. Blue Skies will also 
+display quicktime quicktime animations, GIF and JPEG images, and
+more. Server maintainers will learn how easy it is to create 
+their own interactive images! 
+
+APP9  10:55-11:25  WSGopher: a Windows Gopher+ client - David Brooks
+WSGopher is an asynchronous, MDI Gopher+ client for Microsoft Windows 
+and WinSock 1.1. To support the user, it uses WYSIWIH (what you see 
+is what I have) and a full range of features including bookmark 
+\categories, printing with screen or printer fonts, print preview, 
+parallel TCP/IP connections, and much more. Come hear about this 
+popular client from the author!
+
+APP10 11:30-12:00  Gopher and the Mathematics Archives 
+                   - Larry Husch & Earl Fife
+The Mathematics Archives has as its goals as providing access to 
+all software and other materials which are available on the Internet 
+and which are useful in the teaching of mathematics at the community 
+college, college and university levels. We will discuss how gopher 
+has helped us in our attempt to reach these goals.
+
+
+    Room 3: Gophers of a Different Color
+    -------------------------------------
+COL1   9:00- 9:30 K-12: Using Gopher as a Learning Resource 
+                        Server - Matthew Stuve
+The UIUC Learning Resource Server (located at lynx.ed.uiuc.edu)
+was one of the first Gopher servers to address the needs of pre- 
+and in-service teachers as well as K-12 schools in general. The 
+relevant K-12 resources of the server will be demonstrated. In 
+addition, our server is composed of resources provided by numerous 
+staff, faculty, and students within the College from local K-12 
+schools.  This form of "distributed server management" will be 
+explained in the context of Macintosh file sharing on AppleTalk 
+networks. Finally, guidance on the design, setup, and management
+of Gopher servers in K-12 settings will be provided.
+
+COL2 9:35-10:05   Service Learning Across the USA: Establishing 
+                  a Service Learning Gopher - Charles Boudreaux
+Service-learning has been a major focus of the Clinton administration. 
+Our nationally-funded clearinghouse of K-12th grade service-learning 
+information is shared with the public via toll-free telephone calls 
+to our center, a FoxPro database containing information from the 
+field, and an InterNet Gopher server running on a Macintosh platform.  
+Our server will be demonstrated via Macintosh  TurboGopher and 
+mainframe clients. As our server is still under construction, 
+future directions and Macintosh Server foibles will also be 
+discussed.
+
+COL3  10:10-10:40  Building Gophers Collaboratively: Children, 
+		   Youth and Family Information Servers
+                   - Trudy Dunham and Robert Rubinyi
+Sharing electronic publications, newsletters, and
+information about successful programs in the areas of children,
+youth and family is the focus of two Gopher information bases
+developed by the Minnesota Extension Service.  Initiated in 1992,
+the Minnesota Children, Youth and Family Consortium Electronic
+Clearinghouse has grown to encompass a wide-range of materials
+including census data, reports from nonprofit agencies, project
+abstracts and online publications. The newly formed National
+Extension Children, Youth and Family Network is a collaborative
+effort of land grant universities in over forty five states to
+share materials on child care, family resiliency, science and
+technology education and interagency collaboration. During this
+session, the planning, implementation and technical challenges
+posed in the development of collaborative information systems
+will be discussed.
+
+COL4  10:55-11:25  Corporate Gophers: Schlumberger and its Information 
+                   GopherSpace - Rich Obrecht
+Schlumberger has begun to implement Gopher in such a way that it can 
+distribute information across the corporation. Such information includes 
+things such as how to acquire an IP subnet, getting a DECnet node number 
+and name, telecommunications circuit acquisition, X.25 PSN Host and Line 
+configuration request, and access account requests. This is by no means 
+an exhaustive list and this list grows DAILY! Schlumberger is also 
+pursuing securing information such that only a subset of employees may 
+peruse the secure information (using Gshield). Standards have been defined 
+for 1st and 2nd-level menus such that ALL Schlumberger Gopher servers 
+have the same look and feel for the travelling employee. Indexing has 
+been implemented for global Gopherspace searching (using Jughead) and 
+specific server-based Gopherspace searching (WAIS and freeWAIS). 
+Schlumberger is EXCITED about information distribution using Gopher!
+
+12:00 Lunch 
+
+Afternoon tracks 1:30 - 3:45
+
+    Room 1: Still More Cool Gopher Apps 
+    ------------------------------------
+APP11  1:30- 2:00  Jughead: A tool to search menus in your local 
+                   gopher menu space - Rhett "Jonzy" Jones
+Besides the local search feature, Jughead is also an organizational tool 
+allowing a hierarchical view of a gopher subspace.
+
+APP12  2:05- 2:35  Running a Consolidated Gopher and WWW Server 
+                   - Michael Potter
+Los Alamos National Laboratory has developed a World-Wide-Web server 
+that integrates nicely with an existing Gopher server. The WWW server 
+allows access to information already stored in Gopher, and provides 
+hooks to take full advantage of the features of WWW and hypertext.  
+Organizations that wish to maintain information in a single form, but 
+serve both Gopher and WWW users, should be interested in the LANL 
+WWW server.
+
+APP13  2:50- 3:20  Gopher Goes Interactive - embedding Usenet News 
+                   in Gopher - Stephen Trier
+An innovative MS-DOS Gopher client with integrated Usenet and a 
+modified Unix gopher client that can link to Usenet. Both an
+overview of the technolgy and a demonstration.
+
+APP14  3:25- 3:55  Growing the MIT Libraries Gopher: subject 
+                   classification and team building - Keith Morgan
+Do all gophers look alike? Should all gophers look alike? Keith 
+Morgan, Economics Subject Specialist and member of the MIT Libraries 
+Gopher Team will discuss the subject classification and team building
+approach taken by the MIT Libraries gopher team. Morgan will 
+demonstrate MITosis, the Libraries gopher, and suggest methods by 
+which gopher builders might form collaborative alliances that draw on
+the particular professional knowledge of librarians: an understanding 
+of how people search for information and how best to organize that 
+information. The MIT Libraries have employed a team approach to the
+gopher that has united the organizational skills of cataloging librarians 
+and the evaluative and specialized knowledge of subject selectors with 
+the technical expertise of the systems office. Morgan will also share the 
+gopher team's "Guiding Principles for a Good Gopher" developed over the 
+past year.
+
+  
+    Room 2: Gophers of a Different Color (continued from morning session)
+    ----------------------------------------------------------------------
+COL5  1:30- 2:00  Library and Government Information via Gophers 
+                  Using LC MARVEL - Elizabeth Miller
+LC MARVEL (Library of Congress Machine-Assisted Realization of the 
+Virtual Electronic Library) can be classified as both a "library" 
+and "government" gopher server.  In addition to the Library's own 
+information, LC MARVEL also offers easy and well-organized access 
+to government information (federal, state, international, 
+congressional, etc.) and to library information, online catalogs,
+and library gophers.  This demonstration will focus on using the 
+LC MARVEL gopher to access to this genre of information over the 
+Internet.
+
+COL6  2:05- 2:35   Legi-Slate: Burrowing into the House and Senate
+                   - Ed Stawick
+Legi-Slate, Inc. has designed a new Gopher server to deliver information 
+about the daily activities of the Executive and Legislative branches of 
+the U.S. government. This system has features not found in other gophers and
+uses these features in an attempt to deliver this complex information in a 
+straightforward manner. The Legi-Slate Gopher System is designed to target the 
+academic market although a lot of interest is being shown by government and 
+corporate entities. This session will introduce the Legi-Slate Gopher Service, 
+discuss the unique features of the system and demonstrate the currently 
+available prototype.
+
+    Room 2: Server Tools and Maintenance
+    -------------------------------------
+STM1   2:50- 3:20  UNIX Server Construction and Maintenance for 
+                   Mac Users - Michael Fraase
+You don't need to know much about UNIX to construct and maintain a 
+UNIX-based Gopher server. This session is geared for Mac (or Microsoft Windows) 
+users with little or no UNIX experience who find themselves maintaining a 
+UNIX-based Gopher server. The good news is that you can 
+use familiar Mac (or Microsoft Windows) tools with a graphical 
+interface. You need not be burdened with the UNIX command prompt.
+
+STM2   3:25- 3:55  Titling Menus with scripts and keystrokes (or 
+                   how to work with .names files and .cap directories) 
+                   - Paul Kramer
+This presentation introduces a program that helps manage 
+..names files and .cap directories in a Unix gopher server. These 
+files/directories are used to title entries in the gopher server. 
+A public domain program called utree can be used to create, 
+edit, and manage these files and directories. utree is a 
+screen-oriented file system browser and file management utility 
+written by Peter Klingebiel. While running utree, the user can use 
+single keystroke commands and define new commands to perform tasks
+specific to managing the .names files and/or .cap directories. 
+These features will be demonstrated in this presentation.
+
+    Room 3: Advanced Server Tools and Gateways
+    -------------------------------------------
+ADV1   1:30- 2:00  Gopher to SQL Gateway - Paul Lindner
+SQL databases have an explicit heirarchical structure than can be 
+mapped into Gopherspace very naturally. This sessions covers the
+Gopher to SQL gateway for Oracle and Sybase SQL servers, and 
+demonstrates browsing, searching, and modifying SQL database from 
+Gopher+ clients.
+
+ADV2   2:05- 2:35  Gopher to Z39.50 1992 gateway - Danny Iacovou
+While Gopher has had a gateway to WAIS (an extension of the 1988 
+revision of Z39.50) for several years, Z39.50 has not been standing 
+still. The new 1992 revision of Z39.50 requires a new gopher gateway 
+and this allows for access to online catalogs. This session 
+covers the features of the gopher to 1992 Z39.50 gateway, how to 
+install and configure your own gateway, and a tour of some of the 
+library catalogs that are now accessible via Gopher.
+
+ADV3   2:50- 3:20  Current Contents database on Gopher - Bob Alberti
+The Current Contents database is a set of abstracts for academic 
+journals which is updated weekly. Current Contents is quite popular 
+at the University of Minnesota since it is easily searchable via 
+gopher and is an excellent way to scan journals for articles of 
+interest. The processes used to automate gopherizing the raw Current 
+Contents data is an excellent case study for gopher administrators 
+pondering how to publish masses of frequently changing information.
+This session covers both the userUs view of Current Contents and the 
+system administration issues.
+
+ADV4   3:25- 3:55  Authentication & X.500 gopher gateway - Frank Grewe
+The University of MinnesotaUs online directory is an X.500 directory 
+which contains over 100,000 entries. Faculty, staff, and students can
+use Gopher+ clients to change their entries in the X.500 database as 
+well as browse and search X.500. This session explores how Gopher+ 
+forms and a gopher to X.500 gateway make it possible to update 
+preferred e-mail address, fax number, etc. in the directory.
+
+
+------------------------------------------------------------------------
+In addition to the scheduled sessions, rooms are available for informal 
+Birds-Of-a-Feather (BOF) sessions all day Saturday. BOF signups wil be 
+held during day 1 (Friday).
+------------------------------------------------------------------------

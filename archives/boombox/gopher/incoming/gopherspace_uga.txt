@@ -1,0 +1,698 @@
+Gopherspace
+ _______________________________________________
+|UCNS Computer Review                           |
+|University Computing and Networking Services   |
+|University of Georgia                          |
+|Computer Services Annex                        |
+|Athens, Georgia  30602                         |
+|E-Mail: BITNET     helpdesk@uga                |
+|        Internet   helpdesk@uga.cc.uga.edu     |
+|_______________________________________________|
+
+Newsletter:  Fall Quarter 1993
+Author: Albert DeSimone, Jr.
+-------------------------------------------------------------
+Assembling and utilizing the creative and technical energy to 
+conceive of and develop the Internet Gopher must have been an 
+exciting and challenging task for the University of 
+Minnesota's Internet Gopher Development Team.  But with the 
+popularity of Gopher throughout the world, the team members 
+can certainly be proud of their efforts.
+
+Gopher is information discovery/retrieval software currently 
+in use at the University of Georgia.  You can use a Gopher 
+client (software that runs on CMS and CONTAC, DOS, Macintosh, 
+Unix, etc.) to connect to the UGA Gopher server and find out 
+what's for lunch at Bolton or Snelling, check out campus 
+events, connect to the UGA Libraries Online Catalog, search 
+and browse the UGA Policies and Procedures Manual, and check 
+out the Athens weather.  And this is only the beginning.  
+Employing the computers and networks on the worldwide 
+Internet, you can navigate through UGA's slice of Gopherspace 
+to Gopher servers through the world. 
+
+The client/server protocol
+Based on the client/server model, the Gopher client presents 
+you with a menued hierarchy of information items.  The menu 
+and associated items are delivered to the client from a 
+Gopher server, a repository for the information you receive. 
+You can then select items from a menu to retrieve a specific 
+piece of information or a directory of related items.
+
+How you select, retrieve, and search the items presented to 
+you by the server will depend on the client you are using.  
+This is truly the essence of a client/server protocol--a set 
+of rules which allows different computers and operating 
+systems to communicate with one another. A DOS client, 
+Macintosh client, Unix client, or CMS client all receive the 
+same information.  The client, however, displays the 
+information items in a fashion suitable to the environment in 
+which the client resides.  As an example, let's look at how a 
+graphical user interface on a Macintosh compares to a textual 
+user interface on CMS and CONTAC 
+(Figure 1).
+
+                          Figure 1  
+              The UGA Gopher Server Main Menu
+             As Presented by a Macintosh client
+-------------------------------------------------------------
+|   File    Edit   Gopher   Setup   Recent                  |
+|||||||||||||||||||||   Home Gopher Server 1  |||||||||||||||
+|    Internet Gopher 1991-1993 University of Minnesota      |
+|                                                           |
+| About the University of Georgia Gopher                    |
+| Library                                                   |
+| UGA Campus-Wide Information                               |
+| UGA Departments                                           |
+| University System of Georgia                              |
+| Weather                                                   |
+| Worldwide Information                                     |
+|                                                           |
+|                                                           |
+| <== xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ==>|
+-------------------------------------------------------------
+
+
+                          Figure 1  
+              The UGA Gopher Server Main Menu
+                As Presented by a CMS client
+-------------------------------------------------------------
+Rice CMS Gopher 2.4.1
+GOPHER.UGA.EDU
+1/7
+                                               (root menu)
+<menu>     About the University of Georgia Gopher
+<menu>     Library
+<menu>     UGA Campus-Wide Information
+<menu>     UGA Departments
+<menu>     University System of Georgia
+<menu>     Weather
+<menu>     Worldwide Information
+
+
+1=Help    2=      3=Return   4=Print   5=Receive   6=Find
+7=Backward  8=Forward  9=Bookmark  10=Booklist  11=   12=Quit
+-------------------------------------------------------------
+
+Navigating
+There are several obvious differences in the two menu views 
+presented.  Notice how the menu items, which are all submenus 
+(or directories), are represented as folder icons on the 
+Macintosh.  The word "menu" represents the same item type on 
+the CMS client.  With the Macintosh client, the mouse is your 
+primary tool for navigating through Gopherspace.  The 
+keyboard performs the equivalent function when using the CMS 
+client.  The Macintosh user would select the "Weather" item 
+by using the mouse to position the cursor on "Weather" and 
+clicking the mouse button twice.  The CMS user would use the 
+tab key to position the cursor on "Weather" and press ENTER.  
+Each selection activity is endemic to the client's 
+environment and would yield the same list of related items.
+
+
+Clients and servers
+If ubiquity is a virtue, then Gopher is a candidate for 
+sainthood.  Listed below are the more popular clients and 
+server.  The majority of Gopher software is available at the 
+University of Minnesota's anonymous FTP site:
+
+     boombox.micro.umn.edu
+
+in the directory:
+
+     /pub/gopher
+
+In order to cut down on unnecessary network traffic, UCNS has 
+placed (and endeavors to keep in place) the most recent 
+versions of the more popular clients and servers on the 
+University of Georgia's anonymous FTP site:
+
+     ftp.uga.edu
+
+The specific directory location for each file is included in 
+the description.  Also note references to "Gopher+" in the 
+descriptions.  Gopher+ is the next generation of Gopher 
+clients and servers (more on Gopher+ in the section 
+"Multimedia and Beyond with Gopher+space").  
+
+General requirements
+Only computers connected to the campus network (and therefore 
+the worldwide Internet) can use Gopher.  For those who are 
+not so fortunate as to have desktop connectivity to the 
+campus network,  UCNS provides a Gopher client on CMS and 
+CONTAC.  If you have an account on CMS or CONTAC, you can use 
+Gopher from there (regardless of how you connect).  UGA 
+departments with Unix systems may also have a Gopher client 
+installed.  Contact your departmental Unix administrator for 
+more information.
+
+Network-related configuration
+When configuring Gopher, there are a few bits of information 
+you will need to know.  These include:
+
+Gopher Server:
+     gopher.uga.edu
+     (This is the UGA Gopher server.)
+
+Gopher Port:
+     70
+     (This is the port number for the UGA Gopher server.  All
+     Gopher servers use port numbers for connections; 70 is 
+     the standard port number.)
+
+Your Computer's IP Address:
+     (You will have to know this.  If you don't know, contact 
+     your department's network domain liaison.)
+
+Network Mask:
+     255.255.0.0
+     (The network mask relates to how the local area network 
+     your computer is connected to is configured with respect 
+     to the campus network.)
+
+Name Servers:
+     128.192.1.9
+     129.192.8.4
+     (The first number is the primary campus name server.  In 
+     the event that the primary name server is inaccessible, 
+     the secondary name server is used.  Name servers allow 
+     you to use descriptive names (e.g., gopher.uga.edu) 
+     instead of numeric addresses to connect to other 
+     computers on the Internet.)
+
+Gateway:
+     128.192.1.1
+     (The gateway is a device which gives you access to the 
+     rest of the world.)
+
+IBM PC (and compatible)
+     DOS 
+     Client:  pcg3.zip
+     Support: cutcpi.zip
+
+     Available on ftp.uga.edu in the directory 
+     /pub/doc/msdos.  Retrieve files as binary.  Use PKUNZIP
+     to unzip files.  Server available on 
+     boombox.micro.umn.edu.
+
+     PC Gopher III (a Gopher+ client) requires 640K RAM and 
+     DOS 3.3 or higher.  Clarkson (Crynwr) packet driver 
+     required.  The support file cutcpi.zip is Clarkson 
+     University's Telnet/tn3270 package as distributed by 
+     UCNS.  This package (or an equivalent) is required for 
+     using Telnet/tn3270 via gopher.
+
+     Documentation available in separate file (pcg3doc.zip) 
+     on ftp.uga.edu in /pub/doc/msdos.  Use PKUNZIP to unzip 
+     the file.
+
+Windows
+     Client: gobook11.zip
+
+     Available on ftp.uga.edu in /pub/doc/windows.  Retrieve 
+     file as binary.  Use PKUNZIP to unzip the file.  Other 
+     Windows Gopher clients available at 
+     boombox.micro.umn.edu.  No known server.
+
+     GopherBook has not been tested by UCNS.  Microsoft 
+     Windows Sockets (Winsock) 1.1 and external TCP/IP stack 
+     required. 
+
+     Documentation included in distribution file.
+
+OS/2
+     Client: os2gophe1_04.zip
+
+     Available on ftp.uga.edu in /pub/doc/os2.  Retrieve file 
+     as binary.  Use PKUNZIP to unzip the file.  Server 
+     available on boombox.micro.umn.edu.
+
+     Gopher OS/2 has not been tested extensively by UCNS.  
+     IBM OS/2 TCP/IP Version 1.2.1 (or later) required.
+
+     Documentation included in distribution file.
+
+Macintosh
+     Client:   turbogopher1.07.hqx
+     Server:   goserver1.3.sit.hqx
+     Support:  Telnet2.5.sit.hqx
+               tn327023d26.hqx
+               JPEGView20.sit.hqx
+
+     Available on ftp.uga.edu in /pub/doc/mac.  Retrieve 
+     files as text.  Use BINHEX 4.0 to decode.  Server and 
+     support files must be unstuffed using Stuffit. The 
+     support files  Telnet2.5.sit.hqx and tn327023d26.hqx are 
+     required for using Telnet/tn3270 via TurboGopher.  
+     JPEGView20.sit.hqx is a recommended image viewer for 
+     Macintoshes running System 7.
+
+     TurboGopher (a Gopher+ client) and the Macintosh Gopher 
+     server are System 7 compatible but can be used on pre-
+     System 7 Macintoshes.  System 7 recommended to take 
+     advantage of advanced features.  Suggested memory size 
+     for client is 700K.  Suggested memory size for server is 
+     634K.  Mac/TCP required for client and server.
+
+     Additional documentation provided with server 
+     distribution.
+
+Unix
+     Client:    gopher1.12S.tar.Z
+     Server:    included in above file
+     Support:   freeWAIS-0.1.tar.Z
+
+     Xclient:   xgopher.1.3.tar.Z
+
+     Available on ftp.uga.edu in /pub/doc/packages.  Retrieve 
+     files as binary.  Use Unix utilities to uncompress 
+     and untar files.  Distributed as C source code which 
+     must be compiled and installed.  Gopher+ version of Unix 
+     client and server (gopher2.x.tar.Z) available from 
+     boombox.micro.umn.edu.  Support file freeWAIS-0.1.tar.Z 
+     used to build indexing capability into Gopher server.
+
+     UGA's primary Gopher server is a Unix Gopher server.  A 
+     Gopher+ server is used along with this server for 
+     delivery of a few special items.  
+
+     Documentation included with distribution.
+
+CMS and CONTAC
+     Client installed by UCNS.
+
+MVS (TSO)
+     Client currently being tested by UCNS.  
+
+Menus and files
+When describing collections of items in Gopherspace the term 
+"menu" is synonymous with "directory."  Within menus or 
+directories are related items.  The most basic unit within a 
+directory is typically a file.  
+
+Figure 2 provides a view from the PC Gopher III (DOS) client 
+of the items available after selecting "Library" from the UGA 
+Gopher server top-level menu and then "UGA Library - GALIN."  
+The PC Gopher III client allows you to use either the mouse 
+or keyboard to select the item you want.  The second screen 
+in Figure 2 shows how the document "About GALIN" would be 
+presented.
+
+                            Figure 2   
+             "Library/UGA Library - GALIN" Menu
+                As Presented by PC Gopher III
+                            screen 1
+-------------------------------------------------------------
+|                           root level                      |
+|      File    Window     Configure     266616   23:15:38   |
+|                   UGA Library - GALIN                     |
+|  --------------------------------------------------       |
+|  |<F> About GALIN                                 |       |
+|  |                                                |       |
+|  |<T> Connect to GALIN                            |       |
+|  |                                                |       |
+|  |<F> Using GALIN Document                        |       |
+|  |                                                |       |
+|  --------------------------------------------------       |
+|                                                           |
+|F1Help F10Menus Alt-XExit Alt-GNew Gopher Alt-ZCancel Query|
+-------------------------------------------------------------
+                           Browser View
+
+
+                            Figure 2   
+             "Library/UGA Library - GALIN" Menu
+                As Presented by PC Gopher III
+                            screen 2
+-------------------------------------------------------------
+|       File    Window     Configure     266616   23:15:38  |
+|                   UGA Library - GALIN                     |
+|   --------------------------------------                  |
+|   |                                    |                  |
+|   |  <F> About GALIN                   |                  |
+|   --------------------------------------                  |
+|                          About GALIN                      |
+|GALIN is the Georgia Academic Library Information Network. |
+|In addition to other online services, GALIN allows you to  |
+|access the University of Georgia Libraries' Online Catalog.|
+|                                                           |
+|To use GALIN with your Gopher, your Gopher must be able to |
+|connect to GALIN using tn3270.  After creating the         |
+|connection, position the cursor on the COMMAND line and    |
+|enter:                                                     |
+|                                                           |
+| DIAL VTAM                                                 |
+-------------------------------------------------------------
+| F1 Help  F10 Menus  Alt-X Exit  Alt-G New Gopher          |
+| Alt-Z CancelQuery                                         |
+-------------------------------------------------------------
+                    File Display View
+
+
+Common to all Gopher clients are the two screens shown in 
+Figure 2.  A Browser View allows you to select an item in a 
+menu and the File Display View presents the item selected.  
+In a graphical environment, these will appear as  windows 
+which may cascade on the screen.  When multiple windows are 
+displayed on the screen, you can use the mouse (TurboGopher) 
+to make any window the active window.  PC Gopher III allows 
+you to use either the mouse or the keyboard to activate a 
+window.  In a non-graphical environment, there is usually a 
+"Go Back" or "Return" key to navigate back through selected 
+menus.  
+
+Search Items for documents and document groups
+One of the more powerful items available in Gopherspace is a 
+search item, usually indicated by the word "search" or a 
+question mark.  Most search items in Gopherspace are provided 
+in conjunction with WAIS (Wide Area Information Servers), 
+public domain software generously offered to the Internet 
+community by Thinking Machines Corporation.  WAIS is used to 
+create full-text indexes of documents and document groups; 
+Gopher provides easy access to these indexes. 
+
+When you select a search item, you will be prompted for words 
+that will be used to search a group of related documents.  
+Typically, you will type in the word or words that relate to 
+something you want to know more about, press ENTER, and wait 
+patiently for a list of related documents to be returned.
+
+Here's how searching works.  If you supply a single word as a 
+search request, a list of documents that contain that single 
+word will be returned.  You are not, however, limited to 
+searching on a single word.  Multiple search words can be 
+used.  For all WAIS-based searches, multiple words (each 
+separated by a space) will return a list of documents that 
+contain either word.  You will often see this relationship 
+between the multiple words referred to as an "implied OR" 
+relationship.  For example, if you navigated through the UGA 
+Gopher server to the search item for issues of the UCNS 
+Computer Review:
+
+  UGA Departments -> Computing & Networking -> Newsletters ->
+  UCNS Computer Review -> Search the UCNS Computer Review
+
+and then entered the search request:
+
+   macintosh ibm
+
+the list of documents returned (about 60) would contain 
+either the word "macintosh" OR the word "ibm" OR both words.  
+Supplying search words this way expands your search.  
+You can, however, limit your search by connecting the two 
+words with the connecting term AND.  If you entered the 
+search request:
+
+   macintosh and ibm
+
+the list of documents returned (about 15) would contain both 
+the word "macintosh" AND the word "ibm."  Supplying search 
+words this way limits your search.  You can further limit 
+your search with the connecting term NOT, as shown in Figure 
+3.
+
+                          Figure 3
+            Search Item for UCNS Computer Review 
+                  As Presented by Unix Client
+-------------------------------------------------------------
+                      UCNS Computer Review
+
+      1.  A Look Inside the Front Cover.
+      2.  Browse the UCNS Computer Review/
+-->   3.  Search the UCNS Computer Review?
+
+  +--------------Search the UCNS Computer Review----------+
+  |                                                       |
+  |  Words to search for  macintosh and ibm not software  |
+  |                                                       |
+  |                         [Cancel ^G] [Accept - Enter]  |
+  |                                                       |
+  +-------------------------------------------------------+
+
+Press ? for Help, q to Quit, u to go up a menu      Page: 1/1
+-------------------------------------------------------------
+
+The search request shown in Figure 3 would return a list of 
+documents (about 2) that contain both the word "macintosh" 
+AND the word "ibm" but NOT the word "software."
+
+One important caveat.  Not all WAIS-based searches in 
+Gopherspace allow you to use the connecting terms AND and NOT 
+to limit your search.  While the UGA Gopher server does allow 
+the use of these connecting terms, you may encounter some 
+searches that only allow the implied OR search.  If you try 
+to use the connecting terms AND or NOT on a search item that 
+does not allow their use, AND or NOT are ignored and an 
+implied OR is used.
+
+After performing a search, notice the order of the returned 
+documents.  The documents near the top of the list will very 
+likely be the better match to your search request.  The 
+ordering is a product of "relevance feedback," which scores 
+the returned documents based on word frequency , word 
+position, and size of document.
+
+Internet Duct Tape
+Members of the Gopher Development Team have referred to 
+Gopher as "Internet Duct Tape"; others have described Gopher 
+as "a high-level networking tool."   Two ways of saying 
+essentially the same thing, albeit the latter being a more 
+sophisticated phrase.  From within Gopher's comfortable 
+environment you can use Telnet to connect to online library 
+catalogs all over the word; acquire documents and software 
+from archive sites; and search electronic phone books and 
+directories  for individuals at universities, colleges, and 
+other organizations worldwide. 
+
+Telnet sessions
+Telnet is a service which allows you to connect to computers 
+on the Internet using terminal emulation.  Typically, you are 
+required to log into these systems as a validated user.  
+However, many colleges and universities allow you to access 
+library holdings via Telnet.  The UGA Libraries' online 
+catalog (GALIN) is available from the UGA Gopher server in 
+the menu item "Library."  Also notice that Telnet connections 
+to libraries through the world are also included in the 
+"Library" menu item.  
+
+Notes about Telnet sessions:
+*  Gopher Telnet items are indicated either by a word or an 
+appropriate icon.   The word or icon may indicate a tn3270 
+connection.  A tn3270 connection is often required for 
+connecting to IBM mainframes.  
+
+*  Gopher uses the Telnet client on the computer you are 
+using to make the connection.  When configuring some Gopher 
+clients you may have to specify the Telnet/tn3270 
+applications to be used.  (PC Gopher III is an example.)
+
+*  CMS and CONTAC users should be aware that the Telnet 
+client available to them does not support terminal emulation 
+other than tn3270.  If you attempt a Telnet connection to a 
+site requiring VT100 emulation (the most common), you may not 
+be able to function as well as you would like.
+
+*  TurboGopher (Macintosh client) requires System 7 or higher 
+for a smooth transition to Telnet/tn3270.  You can still use 
+Telnet sessions on a pre-System 7 Macintosh, but you will not 
+be taken directly  to the Telnet session.
+
+FTP gateway
+The file transfer protocol (FTP) is an Internet service which 
+allows someone using an FTP client to connect to an FTP 
+server and transfer between the two systems.  Normal FTP 
+requires that you have an account on the server system you 
+are connecting to.  Anonymous FTP is a special setup on the 
+FTP server which allows you to connect to the server without 
+having an established account.  Gopher provides a gateway to 
+anonymous FTP sites.
+
+Access to selected anonymous FTP sites is available on the 
+UGA Gopher server via the path:
+
+  Worldwide Information -> Internet - RFCs, Archie, FTP and
+  Veronica -> Connect to FTP Sites
+
+At the end of this path is a list of anonymous sites.  When 
+you select one of the sites, Gopher makes a connection to the 
+FTP server and displays a list of files that you can transfer 
+to yourself.  Figure 4 presents an example listing of the DOS 
+archive site wuarchive.wustl.edu in the directory astronomy.
+
+                         Figure 4
+             FTP Gateway to DOS Archive Site
+            As Presented by CMS/CONTAC Client
+-------------------------------------------------------------
+Rice CMS Gopher 2.4.1                          GOPHER.UGA.EDU
+1/29      More
+                           (astronomy)
+<document>  00-index.txt
+<DOS>       aa-51.zip
+<DOS>       astro20.zip
+<DOS>       astro202.zip
+<DOS>       b_star.zip
+<DOS>       cosmos16.zip
+<DOS>       dance13.zip
+<DOS>       de1181.zip
+
+1=Help      2=        3=Return   4=Print   5=Receive   6=Find
+7=Backward  8=Forward  9=Bookmark  10=Booklist  11=   12=Quit
+-------------------------------------------------------------
+
+Notes about the FTP gateway:
+*  Access to anonymous FTP sites via the UGA Gopher server is 
+currently restricted to Gopher clients on the UGA campus.  
+
+*  Files at anonymous FTP sites will often be software and 
+other files that are ordinarily retrieved as binary.  Gopher 
+recognizes these types and retrieves the file properly.  In 
+general, files with the extensions .exe and .zip will be 
+typed as "DOS" or "PC" and retrieved as binary.  Files with 
+the extension .hqx are special Macintosh files that are 
+retrieved as text.  Other files many be typed as generic 
+"binary."  While Gopher takes care of retrieving the files 
+properly,  you will have to keep the type of transfer (either 
+text or binary) in mind if you move the file to another 
+computer.
+
+*  CMS and CONTAC Gopher users should pay special attention 
+to the "Receive" key.  Use this key to retrieve a binary file 
+displayed in a list.  There is no point in attempting to view 
+such a file.  Many of the other popular clients --PC Gopher, 
+TurboGopher, and Unix--automatically retrieve binary files 
+when they are selected.
+
+
+Electronic Phone Books and Directories
+Finding people on the Internet is perhaps one of the more 
+interesting and sometimes frustrating tasks with which you 
+can be presented.  The University of Notre Dame Gopher 
+provides a collection of online phone books and directories, 
+which you can access from the UGA Gopher via the path:
+
+  Worldwide Information -> Worldwide Phone Books and 
+  Directories
+
+You will notice one institution conspicuous by its absence in 
+this collection -- The University of Georgia.  However, on a 
+more positive note, plans are currently in place to provide a 
+similar service for UGA.
+
+Notes about electronic phone books and directories:
+
+*  Be sure to read the related "About" documents in the list 
+of items available in "Worldwide Phone Books and 
+Directories."
+
+*  Electronic phone books and directories are of several 
+different types.  Some are based on CSO Nameserver (developed 
+at the University of Illinois Urbana-Champaign).  This type 
+of electronic phone book will be indicated by an icon of a 
+phone book, the word "CSO" or the word "phonebk."  Other 
+electronic phone books are based on WHOIS servers or WAIS-
+based searches; these are indicated by  the word "search" or 
+a question mark .
+
+
+Multimedia and beyond with Gopher+space
+As Gopher has developed over the past few years, so have the 
+information types supported.  On some Gopher servers you will 
+find sound files, images, and even movies.  With the advent 
+of Gopher+, these new types are being effectively integrated 
+into Gopherspace.
+
+Appropriately enough, a picture is worth a thousand words 
+when describing Gopher+space (Figure 5).
+
+                        Figure 5
+             Gopher+ Information on an Item
+        As Presented by Macintosh TurboGopher Client
+-------------------------------------------------------------
+|=====================  GopherRock.ps  =====================|
+| +INFO:  0GopherRock.ps  0/Multiple Views/Short Document   |
+|   About Gopher/GopherRock                                 |
+| hobbes.cc.uga.edu 9000 +                                  |
+| +ADMIN:                                                   |
+| Admin: Albert DeSimone, Jr. <bdesimon@uga.cc.uga.edu>     |
+| Mod-Date:  Thu Sep  9 09:31:46  1993 <199309093146>       |
+| +Views                                                    |
+| application/postscript En_US:  <40k>                      |
+| application rtf En_US: <5k>                               |
+| Text/plain  En_US:  <3k>                                  |
+| +Abstract                                                 |
+| This is a short paper I wrote in conjunction with a       |
+| presentation at the University System of Georgia Annual   |
+| Computer Conference -- known to all as the "Rock Eagle    |
+| Conference."                                              |
+|                                                           |
+| It was a fine conference and a good time was had by all.  |
+|                                                           |
+| Later ...                                                 |
+|                                                           |
+| bd                                                        |
+| <== xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ==>|
+-------------------------------------------------------------
+
+
+As an extension to Gopher, Gopher+ supports:
+*  More compete information about a Gopher item.  Notice in 
+Figure 5 that modification dates and sizes of particular 
+items are now included.  Also included is the Gopher 
+administrator's name and e-mail address.  (Item information 
+can be retrieved from a Gopher or Gopher+ server the same 
+way.  See the documentation or online help that came with 
+your Gopher client for the procedure.)
+
+   Abstracts can also be included as a part of the item 
+information.
+
+*  Alternate multiple views.  Everyone agrees that plain text 
+isn't the most preferred way to deliver documents.  However, 
+it does represent the "lowest common denominator" in that any 
+Gopher client can adequately display text.  Gopher+ provides 
+alternate views of such documents--including PostScript and 
+Rich-Text Format (RTF) in addition to plain text.  The user 
+of a Gopher+ client can request that these alternate views be 
+listed and then request one of the alternate views from the 
+list.
+
+   Images can also be presented in this way.  Multiple views 
+of a weather map could be available as a GIF, JPEG, or PPM 
+image.  
+
+*  Electronic forms.  Although relatively simple at this 
+time, it is possible to set up a Gopher+ item as an 
+electronic form.  When this item is selected, a blank 
+electronic form is presented.  Information provided on the 
+electronic form can then be mailed to the appropriate 
+individual or office.
+
+
+A Gopher+ server is currently in use at UGA for delivery of a 
+few special items via the UGA Gopher primary server.  This 
+server can be accessed directly if you would like to 
+experiment with some of the Gopher+ features.  If you have a 
+Gopher+ client, set your Gopher to connect to:
+
+   gopher.uga.edu 9000
+
+Gopher+ features can be found in the menu items "Multiple 
+Views" and "Newsletter Registration Request Form."  Please be 
+advised that this is a test Gopher environment.  Items are 
+subject to move around or disappear without notice.  Access 
+to the test server is currently restricted to the UGA campus.
+
+More information on Gopher
+If you would like to learn more about Gopher, there is a 
+comprehensive guide titled Internet Gopher User's Guide.  
+Several copies are available at the UCNS Help Desk in the 
+Computer Services Annex.
+
+Another excellent source of information is the USENET 
+newsgroup: comp.infosystems.gopher.
+
+Gopher-accessible information, including an FAQ (Frequently 
+Asked Questions), is provided by the University of Minnesota.  
+This information is available via the UGA Gopher in the 
+"About Gopher at the University of Georgia" menu item.
+

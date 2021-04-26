@@ -1,0 +1,15 @@
+PC Gopher III
+(ver 1.1.2)
+Freeware
+
+
+PC Gopher III is a standard Gopher (not Gopher+) Client for Pure DOS.  
+It uses a TUI (Textual User Interface) to display Gopher information.  
+This software requires a NIC using a WATTCP packet driver.  You must 
+configure the "GOPHER.INI" file with both your Path and IP Address 
+information.
+
+
+NOTE: The executables have been patched to fix a Runtime200 error.  
+
+

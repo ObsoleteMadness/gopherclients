@@ -1,0 +1,150 @@
+
+Go-ask-wais provides a link from Gopher+ ASK dialogs to WAIS index files,
+allowing you to add various customizations to the Gopher-WAIS query.
+Basically it is a script that processes the ASK query, and a subprogram
+that queries WAIS indices and returns the matches in Gopher directory
+format.
+
+Example usage:
+
+ -->  1.  Search FlyBase Genes data/ <??>
+      2.  Search GenBank (latest full release)/ <??>
+
+ +-------------------------Search FlyBase Genes data--------------------------+
+ |                                                                            |
+ | _____ Search data by key words _____                                       |
+ | Search for?       red                                                      |
+ | Maximum matches:  100                                                      |
+ | ___________________________________________________                        |
+ | The default search finds records matching all words.                       |
+ | Use `and' and `not' to eliminate useless matches.                          |
+ | Use `*' (as in gen*) to match partial words.                               |
+ | Want more help?   no                                                       |
+ |                                                                            |
+ |       [Switch Fields: TAB] [Cancel: ^G] [Erase: ^U] [Accept: Enter]        |
+ |                                                                            |
+ +----------------------------------------------------------------------------+
+
+The main ASK script processes the above query and returns the results below
+including 
+  1. a list of all matches as one document
+  2. a second ASK dialog that lets user select subset items to return
+     as one document. 
+  3. optional help files
+  4. optionally various VIEW formats.
+-------------------
+                           Search FlyBase Genes data
+
+ -->  1.  Titles of matches to "red".
+      2.  Select items to return as one document. <??>
+      3.  (1)  Act88F  Actin-88F  genemap: 3-57.1  cytomap: Placed in 88F by...
+      4.  (2)  Aldox-1  Aldehyde-oxidase-1  genemap: 3-57.2.
+      5.  (3)  amb  amber  genemap: 1-6.8..
+		...
+
+The secondary ASK script here lets user select a subset, and specify
+separator strings.  The separator strings will be evaluated by perl to
+produce a formatted break between items.  $title = title of the item,
+"\n" is a newline symbol.
+		
+ +-------------------Select items to return as one document-------------------+
+ |                                                                            |
+ | List item numbers to return as one document                                |
+ | Items:                                                                     |
+ | ___________________________________________________                        |
+ | An example list is `1..10,12,14..20'                                       |
+ | [Unix client users -- use numbers in `()']                                 |
+ | Return all?  no                                                            |
+ | The next two strings will separate items                                   |
+ | Header:      \n$title\n                                                    |
+ | Footer:      \n-------------------------------------                       |
+ | Leave the following line unchanged.                                        |
+ | datafile:    afg21012                                                      |
+ |                                                                            |
+ |       [Switch Fields: TAB] [Cancel: ^G] [Erase: ^U] [Accept: Enter]        |
+ |                                                                            |
+ +----------------------------------------------------------------------------+
+
+You need one of the newer Gopher+ clients to use these.  These 
+include	   (as of 15 Oct 93)
+	   Unix curses (Uminn,v.2.08)
+	   Mac TurboGopher (v.1.07)  
+	   Mac GopherApp++ (v.2.0)   
+	   MSWin HGopher   (v.2.2) 
+ 
+
+
+Installing Go-ask-wais on your Gopher server
+
+Assumptions:
+	have U.Minnesota gopherd server version 2.04 or later, and its working.
+	have some WAIS variant linked in and working w/ gopherd
+	have perl interpreter
+
+Available:
+	gopher or ftp to ftp.bio.indiana.edu, as
+	IUBio-Software+Data/util/gopher/go-ask-wais.tar.Z	
+	
+Author:  
+	don gilbert, software@bio.indiana.edu, October 1993
+	no copyright restrictions are imposed.
+	
+Distribution files:
+
+go-ask-wais*		
+		-- perl script, processes primary ASK query from gopher,
+		customize this for each query.
+go-ask-wais-etc*	
+		-- perl script, secondary ASK query, returns subset of
+		items as one document.  Can be same for each query
+go-ask-wais.ask		
+		-- ask form that goes with each go-ask-wais script
+go-ask-wais.name
+		-- template for .names file that sets proper type for
+		these items (requires patch.gopehrd-ask-dir)
+gopher-ask-wais.c
+		-- subprogram called by go-ask-wais.  this queries wais
+		index files, then returns matches in gopher directory format
+patch.gopherd-ask-dir
+		-- patch to Unix gopherd required to permit directories as
+		ASK items.  Needed thru at least version 2.08 of gopherd.
+patch.gopherd-make
+		-- inserts to gopher/gopherd/Makefile to compile gopher-ask-wais.c
+patch.wais-make
+		-- alternate inserts to wais/ui/Makefile to compile gopher-ask-wais.c
+
+Primary steps to use:
+
+	1) patch gopherd to deal with ASK items that return directories.  Maybe
+	test this to see if it works.
+	
+	2) patch gopherd/Makefile, compile and test gopher-ask-wais.
+	This short program works something like 'waisq' or 'waissearch', but
+	it only on servers w/ wais indices.
+	
+	Usage: gopher-ask-wais
+    [-h host-machine]    /* defaults to 'fly.bio.indiana.edu' */
+    [-g gopher-directory]  /* defaults to '/bio/gopher/public' */
+    [-p service-or-port] /* defaults to 70 */
+    [-d database]        /* defaults to 'index' */
+    [-m maximum_results] /* defaults to 40 /*
+    word word...
+
+    The important parameters are 
+      -d database == full path to your index file
+      -g gopher-directory == gopher root directory
+      
+     
+    3) copy the files 
+    	go-ask-wais*		
+		go-ask-wais-etc*	
+		go-ask-wais.ask		
+		go-ask-wais.name
+	into a testing area in your gopher server area, and customize them
+	for use.  The go-ask-wais and go-ask-wais-etc have variables you
+	need to edit for your server.  go-ask-wais has variables that change
+	for each search question.  The .name file gets the new name of 'go-ask-wais'
+	and descriptive name.
+	
+	
+	

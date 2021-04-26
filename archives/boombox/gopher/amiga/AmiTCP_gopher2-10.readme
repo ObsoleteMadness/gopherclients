@@ -1,0 +1,34 @@
+The Internet Gopher client/server provides a distributed information
+delivery system around which a world/campus-wide information system (CWIS)
+can readily be constructed.  While providing a delivery vehicle for local
+information, Gopher facilitates access to other Gopher and information
+servers throughout the world.
+
+Gopher appears to the user as a set of menus.  At each menu, an item can be
+selected, or the user may retrace their steps to the previous menu.
+
+Selecting menu items can lead to a variety of actions
+being performed, including displaying another menu, displaying a
+file, transferring a binary file, searching an index.
+
+In this implementation of Gopher, AmigaGuide is used as the user interface,
+and menu items can be selected by clicking on them. Reverting to the 
+previous menu is accomplished by using the standard AmigaGuide Retrace
+button. Closing all the AmigaGuide windows terminates the Gopher session.
+
+
+The distribution archive contains the following files:
+  Gopher    the program itself
+  Startup   an amigaguide file to provide a basis for the user interface
+  Bookmarks a list of handy gopher pages
+
+To install:
+
+Unpack Gopher into AmiTCP:bin/
+Unpack GopherStartup and GopherBookmarks into AmiTCP:db/
+
+Start Gopher by issuing the GOPHER command from a CLI, whilst
+AmiTCP is running.
+
+
+Contact Graham Walter <agopher@gwalter.demon.co.uk> with problems etc.

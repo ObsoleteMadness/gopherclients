@@ -1,0 +1,31 @@
+Patch #:	gopatch.dg5
+Type:		bug fix 
+Priority:	medium
+Summary:	Preserve filename parameter to mindex calls
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg5
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/mindexd.c
+
+*** gopher2.012/gopherd/mindexd.c	Tue Mar  8 11:51:59 1994
+--- go212dg/gopherd/mindexd.c	Wed Mar 30 09:40:46 1994
+***************
+*** 91,97 ****
+      char    line[1024];      /* line buffer for reading config */
+      char    *linep;         /* pointer to 'line' */
+  
+!     local = the_filename;
+  
+      if ((fp = rfopen(local, "r")) == NULL) {
+  	 /** Try adding .mindex to the filename **/
+--- 91,98 ----
+      char    line[1024];      /* line buffer for reading config */
+      char    *linep;         /* pointer to 'line' */
+  
+!      strncpy(line, the_filename,1024); /* dgg -- keep the_filename inviolate */
+!      local = line;
+    
+      if ((fp = rfopen(local, "r")) == NULL) {
+  	 /** Try adding .mindex to the filename **/
+

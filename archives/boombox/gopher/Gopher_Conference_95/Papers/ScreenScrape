@@ -1,0 +1,211 @@
+		   ScreenScraping for Fun & Profit
+	      Paul Lindner lindner@boombox.micro.umn.edu
+			     GopherCon 95
+
+ABSTRACT 
+
+Screen scraping (harvesting information from 3270 terminal sessions)
+is one way to provide an easy-to-use Gopher interface to information
+that is only available via a terminal-based interface. This paper
+covers how a Unix gopher gateway was written to efficiently harvest
+information student grade information from 3270 terminal sessions,
+reformat the information, and present it via Gopher. If you have
+legacy systems that are not going to migrate to client/server
+technology anytime soon, you may want to apply these techniques to
+free your data without creating a shadow database system.
+
+INTRODUCTION
+
+The University of Minnesota, like many other college campuses and
+businesses, use a wide variety of databases. Most recent databases
+support some form of client/server access. However, there are some
+legacy systems that cannot support client/server without significant
+redesign or cost.
+
+We have one of these legacy systems at the University of
+Minnesota. Our Grade Reporting and Registration system, the "Student
+Access System" runs on an IBM mainframe. The system uses an IMS
+database to store information. A large custom application controls
+registration, course and grade access. The application only runs on
+3270 terminals. The following figures shows an example of this system.
+
+FIGURE 1.\x13Student Access System Main Menu
+
+
+
+FIGURE 2.\x13Student Access System Course and Grades
+
+Modifying this system to use client-server would require a complete
+redesign. It would be more economical to start from scratch.
+
+Instead, we designed software that allows students to view information
+from the system using Gopher. By doing this we saved many students
+from the need to find and configure special software to start a 3270
+terminal session. Since nearly everyone at the University of Minnesota
+already has access to Gopher software, this proved a quick way to get
+everyone access to the system.
+
+Rather than navigating a terminal-based system, the Gopher interface
+allows you to fill out a simple electronic form. This form prompts for
+a student ID number and password. The Gopher software uses this
+information to identify you, then finds your grades in the Student
+Access System, and displays the results.
+
+There are three forms for the Gopher system. The first sets an initial
+password for your account. By default the mainframe sets the password
+as the birth date.
+
+FIGURE 3.\x13Setting An Initial Password
+
+The second form allows a student to change their password.
+
+FIGURE 4.\x13Changing a Password
+
+The third form displays Course and Grade Information. The student gets
+their choice of `Recent Coursework' or a `Full Listing'.
+
+FIGURE 5.\x13Getting Grades
+
+When the student completes the form the following information is returned:
+
+·	demographic record
+·	any holds on their record
+·	Day School Courses and grades
+·	Extension and Transfer Courses and grades
+
+The student can then save or print this information.  Here's a sample:
+
+FIGURE 6.\x13Sample Coursework
+
+
+IMPLEMENTING THE SYSTEM.
+
+We used the following tools to implement our solution:
+
+·	 A custom version of tn3270 that displays screens in a predictable way.
+·	 A perl interpreter with the chat2.pl extensions.
+·	 A couple of custom perl script that simulate a terminal session.
+·	 The Unix Gopher Server, version 2.1.3
+·	 A whole lotta regular expressions.
+
+Custom tn3270
+
+To get the information from the mainframe we used a customized 3270
+emulator. We started with the 4.1.1 release of tn3270 from the
+University of California - Berkeley. We modified the input and output
+routines. The new emulator only prints screens when a return character
+is sent. The emulator does not echo anything you type, except when the
+screen updates occur. Basically we turned tn3270 into a line mode
+emulator.
+
+Perl with chat2.pl
+
+We use the Perl programming language to simulate a user typing on a
+terminal. The perl language is superb for this application. Perl's
+regular expressions proved quite a boon for this script.
+
+Perl version 4 include a package of extensions called chat2.pl. The
+chat package allows you to control an external process using the
+following calls:
+
+TABLE 1. chat2.pl functions
+
+Function
+
+Purpose
+
+chat'open_proc()
+
+Opens a process for our control.
+
+chat'expect()
+
+Waits for a specified regular expression. 
+
+chat'print()
+
+Sends data to the process.
+
+
+
+Custom Perl Scripts.
+
+We use three perl scripts to do the necessary work to get the grades
+from the mainframe to the students screen.
+
+1. The `currentgrades' script prompts for a student id#/ssn, a
+password and allows a choice between a `Full Listing' or a `Partial
+Listing'
+
+2. The newpw script sets an initial password given a student id#/ssn,
+the student's date of birth and a user-chosen password.
+
+3.  The setpw script changes a password once set. It prompts for a the
+old password and a new password to set.
+
+Each script launches the custom tn3270 emulator and logs into the
+mainframe system using the given student id/ssn and password.
+
+The two password setting scripts use option #x on the mainframe to set
+the password. They print out a status message to let you know if they
+succeeded or not.
+
+The currentgrades script, on the other hand, selects the course and
+grade information option on the mainframe. If you choose `Current
+Coursework' the system will go back three quarters to find grades. If
+you select `Full Coursework' you will get an entire listing.
+
+The Unix Gopher Server
+
+The gopher server allows us to take these scripts and make them into
+on-line forms. We create forms that will prompt for the right data for
+each script. All these files, along with explanatory information are
+stored in a gopher directory.
+
+Any Gopher+ client that understands forms can then find grades, set
+passwords, and interact with the Student Access System without using a
+3270 terminal or 3270 emulator.
+
+PROBLEMS
+
+ScreenScraper systems like this have one achilles heel, screen and
+user interface changes. Changing the wording on a single screen can
+cause the whole application to fail. Because of this problem we wrote
+our regular expressions to be fairly generic.
+
+Another problem is timing. Accessing the mainframe remotely can be
+delayed by slow or malfunctioning networks. The response time from the
+mainframe can also vary. This throws a monkey-wrench into the whole
+system.
+
+The downside is that people blame the Gopher system, when in fact the
+problem is somewhere else in the system.
+
+ACCESSING SAMPLE SCREENSCRAPER
+
+Our sample screenscraper (and all the forms you see above is available for testing on the gopher server
+
+ mudhoney.micro.umn.edu
+
+in the
+
+  registration 
+
+directory.
+
+You can also check it out by selecting the following URL
+
+<URL:gopher://mudhoney.micro.umn.edu/11/registration>
+
+THE FUTURE
+
+IBM recently came out with a TCP connection for IMS. This will make
+retrieving data a lot easier. We don't regret building this system. It
+puts us in a good position for developing the Gopher interface for
+this other system.
+
+ScreenScraping is a useful last-ditch technique to get information out
+of legacy systems. Just remember to brush up on your regular
+expressions before you start.
+
+

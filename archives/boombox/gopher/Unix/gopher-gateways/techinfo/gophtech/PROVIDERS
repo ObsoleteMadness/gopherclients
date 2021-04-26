@@ -1,0 +1,53 @@
+                 Document Responsibility in PennInfo
+                 ===================================
+
+There are over 70 providers of information in PennInfo.  Each provider 
+is responsible for the information they contribute.  Users of PennInfo 
+are accustomed to being able to identify who is responsible for any 
+topic on any menu in PennInfo through the use of a 'Get Info' option.  
+This functionality is not natively available in Gopher software at 
+this time.  
+
+An alternative mechanism has been created by Data Communications
+and Computing Services (DCCS) to allow Gopher users to identify
+which organization at the University of Pennsylvania is responsible
+for PennInfo information:
+
+
+Step 1
+======
+Use your gopher client to request information about the PennInfo topic.  
+Use whatever mechanism is provided by your application to get this 
+information.
+
+
+Step 2
+======
+Look at the 'Path' information and note the last word in the path.  The 
+last word in the path is the organization responsible for the PennInfo 
+information (known as a 'Source'). For example, the Unix gopher client 
+displays the following information about a topic on a menu called 
+'PennInfo Version 3.9 Available':
+
+     Name=PennInfo Version 3.9 Available
+     Type=0
+     Port=71
+     Path=D penninfo-srv.upenn.edu 9000 8615 Admin
+                                             ^^^^^
+Notice that the last word in the 'Path' is 'Admin.'  This means that 
+'Admin' is the organization that contributed the information -- the 
+'Source'.
+
+
+Step 3
+======
+Now that you have the name of 'Source,' you can search the document 
+'Providers of Information (Sources) List' to retrieve the contact name,
+phone number, and an electronic mail address associated with your
+'Source.'
+
+* Note: the 'Providers of Information (Sources) List' appears at the
+bottom of all PennInfo menus (merged with this instructional document) 
+that are displayed via the Gopher gateway.
+
+

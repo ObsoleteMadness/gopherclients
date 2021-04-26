@@ -1,0 +1,187 @@
+From usenet.ucs.indiana.edu!ux1.cso.uiuc.edu!howland.reston.ans.net!agate!doc.ic.ac.uk!daresbury!bioftp.unibas.ch!comp.bioz.unibas.ch!doelz Tue Jun 22 06:11:36 EST 1993
+Article: 2678 of bionet.software
+Newsgroups: bionet.software
+Path: usenet.ucs.indiana.edu!ux1.cso.uiuc.edu!howland.reston.ans.net!agate!doc.ic.ac.uk!daresbury!bioftp.unibas.ch!comp.bioz.unibas.ch!doelz
+From: doelz@comp.bioz.unibas.ch (Reinhard Doelz)
+Subject: history, and thoughts on the future of biogophers (RE: What is a ...)
+Message-ID: <1993Jun22.071257.23971@comp.bioz.unibas.ch>
+Keywords: biogopher faq
+Sender: usenet@comp.bioz.unibas.ch (NEWS transaction account)
+Nntp-Posting-Host: biox.embnet.unibas.ch
+Reply-To: doelz@urz.unibas.ch
+Organization: EMBnet Switzerland [BASEL]   
+References: <9306181621.AA16695@welchgate.welch.jhu.edu> <3498@emoryu1.cc.emory.edu> <C8zrtG.82n@usenet.ucs.indiana.edu>
+Date: Tue, 22 Jun 1993 07:12:57 GMT
+Lines: 169
+
+
+
+=== history : GOPHER in Biology ===
+
+My first reference to a 'GOPHER' came from Robert Harper, the 
+famous Bionaut from the CSC Helsinki. He's very ambitious and 
+succeeds to report new developments of the networking people... 
+
+Message-ID: <199202131548.AA01763@convex.csc.fi>
+Date: 13 Feb 92 17:48:32 GMT
+>                                 No 22
+>   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+>                        BIO-NAUT NEWSLETTER 12-2-92
+>                       << EDITED BY ROBERT HARPER >>
+>    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+>
+>
+>                         GO FOR IT WITH GOPHER
+
+(Available via gopher from: )
+Name=BioBit No22 (Go for it with Gopher)
+Type=0
+Port=70
+Path=R0-15627-/IUBio-Software+Data/help/biobits/biobit.gopher.text
+Host=ftp.bio.indiana.edu
+
+Only 4 days later, the following surfaced the networks: 
+Message-ID: <1992Feb17.023313.4530@bronze.ucs.indiana.edu>
+Date: Mon, 17 Feb 92 02:33:13 GMT
+
+>This rather long note is in response to questions about what to make
+>of Internet Gopher, WAIS and other Internet information searching
+>methods, and specifically how does this relate to Genbank keyword
+>searching and entry fetching, as compared with the IRX service at
+>genbank.bio.net, and perhaps to e-mail services.
+
+(Full text on:)
+Name=Don Gilbert`s original gopher port to biology
+Type=0
+Port=70
+Path=0/About Gopher, and this bioftp site/Don Gilbert`s original gopher port to biology
+Host=biox.embnet.unibas.ch
+
+The next reference came from the most daring Computer Biologist at the 
+time who had the nerve to try it out: 
+Message-ID: <1992Feb24.235003.22307@cica.indiana.edu>
+Date: Mon, 24 Feb 92 23:50:03 GMT
+
+and it was Don Gilbert saying, 
+
+>I've about finished setting up an Internet Gopher server for
+>biology data at ftp.bio.indiana.edu. It seems to be working well
+>and biologists look like they are taking to it rapidly and
+>easily -- I would say it has some of the good features of both
+>ftp and wais, but is a good bit easier to learn.
+
+(full text on GOPHER from: )
+Name=Don Gilbert`s indexing port to biology
+Type=0
+Port=70
+Path=0/About Gopher, and this bioftp site/Don Gilbert`s indexing port to biology
+Host=biox.embnet.unibas.ch
+
+
+I joined the game February 27, announcing the european leg of the 
+WAIS indexing stuff as implemented first by Don Gilbert, and announced
+a mailing list in 
+Message-ID: <1992Feb27.221816.11563@urz.unibas.ch>
+Date: 27 Feb 92 21:18:16 GMT
+and used the word 'biogopher' as mailing list name. (Thanks Don for pointing
+me at it - I almost forgot). Unfortunately, the purpose of the mailing list was 
+developmental, and it died because in the beginning the biogophers knew each 
+others quite well. Tim Littlejohn suggested a revival of this list recently.
+
+
+
+=== Evaluation of GOPHER as a tool ===
+
+If asked what the benefit of these biogophers is, ask Dan or Don or 
+anyone on the net who made a successful query. There are several points 
+which are partially intrinsic to GOPHER and partially specific to biology: 
+(totally unsorted, jumping off my head). 
+
+	o it is all public domain: You get what you paid for.
+	+ many people use it. Good chance to get patches released.
+	- documentation is hairy. Need some experience for providers.
+	o was never meant to be a world-wide system.
+	- gopher+ future is unclear, as is U Minnesota's commitment to the 
+		gopher theam whether to support the world for free. 
+	o underlying search engine is WAIS
+	- WAIS went commercial recently. Usefulness of FREEWais unclear.
+	- WAIS is full-text. Entry-specific search would be better.
+	- special indices are huge. Incompatible with GCG Blast Pir other.
+	+ Browsing possible without cost.
+	- As all is voluntarily, low reliability on quality. 
+	+ interfaces on all platforms. 
+	+ does not need Xwindows 
+	+ may use XWindows if available
+	+ may use PC/Mac if available
+	+ Client support for VMS is available 
+	- VMS server is rarely used 
+	- uses networks extensively. Who pays? 
+	- needs excellent networks (name server support)
+
+All in all, we are glad to have it but it isn't the last kick. Question 
+being, would you like to pay for 'THE' optimal interface, and would all 
+the service providers like to pay in order to allow always for free ser-
+vices? I doubt it. I would like to see interfaces coming up which allow
+for a moderate usage, but truncate after a while if abusage is suspected.
+E.g., I noticed that some sites use my GOPHER as retrieval of thousands (!) 
+of entries. Obviously, someone has written a procedure to use some sort
+of input file to retrieve all entries en block. That is nice for 10 hits, 
+but garty and network-asocial for thousands. 
+
+
+One last statement: Thanks to Dan Jacobson, there is now a browsing 
+of gopherspace possible explicitly for Biology (BOING). 
+
+
+=== How to find GOPHERs in Biology ===
+
+In Europe, we have tried to set up a network of Gophers in the framework 
+of the European Molecular Biology Network (EMBnet). These 
+nodes are committed to offer some standardized tree look-and-feel, 
+and deliver Biocomputing services to european countries. Ask your 
+nearest EMBnet node how to set up a GOPHER, or how to maintain a
+client to the national EMBnet Gopher. 
+
+If you go for the European entry point for subjects, 
+
+Name=Subject Tree
+Type=1
+Port=70
+Path=1/Subject Tree
+Host=sunic.sunet.se
+
+or its US counterpart, 
+
+Name=Information by Subject Area (from RiceInfo, Rice Univ.)
+Type=1
+Port=70
+Path=1/Subject
+Host=chico.rice.edu
+
+you will find many, many, many hosts in all sort of different areas. 
+E.g., on gopher.embnet.unibas.ch I maintain a subject tree for biology, 
+and use this as link service. There is one item there which is called
+Name=this file is the Index
+Type=0
+Port=70
+Path=0/Information Servers in biology (Gopher based)/this file is the Index
+Host=yeti.embnet.unibas.ch
+
+and this is a link list of biogophers. 
+
+
+Regards
+Reinhard 
+
+
+-- 
++----------------------------------+-------------------------------------+
+|    Dr. Reinhard Doelz            | RFC     doelz@urz.unibas.ch         |
+|      Biocomputing                | DECNET  20579::48130::doelz         |
+|Biozentrum der Universitaet       | X25     022846211142036::doelz      |
+|   Klingelbergstrasse 70          | FAX     x41 61 261- 6760 or 267- 2078     
+|     CH 4056 Basel                | TEL     x41 61 267- 2076 or 2247    |   
++------------- bioftp.unibas.ch is the SWISS EMBnet node ----------------+
+               -----------------------------------------
+
+

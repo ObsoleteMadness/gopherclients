@@ -1,0 +1,463 @@
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then unpack
+# it by saving it into a file and typing "sh file".  To overwrite existing
+# files, type "sh file -c".  You can also feed this as standard input via
+# unshar, or by typing "sh <file", e.g..  If this archive is complete, you
+# will see the following message at the end:
+#		"End of shell archive."
+# Contents:  goform test.form
+# Wrapped by riddle@rio-grande on Mon Jul 25 13:41:58 1994
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+if test -f 'goform' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'goform'\"
+else
+echo shar: Extracting \"'goform'\" \(12068 characters\)
+sed "s/^X//" >'goform' <<'END_OF_FILE'
+X#!/usr/local/bin/perl
+X#
+X# goform -- crude telnettable Gopher form fillout daemon
+X#
+X# History:
+X# PASR 03/09/93	Original version (release 0.1) by Prentiss Riddle,
+X#		riddle@rice.edu.
+X# PASR 03/29/93	Use CRLF on output to user, to make Macs and PCs happy;
+X#		explicitly send an IAC WONT ECHO so Mac telnet clients
+X#		will know that they have to echo locally.
+X# PASR 04/02/93 Added "Reply-To" handling.  Declared this version 0.2.
+X#
+X#-------------------------------------------------------------------------
+X#
+X# INSTALLATION:
+X# 
+X# The goform program should be executed from inetd with the name of the
+X# form file as an argument.  In order to have multiple goform forms
+X# available, each should be assigned a separate port.  An example SunOS
+X# 4.1.2 installation:
+X# 
+X# Files installed:
+X# 	/foo/cwis/bin/goform		executable
+X# 	/foo/cwis/etc/widget.form	Widget Request form
+X# 	/foo/cwis/etc/suggest.form	Suggestion Box form
+X# 
+X# Added to /etc/services (be sure to make yp afterward):
+X#    goform10003      10003/tcp           # gopher form: widget request
+X#    goform10004      10004/tcp           # gopher form: suggestion box
+X# 
+X# Added to /etc/inetd.conf (be sure to HUP inetd afterward):
+X#    goform10003      stream  tcp     nowait  nobody    /foo/cwis/bin/goform        goform /foo/cwis/etc/widget.form
+X#    goform10004      stream  tcp     nowait  nobody    /foo/cwis/bin/goform        goform /foo/cwis/etc/suggest.form
+X# 
+X# 
+X# FORMFILE FORMAT:
+X#
+X# The first few lines of the formfile specify header lines which will be
+X# used to mail off the results after the form is filled out, as follows:
+X#
+X#	To: recipient-address
+X#	Subject: subject-line
+X#	Reply-To: return-address
+X#
+X# The recipient address must be fixed but the subject line and the return
+X# address may contain field specifications in the form of a '$' character
+X# followed by an integer.  These will be expanded to include the
+X# user's answers to the correspondingly numbered questions.  The Reply-To
+X# line is optional; if it is omitted, a "Reply-To:" line will appear in 
+X# the mail header with no argument.  Note that the program doesn't do any
+X# error checking of the address specified in the Reply-To field, so
+X# recipients should use care in replying.
+X#
+X# The remainder of the formfile specifies the form to be filled out.
+X#
+X# Lines containing a '[' are interpreted as questions.  Characters following
+X# the '[' are taken to be a default value for the answer.  Characters
+X# preceding the '[' are taken to be a prompt.  If there is no prompt
+X# preceding the '[', the question is taken to be a running essay questions
+X# and multiple lines of input are accepted until a blank line or a line
+X# consisting of a single '.' is read.
+X#
+X# Non-question lines in the formfile are displayed to the user and/or
+X# displayed together with the user's answers in the results sent by mail:
+X# -- Lines beginning in '>' are displayed to the user but not mailed.
+X# -- Lines beginning in '<' are mailed but not displayed to the user.
+X# -- Lines beginning in '#' are comments and are ignored.
+X# -- Lines containing no '[' and not beginning in '>', '<' or '#' are both
+X#	displayed to the user and mailed.
+X#
+X#
+X# EXAMPLE FORMFILE:
+X#
+X# To: widgetmeister@foobar.edu
+X# Subject: Widget request from $2 ($1)
+X# Reply-To: $1
+X# # Test form.  This is a comment.
+X#                           WIDGET REQUEST FORM
+X# >
+X# >Widget Services supplies widgets only to registered students, faculty
+X# >and staff of Foobar University.
+X# >
+X# >To pick up your widget go to Room 101 between the hours of 1-2 pm
+X# >Monday through Wednesday.
+X# 
+X# Personal info (e-mail address, name, office address, extension):
+X#   E-mail address: [
+X#             Name: [
+X#   Office address: [
+X#        Extension: [
+X# 
+X# Widget shape (round, square, triangular -- CHOOSE ONE):
+X#        Round: [n
+X#       Square: [n
+X#   Triangular: [n
+X# 
+X# Number of widgets desired: [1
+X# 
+X# What additional features would you like to see in a widget?
+X# [
+X# 
+X# <--------------------------------------------------------------------
+X# <                          FOR OFFICE USE ONLY
+X# <
+X# < Processed by: ____________________________   Date: ________________
+X# < 
+X# < Comments: _________________________________________________________
+X# <--------------------------------------------------------------------
+X#	
+X#-------------------------------------------------------------------------
+X# Global variables:
+X#  $ReplyTo   "Reply-To:" line
+X#  $Subject   "Subject:" line
+X#  $To        "To:" line
+X#  $def       are there any default answers in @ans?
+X#  $formfile  name of the file from which form will be taken
+X#  $mailer    mail delivery program
+X#  $nans      number of answers in @ansindex (and possible answers in @ans)
+X#  $nl        number of lines in @lines
+X#  @ans       answers from user (may be predetermined defaults)
+X#  @ansindex  table to look up Nth answer in @ans (since @ans is sparse)
+X#  @lines     lines in form
+X#  @question  array of flags: does this line (in @lines) ask a question?
+X#  FORM       file handle for form file
+X
+X#-------------------------------------------------------------------------
+X
+Xrequire("ctime.pl");
+X
+X$mailer = "/bin/mail";
+X$usage = "usage: goform formfile";
+X
+X# Parse command-line arguments.
+Xdie("$usage\n") unless ($#ARGV == 0);
+X$formfile = $ARGV[0];
+X
+X# Immediately flush all output to STDOUT.  Send an "IAC WONT ECHO" string
+X# (per RFCs 1184 and 857) so the Mac client will know it has to echo text
+X# locally.  Then throw away an initial line of input in order to dispose of
+X# any remaining telnet protocol cruft.
+X$| = 1;
+Xprint("\377\374\001\n");			# IAC WONT ECHO
+Xprint("Press return to begin:\r\n");
+X$whatnow = <STDIN>;
+Xprint("\r\n\r\n\r\n\r\n");
+X
+X&parseform();
+X
+Xdo {
+X	&makepass();
+X
+X	do {
+X		print("\r\nSave/Cancel/Revise (s/c/r)? ");
+X		$whatnow = <STDIN>;
+X		$whatnow =~ tr/A-Z/a-z/;
+X	} until($whatnow =~ /^\s*(s|save|c|cancel|r|revise)\s*$/);
+X	if ($whatnow =~ /^\s*(c|cancel)\s*$/) {
+X		print("Cancelling...")
+X		&sleep(1);
+X		exit(0);
+X	}
+X	print("\r\n\r\n\r\n\r\n");
+X} until ($whatnow =~ /^\s*(s|save)\s*$/);
+X
+X$Subject = &fixfields($Subject);
+X$ReplyTo = &fixfields($ReplyTo);
+X
+X&sendform();
+X
+X#-------------------------------------------------------------------------
+X# clean -- remove leading and final whitespace from a string.
+X#
+X# usage: $str = &clean($str);
+X
+Xsub clean {
+X	local($str) = @_;
+X	$str =~ s/^\s*//;
+X	$str =~ s/\s*$//;
+X	return($str);
+X}
+X#-------------------------------------------------------------------------
+X# fixfields -- fill out "$N" items in Subject and Reply-To lines with
+X#              corresponding answers
+X#
+X# Global variables used:  $ans  $ansindex
+X
+Xsub fixfields {
+X	local($oldsubj) = @_;
+X	local($l, $newsubj, $s);
+X
+X	# Step through the Subject line.  When you find a "$n", substitute
+X	# the corresponding answer field.
+X	$newsubj = $oldsubj;
+X	while ($newsubj =~ s/\$(\d*)/$ans[$ansindex[$1 - 1]]/e) {
+X		# do nothing
+X	}
+X	return($newsubj);
+X}
+X#-------------------------------------------------------------------------
+X# Make a pass through the form.
+X#
+X# Global variables used:
+X
+Xsub makepass {
+X	local($char, $l, $resp);
+X
+X#	# Remind the user how defaults work (unless this is the first
+X#	# pass and there are none).
+X#	if ($def) {
+X#		print("\r\nNOTE:\r\n");
+X#		print("To accept pre-defined values (in []), press return.\r\n");
+X#		print("To delete a pre-defined value, type a space.\r\n\r\n");
+X#	}
+X#	$def = 1;
+X
+X	# Loop through the lines in the form.
+X	for ($l = 0; $l < $nl; $l++) {
+X
+X		# Is there a question associated with this line?
+X		if ($question[$l]) {
+X			# Do we have a default answer for this question?
+X			if ($ans[$l]) {
+X				printf("$lines[$l]<$ans[$l]> ");
+X			} else {
+X				print("$lines[$l]");
+X			}
+X			# Is this a run-on essay question? (Is there a prompt?)
+X			if ($lines[$l]) {
+X				# No, get a single answer.
+X				$resp = <STDIN>;
+X				$resp =~ s/[\r\n]*$//;
+X				$ans[$l] = &clean($resp) if ($resp);
+X			} else {
+X				# Yes, it's a run-on question  -- accept
+X				# multiple lines in a single answer.
+X				print("\r\n") if ($ans[$l]);
+X				print("(Enter a blank line to finish.)\r\n");
+X				$resp = <STDIN>;
+X				$resp =~ s/[\r\n]*$//;
+X				if ($resp) {
+X					$ans[$l] = "";
+X					do {
+X						$ans[$l] .= &clean($resp) . " ";
+X						$resp = <STDIN>;
+X						$resp =~ s/[\r\n]*$//;
+X					} while ($resp);
+X				}
+X			}
+X		} else {
+X			# This isn't a question -- print it unless it's
+X			# intended only for the final mail.
+X			$char = substr($lines[$l], 0, 1);
+X			next if ($char eq "<" | $char eq '#');
+X			if ($char eq ">") {
+X				print(substr($lines[$l], 1), "\r\n");
+X			} else {
+X				print("$lines[$l]\r\n");
+X			}
+X		}
+X	}
+X}
+X#-------------------------------------------------------------------------
+X# mmddyy -- return date in the form "mm/dd/yy"
+X#
+X# Portability issue: we count on &ctime() to return the date in one of
+X# the two following formats:
+X#
+X#       Wed Feb 24 10:42:22 1993
+X#       Wed Feb 24 10:42:22 CST 1993
+X#
+X# If it doesn't, we're in trouble...
+X
+Xsub mmddyy {
+X	local($date, $dd, $mm, $yy);
+X
+X	$date = &ctime(time);
+X	($yy) = $date =~ /\s\d\d(\d\d)\s*$/;
+X	$mm = &monthindex(substr($date, 4, 3));
+X        $dd = substr($date, 8, 2);
+X        $dd =~ s/ /0/;
+X	return("$mm/$dd/$yy");
+X}
+X#--------------------------------------------------------------------------
+X# monthindex -- given a three-character month abbreviation, return the
+X#               corresponding integer "01" (January) to "12" (December)
+X#
+X# usage: $mm = &monthindex($monthstr);
+X# error: return -1 in case of error;
+X
+Xsub monthindex {
+X        local($monthstr) = @_;
+X        local($mm);
+X        $monthstr =~ tr/A-Z/a-z/;
+X        $mm = index("janfebmaraprmayjunjulaugsepoctnovdec", $monthstr) / 3 + 1;
+X        $mm = -1 if ($mm <= 0 || $mm > 12);
+X        $mm = "0" . $mm if ($mm > 0 && $mm < 10);
+X        return $mm;
+X}
+X#-------------------------------------------------------------------------
+X# Parse the form.
+X#
+X# Global variables used:      FORM
+X# Global variables modified:  $ReplyTo  $Subject  $To  $ans  $ansindex
+X#                             $def  $formfile  $nans  $nl  $lines  $question
+X
+Xsub parseform {
+X	local($_);
+X
+X	open(FORM, "< $formfile") || die("Can't open form $formfile");
+X
+X	$nans = 0;
+X	$nl = 0;
+X	$def = 0;
+X	while ($_ = <FORM>) {
+X		chop($_);
+X	
+X		# Discard comments.
+X		next if (/^#/);
+X	
+X		# Find first instances of header lines.
+X		if (!$ReplyTo && /^Reply-To:\s+(\S.*)/) {
+X			$ReplyTo = $1;
+X			next;
+X		}
+X		if (!$Subject && /^Subject:\s+(\S.*)/) {
+X			$Subject = $1;
+X			next;
+X		}
+X		if (!$To && /^To:\s+(\S.*)/) {
+X			$To = $1;
+X			next;
+X		}
+X	
+X		# Determine which lines contain input markers ("[") and of
+X		# those, which contain predetermined defaults.
+X		if (/^(.*)\[(.*)\]?$/) {
+X			$question[$nl] = 1;
+X			$lines[$nl] = $1;
+X			$ans[$nl] = $2;
+X			$ansindex[$nans] = $nl;
+X			$nans++;
+X		} else {
+X			$lines[$nl] = $_;
+X		}
+X		$nl++;
+X	}
+X}
+X#-------------------------------------------------------------------------
+X# sendform -- mail the resulting form off to the recipients defined in the
+X#             "To:" line.
+X#
+X# Global variables used:  $ReplyTo  $Subject  $To  $ans  $lines  $mailer  $nl
+X
+Xformat MAIL = 
+X^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+X$line
+X~~^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+X  $line
+X.
+Xsub sendform {
+X	local($char, $l, $line, $s);
+X
+X	print("Sending...\r\n");
+X
+X	# Open the mail process
+X	$To =~ s/'//g;			# sanitized for your protection
+X	open(MAIL, "| $mailer '$To'")
+X		|| die("unable to open mailer $mailer to $To");
+X
+X	print(MAIL "Subject: $Subject\r\nReply-To: $ReplyTo\r\n\r\n");
+X
+X	print(MAIL "Date: " . &mmddyy() . "\r\n");
+X
+X	for($l=0; $l<$nl; $l++) {
+X		# Skip lines intended only for the user.
+X		$char = substr($lines[$l], 0, 1);
+X		next if ($char eq ">" | $char eq '#');
+X		if ($char eq "<") {
+X			# This line intended only for mail recipient.
+X			$line = substr($lines[$l], 1);
+X		} elsif ($lines[$l]) {
+X			# Normal line -- may include an answer.
+X			$line = $lines[$l] . $ans[$l];
+X		} else {
+X			# Indent lines with no question.
+X			$line = "  " . $ans[$l];
+X		}
+X		write(MAIL);
+X	}
+X	close(MAIL);
+X}
+X#-------------------------------------------------------------------------
+X# end of goform script
+END_OF_FILE
+if test 12068 -ne `wc -c <'goform'`; then
+    echo shar: \"'goform'\" unpacked with wrong size!
+fi
+chmod +x 'goform'
+# end of 'goform'
+fi
+if test -f 'test.form' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'test.form'\"
+else
+echo shar: Extracting \"'test.form'\" \(1041 characters\)
+sed "s/^X//" >'test.form' <<'END_OF_FILE'
+XTo: widgetmeister@foobar.edu
+XSubject: Widget request from $2 ($1)
+XReply-To: $1
+X# Test form.  This is a comment.
+X                          WIDGET REQUEST FORM
+X>
+X>Widget Services supplies widgets only to registered students, faculty
+X>and staff of Foobar University.
+X>
+X>To pick up your widget go to Room 101 between the hours of 1-2 pm
+X>Monday through Wednesday.
+X
+XPersonal info (e-mail address, name, office address, extension):
+X  E-mail address: [
+X            Name: [
+X  Office address: [
+X       Extension: [
+X
+XWidget shape (round, square, triangular -- CHOOSE ONE):
+X       Round: [n
+X      Square: [n
+X  Triangular: [n
+X
+XNumber of widgets desired: [1
+X
+XWhat additional features would you like to see in a widget?
+X[
+X
+X<--------------------------------------------------------------------
+X<                          FOR OFFICE USE ONLY
+X<
+X< Processed by: ____________________________   Date: ________________
+X< 
+X< Comments: _________________________________________________________
+X<--------------------------------------------------------------------
+END_OF_FILE
+if test 1041 -ne `wc -c <'test.form'`; then
+    echo shar: \"'test.form'\" unpacked with wrong size!
+fi
+# end of 'test.form'
+fi
+echo shar: End of shell archive.
+exit 0

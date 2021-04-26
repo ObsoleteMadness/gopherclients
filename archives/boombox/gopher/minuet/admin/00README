@@ -1,0 +1,22 @@
+This is the "admin" directory of Minuet.
+
+It contains files of interest to system and network administrators,
+or anyone who will be distributing or installing Minuet for others.
+
+This area is still under construction,so please bear with the incomplete
+and sketchy information presented here.
+
+-----------------------
+
+The "NewsINfo" server
+
+The News feature of Minuet works better if a "newsinfo" server is available.
+"NewsInfo" is a server that supplies the Minuet client with condensed news
+group information.  THis is particularly useful over slow SLIP links,
+or if your news server has thousands of newsgroups.  Minuet can run
+without the newsinfo server-- it just runs much faster with it.
+
+The newsinfo server we supply is written as a Perl script.  It is a 
+mostly-competent, quite efficient server.  It has a few site configurable
+parameters at the top of the script.  Further information will be forthcoming.
+

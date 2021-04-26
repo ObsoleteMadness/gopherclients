@@ -1,0 +1,117 @@
+This is GNU Emacs 'forms-mode', version 1.2 (patchlevel 9).
+
+This GNU Emacs major mode implements editing a structured file (i.e. a
+file with 'records' and 'fields' in it) using a forms. 
+It is fully documented in the source file 'forms.el' and in the
+texinfo file 'forms.texinfo'.
+
+This kit contains:
+
+	README		- this file
+	MANIFEST	- list of files
+	forms.el	- the lisp source
+	forms.texinfo	- texinfo file
+	forms-passwd	- simple demo using /etc/passwd
+	forms-demo	- advanced demo using 'forms-data'
+	forms-data	- data for forms-demo
+
+Load the lisp source, and execute
+
+	forms-find-file forms-passwd
+
+to look at your password file in a unconventional (but read-only) way.
+
+	forms-find-file forms-demo
+
+gives you something to clobber with data and multi-line fields.
+
+This program has been donated to the Free Software Foundation to be
+part of their GNU Emacs programming system.
+
+Have fun!
+
+	Johan Vromans	<jv@mh.nl>
+
+HISTORY
+-------
+
+1.2.9  Released: Jan 14, 1992
+
+  * Add LCD entry for the lisp archive.
+
+  * Add (provide 'forms) but retain (provide 'forms-mode) for
+    compatibility. 
+
+  * Changed the names of the files so they all start with 'forms'.
+    To ease integration with the GNU Emacs sources.
+
+1.2.7  Released: Jul 1, 1991
+
+ New features:
+  * Is it now possible to define a function
+    `forms-modified-record-filter' in the control file, that gets
+    called when a new record is created.  It can be used to change
+    values in fields.
+
+  * The filter functions may also point to a function.
+
+  * Support for functions and lisp symbols in forms-format-list.
+
+  * Function forms-enumerate can be helpful when defining 'symbolic
+    names' for fields.
+
+  * 'demo2' has been enhanced to exploit most of the new features.
+
+ Misc.:
+  * Internally optimized the forms-format-list.
+
+  * Added support for debugging.
+
+  * Stripped duplicate documentation.
+
+1.2.3  Released: May 21, 1991
+
+ Fixed bug:
+  * Make argument to scroll-{up,down} &optional.
+
+1.2.2  Released: May 20, 1991
+
+ Fixed bug:
+  * The modifications to the last field of a form were not handled
+    correctly if that field was not followed by fixed text.
+
+1.2.1  Released: Sep 18, 1990
+
+ New feature:
+  * Is it now possible to define a function `forms-new-record-filter' in
+    the control file, that gets called when a new record is created.
+    It can be used to insert default values in fields.
+    Thanks to Harald Hanche-Olsen <hanche@imf.unit.no> .
+
+ Fixed bugs:
+  * `save-buffer' was redefined as (interactive "P"). This should have
+    been (interactive "p").
+    Thanks to Jonathan Kamens <jik@pit-manager.MIT.EDU> .
+  * `forms--checkmod' was not called often enough to prevent modified
+    records from getting lost in spurious situations.
+    Thanks to u502sou@mpirbn.uucp (Ignatios Souvatzis).
+  * When updating a new record, sometimes it got prepended to the next
+    record. 
+    Thanks to several users.
+
+ Other modifications:
+  * Harald Hanche-Olsen <hanche@imf.unit.no> rewrote
+    forms--make-format and forms--make-parser to use the more standard
+    backquote construct.
+
+ And finally:
+  * Ignatios Souvatzis wrote a forms routine to sort a file on
+    selected fields. I did not include it because I don't think that
+    sorting belongs to the functionality of forms-mode. Ignatios
+    wrote me:
+
+      as i didn't want to look up the man page for /bin/sort, i wrote
+      a sort function for you forms mode. You may include it in your
+      next distribution to the net or FSF, if you want (as long as
+      there remains a trace of who wrote that ~30 lines). Else tell me
+      please so that i can post the sort code myself.

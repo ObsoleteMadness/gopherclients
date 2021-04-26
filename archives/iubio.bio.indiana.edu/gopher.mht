@@ -1,0 +1,179 @@
+>From bronze!sol.ctr.columbia.edu!spool.mu.edu!agate!bionet!NIC.FUNET.FI!harper Tue Feb 11 10:20:18 EST 1992
+Article: 1984 of bionet.software
+Path: bronze!sol.ctr.columbia.edu!spool.mu.edu!agate!bionet!NIC.FUNET.FI!harper
+From: harper@NIC.FUNET.FI (Rob Harper)
+Newsgroups: bionet.software
+Subject: GOPHER
+Message-ID: <9202111446.AA06804@genbank.bio.net>
+Date: 11 Feb 92 14:38:45 GMT
+Article-I.D.: genbank.9202111446.AA06804
+Sender: daemon@genbank.bio.net
+Distribution: bionet
+Lines: 164
+
+
+We have been using gopher on our convex to provide online help for our
+applications packages. It is radical awesome as BIFF would say.
+We've got it. We like it.
+
+A new newsgroup alt.gopher has been created to handle discussions.
+Check it out!!!
+
+%%%%%%%%%%%%%%%%%%%%%  CLIP & RECOMMENDATION  %%%%%%%%%%%%%%%%%%%%%%
+The newsgroup alt.gopher has been created to for developers and
+users of the Gopher software developed at the University of Minnesota.
+
+Here is our little gopher spiel, in case you're interested:
+
+What is the Internet Gopher?
+
+The Internet Gopher is an information distribution system. It combines
+features of elec- tronic bulletin board services and databases,
+allowing you to either browse a hierarchy of information, or to search
+for the information you need using full-text indexes. Gopher can also
+store references to public telnet sessions, CSO phone book servers,
+finger-protocol information, and sounds.
+
+The Internet Gopher software was devel- oped by the Computer and
+Information Services department of the University of Minnesota. The
+software is freely distributable.
+
+
+What Information is Available?
+
+There is much diverse information stored on various Gopher servers:
+computer documentation, phone books, news, weather, library
+databases, books, recipes, etc.
+
+We use Gopher at the Microcomputer Helpline to quickly answer
+questions using our large user support database. In addition to our
+own information, we have over 6000 information items from various
+hardware and software ven- dors. While it's a good tool for our own
+internal use, anyone may search the database. This means fewer calls
+to our helpline, resulting in better, faster service.
+
+The Gopher system can keep track of campus phone book servers.
+Currently you can search seventeen University phone books.
+
+Quite a bit of news is in Gopher. Two campus newspapers: The Minnesota
+Daily and The Daily Texan are on line and searchable.  National
+Weather Forecasts for the entire nation are also available. For
+Clarinet subscribers we provide a full UPI news feed that's indexed
+hourly.
+
+The electronic books published by the Gutenberg Project are available
+in Gopher. These include classics such as Moby Dick and refer- ence
+works such as the CIA World Fact Book.  The Hacker's Dictionary and
+the Periodic Table of the Elements are available too.
+
+Gopher users can also get at information that is only accessible on
+terminal based infor- mation systems. Gopher can store links to these
+sites. You can easily start a telnet session to many libraries and
+information servers with the press of a key or click of the mouse.
+
+Naturally we have some fun information as well: humor, recipes, jokes,
+etc. There's a wide variety of data, with more coming on-line all the
+time from a multitude of sites on the Inter- net.
+
+
+How does it work?
+
+Information is stored on multiple servers, connected together in a
+network. This allows for capacity to be added to the system in small,
+inexpensive increments. It also allows the Gopher system to cross
+institutional boundaries, since other servers can be "linked" into the
+sys- tem easily. Large indexes can be spread over multiple servers,
+resulting in significant speedups.
+
+You may use the PC, Macintosh, NeXT, Xwindows, or Unix Terminal
+Clients to access the Gopher system. The client connects with a "root"
+gopher server which is an entry point into the Gopher. There can be
+many different entry points. This allows a certain amount of freedom
+in organizing the information. Local or fre- quently accessed
+information can be put higher in the hierarchy for different
+organizations (i.e.  the Library root server would have a library
+search at the top level, whereas the Music root server would have it
+lower)
+
+At the initial connection, the root server sends back a listing of the
+objects in its top level directory. These objects can be:
+
+ Directories,
+ Text Files,
+ CSO Phone Books,
+ Search Engines,
+ Telnet References or
+ Sounds
+
+
+Each object has associated with it a User displayable title, a unique
+"selector string", a hostname, and a port number. The client then
+presents the user with the list of titles, and lets them make a
+selection. The user does not have to remember hostnames, ports, or
+selector strings.  The client takes care of this.
+
+After the user makes a selection, the cli- ent contacts the given host
+at the given port and sends the selector string associated with the
+object. The client will do different things, depending on what type of
+object was selected.  The client may display a new directory, show a
+text file, or prompt the user to search a CSO phone book. This process
+continues until the user decides to quit.
+
+Since gopher uses a simple protocol, we and others were able to
+develop clients and servers on many platforms quickly and easily.
+
+
+How do I access Gopher?
+
+Client software for Macintoshes, PCs, NeXTs, X Windows, and UNIX
+terminals is available for anonymous ftp from
+
+  boombox.micro.umn.edu
+
+in the directory
+
+  /pub/gopher
+
+Or, if you just want a quick look at the UNIX terminal curses client,
+telnet to the machine
+
+  consultant.micro.umn.edu
+
+and log in as:
+
+  gopher
+
+We highly recommend running the client on your local personal computer
+or workstation.  These local clients have a better response time and
+an easier user interface.
+
+
+Contacting Gopher People.
+
+The University of Minnesota Gopher Development Team can be reached by
+sending internet e-mail to
+
+gopher@boombox.micro.umn.edu
+
+Address paper mail to:
+
+Internet Gopher Team
+132 Shepherd Labs
+100 Union St. SE
+Minneapolis, MN 55455
+(612) 625-1300
+
+
+We also operate a mailing-list called gopher-news that contains
+announcements of new software and new information available in Gopher.
+To subscribe send an internet e-mail message to:
+
+gopher-news-request@boombox.micro.umn.edu
+
+--
+ | Paul Lindner | lindner@boombox.micro.umn.edu   | Slipping into madness
+ |  GopherSpace | Computer & Information Services | is good for the sake
+ |   Engineer   | University of Minnesota         | of comparision.
+///// / / /    /////// / / / /  /  /  /   /      //// / / / /  /  /  /   /
+
+

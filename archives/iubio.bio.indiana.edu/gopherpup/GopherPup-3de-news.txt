@@ -1,0 +1,78 @@
+
+GopherPup is an Internet information client program, usable on the common
+computer systems including Macintosh, Motif/XWindows and MS-Windows.  It
+provides an easy-to-use, sophisticated doorway to a wide range of
+Internet information services.
+
+
+GopherPup has several unique strengths
+
+* Display documents in Microsoft's Rich Text Format (RTF) produced by
+popular wordprocessors.  RTF not only is a widely-available standard, it
+has full support for fonts, styles, embedded images, and the formatting
+needed to display publication-quality documents. RTF displays can include a 
+variety of fonts including symbols, font sizes and styles, super-scripting and
+sub-scripting, tabbing, paragraph formatting, and pictures in both
+vector and bitmap forms. 
+
+* Display graphics in a standard, widely-used vector & bitmap format,
+Apple Macintosh's PICT.  This format provides high-resolution output,
+smaller/faster image transfer, and editable graphics, compared to GIF.
+
+* Display documents in the network HyperText Markup Language (HTML), and
+in the popular graphic bitmap format, CompuServe's GIF, as well as plain
+text.
+
+* Easily link network resources into any of these documents.  Documents
+created in a wordprocessor can be directly displayed and network links
+can be placed by simple drag-and-drop methods. 
+ 
+* The hypertext method used is easily extensible to any new format which
+can be displayed.
+
+* Browse and search through information on your local computer system
+using the same easy methods used for remote systems. The search methods 
+use the same query dialogs, and relies on a variant of FreeWAIS-sf software 
+which provides for complex and field-specified queries.  With this feature
+it will be possible for providers to provide the same information services
+throught local CDROM or disk as through remote Internet connections.
+This search support is still under development.
+
+* Supports all Gopher+ protocol features, including 
+   -- User dialogs for client-server interactions.
+   -- Simple and sophisticated multiple view handling.  Easily choose
+the format you prefer, whether RTF or Postscript, GIF or JPEG, and
+specialty formats, depending on the service and your needs.   Add new
+formats readily as needed.
+   -- Display of document dates, sizes, and abstracts -- no more
+guessing if that document is 5 years old or up-to-date, or if it is
+1,000 or 1,000,000 characters long.
+
+* Supports many HTTP/HTML protocol features (more later), and supports
+SMTP Mail protocol.
+
+* One source fits all  -- this program is freely available in one
+source version that compiles on Macintosh, Microsoft Windows and
+X-Windows computer systems. 
+
+
+NOTE:
+This release still includes several bugs and not yet suitable for
+extensive use.  
+
+GopherPup is based on the earlier GopherApp program for Macintosh
+computers.   Version 0.3 is now freely available at
+  <ftp://iubio.bio.indiana.edu:/util/gopher/gopherpup/>.  
+
+There are application executables for Macintosh, MS-Windows, Sun Sparcstation, 
+and Silicon Graphics.  Other systems are supported by the underlying toolkit.
+This is built on a cross-platform toolkit from the Nat'l Center for 
+Biotechnology Information (NCBI), and further extended by the author's 
+object-oriented application framework called DCLAP.   The source for these 
+toolkits and the applicaiton are freely available.  The home archive location 
+for DCLAP is at <ftp://iubio.bio.indiana.edu:/util/dclap/>. 
+
+
+Comments, bug reports and suggestions for new features may be sent to   
+GopherPup@Bio.Indiana.Edu
+

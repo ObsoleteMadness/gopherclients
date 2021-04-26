@@ -1,0 +1,1553 @@
+---- Cut Here and feed the following to sh ----
+#!/bin/sh
+# This is part 04 of a multipart archive
+# ============= Object.h ==============
+if test -f 'Object.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping Object.h (File already exists)'
+else
+echo 'x - extracting Object.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Object.h' &&
+//
+// Object.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This baseclass defines how an object should behave.
+// This includes the ability to be put into a list
+//
+#ifndef	_Object_h_
+#define	_Object_h_
+X
+class Object
+{
+public:
+X	//
+X	// Constructor/Destructor
+X	//
+X							Object();
+X	virtual					~Object();
+X
+X	//
+X	// Member access
+X	//
+X	Object					*Next();
+X	void					Next(Object *obj);
+X	Object					*Previous();
+X	void					Previous(Object *obj);
+X
+protected:
+X	Object					*next;
+X	Object					*prev;
+};
+X
+X
+//***************************************************************************
+// Object::Object()
+// PURPOSE:
+//    This is the simple constructor
+//
+inline Object::Object()
+{
+X	next = prev = (Object *) 0;
+}
+X
+//***************************************************************************
+// Object::~Object()
+// PURPOSE:
+//    This is the simple destructor
+//
+inline Object::~Object()
+{
+X	next = prev = (Object *) 0;
+}
+X
+X
+//***************************************************************************
+// inline void Object::Next(Object *obj)
+// PURPOSE:
+//    Assign the next value
+//
+inline void Object::Next(Object *obj)
+{
+X	next = obj;
+}
+X
+X
+//***************************************************************************
+// inline void Object::Previous(Object *obj)
+// PURPOSE:
+//    Assign the previous value
+//
+inline void Object::Previous(Object *obj)
+{
+X	prev = obj;
+}
+X
+X
+//***************************************************************************
+// inline Object *Object::Next()
+// PURPOSE:
+//    Get the next value
+//
+inline Object *Object::Next()
+{
+X	return next;
+}
+X
+X
+//***************************************************************************
+// inline Object *Object::Next()
+// PURPOSE:
+//    Get the previous value
+//
+inline Object *Object::Previous()
+{
+X	return prev;
+}
+X
+X
+#endif	_Object_h_
+SHAR_EOF
+chmod 0644 Object.h ||
+echo 'restore of Object.h failed'
+Wc_c="`wc -c < 'Object.h'`"
+test 1892 -eq "$Wc_c" ||
+	echo 'Object.h: original size 1892, current size' "$Wc_c"
+fi
+# ============= Preferences.h ==============
+if test -f 'Preferences.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping Preferences.h (File already exists)'
+else
+echo 'x - extracting Preferences.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Preferences.h' &&
+//
+// Preferences.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class defines the interface between the options database and the options.
+//
+#ifndef	_Preferences_h_
+#define	_Preferences_h_
+X
+class Preferences
+{
+public:
+X	//
+X	// Constructor: It will try to read in all the options
+X	//
+X							Preferences();
+X							~Preferences();
+X
+X	//
+X	// The interface to the database consists of get_ and set_ routines.
+X	// Once an option has been 'set_', it will be written to the database
+X	// when this class is deleted.
+X	//
+X	int						get_remove_children();
+X	void					set_remove_children(int);
+X	int						get_popup_bookmarks();
+X	void					set_popup_bookmarks(int);
+X
+X	char					*get_mail_filter();
+X	void					set_mail_filter(char *);
+X	char					*get_print_filter();
+X	void					set_print_filter(char *);
+X	char					*get_play_filter();
+X	void					set_play_filter(char *);
+X	char					*get_image_filter();
+X	void					set_image_filter(char *);
+X	char					*get_telnet_command();
+X	void					set_telnet_command(char *);
+X
+private:
+X	//
+X	// The actual preference items
+X	//
+X	int						remove_children;
+X	int						popup_bookmarks;
+X	char					*mail_filter;
+X	char					*print_filter;
+X	char					*play_filter;
+X	char					*image_filter;
+X	char					*telnet_command;
+};
+X
+#endif	_Preferences_h_
+SHAR_EOF
+chmod 0644 Preferences.h ||
+echo 'restore of Preferences.h failed'
+Wc_c="`wc -c < 'Preferences.h'`"
+test 1347 -eq "$Wc_c" ||
+	echo 'Preferences.h: original size 1347, current size' "$Wc_c"
+fi
+# ============= Response.h ==============
+if test -f 'Response.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping Response.h (File already exists)'
+else
+echo 'x - extracting Response.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Response.h' &&
+//
+// Response.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class keeps track of responses from a gopher server.
+// It can be interrogated to get part or all of the response.
+//
+#ifndef	_Response_h_
+#define	_Response_h_
+X
+#include <stdio.h>
+X
+#define	MAX_WORDS			20
+X
+X
+class Response
+{
+public:
+X	//
+X	// Constructor/Destructor
+X	//
+X							Response();
+X							Response(char *str);
+X							Response(Response *r);
+X							~Response();
+X
+X	//
+X	// Data access
+X	//
+X	int						set(char *str);
+X
+X	char					*get_server();
+X	int						get_port();
+X	char					*get_command();
+X	char					*get_title();
+X	char					get_type();
+X	char					*get_nth(int n);
+X
+X	void					set_server(char *str);
+X	void					set_port(int port);
+X	void					set_port(char *port);
+X	void					set_command(char *str);
+X	void					set_type(char c);
+X	void					set_nth(int n, char *str);
+X	void					set_nth(int n, int x);
+private:
+X	//
+X	// Internally we will split the original into words.  The words are seperated with TABs
+X	//
+X	char					type;
+X	char					*words[MAX_WORDS];
+X	int						wordcount;
+};
+X
+X
+//***************************************************************************
+// void Response::set_server(char *str)
+//
+inline void Response::set_server(char *str)
+{
+X	set_nth(2, str);
+}
+X
+X
+//***************************************************************************
+// void Response::set_command(char *str)
+//
+inline void Response::set_command(char *str)
+{
+X	set_nth(1, str);
+}
+X
+X
+//***************************************************************************
+// void Response::set_port(int port)
+//
+inline void Response::set_port(int port)
+{
+X	set_nth(3, port);
+}
+X
+X
+//***************************************************************************
+// void Response::set_port(char *port)
+//
+inline void Response::set_port(char *port)
+{
+X	set_nth(3, port);
+}
+X
+X
+//***************************************************************************
+// void Response::set_type(char ch)
+//
+inline void Response::set_type(char ch)
+{
+X	type = ch;
+}
+X
+X
+//***************************************************************************
+// char *Response::get_server()
+//
+inline char *Response::get_server()
+{
+X	return get_nth(2);
+}
+X
+X
+//***************************************************************************
+// char *Response::get_title()
+//
+inline char *Response::get_title()
+{
+X	return get_nth(0);
+}
+X
+X
+//***************************************************************************
+// char *Response::get_command()
+//
+inline char *Response::get_command()
+{
+X	return get_nth(1);
+}
+X
+X
+#include <stdlib.h>
+//***************************************************************************
+// int Response::get_port()
+//
+inline int Response::get_port()
+{
+X	return atoi(get_nth(3));
+}
+X
+X
+//***************************************************************************
+// char Response::get_type()
+//
+inline char Response::get_type()
+{
+X	return type;
+}
+X
+X
+#endif	_Response_h_
+SHAR_EOF
+chmod 0644 Response.h ||
+echo 'restore of Response.h failed'
+Wc_c="`wc -c < 'Response.h'`"
+test 2963 -eq "$Wc_c" ||
+	echo 'Response.h: original size 2963, current size' "$Wc_c"
+fi
+# ============= String.h ==============
+if test -f 'String.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping String.h (File already exists)'
+else
+echo 'x - extracting String.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'String.h' &&
+//
+// String.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class defines a string as an object derived from Object.
+//
+#ifndef	_String_h_
+#define	_String_h_
+X
+#include "Object.h"
+#include "string.h"
+X
+class String : public  Object
+{
+public:
+X	//
+X	// Constructors/Destructor
+X	//
+X							String();
+X							String(char *str);
+X							String(String &s);
+X							~String();
+X
+X	//
+X	// Access to the string
+X	//
+X	char					*get();
+X	void					set(char *str);
+X
+private:
+X	//
+X	// A place to store our string
+X	//
+X	char					*string;
+};
+X
+X
+//***************************************************************************
+// String::String()
+//
+inline String::String()
+{
+X	string = (char *) 0;
+}
+X
+X
+//***************************************************************************
+// inline String::String(char *str)
+//
+inline String::String(char *str)
+{
+X	string = strdup(str);
+}
+X
+X
+//***************************************************************************
+// String::~String()
+//
+inline String::~String()
+{
+X	if (string)
+X		delete string;
+X	string = (char *) 0;
+}
+X
+X
+//***************************************************************************
+// inline String::String(String &s)
+//
+inline String::String(String &s)
+{
+X	string = strdup(s.string);
+}
+X
+X
+//***************************************************************************
+// inline char *String::get()
+//
+inline char *String::get()
+{
+X	return string;
+}
+X
+X
+//***************************************************************************
+// inline void String::set(char *str)
+//
+inline void String::set(char *str)
+{
+X	string = strdup(str);
+}
+X
+X
+#endif	_String_h_
+SHAR_EOF
+chmod 0644 String.h ||
+echo 'restore of String.h failed'
+Wc_c="`wc -c < 'String.h'`"
+test 1684 -eq "$Wc_c" ||
+	echo 'String.h: original size 1684, current size' "$Wc_c"
+fi
+# ============= cursor.h ==============
+if test -f 'cursor.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping cursor.h (File already exists)'
+else
+echo 'x - extracting cursor.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'cursor.h' &&
+//
+// Prototypes
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+void frame_busy(Frame);
+void frame_unbusy(Frame);
+Server_image get_gopher(int);
+SHAR_EOF
+chmod 0644 cursor.h ||
+echo 'restore of cursor.h failed'
+Wc_c="`wc -c < 'cursor.h'`"
+test 241 -eq "$Wc_c" ||
+	echo 'cursor.h: original size 241, current size' "$Wc_c"
+fi
+# ============= icons.h ==============
+if test -f 'icons.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons.h (File already exists)'
+else
+echo 'x - extracting icons.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons.h' &&
+//
+// icons.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+#ifndef	_icons_h_
+#define	_icons_h_
+X
+Server_image get_image(char type);
+X
+#endif	_icons_h_
+SHAR_EOF
+chmod 0644 icons.h ||
+echo 'restore of icons.h failed'
+Wc_c="`wc -c < 'icons.h'`"
+test 248 -eq "$Wc_c" ||
+	echo 'icons.h: original size 248, current size' "$Wc_c"
+fi
+# ============= xvgopher.h ==============
+if test -f 'xvgopher.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping xvgopher.h (File already exists)'
+else
+echo 'x - extracting xvgopher.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'xvgopher.h' &&
+//
+// xvgopher.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Header for the xvgopher gopher client
+//
+#ifndef	_xvgopher_h_
+#define	_xvgopher_h_
+X
+//
+// Configurable defines
+//
+X
+//
+// GOPHER_SERVER is a string describing the initial gopher server to
+// contact.  If you have a say in local nameserver administration, it
+// would be wise to create an alias 'gopher' for the machine the gopher
+// server runs on.  This way none of the client configurations will have
+// to change if the server is moved to a different machine.  Only the
+// nameserver alias needs to be changed to reflect the new server.
+//
+#define	GOPHER_SERVER	"gopher"
+X
+//
+// External programs used by xvgopher.  All of these are just defaults and can be
+// changed by the user.
+//
+#define	DEFAULT_TELNET			"xterm -T \"%s\" -e telnet %s %d &"
+#define	DEFAULT_IMAGER			"xv"
+#define	DEFAULT_PLAYER			"play"
+#define	DEFAULT_MAILER			"/usr/ucb/Mail"
+#define	DEFAULT_PRINT_FILTER	"lpr"
+X
+X
+//
+// DO NOT CHANGE ANYTHING BELOW THIS LINE
+//
+X
+//
+// The following define the different types of items which are known
+// to gopher
+//
+#define	GOPHER_FILE			'0'	// Item is a file  
+#define	GOPHER_DIRECTORY	'1'	// Item is a directory  
+#define	GOPHER_CSO			'2'	// Item is a CSO (qi) phone-book server  
+#define	GOPHER_ERROR		'3'	// Error   
+#define	GOPHER_BINHEX		'4'	// Item is a BinHexed Macintosh file. Use of this type is discouraged 
+#define	GOPHER_DOS			'5'	// Item is DOS binary archive of some sort. Use of this type is discouraged 
+#define	GOPHER_UU			'6'	// Item is a UNIX uuencoded file. Use of this type is discouraged 
+#define	GOPHER_INDEX		'7'	// Item is an Index-Search server.  
+#define	GOPHER_TELNET		'8'	// Item points to a text-based telnet session. 
+#define	GOPHER_BIN			'9'	// Item is a binary file! Client must read until the connection closes. Beware.
+#define	GOPHER_REDUNDANT	'+'	// Item is a redundant server (same information as the previous server) 
+#define	GOPHER_SOUND		's'	// Item is a sound file
+#define	GOPHER_IMAGE		'I'	// Item is an image file
+#define	GOPHER_GIF			'g'	// Item is a GIF file
+#define	GOPHER_SPECIAL		31	// Item is a special directory (index)
+X
+#ifndef	TRUE
+# define	TRUE		(1)
+#endif
+X
+#ifndef	FALSE
+# define	FALSE		(0)
+#endif
+X
+#define	OK				0
+#define	NOTOK			(-1)
+X
+typedef	unsigned long	dword;
+typedef	unsigned short	word;
+typedef	unsigned char	byte;
+X
+//
+// These keys are used to attach data to xview items
+//
+#define	KEY_FRAME		11001
+#define	KEY_GWINDOW		11002
+#define	KEY_GOPHER		11003
+X
+//
+// Version number.  This is nicely tucked away so people don't go changing it without
+// any real reasons.
+//
+#define	VERSION			"0.5beta"
+X
+#include "Preferences.h"
+X
+extern Preferences	preferences;
+X
+#endif	_xvgopher_h_
+SHAR_EOF
+chmod 0664 xvgopher.h ||
+echo 'restore of xvgopher.h failed'
+Wc_c="`wc -c < 'xvgopher.h'`"
+test 2810 -eq "$Wc_c" ||
+	echo 'xvgopher.h: original size 2810, current size' "$Wc_c"
+fi
+# ============= icons/bin ==============
+if test ! -d 'icons'; then
+    echo 'x - creating directory icons'
+    mkdir 'icons'
+fi
+if test -f 'icons/bin' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/bin (File already exists)'
+else
+echo 'x - extracting icons/bin (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/bin' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x0100,
+X	0x0380,
+X	0x0380,
+X	0x0380,
+X	0x0380,
+X	0x0380,
+X	0x0380,
+X	0x0100,
+X	0x0100,
+X	0x0000,
+X	0x0380,
+X	0x0380,
+X	0x0380,
+X	0x0000,
+SHAR_EOF
+chmod 0644 icons/bin ||
+echo 'restore of icons/bin failed'
+Wc_c="`wc -c < 'icons/bin'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/bin: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/cso ==============
+if test -f 'icons/cso' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/cso (File already exists)'
+else
+echo 'x - extracting icons/cso (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/cso' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x00C0,
+X	0x03C0,
+X	0x07C0,
+X	0x0FC0,
+X	0x0CC0,
+X	0x0C00,
+X	0x0C00,
+X	0x0C00,
+X	0x0C00,
+X	0x0C00,
+X	0x0C00,
+X	0x0CC0,
+X	0x0FC0,
+X	0x07C0,
+X	0x03C0,
+X	0x00C0,
+SHAR_EOF
+chmod 0644 icons/cso ||
+echo 'restore of icons/cso failed'
+Wc_c="`wc -c < 'icons/cso'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/cso: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/dir ==============
+if test -f 'icons/dir' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/dir (File already exists)'
+else
+echo 'x - extracting icons/dir (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/dir' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x003C,
+X	0x0042,
+X	0xFF81,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0x8001,
+X	0xFFFF,
+SHAR_EOF
+chmod 0644 icons/dir ||
+echo 'restore of icons/dir failed'
+Wc_c="`wc -c < 'icons/dir'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/dir: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/doc ==============
+if test -f 'icons/doc' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/doc (File already exists)'
+else
+echo 'x - extracting icons/doc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/doc' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x1F80,
+X	0x1AC0,
+X	0x10A0,
+X	0x1790,
+X	0x10F8,
+X	0x1D58,
+X	0x1008,
+X	0x1BE8,
+X	0x1008,
+X	0x1D58,
+X	0x1008,
+X	0x16E8,
+X	0x1008,
+X	0x1D68,
+X	0x1008,
+X	0x1FF8,
+SHAR_EOF
+chmod 0644 icons/doc ||
+echo 'restore of icons/doc failed'
+Wc_c="`wc -c < 'icons/doc'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/doc: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/dos ==============
+if test -f 'icons/dos' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/dos (File already exists)'
+else
+echo 'x - extracting icons/dos (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/dos' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0xFFFF,
+X	0xFFFF,
+X	0xFFFE,
+X	0xFFFE,
+X	0xFFFF,
+X	0xFFFF,
+X	0xFE7F,
+X	0xFC3F,
+X	0xFC3F,
+X	0xFE6F,
+X	0xFFFF,
+X	0xFFFF,
+X	0xFE7F,
+X	0xFE7F,
+X	0xFE7F,
+X	0xFE7F,
+SHAR_EOF
+chmod 0644 icons/dos ||
+echo 'restore of icons/dos failed'
+Wc_c="`wc -c < 'icons/dos'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/dos: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/error ==============
+if test -f 'icons/error' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/error (File already exists)'
+else
+echo 'x - extracting icons/error (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/error' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+SHAR_EOF
+chmod 0644 icons/error ||
+echo 'restore of icons/error failed'
+Wc_c="`wc -c < 'icons/error'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/error: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/gopher.icon ==============
+if test -f 'icons/gopher.icon' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/gopher.icon (File already exists)'
+else
+echo 'x - extracting icons/gopher.icon (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/gopher.icon' &&
+/* Format_version=1, Width=64, Height=64, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0007,	0xC000,	0x0000,
+X	0x0000,	0x001F,	0xF000,	0x0000,
+X	0x0000,	0x003F,	0xF800,	0x0000,
+X	0x0000,	0x00F0,	0x0C00,	0x0000,
+X	0x0000,	0x01E7,	0xCE00,	0x0000,
+X	0x0000,	0x038C,	0xC700,	0x0000,
+X	0x0000,	0x070C,	0x0780,	0x0000,
+X	0x0000,	0x0F0D,	0xC3C0,	0x0000,
+X	0x0000,	0x0F0C,	0xC1E0,	0x0000,
+X	0x0000,	0x0E0C,	0xC0F0,	0x0000,
+X	0x0000,	0x0E07,	0x80F0,	0x1F80,
+X	0x01FC,	0x1F00,	0x0FF8,	0x6060,
+X	0x0303,	0x1FFF,	0xFFE9,	0x8030,
+X	0x0401,	0x9FFF,	0xFFC7,	0x0F10,
+X	0x09E0,	0xF8FF,	0xFF02,	0x1F88,
+X	0x1BF8,	0x641C,	0x1C32,	0x3F48,
+X	0x17FC,	0x5803,	0xE009,	0x7904,
+X	0x147C,	0x7180,	0x03C5,	0xF804,
+X	0x107E,	0x27E0,	0x0E71,	0xF004,
+X	0x103E,	0x8C10,	0x0809,	0xC004,
+X	0x101F,	0x880C,	0x1008,	0xE004,
+X	0x181F,	0x9004,	0x1004,	0xE004,
+X	0x180F,	0x91E6,	0x1784,	0xC008,
+X	0x0C05,	0x97E6,	0x17E7,	0xC008,
+X	0x0403,	0x8002,	0xD000,	0xC010,
+X	0x0607,	0x8C01,	0xE01A,	0xE020,
+X	0x0382,	0x0003,	0xF000,	0x60C0,
+X	0x00FB,	0xF003,	0xF007,	0xFF80,
+X	0x001E,	0x0000,	0x0000,	0x2000,
+X	0x0003,	0xF800,	0x007F,	0xE000,
+X	0x00FE,	0x0000,	0x0000,	0x3E00,
+X	0x0302,	0xF000,	0x400F,	0xE180,
+X	0x0007,	0x0300,	0xE030,	0x6000,
+X	0x007D,	0x00FF,	0xFFC7,	0xDE00,
+X	0x0181,	0xC878,	0x438F,	0x0180,
+X	0x0000,	0x7C10,	0x4388,	0x0000,
+X	0x0000,	0x0C18,	0x4310,	0x0000,
+X	0x0000,	0x0308,	0x0220,	0x0000,
+X	0x0000,	0x0088,	0x4440,	0x0000,
+X	0x0000,	0x0047,	0xFCC0,	0x0000,
+X	0x0000,	0x0023,	0xF8C0,	0x0000,
+X	0x0000,	0x0033,	0xF1C0,	0x0000,
+X	0x0000,	0x0010,	0x03C0,	0x0000,
+X	0x0000,	0x0018,	0x03C0,	0x0000,
+X	0x0000,	0x0014,	0x06C0,	0x0000,
+X	0x0000,	0x0013,	0x9CC0,	0x0000,
+X	0x0000,	0x0011,	0xFCE0,	0x0000,
+X	0x0000,	0x0018,	0x0060,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0E7E,	0x383A,	0x0006,	0x0000,
+X	0x0424,	0x1066,	0x0002,	0x0000,
+X	0x0242,	0x2042,	0x0002,	0x0000,
+X	0x0382,	0x2080,	0x19E3,	0x8658,
+X	0x0181,	0x4087,	0x2492,	0x4930,
+X	0x02C1,	0x4082,	0x2492,	0x4F20,
+X	0x0241,	0xC042,	0x2492,	0x4820,
+X	0x0420,	0x8066,	0x2492,	0x4CA0,
+X	0x0E70,	0x803C,	0x18E7,	0x6770,
+X	0x0000,	0x0000,	0x0080,	0x0000,
+X	0x0000,	0x0000,	0x0080,	0x0000,
+X	0x0000,	0x0000,	0x01C0,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+SHAR_EOF
+chmod 0644 icons/gopher.icon ||
+echo 'restore of icons/gopher.icon failed'
+Wc_c="`wc -c < 'icons/gopher.icon'`"
+test 2190 -eq "$Wc_c" ||
+	echo 'icons/gopher.icon: original size 2190, current size' "$Wc_c"
+fi
+# ============= icons/gopher.icon.mask ==============
+if test -f 'icons/gopher.icon.mask' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/gopher.icon.mask (File already exists)'
+else
+echo 'x - extracting icons/gopher.icon.mask (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/gopher.icon.mask' &&
+/* Format_version=1, Width=64, Height=64, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0007,	0xC000,	0x0000,
+X	0x0000,	0x001F,	0xF000,	0x0000,
+X	0x0000,	0x003F,	0xF800,	0x0000,
+X	0x0000,	0x00FF,	0xFF00,	0x0000,
+X	0x0000,	0x01FF,	0xFF00,	0x0000,
+X	0x0000,	0x03FF,	0xFF00,	0x0000,
+X	0x0000,	0x07FF,	0xFF80,	0x0000,
+X	0x0000,	0x0FFF,	0xFFC0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFE0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x1F80,
+X	0x01FC,	0x1FFF,	0xFFF8,	0x7FE0,
+X	0x03FF,	0x1FFF,	0xFFF9,	0xFFF0,
+X	0x07FF,	0x9FFF,	0xFFFF,	0xFFF0,
+X	0x0FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x0FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x07FF,	0xFFFF,	0xFFFF,	0xFFF0,
+X	0x07FF,	0xFFFF,	0xFFFF,	0xFFE0,
+X	0x03FF,	0xFFFF,	0xFFFF,	0xFFC0,
+X	0x00FF,	0xFFFF,	0xFFFF,	0xFF80,
+X	0x001F,	0xFFFF,	0xFFFF,	0xE000,
+X	0x0003,	0xFFFF,	0xFFFF,	0xE000,
+X	0x00FF,	0xFFFF,	0xFFFF,	0xFE00,
+X	0x0303,	0xFFFF,	0xFFFF,	0xE180,
+X	0x0007,	0xFFFF,	0xFFFF,	0xE000,
+X	0x007D,	0xFFFF,	0xFFFF,	0xDE00,
+X	0x0181,	0xFFFF,	0xFFFF,	0x0180,
+X	0x0000,	0x7FFF,	0xFFF8,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x0000,
+X	0x0000,	0x03FF,	0xFFE0,	0x0000,
+X	0x0000,	0x00FF,	0xFFC0,	0x0000,
+X	0x0000,	0x007F,	0xFFC0,	0x0000,
+X	0x0000,	0x003F,	0xFFC0,	0x0000,
+X	0x0000,	0x003F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFE0,	0x0000,
+X	0x0000,	0x001F,	0xFFE0,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0E7E,	0x383A,	0x0006,	0x0000,
+X	0x0424,	0x1066,	0x0002,	0x0000,
+X	0x0242,	0x2042,	0x0002,	0x0000,
+X	0x0382,	0x2080,	0x19E3,	0x8658,
+X	0x0181,	0x4087,	0x2492,	0x4930,
+X	0x02C1,	0x4082,	0x2492,	0x4F20,
+X	0x0241,	0xC042,	0x2492,	0x4820,
+X	0x0420,	0x8066,	0x2492,	0x4CA0,
+X	0x0E70,	0x803C,	0x18E7,	0x6770,
+X	0x0000,	0x0000,	0x0080,	0x0000,
+X	0x0000,	0x0000,	0x0080,	0x0000,
+X	0x0000,	0x0000,	0x01C0,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+SHAR_EOF
+chmod 0644 icons/gopher.icon.mask ||
+echo 'restore of icons/gopher.icon.mask failed'
+Wc_c="`wc -c < 'icons/gopher.icon.mask'`"
+test 2190 -eq "$Wc_c" ||
+	echo 'icons/gopher.icon.mask: original size 2190, current size' "$Wc_c"
+fi
+# ============= icons/gopher1 ==============
+if test -f 'icons/gopher1' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/gopher1 (File already exists)'
+else
+echo 'x - extracting icons/gopher1 (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/gopher1' &&
+/* Format_version=1, Width=64, Height=64, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0007,	0xC000,	0x0000,
+X	0x0000,	0x001F,	0xF000,	0x0000,
+X	0x0000,	0x003F,	0xF800,	0x0000,
+X	0x0000,	0x00F0,	0x0C00,	0x0000,
+X	0x0000,	0x01E7,	0xCE00,	0x0000,
+X	0x0000,	0x038C,	0xC700,	0x0000,
+X	0x0000,	0x070C,	0x0780,	0x0000,
+X	0x0000,	0x0F0D,	0xC3C0,	0x0000,
+X	0x0000,	0x0F0C,	0xC1E0,	0x0000,
+X	0x0000,	0x0E0C,	0xC0F0,	0x0000,
+X	0x0000,	0x0E07,	0x80F0,	0x1F80,
+X	0x01FC,	0x1F00,	0x0FF8,	0x6060,
+X	0x0303,	0x1FFF,	0xFFE9,	0x8030,
+X	0x0401,	0x9FFF,	0xFFC7,	0x0F10,
+X	0x09E0,	0xF8FF,	0xFF02,	0x1F88,
+X	0x1BF8,	0x641C,	0x1C32,	0x3F48,
+X	0x17FC,	0x5803,	0xE009,	0x7904,
+X	0x147C,	0x7180,	0x03C5,	0xF804,
+X	0x107E,	0x27E0,	0x0E71,	0xF004,
+X	0x103E,	0x8C10,	0x0809,	0xC004,
+X	0x101F,	0x880C,	0x1008,	0xE004,
+X	0x181F,	0x9004,	0x1004,	0xE004,
+X	0x180F,	0x91E6,	0x1784,	0xC008,
+X	0x0C05,	0x97E6,	0x17E7,	0xC008,
+X	0x0403,	0x8002,	0xD000,	0xC010,
+X	0x0607,	0x8C01,	0xE01A,	0xE020,
+X	0x0382,	0x0003,	0xF000,	0x60C0,
+X	0x00FB,	0xF003,	0xF007,	0xFF80,
+X	0x001E,	0x0000,	0x0000,	0x2000,
+X	0x0003,	0xF800,	0x007F,	0xE000,
+X	0x00FE,	0x0000,	0x0000,	0x3E00,
+X	0x0302,	0xF000,	0x400F,	0xE180,
+X	0x0007,	0x0300,	0xE030,	0x6000,
+X	0x007D,	0x00FF,	0xFFC7,	0xDE00,
+X	0x0181,	0xC878,	0x438F,	0x0180,
+X	0x0000,	0x7C10,	0x4388,	0x0000,
+X	0x0000,	0x0C18,	0x4310,	0x0000,
+X	0x0000,	0x0308,	0x0220,	0x0000,
+X	0x0000,	0x0088,	0x4440,	0x0000,
+X	0x0000,	0x0047,	0xFCC0,	0x0000,
+X	0x0000,	0x0023,	0xF8C0,	0x0000,
+X	0x0000,	0x0033,	0xF1C0,	0x0000,
+X	0x0000,	0x0010,	0x03C0,	0x0000,
+X	0x0000,	0x0018,	0x03C0,	0x0000,
+X	0x0000,	0x0014,	0x06C0,	0x0000,
+X	0x0000,	0x0013,	0x9CC0,	0x0000,
+X	0x0000,	0x0011,	0xFCE0,	0x0000,
+X	0x0000,	0x0018,	0x0060,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+SHAR_EOF
+chmod 0644 icons/gopher1 ||
+echo 'restore of icons/gopher1 failed'
+Wc_c="`wc -c < 'icons/gopher1'`"
+test 2190 -eq "$Wc_c" ||
+	echo 'icons/gopher1: original size 2190, current size' "$Wc_c"
+fi
+# ============= icons/gopher1.mask ==============
+if test -f 'icons/gopher1.mask' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/gopher1.mask (File already exists)'
+else
+echo 'x - extracting icons/gopher1.mask (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/gopher1.mask' &&
+/* Format_version=1, Width=64, Height=64, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0007,	0xC000,	0x0000,
+X	0x0000,	0x001F,	0xF000,	0x0000,
+X	0x0000,	0x003F,	0xF800,	0x0000,
+X	0x0000,	0x00FF,	0xFC00,	0x0000,
+X	0x0000,	0x01FF,	0xFE00,	0x0000,
+X	0x0000,	0x03FF,	0xFF00,	0x0000,
+X	0x0000,	0x07FF,	0xFF80,	0x0000,
+X	0x0000,	0x0FFF,	0xFFC0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFE0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x1F80,
+X	0x01FC,	0x1FFF,	0xFFF8,	0x7FE0,
+X	0x03FF,	0x1FFF,	0xFFF9,	0xFFF0,
+X	0x07FF,	0x9FFF,	0xFFFF,	0xFFF0,
+X	0x0FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x0FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x07FF,	0xFFFF,	0xFFFF,	0xFFF0,
+X	0x07FF,	0xFFFF,	0xFFFF,	0xFFE0,
+X	0x03FF,	0xFFFF,	0xFFFF,	0xFFC0,
+X	0x00FF,	0xFFFF,	0xFFFF,	0xFF80,
+X	0x001F,	0xFFFF,	0xFFFF,	0xE000,
+X	0x0003,	0xFFFF,	0xFFFF,	0xE000,
+X	0x00FF,	0xFFFF,	0xFFFF,	0xFE00,
+X	0x0303,	0xFFFF,	0xFFFF,	0xE180,
+X	0x0007,	0xFFFF,	0xFFFF,	0xE000,
+X	0x007D,	0xFFFF,	0xFFFF,	0xDE00,
+X	0x0181,	0xFFFF,	0xFFFF,	0x0180,
+X	0x0000,	0x7FFF,	0xFFF8,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x0000,
+X	0x0000,	0x03FF,	0xFFE0,	0x0000,
+X	0x0000,	0x00FF,	0xFFC0,	0x0000,
+X	0x0000,	0x007F,	0xFFC0,	0x0000,
+X	0x0000,	0x003F,	0xFFC0,	0x0000,
+X	0x0000,	0x003F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFE0,	0x0000,
+X	0x0000,	0x001F,	0xFFE0,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+SHAR_EOF
+chmod 0644 icons/gopher1.mask ||
+echo 'restore of icons/gopher1.mask failed'
+Wc_c="`wc -c < 'icons/gopher1.mask'`"
+test 2190 -eq "$Wc_c" ||
+	echo 'icons/gopher1.mask: original size 2190, current size' "$Wc_c"
+fi
+# ============= icons/gopher2 ==============
+if test -f 'icons/gopher2' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/gopher2 (File already exists)'
+else
+echo 'x - extracting icons/gopher2 (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/gopher2' &&
+/* Format_version=1, Width=64, Height=64, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0007,	0xC000,	0x0000,
+X	0x0000,	0x001F,	0xF000,	0x0000,
+X	0x0000,	0x003F,	0xF800,	0x0000,
+X	0x0000,	0x00F0,	0x0C00,	0x0000,
+X	0x0000,	0x01E7,	0xCE00,	0x0000,
+X	0x0000,	0x038C,	0xC700,	0x0000,
+X	0x0000,	0x070C,	0x0780,	0x0000,
+X	0x0000,	0x0F0D,	0xC3C0,	0x0000,
+X	0x0000,	0x0F0C,	0xC1E0,	0x0000,
+X	0x0000,	0x0E0C,	0xC0F0,	0x0000,
+X	0x0000,	0x0E07,	0x80F0,	0x1F80,
+X	0x01FC,	0x1F00,	0x0FF8,	0x6060,
+X	0x0303,	0x1FFF,	0xFFE9,	0x8030,
+X	0x0401,	0x9FFF,	0xFFC7,	0x0F10,
+X	0x09E0,	0xF8FF,	0xFF02,	0x1F88,
+X	0x1BF8,	0x641C,	0x1C32,	0x3F48,
+X	0x17FC,	0x5803,	0xE009,	0x7904,
+X	0x147C,	0x7180,	0x03C5,	0xF804,
+X	0x107E,	0x27E0,	0x0E71,	0xF004,
+X	0x103E,	0x8C10,	0x0809,	0xC004,
+X	0x101F,	0x880C,	0x1008,	0xE004,
+X	0x181F,	0x9004,	0x1004,	0xE004,
+X	0x180F,	0x91E6,	0x1784,	0xC008,
+X	0x0C05,	0x97E6,	0x17E7,	0xC008,
+X	0x0403,	0x8002,	0xD000,	0xC010,
+X	0x0607,	0x8C01,	0xE01A,	0xE020,
+X	0x0382,	0x0003,	0xF000,	0x60C0,
+X	0x00FB,	0xF003,	0xF007,	0xFF80,
+X	0x001E,	0x0000,	0x0000,	0x2000,
+X	0x0003,	0xF800,	0x007F,	0xE000,
+X	0x00FE,	0x0000,	0x0000,	0x3E00,
+X	0x0302,	0xF000,	0x400F,	0xE180,
+X	0x0007,	0x0300,	0xE030,	0x6000,
+X	0x007D,	0x00FF,	0xFFC7,	0xDE00,
+X	0x0181,	0xC818,	0x420F,	0x0180,
+X	0x0000,	0x7C10,	0x4208,	0x0000,
+X	0x0000,	0x0C18,	0x4210,	0x0000,
+X	0x0000,	0x0308,	0x0220,	0x0000,
+X	0x0000,	0x0088,	0x4440,	0x0000,
+X	0x0000,	0x0047,	0xFCC0,	0x0000,
+X	0x0000,	0x0020,	0x00C0,	0x0000,
+X	0x0000,	0x0018,	0x07C0,	0x0000,
+X	0x0000,	0x001F,	0x1FC0,	0x0000,
+X	0x0000,	0x0017,	0xF8C0,	0x0000,
+X	0x0000,	0x0010,	0xF0C0,	0x0000,
+X	0x0000,	0x0010,	0x00C0,	0x0000,
+X	0x0000,	0x0010,	0x00E0,	0x0000,
+X	0x0000,	0x0018,	0x0060,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+SHAR_EOF
+chmod 0644 icons/gopher2 ||
+echo 'restore of icons/gopher2 failed'
+Wc_c="`wc -c < 'icons/gopher2'`"
+test 2190 -eq "$Wc_c" ||
+	echo 'icons/gopher2: original size 2190, current size' "$Wc_c"
+fi
+# ============= icons/gopher2.mask ==============
+if test -f 'icons/gopher2.mask' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/gopher2.mask (File already exists)'
+else
+echo 'x - extracting icons/gopher2.mask (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/gopher2.mask' &&
+/* Format_version=1, Width=64, Height=64, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0007,	0xC000,	0x0000,
+X	0x0000,	0x001F,	0xF000,	0x0000,
+X	0x0000,	0x003F,	0xF800,	0x0000,
+X	0x0000,	0x00FF,	0xFC00,	0x0000,
+X	0x0000,	0x01FF,	0xFE00,	0x0000,
+X	0x0000,	0x03FF,	0xFF00,	0x0000,
+X	0x0000,	0x07FF,	0xFF80,	0x0000,
+X	0x0000,	0x0FFF,	0xFFC0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFE0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x1F80,
+X	0x01FC,	0x1FFF,	0xFFF8,	0x7FE0,
+X	0x03FF,	0x1FFF,	0xFFF9,	0xFFF0,
+X	0x07FF,	0x9FFF,	0xFFFF,	0xFFF0,
+X	0x0FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFFC,
+X	0x1FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x0FFF,	0xFFFF,	0xFFFF,	0xFFF8,
+X	0x07FF,	0xFFFF,	0xFFFF,	0xFFF0,
+X	0x07FF,	0xFFFF,	0xFFFF,	0xFFE0,
+X	0x03FF,	0xFFFF,	0xFFFF,	0xFFC0,
+X	0x00FF,	0xFFFF,	0xFFFF,	0xFF80,
+X	0x001F,	0xFFFF,	0xFFFF,	0xE000,
+X	0x0003,	0xFFFF,	0xFFFF,	0xE000,
+X	0x00FF,	0xFFFF,	0xFFFF,	0xFE00,
+X	0x0303,	0xFFFF,	0xFFFF,	0xE180,
+X	0x0007,	0xFFFF,	0xFFFF,	0xE000,
+X	0x007D,	0xFFFF,	0xFFFF,	0xDE00,
+X	0x0181,	0xFFFF,	0xFFFF,	0x0180,
+X	0x0000,	0x7FFF,	0xFFF8,	0x0000,
+X	0x0000,	0x0FFF,	0xFFF0,	0x0000,
+X	0x0000,	0x03FF,	0xFFE0,	0x0000,
+X	0x0000,	0x00FF,	0xFFC0,	0x0000,
+X	0x0000,	0x007F,	0xFFC0,	0x0000,
+X	0x0000,	0x003F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFC0,	0x0000,
+X	0x0000,	0x001F,	0xFFE0,	0x0000,
+X	0x0000,	0x001F,	0xFFE0,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+X	0x0000,	0x0000,	0x0000,	0x0000,
+SHAR_EOF
+chmod 0644 icons/gopher2.mask ||
+echo 'restore of icons/gopher2.mask failed'
+Wc_c="`wc -c < 'icons/gopher2.mask'`"
+test 2190 -eq "$Wc_c" ||
+	echo 'icons/gopher2.mask: original size 2190, current size' "$Wc_c"
+fi
+# ============= icons/idx ==============
+if test -f 'icons/idx' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/idx (File already exists)'
+else
+echo 'x - extracting icons/idx (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/idx' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x03E0,
+X	0x0670,
+X	0x0770,
+X	0x0770,
+X	0x0270,
+X	0x0060,
+X	0x00C0,
+X	0x0080,
+X	0x0080,
+X	0x0000,
+X	0x01C0,
+X	0x01C0,
+X	0x01C0,
+X	0x0000,
+SHAR_EOF
+chmod 0644 icons/idx ||
+echo 'restore of icons/idx failed'
+Wc_c="`wc -c < 'icons/idx'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/idx: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/image ==============
+if test -f 'icons/image' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/image (File already exists)'
+else
+echo 'x - extracting icons/image (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/image' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x1F80,
+X	0x1040,
+X	0x1020,
+X	0x11D0,
+X	0x1228,
+X	0x1228,
+X	0x11C8,
+X	0x1088,
+X	0x1088,
+X	0x1108,
+X	0x1108,
+X	0x17E8,
+X	0x17E8,
+X	0x13C8,
+X	0x1188,
+X	0x1FF8,
+SHAR_EOF
+chmod 0644 icons/image ||
+echo 'restore of icons/image failed'
+Wc_c="`wc -c < 'icons/image'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/image: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/info ==============
+if test -f 'icons/info' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/info (File already exists)'
+else
+echo 'x - extracting icons/info (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/info' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0180,
+X	0x0180,
+X	0x0000,
+X	0x0000,
+X	0x0780,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x0180,
+X	0x07E0,
+SHAR_EOF
+chmod 0644 icons/info ||
+echo 'restore of icons/info failed'
+Wc_c="`wc -c < 'icons/info'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/info: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/info_dragging ==============
+if test -f 'icons/info_dragging' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/info_dragging (File already exists)'
+else
+echo 'x - extracting icons/info_dragging (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/info_dragging' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0xF000,
+X	0xC000,
+X	0xA000,
+X	0x97FF,
+X	0x0C01,
+X	0x0421,
+X	0x0421,
+X	0x0401,
+X	0x0461,
+X	0x0421,
+X	0x0421,
+X	0x0421,
+X	0x0421,
+X	0x0471,
+X	0x0401,
+X	0x07FF,
+SHAR_EOF
+chmod 0644 icons/info_dragging ||
+echo 'restore of icons/info_dragging failed'
+Wc_c="`wc -c < 'icons/info_dragging'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/info_dragging: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/mac ==============
+if test -f 'icons/mac' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/mac (File already exists)'
+else
+echo 'x - extracting icons/mac (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/mac' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x7FFC,
+X	0x4004,
+X	0x5FF4,
+X	0x5014,
+X	0x5454,
+X	0x5014,
+X	0x5394,
+X	0x5014,
+X	0x5FF4,
+X	0x4004,
+X	0x4004,
+X	0x40F4,
+X	0x4004,
+X	0x4004,
+X	0x4004,
+X	0x7FFC,
+SHAR_EOF
+chmod 0644 icons/mac ||
+echo 'restore of icons/mac failed'
+Wc_c="`wc -c < 'icons/mac'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/mac: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/sound ==============
+if test -f 'icons/sound' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/sound (File already exists)'
+else
+echo 'x - extracting icons/sound (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/sound' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0008,
+X	0x0124,
+X	0x0292,
+X	0x0492,
+X	0xE849,
+X	0xB049,
+X	0xA049,
+X	0xA049,
+X	0xA049,
+X	0xA049,
+X	0xB049,
+X	0xE849,
+X	0x0492,
+X	0x0292,
+X	0x0124,
+X	0x0008,
+SHAR_EOF
+chmod 0644 icons/sound ||
+echo 'restore of icons/sound failed'
+Wc_c="`wc -c < 'icons/sound'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/sound: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/tel ==============
+if test -f 'icons/tel' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/tel (File already exists)'
+else
+echo 'x - extracting icons/tel (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/tel' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x3FFC,
+X	0x2004,
+X	0x2FF4,
+X	0x2004,
+X	0x2FF4,
+X	0x2004,
+X	0x2FF4,
+X	0x2004,
+X	0x3FFC,
+X	0x5556,
+X	0xAAAB,
+X	0xFFFF,
+X	0x0000,
+X	0x0000,
+SHAR_EOF
+chmod 0644 icons/tel ||
+echo 'restore of icons/tel failed'
+Wc_c="`wc -c < 'icons/tel'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/tel: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/unknown ==============
+if test -f 'icons/unknown' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/unknown (File already exists)'
+else
+echo 'x - extracting icons/unknown (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/unknown' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x03E0,
+X	0x0670,
+X	0x0770,
+X	0x0770,
+X	0x0270,
+X	0x0060,
+X	0x00C0,
+X	0x0080,
+X	0x0080,
+X	0x0000,
+X	0x01C0,
+X	0x01C0,
+X	0x01C0,
+X	0x0000,
+SHAR_EOF
+chmod 0644 icons/unknown ||
+echo 'restore of icons/unknown failed'
+Wc_c="`wc -c < 'icons/unknown'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/unknown: original size 222, current size' "$Wc_c"
+fi
+# ============= icons/uu ==============
+if test -f 'icons/uu' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons/uu (File already exists)'
+else
+echo 'x - extracting icons/uu (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons/uu' &&
+/* Format_version=1, Width=16, Height=16, Depth=1, Valid_bits_per_item=16
+X */
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+X	0x0000,
+SHAR_EOF
+chmod 0644 icons/uu ||
+echo 'restore of icons/uu failed'
+Wc_c="`wc -c < 'icons/uu'`"
+test 222 -eq "$Wc_c" ||
+	echo 'icons/uu: original size 222, current size' "$Wc_c"
+fi
+exit 0

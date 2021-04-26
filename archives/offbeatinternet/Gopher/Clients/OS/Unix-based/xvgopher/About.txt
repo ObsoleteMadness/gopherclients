@@ -1,0 +1,23 @@
+xvgopher
+(ver 1.0pre)
+Freeware
+
+
+Xvgopher is a Gopher client tested on SunOS 4.x.  It requires XView.  
+The software is offered in two statically linked executables:
+
+XVGOPHER.NIS = This one is linked with the standard Sun NIS library.  
+		Use this if you do NOT have a  /etc/resolv.conf
+
+XVGOPHER.RES = This one is linked with libresolv.a.  Use this if you DO
+		have  /etc/resolv.conf
+
+
+Both programs will try to contact a local host named 'gopher' at port 
+70.  You can change this on the command line.  Known problems with this
+prerelease are:
+
+	- No bookmarks!
+	- The cut and paste in the action preferences do not work.
+	- The directory filter doesn't filter on dates or types.
+

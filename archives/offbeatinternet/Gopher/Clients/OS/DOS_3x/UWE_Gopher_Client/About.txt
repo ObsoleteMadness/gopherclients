@@ -1,0 +1,11 @@
+UWE Gopher Client
+(ver 0.89)
+Freeware
+
+
+This DOS Gopher Client was written by the University of the West of 
+England.  It requires "Lan Workplace for DOS" (to provide TCP/IP).  You
+must configure the "GOPHER.CFG" file with your SocksServer information.
+
+I do not have Lan Workplace, so I was unable to test this Client.
+

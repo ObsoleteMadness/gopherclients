@@ -1,0 +1,17 @@
+Gopherus
+(ver 1.0a)
+Freeware
+
+
+This is a 32-bit Windows port of the Gopherus console-mode 
+gopher client for DOS. It provides a classic text interface 
+to the gopherspace. 
+
+This port is essentially the same as the DOS version, only 
+it uses the file "SDL.dll" to emulate a pseudo terminal.  
+
+There is NO installer.  Just place the executable and dll 
+in a directory of your choice and run the program from there.  
+Downloads default to the directory you run the program from. 
+To uninstall, just delete the directory you created.  
+

@@ -1,0 +1,566 @@
+
+
+
+****
+****   Waisindex.c patches:
+****     a) allow user selection of max number of documents to retrieve in
+****        query of form "search words >999"
+****     b) allow server to use wais indices built outside of gopher file tree
+****        (compatible w/ existing gopher-wais use)
+****
+
+diff -bwrc gopher2.012/gopherd/Waisindex.c go212dg/gopherd/Waisindex.c
+*** gopher2.012/gopherd/Waisindex.c	Tue Mar  8 10:55:22 1994
+--- go212dg/gopherd/Waisindex.c	Wed Mar 30 10:14:19 1994
+***************
+*** 272,277 ****
+--- 272,293 ----
+  
+       parameters.max_hit_retrieved = 256;
+  
++  
++ #ifdef BIO
++        /* dgg - check query string for ">max_retrieve" number */
++        {
++        int  ihit;
++        char *chit= strrchr( SearchWords, '>');
++        if ((chit != NULL) && (chit > SearchWords) && isdigit(*(++chit)) ) {
++          ihit= atoi( chit);
++          if (ihit>0) {
++            parameters.max_hit_retrieved = ihit;
++   	   *(--chit) = '\0';  /* drop rest of string */
++   	   }
++          }
++        }
++ #endif
++ 
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+       
+       search_result = false;
+***************
+*** 309,314 ****
+--- 325,332 ----
+  
+  		    /*** Strip off the first part of the path in the filename*/
+  		    /*** Plus it gets rid of weird automount things... ***/
++ /* dgg++ */
++ /* lindner code ----
+  		    Selstrout =strstr(best_hit.filename, INDEXPath);
+  		    if (Selstrout == NULL)
+  			 Selstrout = "Error in Hostdata!";
+***************
+*** 315,321 ****
+  		    else
+  			 Selstrout += strlen(INDEXPath);
+  		    
+! 
+                      sprintf(score,"%3d ",best_hit.weight);
+  
+  		    /*  Causes freewais to core dump... 
+--- 333,363 ----
+  		    else
+  			 Selstrout += strlen(INDEXPath);
+  		    
+! ----- */
+!      /* "PLEEZ, OH PLEEZ, let me use wais's real pathnames" -- sez dgg ! */
+!      /* let INDEXPath = "/real/path/to/wais-src;/gopher/path/to/wais-src" */
+!      /* and after cutting out /real/path; prepend /gopher/path */
+!   		    {
+!  		      char newpath[512];
+!  		      char *prefix= strchr(INDEXPath, ';');
+!   		      if (prefix != NULL) {
+!    			 *prefix++= '\0'; /* terminate /real/path */
+!   			 cp= strstr(best_hit.filename, INDEXPath);
+!   			 if (cp==NULL) cp= "Error in Hostdata INDEXPath";
+!  			 else cp += strlen(INDEXPath);
+!   			 strcpy( newpath, prefix);
+!   			 strcat( newpath, cp);
+!   			 cp= newpath;
+!   			 *(--prefix)= ';'; /* put it back for next user */
+!   			 }
+!                        else {
+!   		          cp =strstr(best_hit.filename, INDEXPath);
+!   		          if (cp == NULL) cp = "Error in Hostdata!";
+!   		          else cp += strlen(INDEXPath);
+!   			  }
+!  		    Selstrout= cp;
+!   		    }
+! /* dgg-- */
+                      sprintf(score,"%3d ",best_hit.weight);
+  
+  		    /*  Causes freewais to core dump... 
+
+
+
+***
+***   Gopher+ ASK form protocol implementation:  permit binary file uploads
+***      using gopher+ "+bytecount" or "+-2" client->server transfer sizes
+***
+
+diff -bwrc gopher2.012/gopherd/command.c go212dg/gopherd/command.c
+*** gopher2.012/gopherd/command.c	Tue Mar  8 10:55:25 1994
+--- go212dg/gopherd/command.c	Thu Mar 17 19:19:00 1994
+***************
+*** 215,220 ****
+--- 215,237 ----
+       STRdestroy(temp);
+  }
+  
++ 
++ /* dgg++ need for binary ask data */
++ void
++ CMDpushAskBinary(cmd, buf, buflen)
++   CMDobj *cmd;
++   char   *buf;
++   long   buflen;
++ {
++      String *temp = STRnew();
++      temp->data= buf;
++      temp->len= buflen;
++      STApush(cmd->asklines, temp);
++      temp->data= NULL; /* caller owns buf */
++      STRdestroy(temp);
++ }
++ /* --dgg */
++ 
+  /*
+   * Retrieve extra data from the client request..  This stuff is optional
+   *
+***************
+*** 251,256 ****
+--- 268,294 ----
+  		    CMDpushAskline(cmd, inputline);
+  	       }
+  	  }
++ 
++ /* dgg: patch for askfile +bytecount or +-2 input forms! */
++ /* dgg++ -- need this to read binary file from client */
++ 	  else { /*inputline == "+-2" or  "+bytes..." */
++ 	    long count, nbytes;
++ 	    int  readtilclose;
++ 	    nbytes= atol(inputline+1);
++ 	    if (nbytes == -2) do { /* read til close */
++ 	      count= readrecvbuf(fd,inputline,sizeof(inputline));
++ 	      if (count>0) CMDpushAskBinary(cmd, inputline, count); 
++ 	      } while (count>0);
++ 
++ 	    else while (nbytes>0) { /* read til nbytes found */
++ 	      count= sizeof(inputline);
++ 	      if (count>nbytes) count= nbytes;
++ 	      count= readrecvbuf(fd,inputline,count);
++ 	      if (count>0) CMDpushAskBinary(cmd, inputline, count);
++ 	      nbytes -= count; 
++ 	      } 
++ 	    }
++ /* --dgg */
+        }
+  }
+  
+
+
+
+
+***
+***  various patches to gopherd.c
+***   a) fully implement ASK directories (Type=1?)
+***   b) stop DateNSize from adding dates for each of multiple views
+***   c) show all view forms of a file to gopher- clients as separate files
+***   d) stop gopher- or bad gopher+ clients trying to use ASK
+***      forms improperly (which can cause many hung processes on server)
+***
+
+
+diff -bwrc gopher2.012/gopherd/gopherd.c go212dg/gopherd/gopherd.c
+*** gopher2.012/gopherd/gopherd.c	Tue Mar  8 12:11:16 1994
+--- go212dg/gopherd/gopherd.c	Wed Mar 30 12:41:05 1994
+***************
+*** 335,340 ****
+--- 335,342 ----
+  extern double maxload;
+  int Process_Side();
+  
++ extern int IsGplus = FALSE; /* +dgg global set in gopherd */
++ 
+  #include "STAarray.h"
+  #include "STRstring.h"
+  #include "Sockets.h"
+***************
+*** 968,973 ****
+--- 970,976 ----
+       CMDfromNet(cmd, sockfd);
+       GDCevalDir(Config, CMDgetFile(cmd));
+  
++ 
+       /** At this point there won't be any more data coming in, so shutdown
+           the incoming data 
+        **/
+***************
+*** 984,989 ****
+--- 987,993 ----
+       setgid(Ggid);
+       setuid(Guid);
+  
++     IsGplus = CMDisGplus(cmd); /* +dgg: need for error, others could use */
+      if (CMDisAskitem(cmd)) {
+  	  FILE *retrfile;
+  
+***************
+*** 1152,1157 ****
+--- 1156,1162 ----
+       case 's':
+       case 'I':
+       case 'g':
++      doFile:   /* dgg */
+  	  /*** It's some kind of file ***/
+  
+  	  /*** Is it binary??  ***/
+***************
+*** 1173,1183 ****
+  
+  
+       case '1':
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, Selstr+1, CMDisGplus(cmd), view, filter);
+! 
+  	  /** Log it **/
+  	  LOGGopher(sockfd, "retrieved directory %s", Selstr+1);
+  	  break;
+  
+       case '7':
+--- 1178,1194 ----
+  
+  
+       case '1':
++ 	  /** dgg FIX FOR ASK directories ! this is needed to get them working in this scheme */
++ 	  /* ?? am I the only one who has been using these til now? 30mar94 */
++ 	  if (CMDisAskitem(cmd)) {
++ 	        Debug("ASK directory with view type '%s'\n", view);
++ 		goto doFile;  /* dgg */
++ 		}
++ 
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, Selstr+1, CMDisGplus(cmd), view, filter);
+  	  /** Log it **/
+  	  LOGGopher(sockfd, "retrieved directory %s", Selstr+1);
+  	  break;
+  
+       case '7':
+***************
+*** 1542,1548 ****
+  {
+       int           fd, i;
+       char         longname[256];
+!      char         *cdate, *ti, *fp;
+       
+       switch (GSgetType(gs)) {
+       case '1': /*** It's a directory ***/
+--- 1556,1562 ----
+  {
+       int           fd, i;
+       char         longname[256];
+!      char         *cdate, *ti, *fp, *stitle;
+       
+       switch (GSgetType(gs)) {
+       case '1': /*** It's a directory ***/
+***************
+*** 1555,1566 ****
+  	  break;
+       default:
+       {
+  	  cdate= ctime( &statbuf.st_mtime); /* last mod time */
+  	  cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
+! 	  sprintf( longname, "%s  [%s%s%s, %ukb]", GSgetTitle(gs),
+  		  cdate+8,cdate+4,cdate+22, (statbuf.st_size+1023) / 1024);
+  	  GSsetTitle(gs,longname);
+       }
+  	  break;
+       }
+  }     
+--- 1569,1583 ----
+  	  break;
+       default:
+       {
++ 	  stitle= GSgetTitle(gs);
++ 	  if (strstr( stitle,"kb]")==0) { /* dgg 30mar94 -- correct for multple view items */
+  	    cdate= ctime( &statbuf.st_mtime); /* last mod time */
+  	    cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
+! 	    sprintf( longname, "%s  [%s%s%s, %ukb]", stitle,
+  		  cdate+8,cdate+4,cdate+22, (statbuf.st_size+1023) / 1024);
+  	    GSsetTitle(gs,longname);
+  	    }
++      }
+  	  break;
+       }
+  }     
+***************
+*** 1781,1786 ****
+--- 1803,1809 ----
+  	       strcpy(Pathp+strlen(Prefix), newpath);
+  	       
+  
++             if (isGplus) {     		/* ++dgg : show all views to -client */
+   	       /*** Strip extension off of pathname***/
+  	       Pathp[strlen(Prefix)+strlen(newpath)-strlen(EXgetExt(ext))]= '\0';
+  	       GSsetPath(gs, Pathp);
+***************
+*** 1815,1820 ****
+--- 1838,1849 ----
+  			 lang = GDCgetLang(Config);
+  		    GSaddView(gs, EXgetView(ext), lang, statbuf.st_size);
+  	       }
++             }     				/* ++dgg : show all views to -client */
++ 	    else {	 			/* ++dgg : show all views to -client */
++                 AddItem = TRUE;	 	/* ++dgg : show all views to -client */
++                 GSsetPath(gs, Pathp);	 	/* ++dgg : show all views to -client */
++                 GSsetType(gs, EXgetObjtype(ext));	 /* ++dgg : show all views to -client */
++ 		}	 			/* ++dgg : show all viewss to -client */
+  	  } 
+  	  else if (AddItem) {
+  	       int num;
+***************
+*** 2346,2352 ****
+--- 2378,2400 ----
+  
+  
+  
++ /* ++dgg   test if file is ASK script */
++ boolean
++ IsAskfile( pathname)
++   char *pathname;
++ {
++    struct stat statbuf;
++    static char tmpfile[512];
+  
++   strcpy( tmpfile, pathname);
++   strcat( tmpfile, ".ask"); /* hack -- should do fancy lookup in Config */
++   if (!rstat( tmpfile, &statbuf)) return TRUE;
++   else return FALSE;
++ 
++ }
++ /* dgg-- */
++ 
++ 
+  /*
+  ** This function opens the specified file, starts a zcat if needed,
+  ** and barfs the file across the socket.
+***************
+*** 2378,2383 ****
+--- 2426,2445 ----
+  	  LOGGopher(sockfd,"Denied access for %s", pathname);
+  	  return;
+       }
++ 
++ /* ++dgg  patch to block ASK calls from bad clients */
++      if (IsAskfile(pathname)) {
++         if (!Gplus || !ASKfile) {
++           char errmsg[256];
++           if (!ASKfile)
++             sprintf(errmsg," Missing input data to ASK form\t\t\t\r\n");
++           else
++             sprintf(errmsg," This ASK form needs a gopher+ client\t\t\t\r\n");
++           Abortoutput(sockfd, errmsg);
++           return;
++           }
++         }
++ /* dgg-- */
+  
+  
+       if ( (ZeFile = rfopen(pathname, "r")) == NULL) {
+
+
+
+
+***
+***   global IsGplus variable needed various gopher+ tests
+***
+
+diff -bwrc gopher2.012/gopherd/gopherd.h go212dg/gopherd/gopherd.h
+*** gopher2.012/gopherd/gopherd.h	Mon Jun 14 17:23:02 1993
+--- go212dg/gopherd/gopherd.h	Wed Mar 30 09:43:04 1994
+***************
+*** 66,71 ****
+--- 66,72 ----
+  #endif
+  
+  extern int errno;
++ extern int IsGplus;  /* +dgg need for error GplusError to G- clients */
+  
+  #include "String.h"
+
+
+
+***
+***  User interface change for gopherd.conf:
+***    allow/ignore whitespace in .conf file lines
+***
+
+diff -bwrc gopher2.012/gopherd/gopherdconf.c go212dg/gopherd/gopherdconf.c
+*** gopher2.012/gopherd/gopherdconf.c	Tue Mar  8 10:56:01 1994
+--- go212dg/gopherd/gopherdconf.c	Wed Mar 30 10:42:07 1994
+***************
+*** 274,280 ****
+  {
+       FILE *gdcfile;
+       char inputline[256];
+!      char *cp, *token, *restofline;
+       boolean success;
+  
+  
+--- 274,280 ----
+  {
+       FILE *gdcfile;
+       char inputline[256];
+!      char *cp, *linestart, *token, *restofline;
+       boolean success;
+  
+  
+***************
+*** 283,301 ****
+  	  exit(-1);
+       }
+  
+!      while (fgets(inputline, sizeof inputline, gdcfile)!= NULL) {
+  	  ZapCRLF(inputline);
+  	  
+! 	  if (*inputline == '#' || *inputline == '\0') /** Ignore comments **/
+  	       continue;
+  
+! 	  cp = strchr(inputline, ':');
+  	  if (cp == NULL) {
+  	       fprintf(stderr, "Bad line '%s'\n", inputline);
+  	       exit(-1);
+  	  }
+  	  *cp = '\0';
+! 	  token      = inputline;
+  	  restofline = cp+1;
+  	  while (*restofline == ' ' || *restofline == '\t')
+  	       restofline++;
+--- 283,305 ----
+  	  exit(-1);
+       }
+  
+!      while (fgets(inputline, sizeof(inputline), gdcfile)!= NULL) {
+  	  ZapCRLF(inputline);
+  	  
+! 	  /* dgg eat whitespace! */
+! 	  linestart= inputline;
+!           for ( ; *linestart != '\0' && *linestart <= ' '; linestart++) ;
+! 
+! 	  if (*linestart == '#' || *linestart == '\0') /** Ignore comments **/
+  	       continue;
+  
+! 	  cp = strchr(linestart, ':');
+  	  if (cp == NULL) {
+  	       fprintf(stderr, "Bad line '%s'\n", inputline);
+  	       exit(-1);
+  	  }
+  	  *cp = '\0';
+! 	  token      = linestart;
+  	  restofline = cp+1;
+  	  while (*restofline == ' ' || *restofline == '\t')
+  	       restofline++;
+
+
+
+***
+***  Bug fix to mindex: don't mangle the filename parameter string.
+***
+
+diff -bwrc gopher2.012/gopherd/mindexd.c go212dg/gopherd/mindexd.c
+*** gopher2.012/gopherd/mindexd.c	Tue Mar  8 11:51:59 1994
+--- go212dg/gopherd/mindexd.c	Wed Mar 30 09:40:46 1994
+***************
+*** 91,97 ****
+      char    line[1024];      /* line buffer for reading config */
+      char    *linep;         /* pointer to 'line' */
+  
+!     local = the_filename;
+  
+      if ((fp = rfopen(local, "r")) == NULL) {
+  	 /** Try adding .mindex to the filename **/
+--- 91,99 ----
+      char    line[1024];      /* line buffer for reading config */
+      char    *linep;         /* pointer to 'line' */
+  
+!      /* local = the_filename; -- original, dgg */
+!      strcpy(line, the_filename); /* dgg -- keep the_filename inviolate */
+!      local = line;
+    
+      if ((fp = rfopen(local, "r")) == NULL) {
+  	 /** Try adding .mindex to the filename **/
+
+
+
+
+***
+***   Support error messages in gopher- format for older clients
+***
+
+diff -bwrc gopher2.012/gopherd/serverutil.c go212dg/gopherd/serverutil.c
+*** gopher2.012/gopherd/serverutil.c	Tue Mar  8 10:56:09 1994
+--- go212dg/gopherd/serverutil.c	Wed Mar 30 09:42:34 1994
+***************
+*** 209,214 ****
+--- 209,220 ----
+       char outputline[256];
+       int i;
+   
++ /* +dgg patch -- error to g- clients must be g- form: */
++       if (!IsGplus)
++         sprintf(outputline, "0%s\t\terror.host\t1\r\n", text);
++       else
++ /* dgg- */
++   
+       sprintf(outputline, "--1\r\n%d %s <%s>\r\n0%s\t\t\t\r\n", 
+  	     errclass, GDCgetAdmin(Config),
+  	     GDCgetAdminEmail(Config), text);
+
+
+
+
+***
+***  Gopher+ protocol correction for ASK directories: 
+***    a) include correct view type for clients who rely on +VIEWS being correct
+***      Note: the incorrect "text/plain" view has been included by default before
+***      this.  User/client may have to know more than we expect to get this right.
+***    b) prevent ASK directory info from being sent to gopher- clients (causing
+***       them to fail).
+***
+
+diff -bwrc gopher2.012/object/GSgopherobj.c go212dg/object/GSgopherobj.c
+*** gopher2.012/object/GSgopherobj.c	Tue Mar  8 10:56:17 1994
+--- go212dg/object/GSgopherobj.c	Wed Mar 30 20:22:41 1994
+***************
+*** 1012,1017 ****
+--- 1012,1024 ----
+  		     tempstr[0] = GSgetType(overlay);
+  		     GSsetPath(gs, tempstr);
+  		}
++ 	/* dgg ++ */
++ 	        if (GSisAsk(overlay) && GSgetType(overlay) == A_DIRECTORY)  
++ 		  GSaddView(gs, "application/gopher+-menu", "En_US", 0); 
++ 	           /* lang==GDCgetLang(Config), 0 == dummy size here */
++  /* need this patch for proper protocol & Hgopher, 
++    which ignores gopher0 type in favor of +VIEW */
++ 
+  	  }
+  	  if (GSgetTitle(overlay) != NULL)
+  	       GSsetTitle(gs, GSgetTitle(overlay));
+***************
+*** 1343,1352 ****
+--- 1350,1362 ----
+  
+  	  if (strncmp(buf, "Type=", 5)==0) {
+  	       GSsetType(gs, buf[5]);
++ 	       if (GSisGplus(gs)) { /* dgg -- !! MUST HAVE to let gopher- clients use
++ 					any folder w/ Type=1? */
+  	         if (buf[6] == '+')
+  		    GSsetGplus(gs, TRUE);
+  	         if (buf[6] == '?') 
+  		    GSsetAsk(gs, TRUE);
++ 	       }
+  	       doneflags |= G_TYPE;
+  	  }
+  
+
+

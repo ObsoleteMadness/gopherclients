@@ -1,0 +1,79 @@
+Gopher Client
+(ver 2.0)
+Freeware
+
+
+Gopher Client is a standalone Gopher browser. Gopher Client works 
+on Windows 98, ME, 2k, XP, and Vista.  It needs .NET 2.0 or newer.
+
+The home page is "http://sites.google.com/site/matjaz85/gopherclient".
+
+Version 2 enhancements include Gopher+ (multiple views, multiple languages 
+and Gopherpup graphical (RTF) menus. I also improved the mechanism that 
+connects to Gopher servers so that it should now try harder to get data 
+from the server and not give up so quickly. 
+
+==========
+
+Supported Features:
+-------------------
+
+Gopher Client fully supports Gopher protocol (the original) as well as 
+Gopher+ and some minor extension that got developed by some other gopher 
+clients in the past. Most notably the extension of "Gopherpup" client that 
+supported graphical menus - gopher menus with embedded rich text format page. 
+It was an attempt to add hyperlinking and images to the gopher menus. That 
+kind of menus is now very rare - in fact I couldn't find *any* server 
+supporting it.
+
+Other standard Gopher+ features are also implemented. Gopher+ makes it 
+possible to publish a document on a server in multiple formats (e.g. 
+MS Word + plain text + PDF) - this is called multiple views. User can directly 
+select the view of his choice and set up the preferred views in the client. 
+Same goes for the language. Document on the server can be in multiple languages 
+(e.g. user manual of some sort could be available in English and German). In 
+the Client, the user can set-up the order of preferred languages and the 
+Client will use this list if possible.
+
+Another notable feature are so called ASK forms. These are electronic forms 
+that the user can fill out and send the results back to the server - not much 
+different than forms in html.
+
+I also added my own extension - md5 checksum verification - if the checksum 
+is returned by the server. This extension should provide a simple and efficient 
+way to verify the integrity of the downloaded files. Currently no server 
+actually supports this extension but the server that I am currently working on.
+
+It Also Supports:
+
+                + saving menus to file
+                + printing menus
+                + download of any menu item
+                + viewing text menu items
+                + printing text menu items
+                + saving text menu items
+                + CSO searches (phonebook)
+                + Gopher searches (e.g. Veronica)
+                + automatically starts telnet session if you choose telnet item
+                + you can set your home server (address, selector and port)
+                + settings are stored in a xml file instead of Windows registry
+                + easy installation and removal of the program
+                + Gopher+ ask forms
+                + Gopher+ multiview
+
+
+
+The Future:
+-----------
+
+I still have some ideas that I would like to implement. For example menu items 
+of different colors (each item type would have its own color), "Favicon" - 
+similar to what web-browsers have, favourites, built-in search box (like the 
+one in Firefox or Explorer), internal image viewer, Gopher+ support ...
+
+Already implemented
+
+As far as Gopher protocol goes, the Gopher Client support will not change 
+dramatically any more. New development will be oriented to make the user 
+interface better.
+

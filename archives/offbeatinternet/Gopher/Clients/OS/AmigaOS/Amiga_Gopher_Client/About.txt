@@ -1,0 +1,10 @@
+Amiga Gopher Client
+(ver ?)
+Freeware
+
+
+Requires both AmiTCP (AmigaNOSGW6 or better) and the AmigaGuide 
+(Aguide34 or better) be installed in order to work. 
+
+
+

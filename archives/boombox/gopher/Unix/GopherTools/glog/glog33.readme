@@ -1,0 +1,106 @@
+Gopher LOG 3.3  7/20/93
+   Andy Wick - awick@csugrad.cs.vt.edu
+   bug fixes:  John-David Childs - jdc@selway.umt.edu
+
+   * Fixed up main() routine so that: errors on the command line (or -h
+   as the first parameter) cause glog to print the help information and
+   abort.
+   * Fixed PrintHelp() routine so help message is more understandable.
+   * changed FILETYPE character from ' ' to 'I' (What about Image?)
+   
+============================================================
+
+Announcing Gopher LOG 3.2 
+   Andy Wick - awick@csugrad.cs.vt.edu
+
+   A day before vacation and a bug in glog.  Oh Well.
+   John-David Childs jdc@selway.umt.edu pointed out a slight bug
+   in my ProcessLine routine dealing with search.  Should
+   be fixed now.
+
+=============================================================
+   Since I am going on vacation for a while, I thought I would
+release a minor update.  I have placed glog31.c (ANSI), 
+glog31u.c (NON ANSI, Generated using unprotoize).  In boombox's
+gopher incoming directory.  Or it is on the csugrad.cs.vt.edu gopher
+server (port 70) in Software/Gopher Log Analyzer.
+
+Original version by
+   Chuck Shotton - cshotton@oac.hsc.uth.tmc.edu
+
+3.1 adds some features of the old glog that got removed by mistake.
+   * Supports all known log entries now. (I was missing search, binary,
+      and someothers)
+   * Can now have a tIme report
+   * The report presentation is a little better
+   * Can specify a starting and ending month for the whole command
+   with -s <num> and -e <num>.  These are the only options that
+   are used for the WHOLE command.  The rest are from left
+   to right.
+
+=============================================================
+3.0 is almost a total rewrite of the original, with old ideas
+from the original, and some new ones of my own.  I tried to make it easier
+to get the type of reports that I wanted.  About the only thing
+missing that 2.3 could do, is printing reports without the hits
+field sorted.
+
+I have tested 3.0 with purify and can report there are no memory leaks/bugs
+what so ever (at least when I use it :).  The program is very memory hungry
+though, you need about 1.5 times the size of the log file of memory.  This
+is because the log file is completely parsed and stored in memory 
+at startup. You can lower that amount if you compile without the DETAIL 
+option, see "glog30.c".
+
+How to use:
+ glog30 -h will display the options :).  But as a short example.  
+
+ How to create a [H]ost report, a [D]ata report with detail of [H]osts and
+ width of 132, and a plot of [T]ypes with basename of "test".  The log file
+ is called gopher.log.  Don't forget, reports always go to stdout.
+
+ % glog30 -H -w 132 -DH -f test -pT < gopher.log | more
+
+Tested on:
+ gcc 2.3.3 was used on all platforms.
+ Amiga DOS (main development), SunOS 4.1.3 (purify 2.0.3), Ultrix 4.2A
+
+New Features:
+ * The command line is parsed as the reports/plots are generated, so that
+   it is possible to change options for each separately.  But options
+   are NOT reset for each new one.
+
+ * It now can produce reports on the [D]ata, [H]osts, day of the [W]eek,
+   data [T]ypes, and [M]onth/date sorted (ie. sorted by date).
+
+ * It can now produce detail reports on any thing you can produce a normal
+   a report for.  Yes, you can even produce a host detail report of a 
+   hosts report. (But it doesn't do you much good :)
+
+ * Change the width of the reports.
+
+ * You can specify the filename for plots, it defaults to gopher. (The 
+   program appends a .dat, and and .run to the name)
+
+ * You can request as many plots as you want. (But remember to change the
+   filename or you will overwrite the last plot)
+   
+ * The program is now a lot easier to add new types of reports to, you
+   only need to add 3 short routines, a variable, and edit 2 functions.
+   (Well, maybe it is simple for me. :)
+
+TODO:
+ * Fix up plots some more: add histograms, and more options.
+
+ * option for how detail works (which way should it work?)
+
+ * Someone will probably want to have the hits field unsorted, and I will
+   need to hack a way to do that.
+
+ * Make it so reports can go to files.
+
+ * Make some documentation
+
+ * Improve error checking
+
+If anyone has any ideas or suggestions please send them to me.

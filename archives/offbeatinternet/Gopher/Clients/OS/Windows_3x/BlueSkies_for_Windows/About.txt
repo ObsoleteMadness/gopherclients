@@ -1,0 +1,9 @@
+BlueSkies for Windows
+(ver 1.0[beta]3a)
+Freeware
+
+
+Intended primarily as a multimedia Gopher Weather client.  You must run 
+"setup" to install the software.  
+
+

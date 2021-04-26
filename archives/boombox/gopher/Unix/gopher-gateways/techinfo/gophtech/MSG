@@ -1,0 +1,50 @@
+                 About PennInfo via the Gopher Gateway
+                 =====================================
+
+PennInfo is the online campus-wide information system of the University 
+of Pennsylvania.  PennInfo is based on the TechInfo software developed 
+at MIT  
+
+Gopher access to PennInfo is provided by the Penn developed Gopher-to-
+PennInfo gateway.  This gateway enables viewing PennInfo documents via 
+the Gopher user interface and command set.  Through the gateway you can 
+access other campus information systems that are based on the TechInfo 
+software.
+
+Some features of PennInfo are not available in the Gopher command set.  
+If you want access to the full PennInfo command set exit the Gopher
+system and then:
+
+  1. Telnet to:
+
+     penninfo.upenn.edu           or,
+
+  2. Obtain the PennInfo TCP/IP Macintosh software, select 'Network
+     Preferences' from the pull-down file menu, and fill in two dialog
+     boxes:
+       
+               Server: penninfo-srv.upenn.edu
+               Port: 9000
+
+     The Mac TCP/IP software is available at ftp.upenn.edu in the 
+     pub/penninfo directory.
+
+If you are interested in more detailed information about the differences 
+between the Gopher and PennInfo command sets, please refer to the other 
+documents in this folder.
+
+This gateway is supported by Data Communications and Computing Services 
+(DCCS) at the University of Pennsylvania.  If you wish to report a 
+problem or a 'bug,' please send electronic mail to:
+
+               gopher-bugs@dccs.upenn.edu
+
+If you have suggestions or comments, please send electronic mail to:
+
+               gopher-comments@dccs.upenn.edu
+
+
+** TechInfo is copyright 1989 Massachusetts Institute of Technology **
+
+
+

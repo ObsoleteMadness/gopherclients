@@ -1,0 +1,77 @@
+                          Gopher Log Analyzer 3.5
+			         Andy Wick
+			  awick@csugrad.cs.vt.edu
+
+What is it:
+   glog will allow you to analyze your gopher log files.  Hopefully
+supplying you will useful reports/plots/histograms.  It is fairly 
+easy to use, with plenty of options.  It can generate almost any kind 
+report that you would want.  This is probably going to be the last 
+version of glog, at least by me.  There are lots of other nice utilities 
+that do this very same thing.  Plus I am applying to graduate schools now.
+
+It should compile with any standard ansi compiler, and now it should even 
+work under VMS. (thanks Dennis R. Sherman)
+
+To compile: (assuming gcc)
+   1) Edit glog35.c and look at the configuration section.  There are
+      four options that you can play with, but the defaults should
+      be fine.
+   2)
+      gcc glog35.c -o glog
+
+
+ glog -h will display the options :).
+
+Examples: 
+
+% glog35 -sn -gO < gopher.log | more
+     Print out a domain graph sorted by the domain name field to stdout
+
+% glog35 -pT < gopher.log | more
+     Generate a gnuplot file with type information
+
+% glog35 -aY -sH -rD -i gopher.log -o gopher.out
+     Generate a report sorted by the reverse number of hits, 
+     average the data as if there was a years worth, and save it
+     to a file called gopher.out
+
+Tested on:
+ Amiga DOS, Solaris 2.3, Ultrix 4.2A
+ gcc 2.3.3 and higher was used on all platforms.
+
+Features:
+ * The command line is parsed as the reports/plots/histograms are generated, 
+   so that it is possible to change options for each separately.  But options
+   are NOT reset for each new one.
+
+ * Produces reports/plots/histograms on the [D]ata, [H]osts, day of the [W]eek,
+   data [T]ypes, T[I]me, D[O]main and [M]onth/date sorted (ie. sorted by date).
+
+ * Can sort reports by name forward/backward or by hits forward/backward
+
+ * Produces detailed reports on any thing you can produce a normal
+   report for.  Yes, you can even produce a host detail report of a 
+   hosts report. (But it doesn't do you much good :)
+
+ * Change the width of the reports.
+
+ * You can specify the filename for plots, it defaults to gopher. (The 
+   program appends a .dat, and and .run to the name)
+
+ * You can request as many plots as you want. (But remember to change the
+   filename or you will overwrite the last plot)
+   
+ * The program is now a lot easier to add new types of reports to, you
+   only need to add 3 short routines, a variable, and edit 2 functions.
+   (Well, maybe it is simple for me. :)
+
+ * Can select starting and ending month. (Sorry no wrap around)
+
+ * Average/Estimating can be done with the -aX option.  Possible values
+   for "X" are [E]verything (default), [Y]ear, [M]onth, [W]eek, [D]ay, and [H]our
+
+Where to get:
+- boombox.micro.umn.edu
+     /pub/gopher/incoming (until the move it to)
+     /pub/gopher/Unix/GopherTools/glog

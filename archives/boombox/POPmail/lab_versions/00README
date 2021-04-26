@@ -1,0 +1,36 @@
+This directory contains the lab-optimized versions of POPmail for
+Macintosh and Windows.
+
+The Windows version is in the self-extracting file called labarc.exe.
+The Mac version is in the subdirectory Macintosh_Lab_POPmail.
+
+
+The Lab versions of POPmail are simple POP3 e-mail client optimized 
+for use in computer labs and on kiosks. Here the idea is that roaming 
+users (people on a shared machine in a lab or at a kiosk) should be able 
+to read and compose mail without necessarily removing mail from the 
+POP server and permanently storing it on the computer they are using. 
+Since you can read mail without moving it off the mail server, you do 
+not need to carry a floppy disk to keep a copy of your e-mail. Any mail 
+you have not deleted remains on the mail server. Because POPmail/Lab 
+was designed for computer labs and kiosks, the user interface was kept 
+as simple as possible so that there is minimal training required.
+
+When you launch POPmail/Lab, you are prompted to enter your name, 
+e-mail account, and password. POPmail/Lab then displays a copy of all 
+the mail in the user's account on their POP3 server. If you delete any 
+messages during your session, POPmail/Lab notes this and instructs 
+the mail server to delete these messages the next time the you fetch 
+mail (or when you quit the program). 
+
+POPmail/Lab is available for both Macintosh and Windows. To use 
+POPmail/Lab on the Macintosh, you will need an network connection
+and Apple's MacTCP software. POPmail/Lab for Windows runs on both 
+Windows 3.11 and Windows 95 and requires a network connection and 
+Winsock network software. For information on customizing POPmail/Lab
+for your site (changing initial example username) please send
+email to popmail@boombox.micro.umn.edu for info.
+
+Please send any comments or bug reports to:
+     popmail@boombox.micro.umn.edu
+

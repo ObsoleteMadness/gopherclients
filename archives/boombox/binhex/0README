@@ -1,0 +1,11 @@
+There are two versions of BinHex here.
+
+In the MSDOS directory, you will find a BinHex utilitiy that runs under DOS.
+This must be ftp-ed in binary mode.
+
+In the Mac directory you will find a MacBinary version of BinHex 4.0.
+This is for folks who don't have this most primary of Mac utilities...
+FTP it back to your machine in binary mode.  When you bring it down
+to your Mac, you need to bring it down as MacBinary.
+
+

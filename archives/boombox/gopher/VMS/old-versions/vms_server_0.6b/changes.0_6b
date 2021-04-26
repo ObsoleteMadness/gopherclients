@@ -1,0 +1,37 @@
+Version 0.6b
+
+Changes from the previous version:
+
+- The server can now be started with a command procedure.  In this procedure
+several logical names are defined which the server translates to determine
+where the log file goes, if any; where the security file is, if it is to be
+used; the internet port number on which to listen so you can have more than one
+server running on different ports; where the data is for this server; and the
+definition of the root directory for the data.
+
+- The server will now sort the directory listing in alphabetical order and then
+send it to the client.  It can also follow an internal ordering scheme set up
+by the administrator.
+
+- The server should no longer die if it is fed an incorrect directory
+specification to get a directory listing.
+
+- The server will now execute a .com file and send the results back to the
+client.  The first line of the .com file MUST have "$!" as the first two
+characters.  This is how the server determines whether or not the file is a
+text file or a command procedure.
+
+- The server now handles subdirectories correctly.
+
+- The server will now allow the use of gopher_rootXX similar to hlp$library_xx
+to point to more files.  In this way, if you have a place where you want to
+server a file from that is not in the default gopher_root directory tree,  you
+can create a .link file to point to this other file and create a logical name
+gopher_rootxx logical name to point there.  All files in that directory and
+those under that directory will be visible in a directory listing.
+
+- Hopefully we now have UCX support.
+
+- Some other general cleaning up has to be done yet also.
+
+- Probably others to be added as I remember them

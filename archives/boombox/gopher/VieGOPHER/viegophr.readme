@@ -1,0 +1,198 @@
+
+FILE viegophr.readme (.rme)
+
+written:       1992-10-30 <Gerhard.Gonter@wu-wien.ac.at>
+latest update: 1993-06-16
+
+
+=========================================================================
+INTRODUCTION:
+
+This file gives a short overview about the items from the VieGOPHER
+package along with quick'n'dirty installation instructions.
+
+I finally decided to ship the package at this stage, knowing that some
+clean-up work needs to be done, mostly in the documentation.  The basis
+for my decision was that the current version is fairly stable.
+
+The files are available from
+  olymp.wu-wien.ac.at   /pub/src/VieGOPHER
+  boombox.micro.umn.edu /pub/gopher/VieGOPHER                (not yet ??)
+  awiwuw11.wu-wien.ac.at /gopher.191
+                        (userid=anonymou, passwd=guest)
+
+=========================================================================
+THE PACKAGE:
+
+The standard package contains the following files:
+viegophr.readme         this file
+viegophr.product        PRODUCT file with all REXX modules
+viegophr.ps             documentation in Postscript format
+vieg-um.ps              user documentation in Postscript format
+rose.exec               the installation engine
+rose.doc                instructions for the installation engine
+viegophr.question       a few questions about VieGOPHER
+
+There are a few files that you need to fetch from elsewhere:
+rextcpip.module         TCP/IP transport from Ken Hornstein; vers. 1.8.4
+                        (available from LISTSERV@DEARN.bitnet)
+rxsocket.module         TCP/IP transport from Arthur Ecock
+                        (available from LISTSERV@CUNYVM.bitnet)
+ywakeup.module          Wakeup system, available from
+                        LISTSERV@DEARN.bitnet
+
+You might also find the following files on the same distribution
+media, respectively on the same ftp server:
+rextcpip.assemble       the modified version 1.8.4 of Ken Hornstein's
+                        REXTCPIP.MODULE (the TCP transport system)
+
+
+Note:   For TCP/IP version 1 you need to have REXTCPIP.MODULE; if you
+        have TCP/IP version 2 then you can choose between RXSOCKET
+        and REXTCPIP for the client.  The server needs REXTCPIP in any
+        case (a future version might also allow a choice).
+Note:   You can get RXSOCKET.MODULE or REXTCPIP.MODULE in a modified
+        version 1.8.4 directly from me.  The modifications are
+        documented in VIEGOPHR.PS.
+Note:   YWAKEUP.MODULE is possibly not needed.
+
+
+Source Listing:
+viegophr.tex            documentation in LaTeX format
+vieg-um.tex             user documentation in LaTeX format
+rosetex.awk             generate a LaTeX file from a product file
+vieg-pro.tex            LaTeX source listing of viegophr.product
+vieg-pro.ps             Postscript source listing of viegophr.product
+lpr.sty                 Line-Printer Style File used for running
+                        vieg-pro.tex down
+appleps.sty             page definitions in LaTeX, possibly not needed
+
+
+The complete main source in NED's HYX format together with the necessary
+tools can be obtained on request.  NED is a 'hypertexty' MSDOS editor.
+The file VIEGOPHR.HYX contains the documentation as well as the source
+code together with other items that are not included in the standard
+package.  NED can itself be used as an (experimental) Gopher client
+running under PC/TCP.  The files are:
+viegophr.hyx            HYX file
+viegophr.idx            Index file
+viegophr.lut            Lookup Table
+viegophr.bat            generate PRODUCT and TEX files from the HYX
+
+If you want to use the HYX file you need the MSDOS text editor NED,
+put the hyx, idx and lut file in one directory and enter
+  ned -hy viegophr.hyx
+
+=========================================================================
+QUICK'N'DIRTY INSTALLATION:
+
+(For more information about the installation refer to the documentation
+found in VIEGOPHR.PS.)
+
+Use this checklist to get the system off the ground:
+
+ 1 [ ]  Put VIEGOPHR.PRODCUT and ROSE.EXEC on any readable minidisk.
+
+ 2 [ ]  Prepare a R/W minidisk with filemode A with at least 2 cylinders
+        (275 blocks with 4096 byte).
+
+ 3 [ ]  If you have VIEGOPHR.FIX around somewhere, you can place it on
+        minidisk A, but this is not necessary.
+
+ 4 [ ]  Start the program generator by entering:
+        ROSE VIEGOPHR
+
+ 5 [ ]  Read the options presented by ROSE and answer the questions
+        appropriately.  In most cases you will want to use the
+        predefined option.  In this case simply enter code 1 or hit
+        the ENTER key.  If you want to change something enter code 3
+        (followed by pressing the ENTER key of course) and then enter
+        the value that you want to use.
+
+ 6 [ ]  After prompting for all options ROSE will generate all
+        modules and invoke the postinstallation procedure GOPHINST.EXEC.
+
+ 7 [ ]  Fetch any missing file that the postinstallion procedure might
+        point out.  If the postinstallation procedure finds
+        inconstencies in your installation, remove the appropriate
+        line from VIEGOPHR.FIX and go back to step 4.
+
+ 8 [ ]  Put the file VIEGOPHR.FIX at a safe place.  You might want
+        to use it again for a fast re-installation later on.
+
+ 9 [ ]  Place RXSOCKET.MODULE and/or REXTCPIP.MODULE on minidisk A.
+
+10 [ ]  Done!  Your minidisk A should now contain all necessary programs 
+        for the client and server.
+
+11 [ ]  If you don't want the server you can remove GOPHERDD.EXEC.
+
+12 [ ]  If you want to run the server it's time to look at the
+        documentation (VIEGOPHR.PS) now to find out about index files,
+        access groups, etc...
+
+
+=========================================================================
+If you have earlier version of VieGOPHER ...
+
+... you might want to know about a couple of changes.
+
+GOPHERC.EXEC, Postinstaller
+The client code is not longer named GOPHER.EXEC, instead it's
+GOPHERC.EXEC.  The also new postinstaller generates a GOPHER.EXEC,
+if there doesn't exist one.  GOPHER.EXEC is intended to be customized
+by the administrator to access whatever disks are needed etc.
+
+Files that are not longer needed and can be removed:
+GOPHRNG2.XEDIT          rolled into GOPHER.XEDIT
+GLOBALVV.EXEC           handled by standard GLOBALV
+GLOBALXV.EXEC           handled by standard GLOBALV
+FDNS.EXEC               only needed for REXTCPIP versions before 1.8.4
+FDNS.IN                 ditto
+
+
+=========================================================================
+COPYING and USING:
+
+The files can be distributed and used freely in the spirit of the
+GNU Public License.  The point is, if you manage to sell this program
+to someone, I want my share.  If you give away the program for free and
+you're able to sell your expertise in installing and administrating the
+package, this is fine with me and I wish you the best.  
+
+"No risk, no fun"...  Have fun, but use it at your own risk.
+
+
+=========================================================================
+TROUBLES?  SHOOT 'EM...
+(or what can go wrong will)
+
+There are a couple of problems that you might run into:
+
+*  The client starts but presents only an empty screen.
+   (REXTCPIP version)
+
+   -> Check out if your TCPIP.DATA file contains an entry for a
+      nameserver at the loop-back address 14.0.0.0 or on your
+      local mainframe.  If so, put a modified TCPIP.DATA file on
+      a minidisk with a low enough filemode letter.  This file
+      should provide an entry for a nameserver on a Unix machine
+      instead of the loop-back address.
+
+      On my own installation (awiwuw11.wu-wien.ac.at), the modified
+      TCPIP.DATA is placed on the same disk as all the other Gopher
+      modules.  Users are told either to access the Gopher disk as
+      a lower disk than TCPIP or not to use TCPIP at all.
+      (TCPIP is needed if the user wants to use Telnet-items from
+      Gopher menus, however.)
+
+
+*  The file VIEGOPHR.README doesn't contain any information about
+   a special problem and VIEGOPHR.PS doesn't help either.
+
+   -> Try to describe your problem as complete as you can.  If you
+      have problems when you access a certain item on some fancy
+      server, please write down the Gopher coordinates (name, host,
+      port, type, path).
+      Send your problem description together with the FIX file
+      by email to <Gerhard.Gonter@wu-wien.ac.at>.

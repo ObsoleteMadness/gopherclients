@@ -1,0 +1,447 @@
+#
+# Australian WHOIS Servers
+#
+Name=University of Adelaide
+Type=w
+Port=43
+Path=
+Host=wp.adelaide.edu.au
+#
+# European WHOIS Servers
+#
+Name=Association of Research Networks in Iceland
+Type=w
+Port=43
+Path=
+Host=isgate.is
+#
+Name=Chalmers University of Technology
+Type=w
+Port=43
+Path=
+Host=chalmers.se
+#
+Name=Dansk UNIX-system Bruger Gruppe
+Type=w
+Port=43
+Path=
+Host=dkuug.dk
+#
+Name=Gesellschaft fuer Mathematik und Datenverarbeitung
+Type=w
+Port=43
+Path=
+Host=dfnnoc.gmd.de
+#
+Name=Helsinki University of Technology
+Type=w
+Port=43
+Path=
+Host=cs.hut.fi
+#
+Name=Imperial College
+Type=w
+Port=43
+Path=
+Host=doc.ic.ac.uk
+#
+Name=Institut National de Recherche en Informatique et Automatique
+Type=w
+Port=43
+Path=
+Host=inria.inria.fr
+#
+Name=Tampere University of Technology
+Type=w
+Port=43
+Path=
+Host=tut.fi
+#
+Name=Universite Claude Bernard Lyon I
+Type=w
+Port=43
+Path=
+Host=whois.univ-lyon1.fr
+#
+Name=Wirtschaftsuniversitaet Wien
+Type=w
+Port=43
+Path=
+Host=whois.wu-wien.ac.at
+#
+# New Zealand WHOIS Servers
+#
+Name=University of Canterbury
+Type=w
+Port=43
+Path=
+Host=cantsc.canterbury.ac.nz
+#
+Name=University of Waikato
+Type=w
+Port=43
+Path=
+Host=grace.waikato.ac.nz
+#
+Name=Victoria University of Wellington
+Type=w
+Port=43
+Path=
+Host=vuw.ac.nz
+#
+# North American WHOIS Servers
+#
+Name=Baylor College of Medicine
+Type=w
+Port=43
+Path=
+Host=whois.bcm.tmc.edu
+#
+Name=Bull HN Information Systems
+Type=w
+Port=43
+Path=
+Host=bull.com
+#
+Name=California State University - Sacramento
+Type=w
+Port=43
+Path=
+Host=csus.edu
+#
+Name=DDN Network Information Center
+Type=w
+Port=43
+Path=
+Host=nic.ddn.mil
+#
+Name=EASInet Operations Center
+Type=w
+Port=43
+Path=
+Host=nis.easi.net
+#
+Name=Energy Sciences Network
+Type=w
+Port=43
+Path=
+Host=wp.es.net
+#
+Name=EurOpen
+Type=w
+Port=43
+Path=
+Host=mcsun.eu.net
+#
+Name=Florida State University
+Type=w
+Port=43
+Path=
+Host=cc.fsu.edu
+#
+Name=GTE Laboratories
+Type=w
+Port=43
+Path=
+Host=gte.com
+#
+Name=George Mason University
+Type=w
+Port=43
+Path=
+Host=gmu.edu
+#
+Name=Gettysburg College
+Type=w
+Port=43
+Path=
+Host=gettysburg.edu
+#
+Name=Indiana University
+Type=w
+Port=43
+Path=
+Host=indiana.edu
+#
+Name=InterCon Systems Corporation
+Type=w
+Port=43
+Path=
+Host=intercon.com
+#
+Name=Lawrence Berkeley Laboratory
+Type=w
+Port=43
+Path=
+Host=wp.lbl.gov
+#
+Name=Lawrence Livermore National Laboratory
+Type=w
+Port=43
+Path=
+Host=llnl.gov
+#
+Name=MCNC - Center for Communications
+Type=w
+Port=43
+Path=
+Host=ncnoc.concert.net
+#
+Name=Massachusetts Institute of Technology
+Type=w
+Port=43
+Path=
+Host=mit.edu
+#
+Name=Merit Computer Network
+Type=w
+Port=43
+Path=
+Host=merit.edu
+#
+Name=Mississippi State University
+Type=w
+Port=43
+Path=
+Host=whois.msstate.edu
+#
+Name=NASA Ames Research Center
+Type=w
+Port=43
+Path=
+Host=orion.arc.nasa.gov
+#
+Name=National Centre for Software Technology
+Type=w
+Port=43
+Path=
+Host=sangam.ernet.in
+#
+Name=National Energy Research Supercomputer Center
+Type=w
+Port=43
+Path=
+Host=wp.nersc.gov
+#
+Name=Naval Research Laboratory
+Type=w
+Port=43
+Path=
+Host=whois.nrl.navy.mil
+#
+Name=New Jersey Institute of Technology
+Type=w
+Port=43
+Path=
+Host=earth.njit.edu
+#
+Name=New Jersey Intercampus Network
+Type=w
+Port=43
+Path=
+Host=njin.net
+#
+Name=New York University
+Type=w
+Port=43
+Path=
+Host=wp.nyu.edu
+#
+Name=New York University, Courant Institute
+Type=w
+Port=43
+Path=
+Host=acfcluster.nyu.edu
+#
+Name=North Carolina State University
+Type=w
+Port=43
+Path=
+Host=whois.ncsu.edu
+#
+Name=Northern Arizona University
+Type=w
+Port=43
+Path=
+Host=nau.edu
+#
+Name=Northwestern University
+Type=w
+Port=43
+Path=
+Host=nwu.edu
+#
+Name=Ohio Northern University
+Type=w
+Port=43
+Path=
+Host=austin.onu.edu
+#
+Name=Ohio State University
+Type=w
+Port=43
+Path=
+Host=osu.edu
+#
+Name=Performance Systems International
+Type=w
+Port=43
+Path=
+Host=wp.psi.com
+#
+Name=Portland State University
+Type=w
+Port=43
+Path=
+Host=wp.pdx.edu
+#
+Name=Prime Computer
+Type=w
+Port=43
+Path=
+Host=relay.prime.com
+#
+Name=Rutgers University
+Type=w
+Port=43
+Path=
+Host=whitepages.rutgers.edu
+#
+Name=SRI International
+Type=w
+Port=43
+Path=
+Host=sri.com
+#
+Name=San Diego State University
+Type=w
+Port=43
+Path=
+Host=sdsu.edu
+#
+Name=Sonoma State University
+Type=w
+Port=43
+Path=
+Host=sonoma.edu
+#
+Name=Stanford University
+Type=w
+Port=43
+Path=
+Host=stanford.edu
+#
+Name=State University of New York, Stony Brook
+Type=w
+Port=43
+Path=
+Host=sunysb.edu
+#
+Name=Syracuse University
+Type=w
+Port=43
+Path=
+Host=syr.edu
+#
+Name=USC Information Sciences Institute
+Type=w
+Port=43
+Path=
+Host=isi.edu
+#
+Name=University of California at Berkeley
+Type=w
+Port=43
+Path=
+Host=mailhost.berkeley.edu
+#
+Name=University of California at Davis
+Type=w
+Port=43
+Path=
+Host=directory.ucdavis.edu
+#
+Name=University of California at San Diego
+Type=w
+Port=43
+Path=
+Host=ucsd.edu
+#
+Name=University of Cincinnati
+Type=w
+Port=43
+Path=
+Host=uc.edu
+#
+Name=University of Houston
+Type=w
+Port=43
+Path=
+Host=whois.uh.edu
+#
+Name=University of Maryland
+Type=w
+Port=43
+Path=
+Host=umd5.umd.edu
+#
+Name=University of Minnesota
+Type=w
+Port=43
+Path=
+Host=umn.edu
+#
+Name=University of Nebraska at Lincoln
+Type=w
+Port=43
+Path=
+Host=unl.edu
+#
+Name=University of Notre Dame
+Type=w
+Port=43
+Path=
+Host=nd.edu
+#
+Name=University of Oregon
+Type=w
+Port=43
+Path=
+Host=oregon.uoregon.edu
+#
+Name=University of Pennsylvania
+Type=w
+Port=43
+Path=
+Host=whois.upenn.edu
+#
+Name=University of Rochester
+Type=w
+Port=43
+Path=
+Host=whois.cc.rochester.edu
+#
+Name=University of Saskatchewan
+Type=w
+Port=43
+Path=
+Host=whois.usask.ca
+#
+Name=University of Virginia
+Type=w
+Port=43
+Path=
+Host=whois.virginia.edu
+#
+Name=University of Wisconsin
+Type=w
+Port=43
+Path=
+Host=wisc.edu
+#
+Name=Worcester Polytechnic Institute
+Type=w
+Port=43
+Path=
+Host=wpi.wpi.edu
+#

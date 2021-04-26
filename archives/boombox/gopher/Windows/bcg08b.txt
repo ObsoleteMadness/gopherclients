@@ -1,0 +1,63 @@
+Welcome to BCGopher, the Beta Release!
+
+This is a FREE Microsoft Windows 3.1 (tm) Gopher client compatible with the
+Winsock standard 1.1.
+
+NOTE: You must have a TCP/IP package that is compliant with the Windows Socket Library
+to be able to use BCGopher.  Contact the vendor of your software to find out if it is.
+
+You can aquire the most recent updated copy of BCGopher by ftping to:
+
+address: bcinfo.bc.edu
+username: anonymous
+password: guest           (this is not a true anonymous ftp server)
+directory: [ftp.pub.bcgopher]
+
+In this archive you should find the following files.
+
+BCGOPHER.EXE    - The MS-Windows Gopher Application self extracting archive.
+BCGOPHER.HLP    - The MS-Windows Help File for BCGopher.
+COMMDLG.DLL     - A Dynamic Link Library for Common Dialogs Boxes.
+README.TXT      - This File.
+
+also included for your enjoyment:
+MPEGXING.EXE    - Self Extracting Archive of Xing-It MPEG Windows Viewer version 2.1.
+L-VIEW.EXE      - Self Extracting Archive of L-View FREEware Image viewer.
+QTW11.EXE       - Self Extracting Archive of Quicktime For Windows version 1.1.
+SPEAKER.EXE     - Self Extracting Archive of a sound driver for the PC Speaker.
+WINAVI.EXE      - Self Extracting Archive of a Video for Windows Player.
+WINCODE.EXE     - Self Extracting Archive of WINCODE uuencoder / decoder.
+WINSOCK-FAQ.TXT - Text file containing the Most Frequently asked questions about WinSOCK.
+WINSOCK-VENDOR.TXT  - Text file containing vendor information about WINSOCK.
+
+To install place all the files in your windows directory (or appropriate subdirectory), 
+create a program manager group (if you want) and create an icon and gopher it!
+
+BCGopher is copyrighted 1993, 1994 The Trustees of Boston College.
+
+What's New With BCGopher 0.8(beta)
+
+    * Added support for some Gopher+ Items.
+        Including:
+          Attribute Information.
+          Alternate Views.
+
+    * Added support for command line arguements.
+    * Attempted (really hard) to fix all the bugs I could find.
+
+If you have any problems or suggestions please send them to me.  I won't
+guarantee I will do anything but I will definately read it.
+
+Tested on the following Winsocks:
+    Digital Pathworks V5.
+    FTP's PC/TCP Version 2.11 and higher.
+    Peter Tattam's WinSock stack.
+    Beame & Whitesides Beta WINSOCK.
+    Wollongong Pathway
+    Novell LWP
+
+Edmund C. Greene
+Special Services Consultant
+Information Processing Support
+Boston College
+ed@bcvms.bc.edu

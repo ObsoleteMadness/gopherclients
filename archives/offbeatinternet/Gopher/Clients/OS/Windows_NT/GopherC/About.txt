@@ -1,0 +1,41 @@
+GopherC
+(ver 3.2.0.0)
+Abandonware
+
+
+GopherC is a Gopher+ Client written for Windows NT 3.1.  Unlike 
+most other Gopher Clients, you can connect to Servers on any Port.  
+
+GopherC was bundled by Beame & Whiteside into their commercial 
+BW-Connect NFS software package.  This Client does not require 
+installing, as it will run directly from a directory containing the 
+file "gophercw.exe".  You must have a functional Internet connection 
+however, and the path must find the DLL file "CTL3D32.DLL".
+
+GopherC can be run stand-alone under Win2k, but it will complain 
+that "NFS not loaded". Do -NOT- close this "License Problem" dialog 
+box, or GopherC will shut down.  
+
+GopherC uses two INI files, "GOPHERC.INI" and "BWAPPS.INI", which 
+it will create in the same directory as contains "gophercw.exe".  
+The Help file, which should reside in the same directory as 
+"gophercw.exe", is "wingoph.hlp" (note that like all Help files, 
+"wingoph.hlp" will create its own hidden file, "WINGOPH.GID", in 
+the same directory as "wingoph.hlp").  
+
+The file "bwaudio.exe" is a supplementary audio player for GopherC.
+
+Although preconfigured for the B&W Telnet Client "BW220W.EXE",
+you can change the configuration to point to your own Telnet Client. 
+
+
+
+NOTE:
+Because GopherC was never intended to run stand-alone, and because it
+was originally sold as commercial software (although now abandoned), 
+this software is -NOT- a good choice for your primary Gopher Client.
+However, it is a Gopher Plus Client, and it can view Gopher Servers
+running on Ports other than 70; so it does have a limited nich as
+a testing Client.  
+
+

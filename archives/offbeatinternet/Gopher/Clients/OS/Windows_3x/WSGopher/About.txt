@@ -1,0 +1,10 @@
+WSGopher
+(ver 1.2)
+Freeware
+
+
+WSGopher is a MDI (Multiple Document Inferface).  There is no installer.  
+All files are self-contained within the programs own directory, which 
+can be placed anywhere and named anything.  
+
+

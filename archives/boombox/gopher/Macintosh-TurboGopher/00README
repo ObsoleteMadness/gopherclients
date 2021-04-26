@@ -1,0 +1,36 @@
+Documentation for TurboGopher is included inside the application.
+Select the Help item from the Gopher menu.
+
+To convert old Bookmarks (from 1.0.8 etc), save the Bookmarks
+in a Bookmark file using 1.0.8.  Then launch 2.0 and select
+Open from the File menu while holding down the Option Key.
+You will be able to open the old Bookmark file and it will be
+converted to the new kind.
+
+You also should get a complete suite of Helper Applications which
+are included with the TurboGopher distribution from
+boombox.micro.umn.edu (look in the helper-applications directory).
+
+AcrobatReader2.0.hqx            for viewing PDF files
+Anarchie-140.sit.hqx            for resolving ftp URLs
+InternetLink1.0b3.sea.hqx       to make Acrobat Exchange 2.0 Internet aware
+JPEGView33.sit.hqx              for viewing GIF, JPEG etc graphics files
+MacWeb1.00A3	                for html/http
+POPmail2.2b3.sea.hqx            if you want a URL aware POP/SMTP client
+Ph1.2 (directory)               for Ph/Qi phonebook queries
+QuickTime1.5.hqx                in case you need quicktime to play movies
+Simple_Player.hqx               for viewing QuickTime movie files
+SoundMachine21.cpt.hqx          for sound files
+Sparkle222.sit.hqx              for MPEG movies
+Telnet2.6.sit.hqx               for telnet sessions (to libraries etc)
+TN3270_2.4a7.sea.hqx            for 3270 terminal sessions.
+UULite1.6.hqx                   for uuencoded files
+Ulaw1.4.sit.hqx                 for ulaw sound files
+CompactPro1.50.hqx              to expand compactor archives
+Newswatcher-20b22.sea.hqx       to resolve news URLs
+StuffItExpander_3.5.2.hqx       to expand all archives
+
+Have fun...
+
+	- The Gopher Team
+	July 1995

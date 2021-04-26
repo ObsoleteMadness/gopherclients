@@ -1,0 +1,138 @@
+                                  GO4HAM
+                  The Hamburg Gopher Server for WINSOCK.DLL
+		      Including a Full Text Search Engine
+                                 08-JUN-1993
+
+                              (c) Gunter Hille
+                   Comp. Science Dept., University Hamburg
+                       hille@informatik.uni-hamburg.de
+
+
+Here comes a PC Gopher server for MS-Windows. Before you start 
+downloading, make sure that you have a WINSOCK.DLL from one of the
+vendors. The server will not work without it!
+
+This is a port of the Hamburg PC Gopher server which was released in
+February 1993. Due to an unsolved problem with the UoM TCP/IP package
+(which works fine when connecting PC clients) I decided to switch to
+the Windows socket library.
+
+My thanks goes to Netmanage Inc., I downloaded their WINSOCK.DLL just
+six hours before the license expired (European time, of course).
+And thanks to MS-DOS from Microsoft Inc., it allowed me to set the date
+of my PC to the day before expiry. Until Lanera Corp. sent me a demo
+version of their WINSOCK.DLL without this time limit, I did not grow older.
+
+That's why the server has been tested against two WINSOCK implementations.
+
+The server is written in Borland Pascal for Windows(BP-7). Marc B. Manza's
+definition of the API calls was very helpful.
+
+You will find the package at the Univ. Hamburg anonymous ftp server
+
+	ftp.informatik.uni-hamburg.de/pub/net/gopher/pc/go4ham
+
+You can let the server execute ANY program which is just doing 
+output to the standard output device and which does not expect character
+input from the keyboard. Be sure to run Windows in 386 enhanced mode.
+See the example selector strings in the root gopher file *.GOP
+
+These directories are included in the package:
+
+DOC		Documentation of this package
+SERVER		The Go4ham Gopher Server
+
+
+Improvements to the DOS version:
+
+Search Engine:
+  The search engine can be used by the PC server as well. I will release
+  a new version of the PC server within the next month (then it will
+  hopefully send to all UNIX clients).
+  To understand the search engine you have to read the small documentation
+  accompanying the programs. The system is a patchwork, but I could take
+  most of the parts from programs I had developed a year ago.
+  If more than one keyword appears in the search string, this implies a
+  logical AND. The wildcard character is a "*" at the end of a word.
+  Seek time is approx. 3 seconds per keyword if 5MB (2000 documents) are
+  indexed (measured under DOS on a 386SX-33). Indexing is slower, approx.
+  500 KB/h (under DOS). Windows reduces these times drastically, as expected.
+
+Secure server mode: 
+
+1. You have to specify the names of the programs which will be executed by 
+   the server. Create a file GOPHPROG.DAT and specify the names, each name
+   on a separate line (without extension).
+
+2. No access to files above the working directory. You have to specify
+   the working directory in the command line. Using a wildcard "*" will
+   allow access to all files on your computer, be sure to use it in a safe
+   environment! 
+
+Character translation:
+
+   You may configure the server to translate characters to different
+   character sets (I will add ISO to ASCII and IBM later, there is no
+   need here at home, I do just have IBM code text files).
+
+   - RAW   : no translation
+   - ISO   : ISO Latin 1 as specified in the Gopher protocol
+   - ASCII : translate IBM character set to 7 bit ASCII
+	     (as single characters are expanded to two or three characters,
+	     tabular output may be corrupted).
+
+Logfile:
+
+   The logfile is in the QED format as all other database files. Date, time,
+   Internet address of the caller, and the requests are logged to the file
+   GOPHSERV.LOG.
+
+
+Bugs:
+
+ - Probably lots of them. The server was tested at home and has never been
+   tested on the Internet (our PCs load their Windows system from a mainframe,
+   using Digital Equipment's PCSA, so you cannot run TCP/IP as well). But if
+   the Winsock API is a standard, there should be no problems.
+
+ - All application programs have to send their results in a file with the
+   name RESULTS.PDX. This file will be send back to the client 
+   (being a Gopher directory or a text file). The server adds .<CR><LF> at
+   the end, if item types 1 and 7 are in the selector string.
+
+ - Do not start other Windows applications while the server is executing
+   an application. The server can only synchronize with the completion 
+   of a task (waiting for RESULTS.PDX to appear) by checking the number 
+   of tasks in the system. This is not yet tested.
+   
+ - The server does not fork itself for multiple connections, because 
+   otherwise you could not execute DOS programs by the server and receive
+   the result in a special file. So only one connection is handled at a time.
+   But up to 5 waiting connections are allowed by the WINSOCK API.
+
+ - the documentation is poor, I know. But I was too busy to get the server
+   working.
+
+ - you cannot index files while the server is running (I didn't try it,
+   but I'm sure I have to use the new Paradox Engine for Windows instead
+   of the current one, which was programmed in Borland Pascal version 5.x)
+
+History:
+
+24-APR-93: download of WINSOCK.DLL and WINSOCK.PAS from vax.ftp.com
+25-APR-93: First try of Winsock API with Borland PASCAL 7.0
+02-MAY-93: got my first TCP/IP test programs running
+09-MAY-93: Gopher Server running with WINSOCK API
+18-MAY-93: I added an icon and a small menu, now the code is approx.40 KB.
+	   The icon is borrowed from the University of Minnesota,
+	   the letters "HH" on the gopher's cap are an abbreviation for 
+	   the city of Hamburg.
+25-MAY-93: search engine added in the menu
+10-JUN-93: Beta release of version 1.06
+
+
+Happy gophering,
+
+Gunter
+
+Please send bug reports and comments to:   hille@informatik.uni-hamburg.de

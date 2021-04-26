@@ -1,0 +1,56 @@
+ ========================================
+   Minuet and Multiple Users    ( DOS )
+ ========================================
+
+As e-mail becomes more popular, we are seeing more worksites where many
+people in the office have to share the same computer.
+
+What do you need to do to have many users of Minuet on the same computer
+without placing multiple copies of Minuet on the hard disk?
+
+1.  Establish a DIRECT internet connection for the computer.  (See 
+    separate instructions for using a SLIP connection.)
+
+2.  Register the computer with networking services for BOOTP service.
+    This will allow for the automatic set-up of required 
+    networking configuration parameters (namely: IP, Net Mask,
+    Name Servers, and Gateways).
+    
+3.  Include C:\MINUET in the path statement.
+
+4.  Create the following one-line batch file and name it "min.bat"
+
+       c:\minuet\minuet /p=c:\mail\%1
+
+
+To Set Up Each User
+-------------------
+1.  Assign a unique 3-letter ID code to each user.  
+    A user's initials work well for this purpose.  For example, 
+       Mortimer A. Snerd  ---> MAS
+       Jane B. Doe        ---> JBD
+
+2.  The user types:
+
+       min HisOrHerInitials
+
+    for example:
+
+       min JBD
+
+    Minuet will automatically establish a separate subdirectory for 
+    the user in C:\MAIL\.
+
+3.  Set up Minuet as usual. That is, fill in the E-Mail Address 
+    and Password fields in the "Setup/User" dialog box.
+    NOTE:  Leave the Subdirectory for mail field EMPTY.
+
+4.  Each time you want to run Minuet type:
+ 
+       min HisOrHerInitials
+       
+To set up a second user, quit Minuet and type "min XYZ" where "XYZ"
+is the name or initials of the second user. (A new subdirectory 
+is automatically created.) Go to the Setup/User menu in Minuet
+and enter the E-Mail Address and Password as usual. That's all 
+there is to it!

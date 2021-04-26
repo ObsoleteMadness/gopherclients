@@ -1,0 +1,23 @@
+Internet Gopher Curses Client
+(ver ?)
+Freeware
+
+
+This is UGopher, a Curses based DOS Gopher client written by the 
+University of Texas Health Science Center.  It requires, a commercial 
+tcp/ip stack such as PC/TCP, Lan Workplace for DOS, or PCNFS.
+
+This program should be started with a bookmark file by typing 
+"GOPHER -B" (the bookmark file should be called "_GOPHER.RC").  This is
+because the Mother Gopher no longer exists, and cannot be used as the 
+default root gopher server.  I suggest adding a bookmark pointing to 
+either "gopher.floodgap.com" and/or "home.jumpjet.info".
+
+UGopher was ported to work with WATTCP (see the selector "Gopher for
+WATTCP").  View the documentation that comes with that ported client, 
+for a more detailed understanding of UGopher.
+
+
+I do NOT have a commercial tcp/ip stack, so I could not test this 
+program.  It should be working properly however.  
+

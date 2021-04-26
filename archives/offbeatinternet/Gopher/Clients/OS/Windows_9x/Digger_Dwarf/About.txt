@@ -1,0 +1,21 @@
+Digger Dwarf
+(ver 0.83)
+Freeware
+
+
+Digger Dwarf is a console-based gopher client for 32-bit Windows.
+It is entirely written in FreeBASIC, and uses the ChiSock 
+library for networking.
+
+
+Usage:
+ddwarf [url [--saveto=file]] [--proxy=proxyaddr [--proxyport=xx] [--proxyauth=login:pass]]
+
+If you call DDwarf without any parameter, then it will simply 
+open its browsing window, and let you to enter any URL of your 
+choice. If called with a URL parameter, it will start and 
+immediately open the specified URL (if possible). If you add 
+the "--saveto=" parameter, then DDwarf will load the given URL, 
+dump its content to the specified file, and quit.
+
+

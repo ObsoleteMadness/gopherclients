@@ -1,0 +1,37 @@
+TurboGopherVR
+(ver 2.1a4)
+Freeware
+
+
+TurboGopher enhanced with a 3-D Spacial User Interface.  
+
+
+Why a 3D user interface to Gopher?
+----------------------------------
+Gopher has an explicit organization and structure which is
+external to the content of the documents, so it is straightforward
+to map a 3D virtual world interface onto the existing gopher
+servers. Since the Gopher+ protocol also has provisions for open 
+ended extensions and meta-information that resides external to the
+content of documents, it is also easy for servers to give 3D-savvy
+clients the 3D spatial coordinates and orientation of objects in a
+gopher directory. This means that we can both synthesize 3D scenes
+from existing non-3D-savvy Gopher servers, and take advanatge of
+new 3D-savvy servers without reworking the contents of the
+documents published in Gopher. 
+
+Virtual world interfaces give us a powerful data visualization
+tool. GopherVR makes it possible to display clustering of documents
+which is not feasible on either a menu or a flat page. Combining 
+GopherVR with servers that catagorize and cluster collections of 
+documents will make it possible to visualize complex retationships 
+within collections. To be effective, moving about the 3D scene must 
+be fast and fluid, and GopherVR has been optimized for quick 
+navigationn within the scene without hardware Z-buffer.
+
+
+==========
+
+You may want to view the Screenshot.gif file and the two Quicktime
+movie files to get a better idea of what the VR interface is all about. 
+

@@ -1,0 +1,206 @@
+
+I guess I'm at least as bad as anyone else about documentation.
+There are comments in the sample files,  GOPHERD FILELIST and such.
+
+The package,  including both client (GOPHERC) and server (GOPHERD)
+is available in several forms,  any one of which contains all you need:
+
+        GOPHER23 CARDDUMP  --  Cornell 'CARD' format
+        GOPHER23 TAR       --  Rice CMS TAR format (UNIX 'tar' compatible)
+        GOPHER23 READCARD  --  punch it to yourself and run READCARD
+        GOPHER23 PACKAGE   --  available via LISTSERV
+
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+
+Setting up the client  (user end):
+
+Really there's not much to it.  Just have GOPHER EXEC on an ACCESSed
+disk and the rest of the package on some other,  or the same,  disk.
+GOPHER EXEC is site-tailorable and calls GOPHERC EXEC,  the real code.
+Here at Rice,  we put most applications on their own minidisk  (makes
+maintenance easier,  for us anyway),  and our GOPHER EXEC checks for
+the existence of GOPHERC EXEC and does a LINK and ACCESS of the right
+product disk(s) iff needed.
+
+Setting up the server:
+
+CMS Gopher server "directories" are defined by FILELIST files.
+FILELISTs within FILELISTs define sub-directories.  The "root"
+is typically <userid> FILELIST,  where <userid> is the VM userid
+of the server virtual machine,  usually GOPHERD.
+
+Everything after the filemode  (third word, presently ignored, BTW)
+is considered a "relative path" and concatenated onto the end of the
+path to the directory (FILELIST) which lists the file.   This path is
+the "name" that the client displays,  unless the name is overridden in
+a NAMES file  (or if the file is a GOPHER (link) file).   The filename
+(first word) must be preceeded by at least one blank space in the
+FILELIST.   An asterisk in column one defines a comment in the FILELIST.
+(just like a standard CMS FILELIST,  so you can in fact use a Gopher
+FILELIST as input to CMS' FILELIST EXEC)
+
+A GOPHER file (filetype GOPHER) is a "link" to another Gopher server.
+The contents of a GOPHER (link) file are the same as for a UNIX
+Gopher link file,  of the form:
+
+        name=Rice University CMS Gopher server
+        host=RICEVM1.RICE.EDU
+        port=70
+        path=1/
+        type=1
+
+A NAMES file may accompany any FILELIST file,  providing overrides
+to the default "type" and "name" values sent to the client(s).
+The NAMES file is also where pipeline specifications are defined,
+if any,  for each file.
+
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+
+There is a discussion list,  VMGOPHER@PUCC.Princeton.EDU.
+
+There is another CMS Gopher (both server and client),  sometimes called
+"the Vienna Gopher",  available from Gerhard Gonter <GONTER@AWIWUW11>.
+
+From:    WTS@MAINE.MAINE.EDU (Wayne Smith)
+
+        The basics, documents and FILELIST menus, is fairly easy to grasp,
+        but the relationship of a NAMES file and its entries to a FILELIST
+        file and its entries is not at all evident to the poor soul that
+        just wants to provide an information service without much time
+        invested (I.e., without subscribing to VMGOPHER).
+
+A:      The easiest way to start is just name some plain-text files in
+        GOPHERD FILELIST  (which are available to your GOPHERD service
+        machine on an accessed disk or SFS directory).   Then try some
+        "links"  (filetype GOPHER) and sub-menus  (filetype FILELIST).
+        Then try some overrides  (with a NAMES file for the FILELIST
+        to be overridden).
+
+        It has been suggested that the whole thing be consolidated:
+        from FILELIST/GOPHER/NAMES,  just have NAMES files.   In the
+        long run,  this will probably work.   It's almost possible now,
+        but still,  many may find FILELISTs easier to understand.
+
+Q:      How to I point to another server/menu?
+A:      The easiest way is with a "link" file  (filetype GOPHER).
+        When a link file shows-up in any FILELIST,  the contents of
+        that file are read and the information specified is presented
+        to the client for that particular menu item.
+
+Q:      How does a GOPHER file differ from a "link" in a NAMES file?
+A:      The NAMES file is far more extensive.   With CMS GopherD,
+        you don't use "link" files to override the characteristics
+        of other files in the menu  (as you would with a UNIX server).
+        With CMS GopherD,  GOPHER (link) files are exclusively used to
+        reference other network (usually non-local) resources,  while
+        the NAMES file may apply to files which reside on your system
+        and/or "links" or remote services which are mearly listed locally.
+
+Q:      Some folks have made it seem that their GOPHER server files
+        are free for the taking ...  is there a GOPHER feature
+        to pull these in?
+A:      To "receive" an item,  press PF5.   The receive function
+        will not overwrite an existing file  (though you can still
+        view & SAVE from XEDIT).
+
+Q:      GOPHERD should document DISKWRIT in the prolog.
+A:      GOPHERD uses DISKWRIT to perform the same "reaccess" trick
+        GONE EXEC does when you reconnect.   If disks appear to have
+        changed,  they are reACCESSed so that GopherD has the latest
+        revision of any files on said minidisks.
+
+Q:      Why are the "STANDARD" translate-table files provided?
+        Are these for use with the server?
+A:      The default ASCII<--->EBCDIC translation in VM TCP/IP (FAL) is
+        not 100% correct for the majority of the VM/UNIX/VMS/DOS/Mac
+        world we live in.   STANDARD TCPXLATE and TCPXLBIN provide
+        a 1-for-1 translation between  de-facto "network EBCDIC"
+        (codepage 1047)  and  "extended ASCII"  (ISO 8859-1).
+
+Q:      If PhoneBk and Search are available, how do we use them?
+A:      Presently,  CMS GopherD does not support PhoneBk and Search engines.
+        The client (GOPHERC) is happy to utilize such servers on other hosts.
+
+Q:      Some GOPHERs restrict access or output to some clients;  how?
+A:      Specify an "auth" value in the NAMES file.   The tag :auth.
+        allows for control over any object in a menu  (defined by a
+        FILELIST and/or NAMES file),  even the menu itself.
+
+Q:      Is there anything different about your RXSOCKET?
+A:      RXSOCKET was created by Arty Ecock.   He maintains it.
+        Rice doesn't have any mods to RXSOCKET,  and Gopher doesn't
+        need any special treatment from RXSOCKET.   If you find an
+        RXSOCKET packaged with CMS Gopher to be out-of-date,  by all
+        means,  use the current one or get the latest from Arty.
+
+        If you pick-up RXSOCKET MODULE from a UNIX FTP host,  you must
+        "deblock" it back into its CMS form (record oriented) with:
+
+        PIPE DISK RXSOCKET U-MODULE | DEBLOCK CMS | DISK RXSOCKET MODULE
+
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+
+Thanks:
+
+Yossie Silverman,  Jim Gerland,  Arty Ecock,  Serge Goldstein,
+Chuck Boeheim,  Wayne Smith,
+
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+
+Files associated with CMS Gopher 2.3:
+
+      GOPHER23 README      this file
+      GOPHER23 FILELIST    list of all files in the package
+      GOPHER23 NAMES       overrides;  not needed
+
+client:
+      GOPHER   EXEC        "wrapper";  locally configured
+      GOPHERC  EXEC        main client code
+      GOPHERC  REXX        TCP/IP support pipeline stage
+      GVM      EXEC        used by "DIALed Gopher" service v-machine
+      GVM      DIRECT      definition of the DIALed Gopher SVM
+
+server:
+      GOPHERD  EXEC        TCP/IP server
+      GOPHERD  REXX        main GopherD code as a pipeline stage
+      GOPHERDM REXX        menu-builder pipeline stage
+
+support:
+      EXPAND   REXX        used by GOPHERC EXEC to expand tab characters
+      DROPDOTS REXX        used by GOPHERC EXEC to remove trailing
+                           lines containing just a period
+      PRINT    REXX        used by GOPHERC EXEC to print files viewed
+      A2E      REXX        used by both (client and server)
+      E2A      REXX        "   to translate between ASCII and EBCDIC
+      RXSOCKET MODULE      used by both (client and server)
+                               to communicate via TCP/IP
+      TCPA2E   REXX        same as A2E,  but reads STANDARD TCPXLBIN
+      TCPE2A   REXX        same as E2A,  but reads STANDARD TCPXLBIN
+      STANDARD TCPXLATE    ideal ASCII/EBCDIC translation source
+      STANDARD TCPXLBIN    converted (binary) table from source above
+                           Note that GOPHERC REXX has an option,
+                           "(TRANSLATE",  which makes it speak EBCDIC
+                           so that your own home-grown clients need not
+                           handle translation  (you could toss A2E and E2A)
+
+help files for client (user):
+      GOPHER   HELPCMS
+      BROWSER  HELPGOPHER
+      VIEW     HELPGOPHER
+      FIND     HELPGOPHER
+      LOOKUP   HELPGOPHER
+      SEARCH   HELPGOPHER
+      BOOKMARK HELPGOPHER
+      BOOKLIST HELPGOPHER
+
+serving CMS HELP via Gopher:
+      HELP     NAMES       defines the "help" Gopher directory
+                           put HELP FILELIST into some other FILELIST
+                           (notice,  no real FILELIST in this case)
+      HELPPIPE REXX        pipeline stage for all Gopher-ized CMS HELP
+      HELPTASK REXX        pipeline stage for handling CMS HELP TASKs
+      HELPMENU REXX        pipeline stage for handling CMS HELP MENUs
+
+general information:
+      GOPHER   PROTOCOL
+

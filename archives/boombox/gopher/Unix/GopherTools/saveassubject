@@ -1,0 +1,60 @@
+#!/usr/local/bin/perl
+
+if ($#ARGV != 0) {
+	print "Usage: $0 <directory name>\n";
+	exit;
+}
+
+chdir @ARGV[0];
+
+open(tmphead, "+>/tmp/headers$$");
+
+$HeaderFlag = 1;
+
+while (<STDIN>) {
+    #
+    # Get rid of Headers we don't want
+    #
+    if ((/^Received:/)||
+	(/^Message-Id:/)||
+	(/^Cc:/)) {
+	next;
+    }
+
+    if (/^Subject:/) {
+	$SubjectLine = $_;
+	$SubjectLine =~ s/^Subject: //;
+    }
+
+    if ((/^$/) && ($HeaderFlag == 1)) {
+	# End of headers
+
+	open(Outfile, ">$SubjectLine");
+	$HeaderFlag = 0;
+
+	seek(tmphead, 0,0);
+	while (<tmphead>) {
+	    if ((/^Date:/)     || (/^From:/) ||
+		(/^Subject:/)  || (/^Keywords:/)||
+		(/^Location:/) || (/^ACategory/)) {
+
+		print Outfile;
+	    }
+	}
+	close(tmphead);
+	unlink "/tmp/headers$$";
+    }
+	
+    # Filter out the header lines
+    
+    if ($HeaderFlag == 1) {	
+	print tmphead;
+    }
+    else {
+	print Outfile;
+    }
+    
+}
+    
+
+close Outfile;

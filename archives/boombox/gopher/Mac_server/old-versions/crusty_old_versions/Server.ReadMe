@@ -1,0 +1,39 @@
+This application lets your Mac function as a Gopher 
+server. 
+
+To run this software you will need the have MacTCP 
+installed on your Macintosh. You will have to configure 
+MacTCP so that your Mac has a static IP address; you 
+will also need to register a name for your Macintosh 
+with your local domain name system. Once you launch the 
+Gopher program your Macintosh is an internet Gopher 
+server. While running as a server, your Mac will make 
+everything in the folder the Gopher was run from 
+available to Gopher clients. Note that you can either 
+run the Gopher server in the foreground under Finder 
+(before System 7) or in the background (MultiFinder or
+System 7). 
+
+The Gopher's Helper is a hypercard 2.0 stack that can be 
+used to easily attach long names to files and 
+directories and establish links to entities that either 
+are on other gopher servers or are pointers (links)  to 
+index servers, CSO nameservers, and the like. See the 
+internet Gopher Protocol document for more information 
+about valid types of internet gopher entities. 
+
+If you have questions, bugs to report, or comments you 
+can e-mail them to the internet Gopher team at: 
+
+	   gopher@boombox.micro.umn.edu 
+
+You can subscribe gopher-news, an electronic mailing 
+list we keep to inform interested folks of new versions 
+of Gopher software.  Send your subscription request to: 
+
+      gopher-news-request@boombox.micro.umn.edu 
+
+
+Version 1.0.1.  More System 7 patches.  Default port now 70.
+Version 1.0.2.  Get by date for index server.
+Version 1.3b2   Removed get by date because it was removed from protocol.

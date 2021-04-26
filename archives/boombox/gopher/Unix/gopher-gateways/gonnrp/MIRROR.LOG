@@ -1,0 +1,27 @@
+mirroring completed successfully @ Mon Jun 14 16:58:09 CDT 1993
+Got how_to_gonnrp (4192 bytes)
+Got gonnrp-2.2 (9221 bytes)
+Created symlink gonnrp -> gonnrp-2.2
+Got dotall (874 bytes)
+Got gonnrp-2.1 (8997 bytes)
+Got README (1493 bytes)
+Got gonnrp-2.0 (8224 bytes)
+Got build-newsgroups-db (442 bytes)
+mirroring completed successfully @ Wed Jun 16 16:06:47 CDT 1993
+Created symlink gonnrp -> gonnrp-2.2
+mirroring completed successfully @ Thu Jul  1 22:13:07 CDT 1993
+Created symlink gonnrp -> gonnrp-2.2
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Fri Sep 24 11:54:17 CDT 1993
+unlink /user2/ftp/pub/gopher/Unix/gopher-gateways/gonnrp/.cache+
+unlink /user2/ftp/pub/gopher/Unix/gopher-gateways/gonnrp/.cache
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Fri Sep 24 11:59:19 CDT 1993
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Thu Jan 20 21:15:41 CST 1994
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Thu May  5 21:26:50 CDT 1994
+Got gonnrp-2.3 as gonnrp-2.3.Z 5048
+symlink ./gonnrp-2.3.Z to gonnrp.Z
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Sun Jul 24 22:42:10 CDT 1994
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Tue Aug 23 19:04:00 CDT 1994
+Got gonnrp-2.4 as gonnrp-2.4.Z 5075
+symlink ./gonnrp-2.4.Z to gonnrp.Z
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Tue Nov 29 19:13:52 CST 1994
+mirroring gonnrp (uxa.ecn.bgu.edu:/pub/gopher/gonnrp) completed successfully @ Tue Feb 27 22:37:44 CST 1996

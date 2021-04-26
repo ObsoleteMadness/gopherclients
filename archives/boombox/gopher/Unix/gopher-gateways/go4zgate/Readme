@@ -1,0 +1,7 @@
+
+Go4zgate1.0.tar.Z is based on CNIDR's fw101 package - it requires a
+                  C compiler.
+
+Go4zgate2.0.tar.Z is based on CNIDR's Isite-1.00 package - it
+                  requires a C++ compiler
+

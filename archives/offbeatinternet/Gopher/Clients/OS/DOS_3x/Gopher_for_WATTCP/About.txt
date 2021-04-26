@@ -1,0 +1,38 @@
+Internet Gopher Information Client for DOS WATTCP
+(ver 1.01)
+Freeware
+
+
+This Gopher client is a modification of the UGOPHER Curses based DOS
+Gopher client, to make it work with WATTCP.  In many ways it is a 
+rather primitive Gopher client, but on the other hand, it allows you 
+to use external file viewers (see the "readme.txt" file, which is a
+description of the program taken from FDISK.COM).  
+
+To start this program, you need to type "GOPHER -B".  Before starting
+however, you need to take a text editor and modify the WATTCP file with
+your TCP/IP information (or replace it with your existing WATTCP file).
+
+You will also need to modify the bookmark file "_GOPHER.RC", as most of
+the bookmarks are to servers that no longer exist (the program uses 
+the bookmark file to begin its Gopher surfing).  I suggest adding a
+bookmark to either "gopher.floodgap.com" and/or "home.jumpjet.info".
+CAUTION: Replacing the FIRST bookmark entry in the bookmark file MAY 
+cause the client to crash (I don't know why, but it did so on my 
+computer).  Try at first just adding the links at the bottom of the 
+bookmark file (use the PageUp/PageDown keys to see all the listings).
+
+The bookmark file is also where information such as the path to the
+temporary directory and external program viewers are located (and you
+will need to modify these to match your individual computer setup).
+
+
+The Gopher Client = GOPHER-B.ZIP
+
+---------------------------------------
+
+Also included is the Source Code for the Gopher client.  This source
+code is NOT required to run the Gopher client.
+
+Source Code = GOPHER-S.ZIP
+

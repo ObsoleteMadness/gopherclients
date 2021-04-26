@@ -1,0 +1,1446 @@
+<BESt enc="HYX" ed="ned:3.00.20" cs="IBM-PC">
+<stamp d="1993-06-16" t="17:55:26" u="gg@schnurli.wu-wien.ac.at" pgm="hyxpurge">
+<Frame $$root>
+% File viegophr.hyx
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%+ INTERNET GOPHER, CLIENT &amp; SERVER FOR IBM VM/CMS    (1992-06-19/15:00) +
+%+                                                                       +
+%+ Notes on installation and usage of the `Vienna' VM/CMS GOPHER System. +
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+<HLINK fr="pro: postinst">* product postinstaller
+<HLINK fr="pro: postinst call">* product postinstallation (call of the post-installer)
+
++------------------------------------+-----------------------------------+
+| DOCUMENTATION                      | PRODUCT                           |
++------------------------------------+-----------------------------------+
+| <HLINK fr="docu: index" thread=product>* index                            | <HLINK fr="prod: index">* index                           |
+| <HLINK fr="seq.doc">* main sequence                    | <HLINK fr="seq.pro">* main sequence                   |
+| <HLINK fr="seq.mini">* mini sequence                    | <HLINK fr="seq.mini.pro">* mini.prod                       |
+| <HLINK fr="history">* history                          | <HLINK fr="pro: intro" mark="version">* version nr                      |
+| <HLINK fr="T2D LIST">* internal T2D list                |                                   |
++------------------------------------+-----------------------------------+
+| <HLINK fr="Cl: GOPHFTCH.EXEC">* calling GOPHFTCH.EXEC            | <HLINK fr="pro: module GOPHFTCH.EXEC">* GOPHFTCH.EXEC:  <HLINK fr="pro: module GOPHFTCH.EXEC main">* main          |
+| <HLINK fr="Srv: GOPHERD.EAI">* GOPHERD.EAI                      | <HLINK fr="pro: module GOPHER.XEDIT">* GOPHER.XEDIT                    |
+| <HLINK fr="Srv: GOPHERD.DSKGRP">* GOPHERD.DSKGRP                   | <HLINK fr="pro: module GOPHSCAN.EXEC">* GOPHSCAN.EXEC                   |
+| <hyx.l fr="QA pseudo server">* QA pseudo server                 | <HLINK fr="pro: module GOPHSTP.EXEC">* GOPHSTP.EXEC                    |
+|                                    | <HLINK fr="pro: module GOPHSTP.XEDIT">* GOPHSTP.XEDIT                   |
+|                                    | <HLINK fr="pro: module EDINDEX.EXEC">* EDINDEX.EXEC                    |
+|                                    | <HLINK fr="pro: module EDINDEX.XEDIT">* EDINDEX.XEDIT                   |
+|                                    | GOPHERDD  <HLINK fr="pro: module GOPHERDD.EXEC main loop" ln=105>* main loop             |
++------------------------------------+-----------------------------------+
+
+<HLINK gh=gopher.wu-wien.ac.at gp=70 gt=1>* gopher
+
+<HLINK fr="$$index">* $$index
+</Frame>
+<Frame LaTeX: header><HLINK dir=up fr="$$root"><HLINK dir=prev fr="$$root">
+%
+% File viegophr.tex
+%
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%+ INTERNET GOPHER, CLIENT &amp; SERVER FOR IBM VM/CMS    (1992-06-19/15:00) +
+%+                                                                       +
+%+ Notes on installation and usage of the `Vienna' VM/CMS GOPHER System. +
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%
+% NOTE: This is not the original version of the document!
+%       Instead, this is the sequenced and stripped version of a
+%       hypertext file.
+%       The linear LaTeX version is provided for your convenience.
+%       For more information about the hypertext version contact the author.
+%       LaTeX is described in: (I'm not sure..)
+%         Leslie Lamport:  LaTeX, A document preparation system
+%         Addison Wesley
+%
+\documentstyle{article}
+\pagestyle{headings}
+
+% pagelayout ---------
+% \topmargin10mm
+% \headheight12mm
+% \headsep5mm
+% \topskip0mm
+% \textheight245mm
+% \textwidth175mm
+% \oddsidemargin17mm
+% \evensidemargin65mm
+% \marginparwidth46mm
+% \marginparsep5mm
+% \marginparpush5mm
+
+%needed???? yes...
+\newfont{\vsmtt}{cmtt8 scaled 1000} % very small type writer
+
+%\makeindex
+
+\begin{document}
+
+<HLINK dir=next fr="Title and Abstract"></Frame>
+<Frame Title and Abstract><HLINK dir=up fr="$$root"><HLINK dir=prev fr="LaTeX: header">
+\pagenumbering{roman}
+\thispagestyle{empty}
+\title{VieGOPHER\\---\\A Gopher System for VM/CMS}
+\author{Gerhard Gonter}
+\date{\today}
+\maketitle
+
+\begin{abstract}\footnote{This
+file is still somewhat ... er ... incomplete ... sorry ...}
+The Internet Gopher Protocol provides a simple, yet very effective
+method for distributed document search and retrieval.  This document
+describes usage, installation, maintainance and also some points 
+about the implementation of a Gopher
+system for IBM's operating system VM/CMS, called the VieGOPHER.
+Both, using the client and administrating the server are discussed.
+
+The system can be distributed freely and is dedicated to the community
+of cyberspace.
+\end{abstract}
+
+\pagebreak[4]
+\tableofcontents
+\pagebreak[4]
+\listoftables
+\listoffigures
+\pagebreak[4]
+
+\newcommand{\SUBsection}[1]{\subsection{#1}}
+\newcommand{\SUBsubsection}[1]{\subsubsection{#1}}
+
+% ---------------------------------------------------------------------- 
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+<HLINK dir=next fr="TOC"></Frame>
+<Frame TOC>
+<HLINK dir=next fr="Introduction"></Frame>
+<Frame Introduction><HLINK dir=up fr="$$root"><HLINK dir=prev fr="TOC">
+\section{Introduction}
+
+This document describes an implementation of the Internet GOPHER Server
+and Client protocol for IBM's operating system VM/CMS, known as the
+`Vienna' VM Gopher System or `VieGOPHER'.
+There are things left out and enhancements will follow.  If you find any
+errors or have other suggestion then don't hesitate to contact me on one
+of the addresses given in section \ref{gg.addr} on page \pageref{gg.addr}.
+ 
+The system consists of a client, based on {\sf XEDIT} ({\tt GOPHERC.EXEC}
+together with
+a bunch of {\tt .XEDIT} and {\tt .EXEC} files) and two servers,
+the older one is a simple,
+straight forward, plain vanilla, nothing special, ordinary, single-treaded
+Internet Gopher Server\footnote{not supported anymore} ({\tt GOPHERD.EXEC}),
+the new one ({\tt GOPHERDD.EXEC}) %\index{GOPHERDD.EXEC}
+is just the opposite of that all...  well...  the most interesting feature
+of it is that it is multi-threaded.  This means, it can handle more than
+one connection at the same time and, in fact, the version I currently run
+listens on four ports at the same time and is still able to handle a
+couple of connections simultanously.  Since this server listens on four
+different ports you might suspect that one is the officially assigned
+gopher port (70) and the the other two ports are something else.  This
+assumption is not completely wrong, the server also listens on port 79
+and pretends to be a finger server as well on port 17 and serves out fortune
+cookies.  The service on port 17 is also known as the Quote-of-the-Day
+protocol.  Finger protocol (see \cite{rfc1288})
+and Quote-of-the-Day protocol (see \cite{rfc865})
+are handled by the Gopher Server as a by-product,
+as you may have time to read in the code.
+ 
+In order to run either the server or the client you also need a program
+called {\tt REXTCPIP.MODULE} (by Ken Hornstein).  You can find it on any
+{\sf BITNET LISTSERV} that carries {\sf VM-UTIL}, (e.g. {\sf DEARN}).
+Be sure to use version 1.8.4. or newer.  Section \ref{bugs} gives
+information about modifications that improve the stability of the
+program.  If necessary, a modified version can be obtained from me.
+You also need TCPIP to run either the server or the client.
+The new server can also employ {\tt YWAKEUP.MODULE} to trap messages
+from servicing machines.
+
+Clients running under TCPIP version 2 can take advantage of RXSOCKET
+instead of REXTCPIP.  RXSOCKET is generally more elaborate and
+stable, either version 1 or can be used.
+
+The instability of REXTCPIP is the main weaknes of the server.
+To overcome this problem I work along three paths:
+\begin{enumerate}
+\item   I try to make the REXX code of the server as shock-proof
+        as possible,
+\item   I try to correct some of the problems inherent in
+        REXTCPIP, see section \ref{bugs} for a documentation
+        about some of the patches sofar,
+\item   allowing to select RXSOCKET seems to be the most
+        promising path in the long run.
+\end{enumerate}
+ 
+<HLINK dir=next fr="Features"></Frame>
+<Frame Features><HLINK dir=up fr="$$root"><HLINK dir=next fr="To-Do List"><HLINK dir=prev fr="Introduction">
+\subsection{Features}
+
+\noindent Client:
+\noindent\begin{itemize}
+\item can work with WAIS search gateways
+\item convenient XEDIT interface
+\end{itemize}
+
+\noindent Server:
+\noindent\begin{itemize}
+\item multiple connections
+\item integrated finger server
+\item integrated cookie server
+\item interface for embedded applications
+\end{itemize}
+
+% ---------------------------------------------------------------------- 
+</Frame>
+<Frame Cl: Client><HLINK dir=up fr="$$root"><HLINK dir=prev fr="To-Do List">
+\section{Client}
+
+% <HLINK fr="Cl: Client Modules">* Client Modules
+% <HLINK fr="Cl: General Module Layout">* General Module Layout
+%   <HLINK fr="Cl: Modules from other Sources">* Modules from other Sources
+% <HLINK fr="Cl: Installation">* Installation
+%   <HLINK fr="Cl: Quick Installation">* Quick Installation
+%     Professional Installation
+%     <HLINK fr="Cl: Professional Installation (1)">* (1)
+%     <HLINK fr="Cl: Fig: Instsec in GOPHER.EXEC">* Fig: Instsec in GOPHER.EXEC
+%     <HLINK fr="Cl: Professional Installation (2)">* (2)
+%     <HLINK fr="Cl: Fig: Instsec in GOPHFTCH.EXEC">* Fig: Instsec in GOPHFTCH.EXEC
+%     <HLINK fr="Cl: Professional Installation (3)">* (3)
+% <HLINK fr="Cl: Files">* Files
+% <HLINK fr="Cl: Global Variables">* Global Variables
+%   <HLINK fr="Cl: User Setup">* User Setup
+%   <HLINK fr="Cl: temp vars">* temporary variables used by the GOPHER modules
+% <HLINK fr="Cl: Using the Client">* Using the Client
+%   <HLINK fr="Cl: Fig: Root Index Screen">* Fig: Root Index Screen
+%   <HLINK fr="Cl: temp files">* temp files
+
+<HLINK dir=next fr="Cl: Client Modules"></Frame>
+<Frame Cl: Client Modules><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Client">
+\subsection{Client Modules}
+
+The client is based on {\sf XEDIT} and {\sf REXTCPIP} or {\sf RXSOCKET}.
+It does not
+require any other non-standard extensions of the operating system, like
+{\sf CMS-PIPES} and should also work with TCP/IP release 1 (the
+REXTCPIP version only).
+
+
+<HLINK dir=next fr="Cl: General Module Layout"></Frame>
+<Frame Cl: General Module Layout><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Client Modules">
+\subsection{General Module Layout}
+
+ 
+<HLINK dir=next fr="Cl: Modules from other Sources"></Frame>
+<Frame Cl: Modules from other Sources><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: General Module Layout">
+\subsubsection{Modules from other Sources}
+ 
+The files {\tt REXTCPIP.MODULE} and {\tt RXSOCKET.MODULE}
+alternatively provide the network transport system.
+ 
+TCP/IP must be available to the user; the TCPIP public disk is not
+required unless the user also wants to use TELNET.
+ 
+ 
+<HLINK dir=next fr="Cl: Installation"></Frame>
+<Frame Cl: Installation><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Modules from other Sources">
+\subsection{Installation}
+
+%   <HLINK fr="Cl: Quick Installation">* Quick Installation
+%   * Professional Installation
+%     <HLINK fr="Cl: Professional Installation (1)">* (1)
+%     <HLINK fr="Cl: Fig: Instsec in GOPHER.EXEC">* Fig: Instsec in GOPHER.EXEC
+%     <HLINK fr="Cl: Professional Installation (2)">* (2)
+%     <HLINK fr="Cl: Fig: Instsec in GOPHFTCH.EXEC">* Fig: Instsec in GOPHFTCH.EXEC
+%     <HLINK fr="Cl: Professional Installation (3)">* (3)
+<HLINK dir=next fr="Cl: Quick Installation"></Frame>
+<Frame Cl: Quick Installation><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Installation">
+\subsubsection{Quick Installation}
+
+Installing the VieGOPHER client quickly is fairly easy:  Just get the
+distribution package\footnote{see appendix \ref{sources} how to obtain it},
+and follow the installation procedures given in the readme file (or
+in the introduction),
+get {\tt REXTCPIP.MODULE} version 1.8.4 or {\tt RXSOCKET.MODULE},
+put everything on your minidisk, and type {\tt GOPHER}.
+If everything is ok you should get the root menu of the server
+{\tt gopher.wu-wien.ac.at}\footnote{Figure \ref{run.cl1} on page
+\pageref{run.cl1} shows such a menu}, otherwise you have a problem.
+% and you should consider reading the upcomming section about
+% professional installation.
+
+<HLINK dir=next fr="Cl: Professional Installation (1)"></Frame>
+<Frame Cl: Professional Installation (1)><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Quick Installation">
+\subsubsection{Professional Installation}
+Two modules of the client have configuration sections.
+Figure \ref{conf.gopher} shows the one of {\tt GOPHER.EXEC} while
+figure \ref{conf.gophftch} shows that of {\tt GOPHFTCH.EXEC}.
+Usually, you will want to configure the name and the port number
+of your default server in {\tt GOPHER.EXEC} as well as in
+{\tt GOPHFTCH.EXEC}.
+
+In {\tt GOPHER.EXEC} this is done by assigning the appropriate name
+and values to the variables {\tt host}, {\tt port} and {\tt ity}
+(see figure \ref{conf.gopher} on page \pageref{conf.gopher}).
+
+These parameters can be overriden by assigning values of your choice
+to the global variables {\tt HOST}, {\tt PORT}, {\tt ITYPE} and
+{\tt SEL}.  For doing so you may need to use the program
+{\tt GLOBALVV.EXEC}, since the selector string defined by {\tt SEL}
+might be mixed case.
+
+All these values can still be overriden by calling GOPHER
+with parameters, more information about this can be found in
+section \ref{XXX}.
+
+<HLINK dir=next fr="Cl: Fig: Instsec in GOPHER.EXEC"></Frame>
+<Frame Cl: Fig: Instsec in GOPHER.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Professional Installation (1)">
+\begin{figure}
+\caption{Installation section in {\tt GOPHER.EXEC}}\label{conf.gopher}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+/* to be configured at installation time by ROSE:  - - - - - - - - - - */
+if host='' | host='=' then host=#&lt;CL_DEFAULT_HOST&gt;#;
+if port='' | port='=' then port=#&lt;CL_DEFAULT_PORT&gt;#;
+if ity='' then ity=#&lt;CL_DEFAULT_TYPE&gt;#;  /* default: directory */
+/* - - - - - - - - - - - - - - - - - - -  end of configuration section */
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+<HLINK dir=next fr="Cl: Professional Installation (2)"></Frame>
+<Frame Cl: Professional Installation (2)><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Fig: Instsec in GOPHER.EXEC">
+The reason why there is a second, almost redundant configuration section
+results from the fact, that the module {\tt GOPHFTCH.EXEC}, the item fetcher,
+can also be used isolated, for instance for automatic retrieval of
+documents.  You can find an example for such an application in section
+\ref{ex.weathrep}.
+
+Assignments to variables {\tt rsrv} and {\tt rprt} define again the
+name and the port of a default server.  These values can be overriden
+by calling the program with parameters as described below.  During a
+regular interactive Gopher session the program will always be called by
+other modules with a full parameter list.
+
+An especially delicate setup parameter that can only be defined in this
+module is {\tt localhost}.  It defines the IP-address of the machine
+where the client runs on.  Assigning a valid value to this variable will
+force the fetcher module to try to access the server files directly,
+if the server's IP-address turns out to be the same as {\tt localhost}.
+This attempt will of course fail and return empty documents
+when you specify an IP-address of an
+existing server which is not your own IP-address.  Otherwise, specifying
+an invalid IP-address likte {\tt 999.208.3.2} will force GOPHFTCH
+to use TCP/IP connections for all item retrievals.%\pagebreak
+
+The reason why direct access to the server's files was needed was a
+problem in {\tt REXTCPIP.MODULE}
+\footnote{Besides that, direct access to the server's
+files has pros and cons:
+\begin{itemize}
+\item[+] higher throughput
+\item[+] no need to run a real server at all, just set up the
+         server's files
+%\item[--] the user might have access to files which s/he better
+%         should not see
+\item[--] having to implement some server functions in the
+         client modules
+\end{itemize}}.  A description and a fix of that
+problem follows in section \ref{bug.fdns}.
+
+
+I'm not sure yet if I will continue to support code for full direct
+access or not or if I'll design a system that allows mixed operation.
+
+<HLINK dir=next fr="Cl: Fig: Instsec in GOPHFTCH.EXEC"></Frame>
+<Frame Cl: Fig: Instsec in GOPHFTCH.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Professional Installation (2)">
+\begin{figure}
+\caption{Installation section in {\tt <HLINK fr="pro: module GOPHFTCH.EXEC main" ln=44 cn=1>GOPHFTCH.EXEC}}\label{conf.gophftch}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+/* to be configured at installation time by ROSE:  - - - - - - - - - - */
+if rsrv='' then rsrv=#&lt;CL_DEFAULT_HOST&gt;#;      /* default server       */
+if rprt='' then rprt=#&lt;CL_DEFAULT_PORT&gt;#;      /* default servers port */
+tout=15;                                /* timeout for TCPOPEN (sec)   */
+
+#switch CL_USE_LOCALFETCH
+#case YES
+localhost='999.208.3.2';                       /* IP where client runs */
+localgopher='70';              /* Port where Gopher server listens on  */
+selectorfile='GOPHERD SELECTOR';
+indexfile='GOPHERD INDEX';
+gopherdisk='*';
+#endswitch
+/* - - - - - - - - - - - - - - - - - - -  end of configuration section */
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+<HLINK dir=next fr="Cl: Professional Installation (3)"></Frame>
+<Frame Cl: Professional Installation (3)><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Fig: Instsec in GOPHFTCH.EXEC">
+
+  GOPHFTCH used a workaround ({\tt FDNS.EXEC}) to resolve the server's
+  IP-address.
+  This workaround is currently disabled since it was
+  possibe to track down the reason for the irregularites.  
+  If {\tt GetIPAddr()}
+  does not work properly in your environment, you can uncomment
+  the call to FDNS and remove or disable the {\tt GetIPAddr()} section
+  from the code.  For more information about this consult section
+  \ref{bug.fdns}.
+
+<HLINK dir=next fr="Cl: Files"></Frame>
+<Frame Cl: Files><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Professional Installation (3)">
+\SUBsection{Files}
+
+  There are no files read in normal operation.  For direct access without
+  TCP/IP, the local fetching option ({\tt CL\_USE\_LOCALFETCH}) must be
+  turned on and all the files visible to the server must also be visible
+  to the client, especially the selector file, the group file, and the
+  root index.
+ 
+<HLINK dir=next fr="Cl: Global Variables"></Frame>
+<Frame Cl: Global Variables><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Files">
+\SUBsection{Global Variables}
+
+  The client uses two different types of global variables, permanent
+  ones, for storing setup parameters, in the file {\tt LASTING.GLOBALV}
+  and temporary ones in memory.
+ 
+ 
+<HLINK dir=next fr="Cl: User Setup"></Frame>
+<Frame Cl: User Setup><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Global Variables">
+\SUBsubsection{User Setup}
+
+Table \ref{clglv} on page \pageref{clglv} lists all the
+global variables that are used by the client.
+They are in the group GOPHER in the file {\tt LASTING.GLOBALV}
+and can be modified with the SETUP function built into the
+client (PF23: {\tt Setup}) or by calling the program GOPHSTP.
+
+%%% this part is obsolete already ... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%\noindent {\bf Attention:}
+%%% {\tt HOST}, {\tt ITYPE} and {\tt SEL}
+%%%     need to be set, accessed and modified using
+%%%     {\tt GLOBALVV.EXEC} since they will usually contain mixed
+%%%     case strings which can't be handled with GLOBALV.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\begin{table}
+\caption{Permanent Global Variables for the Client}\label{clglv}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}
+\hline  % --------------------------------------------------------------------
+% {\tt  KEEP\footnote{this feature is not fully implemented yet.}       } 
+%                    &amp; define, if items should be kept and how long         \\
+% {\tt  ~~=ALL     } &amp; keep all items                                       \\
+% {\tt  ~~=SESSION } &amp; keeps items only during a session                    \\
+% {\tt  ~~={\sl{(none)}}} &amp; don't keep any items [Default]                  \\
+% \hline % -------------------------------------------------------------------
+{\tt HOST}      &amp; name of the GOPHER server to be accessed at startup       \\
+                &amp; [Default: {\tt gopher.wu-wien.ac.at}]                     \\
+\hline % ---------------------------------------------------------------------
+{\tt PORT}      &amp; port of the GOPHER server                                 \\
+                &amp; [Default: {\tt 70}]                                       \\
+\hline % ---------------------------------------------------------------------
+{\tt ITYPE}     &amp; item type of the first item to be fetched                 \\
+                &amp; [Default: {\tt 1} ({\sl directory})]                      \\
+\hline % ---------------------------------------------------------------------
+{\tt SEL}       &amp; selector string of the first item to be fetched           \\
+                &amp; [Default: {\sl text}\footnote{set during installation
+                  as a ROSE definition}]                                    \\
+\hline % ---------------------------------------------------------------------
+{\tt DNAME}     &amp; name of the startup menu                                  \\
+                &amp; [Default: {\sl none}]                                     \\
+\hline % ---------------------------------------------------------------------
+{\tt BOOKMARK}  &amp; name of the bookmark file                                 \\
+                &amp; [Default: {\tt GOPHER BOOKMARK A}]                        \\
+\hline % ---------------------------------------------------------------------
+{\tt SAVEFILE}  &amp; name of the file where items may be saved                 \\
+                &amp; [Default: {\tt GOPHER SAVEFILE A}]                        \\
+\hline % ---------------------------------------------------------------------
+{\tt INFOLEVEL} &amp; level of verbosity, amount of function key description    \\
+                &amp; [Default: {\tt 5}]                                        \\
+\hline % ---------------------------------------------------------------------
+{\tt TELNET-8}  &amp; name of the telnet program for items of {\tt Type=8}      \\
+                &amp; [Default: {\tt TELNET MODULE}]                            \\
+\hline % ---------------------------------------------------------------------
+{\tt TELNET-T}  &amp; name of the telnet program for items of {\tt Type=T}      \\
+                &amp; [Default: {\tt TELNET MODULE}]                            \\
+\hline % ---------------------------------------------------------------------
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+ 
+<HLINK dir=next fr="Cl: temp vars"></Frame>
+<Frame Cl: temp vars><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: User Setup">
+\SUBsubsection{temporary variables}
+ 
+  Table \ref{clglv-t} on page \pageref{clglv-t} lists the client's
+  temporary global variables,
+  %%% they are in the group GOPHER in the special format 
+  %%% file {\tt LASTING.GLOBALXV}.
+  the CMS program GLOBALV keeps them in main memory.
+  %%% The Gopher program will purge this file
+  %%% at the end of every session.
+  These variables can not be accessed directly.
+
+
+\begin{table}
+\caption{Temporary Global Variables for the Client}\label{clglv-t}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}\hline 
+{\tt  TMPCNT     } &amp; number of the last item fetched (0..??)\\
+\hline
+{\tt  GHOST      } &amp; host, port, type and selector of the last item fetched\\
+\hline
+{\tt  GI1:{\sl{$&lt;$ty$&gt;$}}  } &amp;  directory entry of the item held in 
+                                file {\tt GOPHTMP.}{\sl{$&lt;$ty$&gt;$}}\\
+{\tt  GI2:{\sl{$&lt;$ty$&gt;$}}  } &amp;  {\sl $&lt;$ty$&gt;$} is the file type of the
+                                XEDIT file in the ring\\ \hline
+{\tt  L{\sl{$&lt;$ty$&gt;$}}     } &amp;  screen information for active item in
+                                XEDIT ring\\ 
+\hline
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+\rule{0mm}{5mm}
+
+%%%\noindent {\bf Attention:}
+%%% {\tt GHOST}, {\tt GI1:}{\sl{$&lt;$ty$&gt;$}} and
+%%%     {\tt GI2:}{\sl{$&lt;$ty$&gt;$}}
+%%%     are set, accessed and modified by the client modules
+%%%     using {\tt GLOBALXV.EXEC} since they will usually contain mixed case
+%%%     strings, possibly even longer than 256 bytes, which can't be handled
+%%%     with GLOBALV or GLOBALVV.
+%%%{\tt  L{\sl{$&lt;$ty$&gt;$}}} is handled using GLOBALV.
+
+<HLINK dir=next fr="Cl: Using the Client"></Frame>
+<Frame Cl: Using the Client><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: temp vars">
+\SUBsection{Using the Client}
+
+The gopher client is invoked by executing GOPHER.  If everything is set up
+properly, the root menu of your default server should appear within a
+few seconds.  Figure \ref{run.cl1} shows a root menu.  The beginning of
+a menu line contains an item marker, {\tt $&lt;$F$&gt;$} indicates a text file
+and {\tt $&lt;$D$&gt;$} indicates another menu or directory.
+Table \ref{supported.items} lists all item types that are supported
+by this client.  Please note that other servers might also provide
+different item types, these are flagged by a marker of the form
+{\tt $&gt;$}{\sl{x}}{\tt{$&lt;$}}.  A list of other know item types is provided
+in table \ref{supported.items}.
+
+%    <HLINK fr="Cl: Fig: Root Index Screen">* Fig: Root Index Screen
+%    * Programmable Function Keys
+%      <HLINK fr="Cl: PF keys (1)">* (1)
+%      <HLINK fr="Cl: Fig: PF keys">* Fig: Programmable Function Keys
+%      <HLINK fr="Cl: PF keys (2)">* (2)
+%    <HLINK fr="Cl: Bookmarks">* Bookmarks
+%    <HLINK fr="Cl: saving items">* saving items
+%    <HLINK fr="Cl: Feedback">* Feedback
+%    <HLINK fr="Cl: Outlook">* Outlook
+%    <HLINK fr="Cl: temp files">* temp files
+%    <HLINK fr="Cl: Supported Item Types">* Supported Item Types
+%    <HLINK fr="Cl: Tbl: Supported Item Types">* Tbl: Supported Item Types
+<HLINK dir=next fr="Cl: Fig: Root Index Screen"></Frame>
+<Frame Cl: Fig: Root Index Screen><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Using the Client">
+\begin{figure}
+\caption{Root Index of a Gopher Server}\label{run.cl1}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+ GOPHTMP  TMP0     A1  V 122  Trunc=122 Size=20 Line=1 Col=1 Alt=0
+====&gt;
+&lt;D&gt; WU-Wien Gopher Information Service: Main Menu
+gopher.wu-wien.ac.at:70 &lt;1&gt;                                                  
+&lt;F&gt; About Internet Gopher (gopher.wu-wien.ac.at:70)
+&lt;D&gt; Local Info
+&lt;F&gt; ----------------------------------------------------------------------
+&lt;D&gt; Gophers around the house (Univ. Economics, Vienna)
+&lt;D&gt; Gophers around the place (Austrian Universities)
+&lt;D&gt; Gophers around the world (and other information services)
+&lt;F&gt; ----------------------------------------------------------------------
+&lt;D&gt; Early Music List: archives of EARLYM-L@AEARN.bitnet + rec.music.early
+&lt;D&gt; CERRO: the Central European Regional Research Organization
+&lt;D&gt; WAFE: Widget Athena Frontend
+&lt;D&gt; documents
+&lt;D&gt; services
+&lt;D&gt; external services
+&lt;D&gt; pointers                        (things you might also find elsewhere)
+&lt;D&gt; life, the NET and everything
+&lt;D&gt; The Guide!
+&lt;F&gt; ----------------------------------------------------------------------
+&lt;D&gt; VieGOPHER: VM/CMS Gopher Version
+ 1= Help      2=(altpfs)  3= GoBack  4= Disp-&gt;BMK   5= Curs-&gt;BMK   6= BMK  
+ 7= PageUP    8= PageDN   9= Save   10=            11= Display    12= Circle
+
+
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+ 
+<HLINK dir=next fr="Cl: temp files"></Frame>
+<Frame Cl: temp files><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: Fig: Root Index Screen">
+\SUBsubsection{Client: list of temporary files}
+
+% ---------------------------------------------------------------------- 
+<HLINK dir=next fr="Srv: Multi-Threaded Multi-Protocol Daemon"></Frame>
+<Frame Srv: Multi-Threaded Multi-Protocol Daemon><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Cl: temp files">
+\section{Server}
+ 
+% <HLINK fr="Srv: Modules">* Modules
+%   <HLINK fr="Srv: GOPHERDD.EXEC">* GOPHERDD.EXEC
+%   <HLINK fr="Srv: Modules from other Sources">* Modules from other Sources
+%   Installation
+%   <HLINK fr="Srv: Installation (1)">* (1)
+%   <HLINK fr="Srv: Fig: Instsec in GOPHERDD.EXEC">* Fig: Instsec in GOPHERDD.EXEC
+%   <HLINK fr="Srv: Installation (2)">* (2)
+% <HLINK fr="Srv: Files">* Files
+%   <HLINK fr="Srv: GOPHERD.SELECTOR">* GOPHERD.SELECTOR
+%   <HLINK fr="Srv: GOPHERD.GROUPS">* GOPHERD.GROUPS
+%   <HLINK fr="Srv: GOPHERD.INDEX">* GOPHERD.INDEX
+%   <HLINK fr="Srv: Format of an Index File">* Format of an Index File
+% <HLINK fr="Srv: Global Variables">* Global Variables
+%   <HLINK fr="Srv: Tbl: Global Variables">* Tbl: Global Variables
+<HLINK dir=next fr="Srv: Modules"></Frame>
+<Frame Srv: Modules><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Multi-Threaded Multi-Protocol Daemon">
+\subsection{Server Modules}
+
+%   <HLINK fr="Srv: GOPHERDD.EXEC">* GOPHERDD.EXEC
+%   <HLINK fr="Srv: Modules from other Sources">* Modules from other Sources
+<HLINK dir=next fr="Srv: GOPHERDD.EXEC"></Frame>
+<Frame Srv: GOPHERDD.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Modules">
+\subsubsection{Multi-Threaded Multi-Protocol Daemon}
+ 
+The file {\tt GOPHERDD.EXEC} resembles the main module of the server.
+This program will also call the modules {\tt FINGERXX.EXEC} to generate
+the response for finger queries and {\tt COOKIE.EXEC} to generate
+short text messages from a cookie base.
+ 
+ 
+<HLINK dir=next fr="Srv: Modules from other Sources"></Frame>
+<Frame Srv: Modules from other Sources><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: GOPHERDD.EXEC">
+\subsubsection{Modules from other Sources}
+
+For managing TCP connections, the file {\tt REXTCPIP.MODULE} is used,
+trapping control messages from servicing VMs is implemented using
+{\tt YWAKEUP.MODULE} or IBM's standard WAKEUP method.
+ 
+TCP/IP must be available to the server, however, access to the TCPIP
+public disk is not necessary.
+ 
+ 
+<HLINK dir=next fr="Srv: Installation (1)"></Frame>
+<Frame Srv: Installation (1)><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Modules from other Sources">
+\subsection{Installation}
+ 
+  The files {\tt GOPHERD.EXEC}\footnote{This program is now obsolete;
+  it is still distributed in the package to provide the interested
+  reader with some in-depth information.} as well as {\tt GOPHERDD.EXEC}
+  have an installation
+  section where local parameters should be configured at installation
+  time using ROSE.
+  There are the definitions of the ports where the servers listen
+  and the files that are used by the server modules.
+  Figure \ref{conf.gopherdd} shows an example.
+ 
+<HLINK dir=next fr="Srv: Fig: Instsec in GOPHERDD.EXEC"></Frame>
+<Frame Srv: Fig: Instsec in GOPHERDD.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Installation (1)">
+\begin{figure}
+\caption{ROSE Installation section in
+{\tt GOPHERDD.EXEC}}\label{conf.gopherdd}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+/* to be configured at installation time by ROSE:  - - - - - - - - - - */
+if logfile=''      then logfile=      #&lt;LOGFILE&gt;#;
+if selectorfile='' then selectorfile= #&lt;SELECTORFILE&gt;#;
+if groupfile=''    then groupfile=    #&lt;GROUPFILE&gt;#;
+if rootindex=''    then rootindex=    #&lt;ROOTINDEX&gt;#;
+if gopherport=''   then gopherport=   #&lt;GOPHER_PORT&gt;#;
+if fingerport=''   then fingerport=   #&lt;FINGER_PORT&gt;#;
+if cookieport=''   then cookieport=   #&lt;COOKIE_PORT&gt;#;
+if sreport=''      then sreport=      #&lt;SRE_PORT&gt;#;
+/* - - - - - - - - - - - - - - - - - - -  end of configuration section */
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+<HLINK dir=next fr="Srv: Installation (2)"></Frame>
+<Frame Srv: Installation (2)><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Fig: Instsec in GOPHERDD.EXEC">
+\subsubsection{Virtual Machines}
+  The setup used at {\sf awiwuw11.wu-wien.ac.at} is this:  
+  the virtual machine {\bf GOPHER} has all the programs on it's minidisk 191,
+  accessed as A.  This disk is public to all users.
+  Data files are stored on various disks.
+  The VM also has a link to GOPHERD.191 as I.
+
+  The VM {\bf GOPHERD} has a link to GOPHER.191 as minidisk B (read-only)
+  and all the necessary data disks of GOPHER and other VMs.
+  The server module GOPHERDD is started from the profile\footnote{A sample
+  profile is shown in section \ref{prof.GOPHERD}.}.  GOPHERD can be forced
+  and auto-logged by the VM TCPIP and is currently also forced and
+  auto-logged by the VM VMUTIL four times a day.
+
+  Allowing TCPIP to control GOPHERD requires an entry in the file
+  PROFILE TCPIP.  Figure \ref{PROFILE.TCPIP} on page \pageref{PROFILE.TCPIP}
+  shows an excerpt of that file, listing relevant entries.
+  Please note that GOPHERD is mentioned in the AUTOLOG section once and
+  three times in the PORT section, where the statements for port
+  17 (Quote) and 79 (Finger) are flagged with NOAUTOLOG.  It's not
+  clear if it could cause problems when one virtual machine
+  has more than one autolog-controlled ports and sofar this setup
+  did not reveal any shortcoming.
+
+\begin{figure}\label{PROFILE.TCPIP}
+\caption{Excerpt from PROFILE TCPIP}
+...\\
+...
+\begin{verbatim}
+AUTOLOG
+  FTPSERVE  PASSWD     ; FTP Server
+  GOPHERD   PASSWD     ; Gopher, Finger and Quote Server
+  LPSERVE   PASSWD     ; LP Server
+\end{verbatim}
+...\\
+...
+\begin{verbatim}
+ENDAUTOLOG
+
+PORT
+  17 TCP GOPHERD   NOAUTOLOG ; Quote Server
+  20 TCP FTPSERVE  NOAUTOLOG ; FTP Server
+  21 TCP FTPSERVE            ; FTP Server
+  23 TCP INTCLIEN            ; TELNET Server
+  25 TCP SMTP                ; SMTP Server
+  53 TCP NAMESRV             ; Domain Name Server
+  53 UDP NAMESRV             ; Domain Name Server
+  70 TCP GOPHERD             ; Gopher Server
+  79 TCP GOPHERD   NOAUTOLOG ; Finger Server
+ 109 TCP POP2                ; Post Office Protocol Version 2
+\end{verbatim}
+...\\
+...
+\end{figure}
+
+<HLINK dir=next fr="Srv: Files"></Frame>
+<Frame Srv: Files><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Installation (2)">
+\subsection{Files}
+
+%   <HLINK fr="Srv: GOPHERD.GROUPS">* GOPHERD.GROUPS
+%   <HLINK fr="Srv: GOPHERD.DSKGRP">* GOPHERD.DSKGRP
+%   <HLINK fr="Srv: GOPHERD.SELECTOR">* GOPHERD.SELECTOR
+%   <HLINK fr="Srv: GOPHERD.EAI">* GOPHERD.EAI
+%   <HLINK fr="Srv: GOPHERD.INDEX">* GOPHERD.INDEX
+%   <HLINK fr="Srv: Format of an Index File">* Format of an Index File
+
+The server processes a number of files to obtain vital information
+for it's operation.  Purpose and format of these files is described
+in the following sections.
+
+\begin{tabular}{|l|l|}
+\\t GOPHERD.GROUPS    &amp; privileged IP addresses, access groups \\ \hline
+\tt GOPHERD.DSKGRP    &amp; list of public data disks \\ \hline
+\tt GOPHERD.SELECTOR  &amp; known selector strings \\ \hline
+\tt GOPHERD.EAI       &amp; embedded application interface \\ \hline
+\tt GOPHERD.INDEX     &amp; main (or root) index \\ \hline
+\end{tabular}
+
+<HLINK dir=next fr="Srv: GOPHERD.SELECTOR"></Frame>
+<Frame Srv: GOPHERD.SELECTOR><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Files">
+\subsubsection{{\tt GOPHERD.SELECTOR}}\label{selectorfile}
+
+  This file lists all known selector strings (path names)
+  together with associated access group names,
+  owner authentication codes, and finally the file name.
+  The server checks the requested item in the selector list
+  and sends out the contents of the
+  associated file if the file has no access restrictions.
+  Records have the form...\\
+\rule{0mm}{1mm}
+
+\begin{center}
+   \fbox{\sl fn.ft.fm ~~~ owner ~~~ group ~~~ selector}
+\end{center}
+
+\rule{0mm}{3mm}
+
+\noindent where\\ \rule{0mm}{2mm}
+
+\noindent\begin{tabular}{|l|l|}\hline
+  fn          &amp; file name\\
+  ft          &amp; file type\\
+              &amp; * indicates that the file type is taken from the\\
+              &amp; selector string.  This is used to reduce the number\\
+              &amp; of entries in the selector file and to have less\\
+              &amp; administrative overhead when installing new files.\\
+  fm          &amp; file mode\\
+  owner       &amp; a short string identifying the owner of the item\\
+              &amp; * for the general public\\
+  group       &amp; a group name defined in GOPHERD.GROUPS or\\
+              &amp; * for the general public group\\
+  selector    &amp; any text string used as selector\\ \hline
+\end{tabular}
+
+\rule{0mm}{5mm}
+ 
+\noindent  NOTES:
+\begin{itemize}
+\item   Don't use characters in the selector string which are difficult
+        to be processed in the command line.
+\item   Group names, owner names as well as selector strings are case
+        sensitive.
+\item   Owner names have currently no real meaning and are ignored
+\item   Note the dotted notation for file names.
+\item   Include the file mode in the filename field.
+\end{itemize}
+ 
+<HLINK dir=next fr="Srv: GOPHERD.GROUPS"></Frame>
+<Frame Srv: GOPHERD.GROUPS><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: GOPHERD.SELECTOR">
+\subsubsection{{\tt GOPHERD.GROUPS}}\label{groupfile}
+ 
+  This file defines the known access group names and lists the
+  privileged IP addresses that are contained in a group.
+  Records have the form...\\
+\rule{0mm}{1mm}
+
+\begin{center} 
+    \fbox{\sl group ({\tt\symbol{32}}addr)+}
+\end{center}
+
+\rule{0mm}{3mm}
+
+\noindent Example 1:\\ \rule{0mm}{1mm}
+
+\begin{center}
+%\fbox{\parbox{8cm}{
+\begin{verbatim}
+* File GOPHERD GROUPS
+*
+* list of know groups
+gg       137.208.
+wu-wien  137.208.
+edvz     137.208.16.
+schnurli 137.208.16.39
+\end{verbatim}
+%}}
+\end{center}
+
+\rule{0mm}{5mm}
+
+\noindent where $\ldots$\\ \rule{0mm}{1mm}
+
+\noindent\begin{tabular}{|lcl|}\hline
+137.208.       &amp;$\ldots$&amp; is the network address of the Univ. of Economics. \\
+137.208.16.    &amp;$\ldots$&amp; is the sub network of the computer center.        \\
+137.208.16.10  &amp;$\ldots$&amp; is the author's PC                                \\
+\hline\end{tabular}
+
+\rule{0mm}{5mm}
+
+\noindent NOTES:
+\begin{itemize}
+\item   The group {\tt *} is not defined in {\tt GOPHERD.GROUPS}.
+        Files refering to group names will use {\tt *} to indicate that
+        something is available to everyone on the Internet.
+\item   There is a dot ({\tt .}) after subnet addresses and
+        that there is no dot after a completely specified host address.
+\end{itemize}
+
+<HLINK dir=next fr="Srv: GOPHERD.INDEX"></Frame>
+<Frame Srv: GOPHERD.INDEX><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: GOPHERD.GROUPS">
+\subsubsection{{\tt GOPHERD.INDEX}}\label{rootindex}
+ 
+  This file is the main index (root index), it is sent out whenever
+  an empty selector string comes in.
+ 
+ 
+<HLINK dir=next fr="Srv: Format of an Index File"></Frame>
+<Frame Srv: Format of an Index File><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: GOPHERD.INDEX">
+\subsubsection{Format of an Index File}
+
+  The server does not distinguish between index files and any other
+  text file, therefore, index files are implicitly just text files that
+  have the directory structure as defined in \cite{gophprot}.
+  Thus, all records in an index file have the form...\\
+\rule{0mm}{1mm}
+
+  \fbox{\sl type display {\tt TAB} selector {\tt TAB} host {\tt TAB} port}
+ 
+\rule{0mm}{3mm}
+
+\noindent
+\begin{tabular}{lcl}
+type    &amp; $\ldots$ &amp; document item type (see table
+                     \ref{supported.items} on page
+                     \pageref{supported.items} for list)          \\
+display &amp; $\ldots$ &amp; string displayed in the index                \\
+selector&amp; $\ldots$ &amp; string sent to server by the client          \\
+        &amp;          &amp; to retrieve the document\\
+host    &amp; $\ldots$ &amp; host address of the server                   \\
+port    &amp; $\ldots$ &amp; port number of the server                    \\
+\end{tabular}
+
+\rule{0mm}{3mm}
+
+\noindent NOTES:
+\begin{itemize}
+\item  The blanks in the line above are only used for readability,
+       they will not be found in an index file.
+\item  The {\tt TAB} character has hex code {\tt `05'x}
+       in EBCDIC ({\tt 0x09} in ASCII).
+\item  The server sends an index file (like any other file) without any
+       filtering.
+\end{itemize}
+ 
+<HLINK dir=next fr="Srv: Global Variables"></Frame>
+<Frame Srv: Global Variables><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Format of an Index File">
+\subsection{Global Variables}
+ 
+  Global variables are used to define a couple of parameters for the
+  server, they are set and accessed using GLOBALV and are found in the
+  group GOPHER in {\tt LASTING.GLOBALV}.  Table \ref{srvglv} on page
+  \pageref{srvglv} lists all relevant global variables for the
+  multi-threaded server daemon.
+
+<HLINK dir=next fr="Srv: Tbl: Global Variables"></Frame>
+<Frame Srv: Tbl: Global Variables><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Global Variables">
+\begin{table}
+\caption{Global Variables for the Server}\label{srvglv}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}\hline
+{\tt LOGFILE}       &amp;   defines the name of the logfile file\\
+                    &amp;   (default: {\tt GOPHERD.LOG})\\  \hline
+{\tt ROOTINDEX}     &amp;   defines the name of the file with the \\
+                    &amp;   main menu (also called root index)\\
+                    &amp;   (see section \ref{rootindex}
+                        on page \pageref{rootindex}) \\
+                    &amp;   (default: {\tt GOPHERD.INDEX})\\  \hline
+ 
+{\tt SELECTORFILE}  &amp;   defines the name of the selector file\\
+                    &amp;   (see section \ref{selectorfile})
+                        on page \pageref{selectorfile}) \\
+                    &amp;   (default: {\tt GOPHERD.SELECTOR})\\  \hline
+ 
+{\tt GROUPFILE}     &amp;   defines the name of the group definition file\\
+                    &amp;   (see section \ref{groupfile}
+                        on page \pageref{groupfile}) \\
+                    &amp;   (default: {\tt GOPHERD.GROUPS})\\  
+\hline
+{\tt EAIFILE}       &amp;   defines the name of the embedded application    \\
+                    &amp;   handle file (see section \ref{eaifile}          \\
+                    &amp;   (default: {\tt GOPHERD.EAI})                    \\
+\hline
+{\tt DSKGRPFILE}    &amp;   defines the name of the disk group definition   \\
+                    &amp;   file (see section \ref{dskgrpfile}              \\
+                    &amp;   (default: {\tt GOPHERD.DSKGRP})                 \\
+\hline
+
+{\tt GOPHERPORT}&amp; defines the TCP/IP port the daemon listens\\
+                &amp; to perform 
+GOPHER protocol\footnote{see \cite{gophprot}} connections\\
+                &amp; (default: port 70) \\ \hline
+ 
+{\tt FINGERPORT}&amp; defines the TCP/IP port the daemon listens\\
+                &amp; to perform 
+FINGER protocol\footnote{see \cite{rfc1288}} connections\\
+                &amp; (default: port 79) \\ \hline
+ 
+{\tt COOKIEPORT}&amp; defines the TCP/IP port the daemon listens\\
+                &amp; to perform 
+Quote-of-the-Day protocol\footnote{see \cite{rfc865}} connections\\
+                &amp; (default: port 17) \\ \hline
+ 
+{\tt SREPORT}  &amp; defines the TCP/IP port the daemon listens\\
+                &amp; to perform 
+SRE protocol\footnote{no documentation on SRE is currently 
+available} connections\\
+                &amp; (default: port 150)\\ \hline
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+<HLINK dir=next fr="SA: Server Administration Support Programs"></Frame>
+<Frame SA: Server Administration Support Programs><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Srv: Tbl: Global Variables">
+% -----------------------------------------------------------------------
+\section{Server Administration Support Programs}
+
+% <HLINK fr="SA: Index Editor">* Index Editor
+% <HLINK fr="SA: User Posting">* User Posting
+
+<HLINK dir=next fr="SA: Index Editor"></Frame>
+<Frame SA: Index Editor><HLINK dir=up fr="$$root"><HLINK dir=prev fr="SA: Server Administration Support Programs">
+\subsection{Index Editor}
+
+The Index Editor provides an interactive tool for modifying index files.
+The program is, as usual, set up as a XEDIT macro, the function keys are
+defined in table \ref{EDINDEX} on page \pageref{EDINDEX}.
+It consists of the following modules:
+\begin{itemize} 
+\item  {\tt EDINDEX.EXEC}:  the editor for INDEX files\\
+\item  {\tt EDINDEX.XEDIT}: screen mask for INDEX files
+\end{itemize}
+
+% -----------
+\begin{table}
+\caption{Programmable Function Keys in {\tt EDINDEX}}\label{EDINDEX}
+\rule{0mm}{2mm}
+\begin{center}
+\noindent\begin{tabular}{|l|l|l|}
+\hline
+Key     &amp; Label             &amp; Description\\
+\hline\hline
+PF1     &amp;                   &amp;                                               \\
+PF2     &amp; {\tt append}      &amp; append a new record and copy data             \\
+PF3     &amp; {\tt quit}        &amp; quit the editor indexer                       \\
+PF4     &amp; {\tt clear}       &amp; erase information form current record         \\
+\hline
+PF5     &amp; {\tt insert}      &amp; insert a new record and copy data             \\
+PF6     &amp; {\tt delete}      &amp; delete a record                               \\
+PF7     &amp; {\tt back}        &amp; display previous record                       \\
+PF8     &amp; {\tt next}        &amp; display next record                           \\
+\hline
+PF9     &amp;                   &amp;                                               \\
+PF10    &amp;                   &amp;                                               \\
+PF11    &amp;                   &amp;                                               \\
+PF12    &amp;                   &amp;                                               \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+<HLINK dir=next fr="SA: User Posting"></Frame>
+<Frame SA: User Posting><HLINK dir=up fr="$$root"><HLINK dir=prev fr="SA: Index Editor">
+\subsection{User Posting}
+(This section is not even really started.  It will contain
+information about tools for allowing user posting new items
+or pointers to them directly with as few human intervention
+as possible.)
+
+% -----------------------------------------------------------------------
+<HLINK dir=next fr="Ext: Spin-Off Programs"></Frame>
+<Frame Ext: Spin-Off Programs><HLINK dir=up fr="$$root"><HLINK dir=prev fr="SA: User Posting">
+\section{Spin-Off Programs}
+
+% <HLINK fr="Ext: (FINGER)">* Remote User Information Protocol: (FINGER)
+%   <HLINK fr="Ext: FINGERXX.EXEC">* FINGERXX.EXEC
+%   <HLINK fr="Ext: FINGER.EXEC">* FINGER.EXEC
+% <HLINK fr="Ext: COOKIE">* COOKIE
+<HLINK dir=next fr="Ext: (FINGER)"></Frame>
+<Frame Ext: (FINGER)><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Ext: Spin-Off Programs">
+\subsection{Remote User Information Protocol: (FINGER)}
+
+%   <HLINK fr="Ext: FINGERXX.EXEC">* FINGERXX.EXEC
+%   <HLINK fr="Ext: FINGER.EXEC">* FINGER.EXEC
+
+<HLINK dir=next fr="Ext: FINGERXX.EXEC"></Frame>
+<Frame Ext: FINGERXX.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Ext: (FINGER)">
+\subsubsection{{\tt FINGERXX.EXEC}}
+ 
+  This program prepares the data for a user information query and writes
+  it either to a file or the console.  The program is normally either
+  called by {\tt GOPHERDD.EXEC} to process a FINGER query or 
+  a {\tt SPEC-FINGER} request
+  from the Gopher server.  {\tt FINGERXX.EXEC} is usually not
+  invoked by the user directly.  The implementation
+  of the output preparation module tried to fulfill all
+  requirements of RFC1288 \cite{rfc1288}
+  and it can now be said that it is compliant to this standard.
+ 
+\noindent User information has several options and consists of several parts:
+
+\begin{enumerate} 
+\item empty query string (\{C\} query)\\
+     The program returns the list of all logged in virtual machines.
+     RFC1288 specifies that a finger server ``MUST at least provide the
+     full name'' of all online users.  The full name of the owner of a
+     virtual machine is looked up in the file
+     {\tt LOCAL.NAMES} using NAMEFIND.
+ 
+\item in-depth status of a specified user (\{U\}\{C\} query)\\
+     The program tries to return following information components:
+
+\begin{enumerate}
+\item user log-on status:\\
+        RFC1288 requires: ``An answer MUST include at least the full name
+        of the user.''  The program returns the userid, full name,
+        terminal number and the phone number (local extension), provided
+        that this information can be found in the lookup files.
+ 
+\item a user information file: {\tt FINGERID.}{\sl{userid}}\\
+        The contents of this file is returned
+        without filtering, it will reside on one of the Gopher service
+        machine's public disks so that the GOPHERDD daemon as well as any
+        user invoking FINGER has read access to the file.
+ 
+\item information from a phone book file: {\tt PHONEBK.NAMES}
+\end{enumerate}
+
+\item phone book lookup: a string containing blanks\\
+     This query type is interpreted as a full name (which is invalid as
+     a userid under VM/CMS) that has to be looked up in the phone book.
+     Any phone book entry matching the query string will be returned.
+ 
+\item phone number query: {\tt \#}{\sl{number}}\\
+     This query type is interpreted as a phone number that has to be
+     looked up in the phone book.  Any phone book entry matching the
+     query string will be returned.
+\end{enumerate}
+
+  Full names are contained in the file {\tt LOCAL.NAMES}, it is looked up
+  using NAMEFIND.\\
+\rule{0mm}{2mm}
+
+\begin{tabular}{|l|l|}\hline
+\multicolumn{2}{|l|}{The following fields are required to be present}\\ \hline
+  {\tt :nick. }    &amp;   the userid of the virtual machine\\
+  {\tt :name. }    &amp;   the name of the virtual machine's owner\\
+\hline
+\end{tabular}
+
+\rule{0mm}{5mm}
+
+  The phone book is a file named {\tt PHONEBK.NAMES} which is processed using
+  NAMEFIND.\\
+\rule{0mm}{2mm}
+
+\begin{tabular}{|l|l|}\hline
+\multicolumn{2}{|l|}{The following fields are required to be present}\\ \hline
+  {\tt :nick. }     &amp; any unambigous string\\
+  {\tt :name. }     &amp; the user's full name\\
+  {\tt :cnt.  }     &amp; contents: list of all other field tags\\
+\hline\hline
+\multicolumn{2}{|l|}{The following fields are present at my installation}\\
+\hline
+  {\tt :phone. }    &amp; the user's phone number\\
+  {\tt :fname. }    &amp; the user's first name\\
+\hline
+\end{tabular}
+
+\rule{0mm}{5mm}
+
+\noindent Notes:
+\begin{itemize}
+\item  A {\tt /W} token as defined in RFC1288 is
+     ignored and a message indicating
+     the absence of verbose information is appended to the output.
+\item  Finger forwarding is actively refused by returning the message:
+     ``Finger forwarding service is denied'' as defined in RFC1288.
+\end{itemize}
+ 
+<HLINK dir=next fr="Ext: FINGER.EXEC"></Frame>
+<Frame Ext: FINGER.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Ext: FINGERXX.EXEC">
+\subsubsection{{\tt FINGER.EXEC}}
+ 
+  This program is a spin-off product of the FINGER protocol
+  implementation in GOPHERDD and interfaces {\tt FINGERXX.EXEC} for local and
+  remote user information queries.  The program can contact finger
+  servers on remote hosts and display the resulting information on the
+  console.
+ 
+ 
+<HLINK dir=next fr="Ext: COOKIE"></Frame>
+<Frame Ext: COOKIE><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Ext: FINGER.EXEC">
+\subsection{Quote-of-the-Day Protocol: (COOKIE or FORTUNE)}
+ 
+  The program {\tt COOKIE.EXEC} is called by {\tt GOPHERDD.EXEC}
+  to produce a short text file used as a fortune cookie served by the
+  Quote-of-the-Day protocol \cite{rfc865} server.
+  The program can also be invoked by the user directly and displays the
+  message at the user's console.
+ 
+  Two files are used, {\tt FORTUNE.TXT} which holds the fortune texts and
+  {\tt FORTUNE.IDX} which lists the beginning and end record numbers of
+  all messages in the cookie database.  Any user invoking COOKIE needs
+  read access to these files, consequently, these files will be held
+  on the Gopher service machine's public disk.
+ 
+\noindent A couple of modifications seem to be appropriate:
+\begin{itemize}
+\item different cookie bases with different type of contents might be a
+     nice idea.
+\end{itemize}
+
+\noindent Notes:
+\begin{itemize}
+\item  The server is RFC865 compliant but listens only on TCP port 17
+     and not on a corresponding UDP port.
+\end{itemize}
+ 
+ 
+
+<HLINK dir=next fr="Obs: Obsolete Programs"></Frame>
+<Frame Obs: Obsolete Programs><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Ext: COOKIE">
+\section{Obsolete Programs}
+
+% <HLINK fr="Obs: GOPHERD.EXEC">* GOPHERD.EXEC
+% <HLINK fr="Obs: FDNS.EXEC">* FDNS.EXEC
+<HLINK dir=next fr="Obs: GOPHERD.EXEC"></Frame>
+<Frame Obs: GOPHERD.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Obs: Obsolete Programs">
+\subsection{Single-Threaded Gopher Server: {\tt GOPHERD.EXEC}}
+ 
+This program was used as a Gopher server module, it has been replaced
+by the new module {\tt GOPHERDD.EXEC} that is now also able to handle
+several connections and even different protocols at the same time.
+ 
+% The file is included in the distribution package for historical
+% reasons only.
+
+The file can be obtained from the author on request.
+ 
+<HLINK dir=next fr="Obs: FDNS.EXEC"></Frame>
+<Frame Obs: FDNS.EXEC><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Obs: GOPHERD.EXEC">
+\subsection{Domain Name Resolution: {\tt FDNS.EXEC}}
+
+This program was used by the client modules to resolve host domain
+names of remote servers.  Luckily, it's now obsolete.  See 
+section \ref{bug.fdns} for more details, if you're interested.
+
+<HLINK dir=next fr="Bug: Known and Exterminated Bugs"></Frame>
+<Frame Bug: Known and Exterminated Bugs><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Obs: FDNS.EXEC">
+% -----------------------------------------------------------------------
+\section{Known and Exterminated Bugs}\label{bugs}
+
+% <HLINK fr="Bug: REXTCPIP.MODULE: TCPopen() timing">* REXTCPIP.MODULE: TCPopen() timing
+%   <HLINK fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 1">* Fig: REXTCPIP.ASSEMBLE Fix 1
+% <HLINK fr="Bug: REXTCPIP.MODULE: TCPclose() hanging">* REXTCPIP.MODULE: TCPclose() hanging
+%   <HLINK fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 2">* Fig: REXTCPIP.ASSEMBLE Fix 2
+% <HLINK fr="Bug: REXTCPIP.MODULE: GetIPAddr() name resolution">* REXTCPIP.MODULE: GetIPAddr() name resolution
+%   <HLINK fr="Bug: Fig: TCPIP.DATA Fix 3">* Fig: TCPIP.DATA Fix 3
+% <HLINK fr="Bug: viegophr.tex: loop">* viegophr.tex: loop
+<HLINK dir=next fr="Bug: REXTCPIP.MODULE: TCPopen() timing"></Frame>
+<Frame Bug: REXTCPIP.MODULE: TCPopen() timing><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Bug: Known and Exterminated Bugs">
+\subsection{{\tt REXTCPIP.MODULE}: {\tt TCPopen()} timing}
+
+    For some reason, the VM client could not talk to the VM server, if
+    both were on the same machine.  This was a problem intrinsic to the
+    original version of REXTCPIP, it is discussed here and a fix is
+    presented in figure \ref{fix4} later on.
+
+    What happened exactly, when the orginal versions were used:
+\begin{itemize}
+\item When the client opens a TCP connection to the server, the server
+      changes its status from {\sl listening} at the port to 
+      {\sl receiving},
+      the connection status is then `{\tt Connected}' (Just as wanted).
+\item However, the client's TCPOPEN call doesn't return so the
+      client program hangs and the server's connection status is
+      never changing.
+      The single-threaded server could not handle other requests
+      during that time, for the multi-threaded server, however,
+      this wasn't really a problem, just a bit more of overhead.
+\item If the client is finally killed and the TCB (TCP control block)
+      gets removed
+      by the system (this can be triggerd by calling NETSTAT on the
+      client's VM) the TCP connection on the server side breaks down
+      and the single-threaded server returns to the listen status and
+      behaves normally again, the multi-threaded server simply eliminates
+      that particular connection.
+\end{itemize}
+    One solution for
+    this problem was to allow the local client to access the
+    servers mini disk(s) directly.  Consequently, local connections
+    with direct access to the server's files
+    did not use TCPIP at all.  I was a bit lazy implementing all
+    system and special functions of the GOPHERDD-server in the client
+    so some of these will not work.
+
+This kind of behaviour was finally identfied as a waiting problem 
+intrinsic to
+    {\tt REXTCPIP.MODULE}.  The function {\tt TCPopen()} waits for a
+    {\em change} of the TCPIP machines control flag for the TCP connection.
+    The flag indicates the presence of an established connection.
+    The code assumes that a connection is not established without any
+    noticable delay, but, in fact, the connection is established almost
+    immediately and the control flag does not change anymore.  Due to that,
+    this wait call will result in a loop waiting endlessly.
+    Figure \ref{fix4} describes a fix for this problem where the wait
+    macro is skipped for local connections.  As of now this worked fine.
+
+<HLINK dir=next fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 1"></Frame>
+<Frame Bug: Fig: REXTCPIP.ASSEMBLE Fix 1><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Bug: REXTCPIP.MODULE: TCPopen() timing">
+\begin{figure}
+\caption{{\tt REXTCPIP.ASSEMBLE} Fix 1}\label{fix1}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+*
+* Wait for the connect notificatione
+*
+WOPENTOP EQU  *
+         CLC  BLSOCKAD,BFSOCKAD        Don't wait for local connections
+         BE   WOPTNOWT                 (GG)
+         OI   COMMFLAG,WAITFLAG+CONSTFLG Get new wait flag
+         WAIT PSW=WAITPSW,OLDPSW=WOPSW Wait on it
+*
+* Got a response ... check it
+*
+WOPTNOWT EQU  *
+         CLC  BCONN,CONNNUM            Our connection number?
+         BNE  WOPENTOP                 If not, continue on wait
+         L    R3,BVADB                 Get new state
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+<HLINK dir=next fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 4"></Frame>
+<Frame Bug: REXTCPIP.MODULE: TCPclose() hanging><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 1">
+\subsection{{\tt REXTCPIP.MODULE}: {\tt TCPclose()} hanging}
+
+% (Server hangs when connection is not closed propperly by other side)
+% (fix see figure \ref{fix2})
+
+{\tt REXTCPIP} used to wait for the other side to {\em propperly} close the
+connection before the program closed the connection and control data
+structures itself.  In some case this caused the server to hang because
+the client wasn't either able to close the connection or didn't implment
+the protocol carefully enough.  A fix in {\tt REXTCPIP.ASSEMBLE} as shown
+in figure \ref{fix2} allows the server to close the connection without
+waiting for the client.
+
+<HLINK dir=next fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 2"></Frame>
+<Frame Bug: Fig: REXTCPIP.ASSEMBLE Fix 2><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Bug: REXTCPIP.MODULE: TCPclose() hanging">
+\begin{figure}
+\caption{{\tt REXTCPIP.ASSEMBLE} Fix 2}\label{fix2}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+*
+* Wait for connection change record
+*
+TOPCWAIT EQU  *
+         OI   COMMFLAG,WAITFLAG+CONSTFLG   Wait for conn stat update
+         WAIT PSW=WAITPSW,OLDPSW=WOPSW Wait for event
+*
+* Return the code given in RETCODE, and get rid of connection record
+*
+CLOSERET EQU  *
+*        CLI  DCONNSTA,CONNCLOS        Is the connection closed?
+*        BE   FINISHCL                 If so, then leave
+*        CLI  DCONNSTA,NOEXIST         Is the connection gone?
+*        BNE  TOPCWAIT                 if so, then leave
+* Waiting is nice, but it caused more troubles than it is worth (GG)
+FINISHCL EQU  *
+         L    R8,NEXTCONR              Get next connection record
+         ST   R8,0(R10)                Remove that link
+         L    R2,DLBUFANC              Get pointer to rec buffer
+         DMSFRET DWORDS=MAXBYTES/8,LOC=0(R2)  Release rec buffer
+         DMSFRET DWORDS=CONRLEND,LOC=0(R9)  Drop storage
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+<HLINK dir=next fr="Bug: REXTCPIP.MODULE: GetIPAddr() name resolution"></Frame>
+<Frame Bug: REXTCPIP.MODULE: GetIPAddr() name resolution><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Bug: Fig: REXTCPIP.ASSEMBLE Fix 2">
+\subsection{{\tt REXTCPIP.MODULE}: {\tt GetIPAddr()} name resolution}
+\label{bug.fdns}
+ 
+The function {\tt GetIPAddr()} in {\tt REXTCPIP.MODULE}
+ands over most of the work to the nameserver and returns whatever
+he first nameserver comes up with.
+
+The NAMESRV virtual machine might not deliver the correct IP-address as
+expected, sometimes the lookup would simply fail and no IP-address
+would be returned at all.
+Apparently, the function {\tt GetIPAddr()} together with NAMESRV are
+quite `case sensitive' so that the function returns different
+IP-addresses for various upper/lower case combinations of a
+given host name.
+
+\noindent  Examples:\\
+\begin{itemize}
+\item (done second week of March 1992)\\
+\begin{tabular}{|lcl|}\hline
+  {\tt   ganymed.wu-wien.ac.at } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   GANYMED.WU-Wien.AC.AT } &amp; $\Longrightarrow$ &amp; 137.208.5.2 \\
+  {\tt   GANYMED.WU-WIEN.AC.AT } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   Ganymed.WU-Wien.AC.AT } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   uicvm.uic.edu         } &amp; $\Longrightarrow$ &amp; 128.248.2.50 \\
+  {\tt   uicvm.UIC.EDU         } &amp; $\Longrightarrow$ &amp; 128.248.???.??? \\
+\hline\end{tabular}
+
+\item (done third week of March 1992)\\
+\begin{tabular}{|lcl|}\hline
+  {\tt   ganymed.wu-wien.ac.at } &amp; $\Longrightarrow$ &amp; 137.208.5.2 \\
+  {\tt   GANYMED.WU-Wien.AC.AT } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   GANYMED.WU-WIEN.AC.AT } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   Ganymed.WU-Wien.AC.AT } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   uicvm.uic.edu         } &amp; $\Longrightarrow$ &amp; failed \\
+  {\tt   UICVM.UIC.EDU         } &amp; $\Longrightarrow$ &amp; 128.248.2.50 \\
+\hline\end{tabular}
+\end{itemize}
+ 
+  As you can see from these examples, this situation was unsatisfying and
+  so FDNS was created to provide a quick hack to
+  circumvent {\tt GetIPAddr()}.
+ 
+  After several days of discussion\footnote{with Ken Hornstein and
+  Alan Flavel} and testing the following solution
+  was found:  removing the entry {\tt NSINTERADDR 14.0.0.0} from the file
+  {\tt TCPIP.DATA} and providing an entry pointing to a UNIX nameserver,
+  as shown in figure \ref{fix3}, works reliably.
+ 
+  Please note also that this problem can't be solved by simply
+  translating the host name either to lower case or to upper case!
+ 
+  Maybe it's possible to find even better solutions for this problem,
+  if you do, please drop me a line.  In my oppinion, improving
+  {\tt GetIPAddr()} is the most promising path to take.
+ 
+<HLINK dir=next fr="Bug: Fig: TCPIP.DATA Fix 3"></Frame>
+<Frame Bug: Fig: TCPIP.DATA Fix 3><HLINK dir=up fr="$$root"><HLINK dir=prev fr="Bug: REXTCPIP.MODULE: GetIPAddr() name resolution">
+\begin{figure}
+\caption{{\tt TCPIP.DATA}: defining the name server}\label{fix3}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+;
+; NSINTERADDR specifies the internet address of the name server.
+; LOOPBACK (14.0.0.0) is the default value (your local name server).
+; If a name server will not be used, then do not code an NSINTERADDR
+; statement (Comment out the NSINTERADDR line below).  This will cause
+; all names to be resolved via site table lookup.
+;
+; NSINTERADDR  14.0.0.0
+NSINTERADDR  137.208.3.4
+NSINTERADDR  137.208.3.5
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+
+<HLINK dir=next fr="Bug: viegophr.tex: loop"></Frame>
+<Frame                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

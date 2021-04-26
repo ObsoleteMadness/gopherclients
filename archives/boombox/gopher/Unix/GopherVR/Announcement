@@ -1,0 +1,151 @@
+Announcing alpha-test releases 
+of Internet GopherVR for Macintosh and Unix
+
+
+Announcing GopherVR
+-------------------
+At GopherCON '94 we talked about using 3D scenes as a user
+interface metaphor for navigating the Internet and visualizing
+relationships and clustering of documents. Early (alpha test)
+releases of Macintosh and Unix Gopher clients that display 3D
+scenes are now available via gopher and anonymous ftp from
+boombox.micro.umn.edu.
+
+Although not yet complete, in this release you can browse gopher 
+directories by driving around Gopherspace, navigate between gopher 
+servers by driving through a series of 3D scenes, open items by 
+clicking on them, get overviews of the neighborhood you are in, 
+and view meta-information about items.
+
+Because this is an alpha-test release, we are still working on
+the software and will be doing frequent bugfix releases. Use it 
+at your own risk, and please send us bug reports and comments. 
+We are doing an early release of this software because we have 
+found this to be the best way of quickly shaking out bugs and 
+feature sets. 
+
+To keep up to date on the bugfix releases of GopherVR, subscribe 
+to gopher-news by e-mailing a subscribe request to:
+     gopher-news-request@boombox.micro.umn.edu
+Major new releases are announced on gopher-announce. Subscribe 
+by sending e-mail to:
+     gopher-announce-request@boombox.micro.umn.edu
+
+
+Why a 3D user interface to Gopher?
+----------------------------------
+Gopher has an explicit organization and structure which is
+external to the content of the documents, so it is straightforward
+to map a 3D virtual world interface onto the existing gopher
+servers. Since the Gopher+ protocol also has provisions for open 
+ended extensions and meta-information that resides external to the
+content of documents, it is also easy for servers to give 3D-savvy
+clients the 3D spatial coordinates and orientation of objects in a
+gopher directory. This means that we can both synthesize 3D scenes
+from existing non-3D-savvy Gopher servers, and take advanatge of
+new 3D-savvy servers without reworking the contents of the
+documents published in Gopher. 
+
+Virtual world interfaces give us a powerful data visualization
+tool. GopherVR makes it possible to display clustering of documents
+which is not feasible on either a menu or a flat page. Combining 
+GopherVR with servers that catagorize and cluster collections of 
+documents will make it possible to visualize complex retationships 
+within collections. To be effective, moving about the 3D scene must 
+be fast and fluid, and GopherVR has been optimized for quick 
+navigationn within the scene without hardware Z-buffer.
+
+
+What comes after this release?
+------------------------------
+With later versions of this software you will be able to define 
+3D icons for objects in Gopherspace, and server administrators 
+will be able to specify placement of objects in 3D scenes. 
+In addition, there will be more user navigation features for 
+browsing within the 3D scenes. 
+
+
+Macintosh
+---------
+TurboGopherVR 2.1a1 is a sneak-preview (alpha-test) release
+of an Internet Gopher client that combines a point and click
+browser interface to the Internet with a 3D virtual-world
+interface. Essentially, this is a superset of the current
+release version of TurboGopher (version 2.0) with 3D 
+extensions.
+
+TurboGopherVR 2.1a1 requires a PowerPC Macintosh running 
+System 7 or better. System 7.5.1 is reccommended since this
+version of the system software includes a much improved
+floating point math library. A version for 68K Macs is also
+under construction but is not yet available. 
+
+To get the software, gopher to boombox.micro.umn.edu and follow 
+the path /gopher/Macintosh-TurboGopher/TurboGopherVR. This 
+brings you to the directory holding the current version of the 
+software.
+
+You can also use these URLs to get to the same directory: 
+    <URL:GOPHER://boombox.micro.umn.edu/11/gopher/Macintosh-
+    TurboGopher/TurboGopherVR>
+    
+    <URL:FTP://boombox.micro.umn.edu/pub/gopher/Macintosh-
+    TurboGopher/TurboGopherVR/>
+
+
+Unix
+---------
+GopherVR 0.1 is an alpha-test release of an X-window Gopher client.
+GopherVR for Unix is curently available for SUN Sparc, SGI, and 
+IBM AIX RS-6000 platforms. At this time, only binaries are available 
+since we expect frequent changes to the source. To run the software,
+you will need a color monitor. We have tested the software on 
+
+SUN    SunOS 4.1.3 with MIT X11R5 distribution
+SGI    IRIX 5.3 with SGI's X-windows distribution
+IBM    AIX 3.2.5 with IBM's X-windows distribution
+
+To get the software, gopher to boombox.micro.umn.edu and follow 
+the path /gopher/Unix/GopherVR. This brings you to the directory 
+holding the current version of the software. 
+
+You can also use these URLs to get to the same directory: 
+    <URL:GOPHER://boombox.micro.umn.edu/11/gopher/Unix/GopherVR>
+    
+    <URL:FTP://boombox.micro.umn.edu/pub/gopher/Unix/GopherVR/>
+
+GopherVR binaries will be available for HP-UX and DEC OSF soon.
+
+
+NOTE
+----      
+This is an alpha test release. We wouldn't reccomend
+distributing this to every user in your organization yet, since
+
+  1.) There are a lot more features that will be added in 
+      the near future
+      
+  2.) There are certainly going to be bugs.
+  
+If you find a bug, please report it to us by sending an e-mail
+decribing your computer, the version of the operating system and
+how you caused the bug to occur. If you have ideas for features we'd
+love to hear about it. Send your bug reports and comments to:
+
+     <gopher@boombox.micro.umn.edu>. 
+
+
+	Internet Gopher Team / mongoose & iguana squad
+	TurboGopherVR 2.1.a1
+	Unix GopherVR 0.1
+	March 30, 1995
+	
+	See you at GopherCON '95 !
+	For information on GopherCON '95 see:
+	<URL:GOPHER://boombox.micro.umn.edu:70/11/gopher/Gopher_Conference_95>
+
+
+
+
+
+

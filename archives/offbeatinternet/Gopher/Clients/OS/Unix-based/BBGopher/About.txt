@@ -1,0 +1,8 @@
+BBGopher
+(ver 1.6)
+Freeware
+
+
+BBGopher is a Unix-based Gopher client.  It has been tested under
+Linux and SunOS, but should compile under most Unix-based systems.  
+

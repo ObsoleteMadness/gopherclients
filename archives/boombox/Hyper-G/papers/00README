@@ -1,0 +1,15 @@
+This directory contains technical reports and other papers related to
+the Hyper-G project.
+
+The reports are available in one or both of the following formats:
+
+  o compressed PostScript (.ps.Z  or  .ps.gz)
+  o compressed ascii text (.txt.Z  or  .txt.gz)
+
+The compression formats are UNIX compress (.Z) and GNU gzip (.gz).
+
+To receive the files in uncompressed form specify the filename 
+without the "compress-extension" .Z or .gz. 
+
+The File '00CONTENTS' contains abstracts of the papers.
+

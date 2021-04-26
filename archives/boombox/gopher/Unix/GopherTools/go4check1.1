@@ -1,0 +1,437 @@
+#!/usr/local/bin/perl
+# go4check, v1.1
+#
+#-------------------------------------------------------------------------------
+# Introduction
+#   go4check checks gopher links, probing each connection and testing the 
+#   output received.  It handles most types of links, reporting if the link 
+#   is ok, the host serving it is down/refusing connections, or its pathname 
+#   has changed.  It is not 100% successful at this, especially when it 
+#   comes to gopher0 servers, but does indeed help you keep on top of links
+#   in your server(s).
+#
+#   To run, go4check requires only perl and socket.ph.  It understands
+#   gopher0 and gopher+ servers.
+#
+#   go4check produces a line of output on stdout for each item appearing 
+#   in a gopher's menu: the name of the item plus a result.  Indentation 
+#   serves to maintain items in context so problems can be located easily.
+#   As an extra benefit, go4check's output can be used as a roadmap of
+#   the gopher after some rather trivial editing to remove results.
+#
+#   go4check is written by George A. Theall, George.A.Theall@mail.tju.edu.  
+#   You may freely use and redistribute this.  I can not offer any
+#   support for this but am interested in your comments, suggestions,
+#   and problem reports.
+#
+#-------------------------------------------------------------------------------
+# Operation
+#   Before you run go4check, make sure perl and the header file socket.ph are
+#   available on your system. [You can generate this file by running the perl 
+#   utility h2ph on /usr/include/sys/socket.h, or something similar.]
+#
+#   Invoke go4check with the name of the server to check and an optional port
+#   number.  Other options can be used to specify a non-standard starting
+#   path or generate copious debugging info.  go4check will test the items
+#   listed in the initial menu and recurse into any menus it finds as long
+#   as the names of server it finds match the one specified at go4check's
+#   invocation. go4check does, though, skip recursion if pathnames refer 
+#   to ftp gateways or point back to the initial entry point.
+#
+#   Results are directed to stdout, so you probably will want to redirect
+#   to a file.  You might then remove instances of "...ok.", which
+#   indicate no problems and finally search on "...can't connect.",
+#   "...path changed.", and "...timed out.".  Another possible result 
+#   is "...n/a.", which is used when go4check doesn't know how to check 
+#   a particular type of link.
+#
+#   You may want to tune the variables that go4check uses for testing 
+#   items of type 2 and 7.  See below where initial values are defined.
+#   For items of type 2, go4check sends a invalid command, which causes
+#   many CSO servers to respond in a way that go4check interprets as a
+#   success.  As for items of type 7, I don't know of any robust way
+#   to test searches.  Currently, the best solution appears to be
+#   to search for a word that's common to whatever searches are in the
+#   gopher being checked.
+#
+#   go4check is slow; it probably belongs in a cron job to run at night.
+#
+#-------------------------------------------------------------------------------
+# History
+#   31-Jan-95, GAT, v1.1
+#      - Alarms are now used to abort connections that are otherwise hung.
+#      - Added patches from R.D. Cameron for supporting type 7 items with
+#        non-empty paths and checking error returns of type 3.
+#      - Fixed glitch that arose on some servers (gopher.uwsp.edu for one)
+#        that return lines with non-standard endings.
+#      - Explicitly added an assignment for $| and set it to true so output
+#        will be flushed after every print.
+#
+#   17-Oct-94, GAT
+#      - Added a semicolon after a line in make_URL.  Its lack appears to
+#        cause problems with some versions of Perl.
+#
+#   01-Sep-94, GAT, v1.0
+#      - Released publically.
+#
+#   10-Aug-94, GAT, v1.0b2
+#      - Added $snooze_length as a way to control how long to pause after
+#        establishing a connection.
+#      - Fixed initialization of %URLs.
+#      - Changed format of internal URLs by removing ":" from between type
+#        and path info.
+#      - Used a configurable word to check search items.
+#      - Added check of CSO servers.
+#      - Adjusted regular expression used to check success/failure of
+#        a link.
+#      - Documented go4check's operation.
+#
+#   12-Jul-94, GAT, v1.0b1
+#      - Used pseudo URLs internally for storing links so they are not
+#        checked more than once.
+#      - Added support for most types of links, including telnet, binary
+#        files, and searches.
+#      - Used gopher+ protocol whenever possible to avoid retrieving 
+#        entire files.
+#
+#   09-Jun-94, GAT, v1.0a
+#      - First version of go4check. Checks only files and directories.
+#
+#-------------------------------------------------------------------------------
+
+
+# Specify where perl can find include files.
+push(@INC, "/usr/local/lib/perl");
+push(@INC, "/usr/local/lib/perl/sys");
+
+
+# Define initial values for selected variables.
+$| = 1;					# flush after every print?
+$default_path2 = "helo";		# for searching type 2 items
+$default_search_term = "cancer";	# for searching type 7 items
+$Indent = "  ";				# indentation at each level
+$snooze_length = 3;			# time to snooze after connect
+$timeout = 300;				# max len of connect (seconds)
+%URLs = ();				# array of URL's on server
+
+
+# Check for options.
+$DEBUG = 0;				# default to no debug
+if ($ARGV[0] eq '-d') {
+	shift;
+	$DEBUG = 1;
+}
+
+
+# Parse commandline args and provide help as needed.
+$inithost = shift || "";		# name of host to check
+$initport = shift || 70;		# port number
+$initpath = shift || "";		# initial directory
+if ($inithost eq "" || $inithost eq "-?") {
+	print "$0 checks links in a gopher by probing connections\n\n";
+	print "Usage:  $0 [-d] host [port] [\"path\"]\n";
+	print "        unless specified, port defaults to 70 and path to \"\".\n";
+	print "        -d is used for debugging.\n";
+	exit(9);
+}
+
+
+# Set up subroutines to catch some alarms.
+$SIG{'ALRM'} = handle_Timeout;
+
+
+# Establish connection and check links.
+require 'socket.ph';
+chop($thishost = `hostname`);		# needed for tcpconnect
+&check_Links($inithost, $initport, $initpath);
+exit(0);
+
+
+########################################################################
+#  check_Links - checks links for a given directory.                   #
+#                                                                      #
+#  Notes:                                                              #
+#      - Links on the same host will be followed unless they point to  #
+#        the root.  While this will prevent most recursion, there may  #
+#        be some gophers with odd setups that lead to infinite loops.  #
+#      - FTP links are not followed.                                   #
+#  Entry:                                                              #
+#        host = hostname                                               #
+#        port = port number                                            #
+#        path = selector string                                        #
+#  Exit:                                                               #
+#        New links are appended to @URLs.                              #
+########################################################################
+sub check_Links {
+	local($host, $port, $path) = @_;
+	local($margin) = $Indent . $margin;
+	local($stat);
+	local(@Items);
+
+
+	# Establish connection and read contents.
+	alarm($timeout);
+	$DEBUG && print "DEBUG: connecting to $host at port $port.\n";
+	($GOPHER) = &tcpconnect($host, $thishost);
+	($GOPHER) || die "Can't connect";
+	$DEBUG && print "DEBUG: sending path \"$path\".\n";
+	send($GOPHER, "$path\r\n", 0);
+	@Items = <$GOPHER>;
+	close($GOPHER);
+	alarm(0);
+
+
+	# Check each item, recursing into directories as necessary.
+	foreach (@Items) {
+		local($atype, $aname, $apath, $ahost, $aport, $aextra);
+
+		s/\s*$//;		# remove \r\n combo
+		last if (/^\.$/);	# done if line is just a period
+
+
+		# Check status of each unique URL.
+		$url = &make_URL($_);
+		s/^(.)// && ($atype = $1);
+		($aname, $apath, $ahost, $aport, $aextra) = split(/\t/, $_);
+		chop($ahost) if ($ahost =~ /\.$/);
+		if (defined($URLs{$url})) {	# already checked
+			print "$margin$aname...$URLs{$url}.\n";
+		}
+		else {
+			$stat = ($URLs{$url} = &test_URL($url, $aextra));
+			print "$margin$aname...$stat.\n";
+		}
+
+
+		# Recurse as necessary.
+		if ($stat eq "ok" && 
+				$atype == 1 && 
+				$ahost eq $inithost && 
+				$aport eq $initport && 
+				$apath ne "" &&
+				$apath !~ /ftp.*:/) {
+			&check_Links($ahost, $aport, $apath);
+		}
+	}
+}
+
+
+################################################
+#  make_URL - constructs a URL from a string.  #
+#                                              #
+#  Notes:                                      #
+#      - The URLs generated here are not 100%  #
+#        kosher, only used internally.         #
+#                                              #
+#  Entry:                                      #
+#        string as passed by gopher server.    #
+#  Exit:                                       #
+#        string representing URL.              #
+################################################
+sub make_URL {
+	local($_) = @_;
+	local($url);
+	local($type, $name, $path, $host, $port);
+
+
+	s/^(.)// && ($type = $1);
+	($name, $path, $host, $port) = split(/\t/, $_);
+	chop($host) if ($host =~ /\.$/);
+	if ($type =~ /[01245679sgMhIi]/) {
+		$url = "gopher://$host:$port/$type$path";
+	}
+	elsif ($type =~ /[8T]/) {
+		$url = "telnet://";
+		$path !~ /^$/ && $url .= "$path@";
+		$url .= $host;
+		$port > 0 && $url .= ":$port";
+		$url .= "/";
+	}
+	return($url);
+}
+
+
+###########################################################################
+#  test_URL - check that a URL is accessible.                             #
+#                                                                         #
+#  Notes:                                                                 #
+#      - I don't have a good way to check gopher0 servers.  Currently, I  #
+#        look for the string "error.host", which servers like gn seem to  #
+#        generate.  However, this fails with KA9Q, for which an error     #
+#        message is indistinguishable from regular text.                  #
+#      - For gopher+, a error code indicating a server is too busy is     #
+#        treated as an error.  This may not be the right thing to do.     #
+#      - If the server understands gopher+, we'll only ask for info (!)   #
+#        so as not to retrieve large files.  This approach also seems to  #
+#        be the only way to check ASK blocks reliably.                    #
+#      - CSO nameservers (type 2) are checked with an invalid command -   #
+#        this returns a warning message from the server that is not       #
+#        regarded as an error by go4check. Using the command "fields"     #
+#        does *not* work since this typically results in lines starting   #
+#        with -2, which look like errors.                                 #
+#      - Checks of telnet links only see if host is up; no attempt        #
+#        is made to login to whatever account may be specified.           #
+#      - Checks of FTP links could be improved.  Currently, the info      #
+#        returned is not examined beyond looking for the usual signs      #
+#        of failure.                                                      #
+#  Entry:                                                                 #
+#        URL = URL to test                                                #
+#        GPLUS = extra character indicating a gopher+ item.               #
+#  Exit:                                                                  #
+#        Text string indicating status of URL:                            #
+#           "ok" = everything ok                                          #
+#           "can't connect" = can't connect to host                       #
+#           "path changed" = path changed                                 #
+#           "n/a" = unknown status                                        #
+###########################################################################
+sub test_URL {
+	local($_, $gplus) = @_;
+	local($protocol, $logonid, $host, $port, $type, $path);
+	local($1, $2, $3, $4, $5);
+
+
+	$DEBUG && print "DEBUG: checking $_.\n";
+	m#^(\w+)://(.*):(\d+)/?(.?)(.*)#;
+	$protocol = $1;
+	$host = $2;
+	$port = $3;
+	$type = $4;
+	$path = $5;
+	if ($host =~ /@/) {
+		($logonid, $host) = split(/@/, $host);
+	}
+	$DEBUG && print "protocol=$protocol; logonid=$logonid; host=$host; port=$port; type=$type; path=$path.\n";
+
+
+	# Check gopher links.
+	if ($protocol eq "gopher") {
+		local($GOPHER);
+		local($Stuff);
+
+		$DEBUG && print "DEBUG: checking gopher at $host;$port.\n";
+		eval {
+			alarm($timeout);
+			($GOPHER) = &tcpconnect($host, $thishost);
+			alarm(0);
+		};
+		if ($@ && $@ =~ /Timed Out/) {
+			return "timed out";
+		}
+		($GOPHER) || return "can't connect";
+		$path .= "\t!" if ($gplus);	# Modify selector to get only info
+		if ($type eq "2") {
+			$path = $default_path2 if ($path =~ /^$/);
+		}
+		elsif ($type eq "7") {
+                # Modification Oct. 19/94 by R.D. Cameron to append
+                # handle the nonempty $path case:  to test in this
+                # case, we send a tab and the search term after the
+                # $path.
+			if ($path =~ /^$/) {
+				$path = $default_search_term;
+			}
+			else {
+				$path = "$path\t$default_search_term";
+			}
+			$path =~ s#^waissrc:(.*)/.*$#1$1#;
+		}
+		$DEBUG && print "DEBUG: sending path \"$path\".\n";
+		eval {
+			alarm($timeout);
+			send($GOPHER, "$path\r\n", 0);
+			alarm(0);
+		};
+		if ($@ && $@ =~ /Timed Out/) {
+			return "timed out";
+		}
+		$Stuff = <$GOPHER>;
+		close($GOPHER);
+		$DEBUG && print "DEBUG: read \"$Stuff\".\n";
+
+
+		# Test line for signs of errors.
+		#
+                # Modification Oct. 19/94 by R.D. Cameron to 
+                # check for type 3 error returns when a directory
+                # listing is expected.  (According to the gopher 
+		# protocol, "3" as the first character of a directory
+		# entry always indicates error.
+		if ((($type eq "1") | ($type eq "7")) &
+		    ($Stuff =~ /^3/)) {
+                        return("path changed");
+		}
+		# Test line for other signs of errors.
+		elsif ($Stuff =~ /(^\-\-\d)|(\terror.host\t\d+)/) {
+			return("path changed");
+		}
+		else {
+			return("ok");
+		}
+	}
+
+
+	# Check telnet links.
+	if ($protocol eq "telnet") {
+		local($TELNET);
+
+		$DEBUG && print "DEBUG: checking telnet at $host;$port.\n";
+		($TELNET) = &tcpconnect($host, $thishost);
+		($TELNET) || return "host down";
+		return "ok";
+		close($TELNET);
+	}
+
+
+	# If we get here, we don't know how to test the link.	
+	return("n/a");
+}
+
+
+################################################################
+#  This comes from gopherhunt by Paul Lindner.                 #
+#                                                              #
+#  I've added a line to abort if it can't resolve an address.  #
+#  and return 0 if failure rather than die. GAT                #
+################################################################
+sub tcpconnect {                    #Get TCP info in place
+   local($host, $hostname) = @_;
+   local($name, $aliases, $type, $len);
+   local($thisaddr, $thataddr, $this, $that);
+   local($sockaddr);
+   $sockaddr = 'S n a4 x8';
+
+   ($name,$aliases,$proto) = getprotobyname('tcp');
+   ($name,$aliases,$port) = getservbyname($port, 'tcp')
+        unless $port =~ /^\d+$/;
+   ($name,$aliases,$type,$len,$thisaddr) = gethostbyname($hostname);
+   ($name,$aliases,$type,$len,$thataddr) = gethostbyname($host);
+   $name || return(0);
+
+   $this = pack($sockaddr, &AF_INET, 0, $thisaddr);
+   $that = pack($sockaddr, &AF_INET, $port, $thataddr);
+
+   sleep($snooze_length);
+
+   socket(N, &PF_INET, &SOCK_STREAM, $proto) || return(0);
+   bind(N, $this)                            || return(0);
+   connect(N, $that)                         || return(0);
+
+   return(N);
+}
+
+
+#####################################################
+#  handle_Timeout - Die with a specific message.    #
+#                                                   #
+#  Notes:                                           #
+#        - Calls to alarm() should be in an eval    #
+#          block.                                   #
+#                                                   #
+#  Entry:                                           #
+#        n/a                                        #
+#  Exit:                                            #
+#        Message "Timed Out" is returned.           #
+#####################################################
+sub handle_Timeout { 
+	die "Timed Out";
+}

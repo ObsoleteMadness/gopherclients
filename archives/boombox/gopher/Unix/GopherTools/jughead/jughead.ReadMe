@@ -1,0 +1,328 @@
+Copyright 1993, 1994, University of Utah Computer Center.
+JUGHEAD (TM) is a trademark of Archie Comic Publications, Inc.
+and is used pursuant to license.  This source may be used and
+freely distributed as long as this copyright notice remains
+intact, and is in no way used for any monetary gain, by any
+institution, business, person, or persons.
+
+jughead is a tool for getting menu information from various gopher
+servers, acting as a search engine in a specified gopher sub-space,
+and is an acronym for:
+
+	Jonzy's Universal Gopher Hierarchy Excavation And Display
+
+The remainder of this document is divided into two parts, the first
+part titled "KNOWN PORTS" lists all machines jughead is known to
+have been ported to, and the second part "GETTING STARTED" is a
+somewhat detailed set of steps to assist you in getting jughead up
+and running.
+
+----------------------------------------------------------------------
+KNOWN PORTS
+
+jughead was written in ANSI C, developed on both an IBM RS6000, and
+a Sun sparc-10, and should port easily to any ANSI C conformant
+environment.  jughead has been successfuly ported to the following
+platforms:
+
+	Apple Macintosh IIci with a A/UX 3.0
+
+	DEC VAX/VMS version 5.5-1 running multinet networking software
+
+	DECstation 5000/25 running Ultrix 4.2a
+
+	DECstation 5000/200 running Ultrix 4.2
+
+	DECstation 5000/200, Ultrix 4.3
+
+	DECstation 5000/240, ULTRIX 4.4
+
+	Dec 5000, running Ultrix 4.2A
+
+	Digital DECstation 5000, model 133
+
+	DEC 5900 running ULTRIX V4.3A
+
+	HP-UX oac3 A.09.03 E 9000/750 2011779154
+
+	HP 9000/815 running HP-UX version 9.0
+
+	Hewlett-Packard 9000/730 with HP-UX 8.07
+
+	Hewlett-Packard 9000/822 with HP-UX 8.07
+
+	IBM RISC/6000 520H running AIX 3.2.3
+
+	IBM RS/6000 950 running AIX 3.2.4
+
+	insey Computer Systems model FS-486/50-SCO-64.1250.14LR",
+	476-90-4049 Tower Microcomputer running SCO Open Server Enterprise
+	System 3.2v4.2
+
+	icronics 486-66, 2 - IDE drives, Linux 1.0
+
+	NeXT 040 running NeXTSTEP 2.1
+
+	NeXT 040 running NeXTSTEP 3.0
+
+	SCO
+
+	Sun SPARCstation IPC with SunOS 4.1.1
+
+	SUN Sparc-2, Sun-OS 4.1.2
+
+	Sun sparc4 running sun OS 4.1.2
+
+	Sun Sparc1+ compatible (Aeon1+), SunOS 4.1.3
+
+	Sun 4/690 running SunOS 4.1.1
+
+	Sun 6/70 MP running SunOS 4.1.2
+
+	Sun SPARCstation 1 under SunOS Release 4.1.2
+
+	SunOS sun09 4.1.3 1 sun4c
+
+	SUN SparCentre 2000 running Solaris 2.3
+
+	Viglen 486DX33 16Mb RAM running FreeBSD 1.0.2
+
+It is anticipated this program will be a tool for administrators
+in gopherspace.  If you make any changes to the sources, please
+send me a copy.  <jonzy@cc.utah.edu>
+
+----------------------------------------------------------------------
+GETTING STARTED
+
+jughead can be acquired via gopher by gophering to gopher.utah.edu
+and looking in:
+   About U of U Gopher
+      Gopher Tools
+         jughead
+            as jughead.ReadMe and jughead.VERS.tar.Z
+or via anonymous ftp from ftp.cc.utah.edu in /pub/gopher/GopherTools/jughead
+as jughead.ReadMe and jughead.VERS.tar.Z, where "VERS" is the current version.
+
+Once you have downloaded jughead the following command will uncompress and
+untar the files into a directory that gets created called "jughead.VERS":
+	uncompress -c < jughead.VERS.tar.Z | tar xfv -
+
+The file jughead.VERS.tar.Z is a compressed tar file which contains:
+	About.jughead
+	Makefile.dist
+	configure
+	dirTree.c
+	dirTree.h
+	getargs.c
+	jughead.1
+	jughead.ReadMe			THE FILE YOU ARE READING NOW
+	jughead.c
+	jughead.changes
+	jughead.conf
+	jughead.conf.5
+	jughead.conf.h.dist
+	jughead.faq
+	jughead.h
+	jughead.sample.csh
+	jughead.survey
+	jughead.todo
+	jugheadConf.c
+	jugheadVctl.c
+	path.c
+	search.c
+	searchCmnds.c
+	sockets.c
+	sockets.h
+	tree.c
+	tree.h
+	utils.c
+	utils.h
+	veronica.ctl
+	veronica.ctl.5
+
+For a quick compilation attempt do the following:
+   cd jughead.VERS
+   configure		(At the prompt, hit return to make jughead)
+   edit jughead.conf	(To get the file ready for the next step)
+   make install		(If errors, are you root?  If not simply
+			comment out the Makefile install target lines
+			cp jughead.1 $(DESTMAN)/jughead.$(MANSUFF)
+			chown root $(DESTMAN)/jughead.$(MANSUFF)
+			chmod 755 $(DESTMAN)/jughead.$(MANSUFF)
+			cp veronica.ctl.5 $(VDESTMAN)/veronica.ctl.$(VMANSUFF)
+			chown root $(VDESTMAN)/veronica.ctl.$(VMANSUFF)
+			chmod 755 $(VDESTMAN)/veronica.ctl.$(VMANSUFF)
+			and change DESTDIR to the current directory)
+
+
+To make the jughead application do a "configure" which will do some
+configuring for your environment and generate jughead.conf.h, Makefile,
+and sprint.h headerfile.  If "configure" was able to determine the local
+configuration for your platform correctly it will ask you if it should
+run "make" for you.  The configuration file is known to correctly on
+the following platforms determined from the `uname -mrsv` system call:
+	4.3bsd 2.0 B 9000/375
+	AIX 2 3 000007401C00
+	A/UX 3.0 SVR2 mc68040
+	HP-UX A.08.00 B 9000/845
+	HP-UX A.09.00 D 9000/850
+	IRIX 4.0.5 06151813 IP6
+	IRIX 5.1.1.2 11021902 IP22
+	Linux 1.1.0 #1 Tue May 31 15:42:59 MDT 1994 i386
+	openage 2 3.2 i386
+	SunOS 4.1.3 2 sun4
+	SunOS 4.1.3 1 sun4m
+	SunOS 5.1 Generic sun4m
+	ULTRIX 4.4 0 RISC
+And machines without `uname -mrsv':
+	NeXT 2.1
+	NeXT 3.0
+	NeXT 3.1
+	NeXT 3.2
+
+Every effort has been made with the configure script to ease the pain
+of porting jughead.  If you run into any problems please let me know so I
+can modify the configure script to accommodate your particular platform.
+
+At this point you may want to read the jughead.changes file which lists
+the development changes to jughead, and the jughead.todo file which lists
+the things still needing attention.
+
+You do not need to have root access to install or run jughead, you will,
+however, need to ensure DESTDIR and DESTMAN in the Makefile are adjusted
+to reflect your particular needs.
+
+To view the man page, prior to running make install you can:
+	make viewman
+
+The make commands supported by the jughead Makefile are:
+
+   make			makes jughead.
+   make all		same as make.
+   make jughead		same as make.
+   make objects		compiles the various jughead sources.
+   make install		same as make, intalls jughead the man page,
+			and the jughead.conf file.
+   make clobber		same as realclean and removes the installed files.
+   make realclean	same clean and removes sprint.h, Makefile.config,
+			and the jughead executable.
+   make clean		removes the objects, core and backup edit files.
+   make tar		tars and compresses all files except jughead.ReadMe
+   make viewman		allows viewing the man page prior to installation.
+   make lint		runs lint to report on the programmers codability.
+   make help		displays the various make options.
+   make defunct		same as make but forces recompilation of search.o
+   make nodefunct	same as make except code is generated to remove the
+			<defunct> process which will result in a cleaner
+			environment, but produce less efficient code.
+
+It is highly recommended you edit the "jughead.conf.h" file to ensure
+the defines HOSTDOMAIN, JUGHEADHELP, and ERRORHOST reflect the needs
+for your site.  These values can be overridden if you edit the "jughead.conf"
+file and ensure "hostname", "jugheadhelp", and "errorhost" reflect your site
+as well.
+
+If you have problems compiling look at the Makefile and sprint.h files
+created via "configure".  Alternatily you may need to look at the
+jughead.conf.h and Makefile.
+
+The following information describes the purpose of various defines and
+variables to assist you should any problems be encountered:
+
+  These values are found in jughead.conf.h:
+  You can use the jughead.conf file alter these values. 
+  HOSTDOMAIN      Any part of your machine name that does not get displayed
+		  via a call to `hostname`.  The result of `hostname` and
+		  HOSTDOMAIN should yield a fully qualified domain name of the
+		  machine running jughead.
+		  Note: The fully qualified domain name can be overridden by
+		  entering "hostname" as the name in the jughead.conf file.
+  JUGHEADHELP     The gopher server serving the jughead help document.
+		  This is the gopher selector, host, and port of the document
+		  to give the user if an error is encountered.
+		  Note: This field can be overridden by entering "jugheadhelp"
+		  as the gopher path to the jughead help document in the
+		  jughead.conf file.
+  ERRORHOST       The Path, Host, and Port for an error item.
+		  Note: This field can be overridden by entering "errorhost"
+		  as the gopher path in the jughead.conf file.
+  PORT2USE        The port to use when jughead is a search engine.
+  MAXPROCS	  The maximum number of forked jughead processes.
+  DELIMITERS	  The delimiters that seperate a word.
+  MAXITEMS2RETURN The maximum number of found items to return.
+  DEFAULTBOOLOP   The default boolean operator if none is given between words.
+  JUGHEADHELPTITL The title to be displayed to the user of the jughead
+                  help document.
+  USAGERROR       The string "usage error".
+  WILDCARDERR     The invalid wildcard usage error message.
+  TOMNYPRCSERR    The too many processes error message.
+  NOFORKERR       The jughead can't fork error message.
+  GTSTRERR        The get string timed out error message.
+  READERR         The read line error message.
+  TMPFILENAME     The location and name of jughead's temporary file.
+
+  These values are found in jughead.conf.h are automaticly generated when you
+  run "configure".  These too can be altered via the jughead.conf file.
+  CATCOMMAND      The cat system command, the %s is required.
+  SORTCOMMAND     The sort system command, the %s is required.
+  TOUCHCOMMAND    The touch system command, the %s is required.
+
+  These values are found in Makefile
+  THEVERSION      The version of jughead, only edit this if you make changes.
+  MANSUFF         The suffix of the man page and where to install the manpage.
+  DESTDIR         The location of the jughead executable.  You may not want
+		  this to be publicly accessible.
+  DESTMAN         The location of the jughead man page.
+  PERMISSIONS     The permissions for the jughead executable.
+  LINT            The lint program to use if need me.
+  LINTFLAGS       Any lint flags you want to set.
+  CC              The C compiler to use.  Note: You can leave this blank
+		  if you don't know where your C compiler resides, the
+		  configuration step will attempt to locate it for you.
+  NOWARNINGS	  Uncommented if you don't want to see any compiler warnings.
+  OPTIMIZATION	  Any optimization flags you want to have.
+  PROTOTYPES	  Uncommented if you want to use prototypes.
+
+  These values are found in Makefile are automaticly generated when you
+  run "configure".  If you know you need these flags simply add them to the
+  DFLAGS or LFLAGS line.
+  -D_POSIX_SOURCE    Needed when compiling under A/UX.
+  -DSOLARIS2 -DSVR4  Needed when compiling on a sun with Solaris.
+  -lsocket -lnsl     Needed for linking under Solaris
+  DFLAGS	     The definition flags needed for your environment
+  CFLAGS	     The compiler flags needed for your environment.
+  LFLAGS	     The libraries you need, some libraries may exist
+		     here you don't need but this should not cause
+		     problems.
+
+You will want to place the "About.jughead" document somewhere on your
+gopher server, and then give the proper definition of JUGHEADHELPDOC
+in the jughead.conf.h or "jugheadhelp" in jughead.conf.  You may want
+to copy the file "About.jughead" in the same directory as the jughead
+link, so the users will have knowlege of how to search the tables built
+by jughead, and rename it "About jughead".
+
+Create a link file somewhere in your gopher data directory.  Mine looks like:
+  Name=Search all UofU menus using jughead
+  Numb=4
+  Type=7
+  Port=3000
+  Path=
+  Host=gopher.utah.edu
+
+As of jughead version 1.0.3 you can assist veronica in harvesting its
+data by configuring and placing the veronica.ctl file, included with
+this distribution, at the appropriate location in your gopher tree.
+
+IMPORTANT NOTE:  jughead does NOT use aliased hostnames and requires
+Fully Qualified Domain Names.
+
+The steps I did to get jughead running as a server follow:
+ jughead -tmVb data -X "ftp:*" .utah.edu gopher.utah.edu
+ jughead -tB data
+ jughead -tS -l data.log data
+
+Sample steps to rebuild the jughead database follow:
+ cd directory_other_than_where_the_jughead_data_resides
+ jughead -b data -l report -X "ftp:*" .utah.edu gopher.utah.edu
+ jughead -B                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

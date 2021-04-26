@@ -1,0 +1,11 @@
+Gopherus
+(ver 1.0a)
+Freeware
+
+
+Gopherus is a free console-mode gopher client for DOS. 
+It provides a classic text interface to the gopherspace. 
+
+This DOS version of Gopherus requires using the services 
+of an external Packet Driver (the type being unspecified).  
+

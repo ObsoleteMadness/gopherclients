@@ -1,0 +1,3989 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 10 FMDOCUMENT
+0 0 /Helvetica-Bold FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Roman FMFONTDEFINE
+3 0 /Courier-Bold FMFONTDEFINE
+4 0 /Helvetica FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "6" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 750.68 540 750.68 2 L
+2 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 9 Q
+(The Gateway Software) 248.99 739.85 T
+54 726.98 540 726.98 2 L
+0.25 H
+N
+54 75.33 540 75.33 2 L
+2 H
+2 Z
+N
+0 10 Q
+(6) 54 59.95 T
+0 9 Q
+( of) 59.56 59.95 T
+0 10 Q
+( 6) 70.56 59.95 T
+0 9 Q
+(Accessing Library Catalogs Using Go4zgate) 350.95 59.95 T
+54 81 540 720 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 81 540 720 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 -208 1000 792 C
+54 675 540 711 R
+7 X
+0 0 0 1 0 0 0 K
+V
+0 9 Q
+0 X
+(Architecture diagram showing a Gopher client speaking to a Z39.50) 152.96 705 T
+-0.28 (server \050with 1 or more on-line catalogs\051. The Z39.50 Gateway \050go4zgate\051) 144 693 P
+(translates between the two systems.) 218.98 681 T
+54 81 540 666 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 81 540 666 R
+7 X
+0 0 0 1 0 0 0 K
+V
+82.01 198.22 140.52 192.37 140.52 139.71 82.01 148.48 4 Y
+V
+0.01 H
+0 Z
+0 X
+N
+140.52 192.37 146.37 195.29 146.37 143.77 140.52 139.71 4 Y
+7 X
+V
+0 X
+N
+146.37 195.29 91.32 200.38 82.01 198.22 140.52 192.37 4 Y
+7 X
+V
+0 X
+N
+146.37 180.66 161 189.44 161 166.04 146.37 151.41 4 Y
+7 X
+V
+0 X
+N
+96.63 146.29 96.63 141.33 129.14 136.13 129.14 141.41 4 Y
+7 X
+V
+0 X
+N
+96.63 141.33 86.23 135.97 131.74 128 129.14 136.13 4 Y
+7 X
+V
+0 X
+N
+131.74 128 149.13 141.33 142.88 141.33 140.52 139.71 135.97 140.39 129.14 136.13 6 Y
+7 X
+V
+0 X
+N
+129.14 141.41 129.14 136.13 135.97 140.39 3 Y
+7 X
+V
+0 X
+N
+97.73 142.63 105.41 141.53 104.31 138.24 96.63 139.34 4 Y
+7 X
+V
+0 X
+N
+105.41 141.53 106.6 139.74 104.31 138.24 3 Y
+7 X
+V
+0 X
+N
+86.99 193.23 135.53 188.38 135.53 144.69 86.99 151.97 4 Y
+7 X
+V
+0 X
+N
+1 1 0 0 0 0 1 K
+89.32 190.9 133.2 186.52 133.2 147.02 89.32 153.6 4 Y
+5 X
+1 1 0 0 0 0 1 K
+V
+0 X
+N
+87.04 151.2 85.95 150.1 87.04 148.64 88.14 149.74 4 Y
+3 X
+V
+0 X
+N
+0 0 0 1 0 0 0 K
+161 189.44 146.37 180.66 146.37 190.9 3 Y
+7 X
+0 0 0 1 0 0 0 K
+V
+0 X
+N
+149.13 141.33 146.37 146.13 146.37 143.77 142.88 141.33 4 Y
+7 X
+V
+0 X
+N
+398.4 411.89 413.28 429.25 398.4 429.25 390.96 424.29 386 416.85 5 Y
+7 X
+V
+2 Z
+0 X
+N
+386 416.85 386 401.97 398.4 397 398.4 411.89 4 Y
+7 X
+V
+0 X
+N
+404.1 418.59 404.1 470.67 395.92 476.37 395.92 421.81 4 Y
+7 X
+V
+0 X
+N
+395.92 476.37 400.88 481.33 413.28 481.33 411.17 479.17 403.5 479.17 401.34 477.1 406.76 473.34
+ 404.1 470.67 8 Y
+7 X
+V
+0 X
+N
+411.17 479.17 411.17 426.77 413.28 429.25 413.28 481.33 4 Y
+4 X
+V
+0 X
+N
+403.5 479.17 411.17 479.17 411.17 426.77 406.76 426.77 406.76 473.34 403.5 475.71 6 Y
+3 X
+V
+0 X
+N
+399.78 473.68 399.78 420.31 2 L
+N
+395.92 421.81 386 416.85 2 L
+N
+411.17 426.77 406.76 426.77 406.76 421.62 3 Y
+V
+N
+401.34 477.1 403.5 479.17 403.5 475.71 3 Y
+V
+N
+404.42 418.91 404.42 406.05 398.4 397 398.4 411.89 4 Y
+3 X
+V
+0 X
+N
+404.42 418.91 404.42 406.05 415.76 421.81 415.76 432.14 413.28 429.25 5 Y
+3 X
+V
+0 X
+N
+415.76 432.14 413.28 432.14 413.28 429.25 3 Y
+7 X
+V
+0 X
+N
+406.76 473.34 406.76 421.62 404.1 418.59 404.1 470.67 4 Y
+4 X
+V
+0 X
+N
+406.39 411.89 406.39 397 426.51 397 426.51 411.89 4 Y
+7 X
+V
+0 X
+N
+412.27 470.67 414.93 473.34 422.05 474.07 425.45 477.42 419.43 479.17 421.55 481.33 431.47 478.85
+ 424.44 471.59 8 Y
+7 X
+V
+0 X
+N
+419.43 479.17 419.43 473.8 422.05 474.07 425.45 477.42 4 Y
+V
+N
+431.47 424.29 441.39 421.81 2 L
+N
+426.51 411.89 441.39 421.81 441.39 406.93 426.51 397 4 Y
+7 X
+V
+0 X
+N
+412.42 418.91 424.44 418.91 431.47 424.29 431.47 478.85 424.44 471.59 412.36 470.67 6 Y
+7 X
+V
+0 X
+N
+417.69 471.08 417.69 418.91 2 L
+N
+424.44 471.59 424.44 418.91 2 L
+N
+412.42 418.91 406.39 411.89 426.51 411.89 424.44 418.91 4 Y
+7 X
+V
+0 X
+N
+424.44 418.91 431.47 424.29 441.39 421.81 426.51 411.89 4 Y
+7 X
+V
+0 X
+N
+431.47 426.77 431.47 429.25 436.43 426.77 3 Y
+7 X
+V
+0 X
+N
+431.47 426.77 436.43 426.77 441.39 421.81 431.47 424.29 4 Y
+7 X
+V
+0 X
+N
+249.17 373.05 252.54 350.3 260.34 360.93 260.34 348.77 271.73 361.77 267.55 345.8 288.44 372.21
+ 273.8 341.52 280.92 341.52 278.79 336.16 311 336.16 283.43 322.92 300.14 315.4 282.26 309.76 297.21 299.94
+ 278.79 303.58 304.73 279.47 273.8 298.23 273.8 281.14 260.34 290.98 265.05 259 252.54 289.45 248.75 282.39
+ 244.55 289.45 233.05 271.53 233.05 292.29 217.42 268.19 226.28 295.94 213.66 285.74 220.62 300.79 197.37 300.79
+ 213.05 316.45 184 320.41 213.05 323.3 198.62 327.09 213.24 328.35 199.04 341.3 218.3 336.16 201.13 355.92
+ 223.29 341.52 220.76 361.35 236.75 348.77 236.75 365.11 244.55 350.3 44 Y
+7 X
+V
+1 H
+0 X
+N
+J
+396.18 626.12 434.22 628.15 434.22 548 396.18 552.1 4 Y
+7 X
+V
+J
+396.18 626.12 434.22 628.15 434.22 548 396.18 552.1 4 Y
+J
+396.18 625.12 396.18 626.12 397.18 626.17 3 L
+0.2 H
+0 Z
+0 X
+N
+[1.805 3.609] 1.805 I
+397.18 626.17 433.23 628.1 2 L
+N
+J
+433.23 628.1 434.22 628.15 434.22 627.15 3 L
+N
+[1.906 3.812] 1.906 I
+434.22 627.15 434.22 549 2 L
+N
+J
+434.22 549 434.22 548 433.23 548.11 3 L
+N
+[1.813 3.626] 1.813 I
+433.23 548.11 397.18 551.99 2 L
+N
+J
+397.18 551.99 396.18 552.1 396.18 553.1 3 L
+N
+[1.895 3.79] 1.895 I
+396.18 553.1 396.18 625.12 2 L
+N
+J
+434.22 628.15 449.57 624.88 449.57 557.43 434.22 548 4 Y
+7 X
+V
+J
+434.22 628.15 449.57 624.88 449.57 557.43 434.22 548 4 Y
+J
+434.22 627.15 434.22 628.15 435.2 627.94 3 L
+0 X
+N
+[1.711 3.423] 1.711 I
+435.2 627.94 448.59 625.09 2 L
+N
+J
+448.59 625.09 449.57 624.88 449.57 623.88 3 L
+N
+[2.045 4.091] 2.045 I
+449.57 623.88 449.57 558.43 2 L
+N
+J
+449.57 558.43 449.57 557.43 448.72 556.91 3 L
+N
+[2.002 4.003] 2.002 I
+448.72 556.91 435.08 548.52 2 L
+N
+J
+435.08 548.52 434.22 548 434.22 549 3 L
+N
+[1.906 3.812] 1.906 I
+434.22 549 434.22 627.15 2 L
+N
+J
+397.42 601.39 431.99 601.39 431.99 578.9 397.42 581.13 4 Y
+7 X
+V
+J
+397.42 601.39 431.99 601.39 431.99 578.9 397.42 581.13 4 Y
+J
+397.42 600.39 397.42 601.39 398.42 601.39 3 L
+0 X
+N
+[1.916 3.831] 1.916 I
+398.42 601.39 430.99 601.39 2 L
+N
+J
+430.99 601.39 431.99 601.39 431.99 600.39 3 L
+N
+[1.863 3.726] 1.863 I
+431.99 600.39 431.99 579.9 2 L
+N
+J
+431.99 579.9 431.99 578.9 430.99 578.96 3 L
+N
+[1.92 3.84] 1.92 I
+430.99 578.96 398.42 581.07 2 L
+N
+J
+398.42 581.07 397.42 581.13 397.42 582.13 3 L
+N
+[1.66 3.319] 1.66 I
+397.42 582.13 397.42 600.39 2 L
+N
+J
+397.42 578.9 431.99 576.45 431.99 554.55 397.42 558.05 4 Y
+7 X
+V
+J
+397.42 578.9 431.99 576.45 431.99 554.55 397.42 558.05 4 Y
+J
+397.42 577.9 397.42 578.9 398.42 578.82 3 L
+0 X
+N
+[1.921 3.841] 1.921 I
+398.42 578.82 430.99 576.52 2 L
+N
+J
+430.99 576.52 431.99 576.45 431.99 575.45 3 L
+N
+[1.81 3.619] 1.81 I
+431.99 575.45 431.99 555.55 2 L
+N
+J
+431.99 555.55 431.99 554.55 430.99 554.65 3 L
+N
+[1.926 3.852] 1.926 I
+430.99 554.65 398.42 557.95 2 L
+N
+J
+398.42 557.95 397.42 558.05 397.42 559.05 3 L
+N
+[1.713 3.426] 1.713 I
+397.42 559.05 397.42 577.9 2 L
+N
+J
+449.57 622.44 434.22 625.5 396.18 623.66 3 L
+J
+449.57 622.44 448.69 622.62 2 L
+2 Z
+N
+[1.539 3.59] 1.539 I
+448.69 622.62 435.11 625.33 2 L
+N
+J
+435.11 625.33 434.22 625.5 433.33 625.46 3 L
+N
+[1.625 3.791] 1.625 I
+433.33 625.46 397.08 623.71 2 L
+N
+J
+397.08 623.71 396.18 623.66 2 L
+N
+J
+431.99 625.3 431.99 548.28 2 L
+J
+431.99 625.3 431.99 624.4 2 L
+N
+[1.777 4.146] 1.777 I
+431.99 624.4 431.99 549.18 2 L
+N
+J
+431.99 549.18 431.99 548.28 2 L
+N
+J
+397.42 623.66 397.42 551.9 2 L
+J
+397.42 623.66 397.42 622.76 2 L
+N
+[1.794 4.186] 1.794 I
+397.42 622.76 397.42 552.8 2 L
+N
+J
+397.42 552.8 397.42 551.9 2 L
+N
+J
+410.49 597.91 417.53 597.91 417.53 593.32 410.49 593.5 4 Y
+7 X
+V
+J
+410.49 597.91 417.53 597.91 417.53 593.32 410.49 593.5 4 Y
+J
+410.49 596.91 410.49 597.91 411.49 597.91 3 L
+0 Z
+0 X
+N
+[2.518 5.037] 2.518 I
+411.49 597.91 416.53 597.91 2 L
+N
+J
+416.53 597.91 417.53 597.91 417.53 596.91 3 L
+N
+[1.297 2.593] 1.297 I
+417.53 596.91 417.53 594.32 2 L
+N
+J
+417.53 594.32 417.53 593.32 416.53 593.35 3 L
+N
+[2.519 5.039] 2.519 I
+416.53 593.35 411.49 593.47 2 L
+N
+J
+411.49 593.47 410.49 593.5 410.49 594.5 3 L
+N
+[1.208 2.416] 1.208 I
+410.49 594.5 410.49 596.91 2 L
+N
+J
+410.29 575.21 417.47 574.71 417.47 570.18 410.29 570.89 4 Y
+7 X
+V
+J
+410.29 575.21 417.47 574.71 417.47 570.18 410.29 570.89 4 Y
+J
+410.29 574.21 410.29 575.21 411.28 575.15 3 L
+0 X
+N
+[2.601 5.201] 2.601 I
+411.28 575.15 416.47 574.78 2 L
+N
+J
+416.47 574.78 417.47 574.71 417.47 573.71 3 L
+N
+[1.267 2.534] 1.267 I
+417.47 573.71 417.47 571.18 2 L
+N
+J
+417.47 571.18 417.47 570.18 416.48 570.28 3 L
+N
+[2.609 5.219] 2.609 I
+416.48 570.28 411.28 570.79 2 L
+N
+J
+411.28 570.79 410.29 570.89 410.29 571.89 3 L
+N
+[1.164 2.328] 1.164 I
+410.29 571.89 410.29 574.21 2 L
+N
+J
+410.85 574.74 416.91 574.33 416.91 570.65 410.85 571.21 4 Y
+7 X
+V
+J
+410.85 574.74 416.91 574.33 416.91 570.65 410.85 571.21 4 Y
+J
+410.85 573.74 410.85 574.74 411.84 574.68 3 L
+0 X
+N
+[2.04 4.079] 2.04 I
+411.84 574.68 415.91 574.4 2 L
+N
+J
+415.91 574.4 416.91 574.33 416.91 573.33 3 L
+N
+[0.84 1.68] 0.84 I
+416.91 573.33 416.91 571.65 2 L
+N
+J
+416.91 571.65 416.91 570.65 415.92 570.74 3 L
+N
+[2.045 4.091] 2.045 I
+415.92 570.74 411.84 571.12 2 L
+N
+J
+411.84 571.12 410.85 571.21 410.85 572.21 3 L
+N
+[0.767 1.533] 0.767 I
+410.85 572.21 410.85 573.74 2 L
+N
+J
+408.67 568.47 418.06 567.53 418.06 566.32 408.67 567.32 4 Y
+7 X
+V
+J
+408.67 568.47 418.06 567.53 418.06 566.32 408.67 567.32 4 Y
+J
+409.66 567.22 408.67 567.32 408.67 568.47 409.66 568.37 4 L
+0 X
+N
+[1.488 2.976] 1.488 I
+409.66 568.37 417.07 567.63 2 L
+N
+J
+417.07 567.63 418.06 567.53 418.06 566.32 417.07 566.43 4 L
+N
+[1.489 2.978] 1.489 I
+417.07 566.43 409.66 567.22 2 L
+N
+J
+408.96 591.76 418.06 591.47 418.06 590.14 408.96 590.64 4 Y
+7 X
+V
+J
+408.96 591.76 418.06 591.47 418.06 590.14 408.96 590.64 4 Y
+J
+409.96 590.59 408.96 590.64 408.96 591.76 409.96 591.73 4 L
+0 X
+N
+[1.421 2.841] 1.421 I
+409.96 591.73 417.06 591.5 2 L
+N
+J
+417.06 591.5 418.06 591.47 418.06 590.14 417.06 590.2 4 L
+N
+[1.422 2.845] 1.422 I
+417.06 590.2 409.96 590.59 2 L
+N
+J
+416.53 591.35 416.53 590.64 2 L
+7 X
+V
+J
+416.53 591.35 416.53 590.64 2 L
+2 Z
+0 X
+N
+J
+411.14 597.5 416.91 597.5 416.91 593.73 411.14 593.88 4 Y
+7 X
+V
+J
+411.14 597.5 416.91 597.5 416.91 593.73 411.14 593.88 4 Y
+J
+411.14 596.5 411.14 597.5 412.14 597.5 3 L
+0 Z
+0 X
+N
+[1.885 3.771] 1.885 I
+412.14 597.5 415.91 597.5 2 L
+N
+J
+415.91 597.5 416.91 597.5 416.91 596.5 3 L
+N
+[0.884 1.769] 0.884 I
+416.91 596.5 416.91 594.73 2 L
+N
+J
+416.91 594.73 416.91 593.73 415.91 593.76 3 L
+N
+[1.886 3.773] 1.886 I
+415.91 593.76 412.14 593.86 2 L
+N
+J
+412.14 593.86 411.14 593.88 411.14 594.88 3 L
+N
+[0.811 1.621] 0.811 I
+411.14 594.88 411.14 596.5 2 L
+N
+J
+416.94 567.53 416.94 566.82 2 L
+7 X
+V
+J
+416.94 567.53 416.94 566.82 2 L
+2 Z
+0 X
+N
+[1.625 3.25] 0 I
+428.1 625.53 428.87 627.56 0.38 RR
+V
+0 Z
+N
+[1.625 3.25] 0 I
+427.89 625.53 428.66 627.56 0.38 RR
+7 X
+V
+0 X
+N
+J
+410.51 620.52 417.54 620.73 417.54 616.14 410.51 616.09 4 Y
+7 X
+V
+J
+410.51 620.52 417.54 620.73 417.54 616.14 410.51 616.09 4 Y
+J
+410.51 619.52 410.51 620.52 411.51 620.55 3 L
+0 X
+N
+[2.52 5.04] 2.52 I
+411.51 620.55 416.55 620.7 2 L
+N
+J
+416.55 620.7 417.54 620.73 417.54 619.73 3 L
+N
+[1.297 2.593] 1.297 I
+417.54 619.73 417.54 617.14 2 L
+N
+J
+417.54 617.14 417.54 616.14 416.55 616.13 3 L
+N
+[2.518 5.037] 2.518 I
+416.55 616.13 411.51 616.09 2 L
+N
+J
+411.51 616.09 410.51 616.09 410.51 617.09 3 L
+N
+[1.215 2.43] 1.215 I
+410.51 617.09 410.51 619.52 2 L
+N
+J
+408.96 613.04 418.06 613.04 418.06 614.66 408.99 614.46 4 Y
+7 X
+V
+J
+408.96 613.04 418.06 613.04 418.06 614.66 408.99 614.46 4 Y
+J
+409.99 614.48 408.99 614.46 408.96 613.04 409.96 613.04 4 L
+0 X
+N
+[1.42 2.839] 1.42 I
+409.96 613.04 417.06 613.04 2 L
+N
+J
+417.06 613.04 418.06 613.04 418.06 614.66 417.06 614.64 4 L
+N
+[1.414 2.827] 1.414 I
+417.06 614.64 409.99 614.48 2 L
+N
+J
+416.53 614.25 416.53 613.54 2 L
+7 X
+V
+J
+416.53 614.25 416.53 613.54 2 L
+2 Z
+0 X
+N
+J
+411.14 620.05 416.91 620.19 416.91 616.63 411.14 616.63 4 Y
+7 X
+V
+J
+411.14 620.05 416.91 620.19 416.91 616.63 411.14 616.63 4 Y
+J
+411.14 619.05 411.14 620.05 412.14 620.08 3 L
+0 Z
+0 X
+N
+[1.886 3.772] 1.886 I
+412.14 620.08 415.91 620.16 2 L
+N
+J
+415.91 620.16 416.91 620.19 416.91 619.19 3 L
+N
+[0.777 1.554] 0.777 I
+416.91 619.19 416.91 617.63 2 L
+N
+J
+416.91 617.63 416.91 616.63 415.91 616.63 3 L
+N
+[1.885 3.771] 1.885 I
+415.91 616.63 412.14 616.63 2 L
+N
+J
+412.14 616.63 411.14 616.63 411.14 617.63 3 L
+N
+[0.709 1.418] 0.709 I
+411.14 617.63 411.14 619.05 2 L
+N
+J
+397.8 623.47 431.96 625.3 431.96 603.63 397.8 603.83 4 Y
+V
+J
+397.8 623.47 431.96 625.3 431.96 603.63 397.8 603.83 4 Y
+J
+397.8 622.47 397.8 623.47 398.8 623.52 3 L
+N
+[1.894 3.788] 1.894 I
+398.8 623.52 430.96 625.24 2 L
+N
+J
+430.96 625.24 431.96 625.3 431.96 624.3 3 L
+N
+[1.788 3.576] 1.788 I
+431.96 624.3 431.96 604.63 2 L
+N
+J
+431.96 604.63 431.96 603.63 430.96 603.63 3 L
+N
+[1.891 3.783] 1.891 I
+430.96 603.63 398.8 603.83 2 L
+N
+J
+398.8 603.83 397.8 603.83 397.8 604.83 3 L
+N
+[2.205 4.41] 2.205 I
+397.8 604.83 397.8 622.47 2 L
+N
+J
+424.6 615.7 431.96 615.08 431.96 605.89 424.6 605.28 4 Y
+3 X
+V
+J
+424.6 615.7 431.96 615.08 431.96 605.89 424.6 605.28 4 Y
+J
+424.6 614.7 424.6 615.7 425.59 615.61 3 L
+0 X
+N
+[2.693 5.387] 2.693 I
+425.59 615.61 430.96 615.16 2 L
+N
+J
+430.96 615.16 431.96 615.08 431.96 614.08 3 L
+N
+[1.437 2.874] 1.437 I
+431.96 614.08 431.96 606.89 2 L
+N
+J
+431.96 606.89 431.96 605.89 430.96 605.81 3 L
+N
+[2.693 5.387] 2.693 I
+430.96 605.81 425.59 605.36 2 L
+N
+J
+425.59 605.36 424.6 605.28 424.6 606.28 3 L
+N
+[1.685 3.369] 1.685 I
+424.6 606.28 424.6 614.7 2 L
+N
+J
+431.96 609.75 429.69 609.37 429.69 604.66 431.96 603.63 4 Y
+4 X
+V
+J
+431.96 609.75 429.69 609.37 429.69 604.66 431.96 603.63 4 Y
+J
+431.96 608.75 431.96 609.75 430.97 609.58 3 L
+0 X
+N
+[0.15 0.299] 0.15 I
+430.97 609.58 430.68 609.53 2 L
+N
+J
+430.68 609.53 429.69 609.37 429.69 608.37 3 L
+N
+[1.355 2.711] 1.355 I
+429.69 608.37 429.69 605.66 2 L
+N
+J
+429.69 605.66 429.69 604.66 430.6 604.24 3 L
+N
+[0.245 0.49] 0.245 I
+430.6 604.24 431.05 604.04 2 L
+N
+J
+431.05 604.04 431.96 603.63 431.96 604.63 3 L
+N
+[2.062 4.124] 2.062 I
+431.96 604.63 431.96 608.75 2 L
+N
+J
+424.6 617.94 431.96 617.52 2 L
+4 X
+V
+J
+424.6 617.94 425.49 617.89 2 L
+2 Z
+7 X
+N
+[2.388 5.572] 2.388 I
+425.49 617.89 431.06 617.57 2 L
+N
+J
+431.06 617.57 431.96 617.52 2 L
+N
+J
+403.93 606.49 404.75 615.34 403.72 624.52 401.9 629.54 418.86 632.77 420.71 626.86 420.92 620.65
+ 420.71 608.28 8 Y
+V
+J
+403.93 606.49 404.75 615.34 403.72 624.52 401.9 629.54 418.86 632.77 420.71 626.86 420.92 620.65
+ 420.71 608.28 8 Y
+J
+404.92 606.59 403.93 606.49 404.02 607.48 3 L
+0 Z
+0 X
+N
+[1.377 2.754] 1.377 I
+404.02 607.48 404.66 614.34 2 L
+N
+J
+404.66 614.34 404.75 615.34 404.64 616.33 3 L
+N
+[1.449 2.897] 1.449 I
+404.64 616.33 403.83 623.53 2 L
+N
+J
+403.83 623.53 403.72 624.52 403.38 625.46 3 L
+N
+[1.67 3.34] 1.67 I
+403.38 625.46 402.24 628.6 2 L
+N
+J
+402.24 628.6 401.9 629.54 402.88 629.73 3 L
+N
+[1.908 3.816] 1.908 I
+402.88 629.73 417.87 632.58 2 L
+N
+J
+417.87 632.58 418.86 632.77 419.15 631.82 3 L
+N
+[2.098 4.196] 2.098 I
+419.15 631.82 420.41 627.81 2 L
+N
+J
+420.41 627.81 420.71 626.86 420.74 625.86 3 L
+N
+[2.106 4.213] 2.106 I
+420.74 625.86 420.88 621.65 2 L
+N
+J
+420.88 621.65 420.92 620.65 420.9 619.65 3 L
+N
+[2.075 4.151] 2.075 I
+420.9 619.65 420.73 609.28 2 L
+N
+J
+420.73 609.28 420.71 608.28 419.71 608.17 3 L
+N
+[1.86 3.719] 1.86 I
+419.71 608.17 404.92 606.59 2 L
+N
+J
+402.93 606.79 403.72 615.63 402.72 624.82 400.86 629.84 417.85 633.07 419.68 627.16 419.89 620.95
+ 419.68 608.57 8 Y
+7 X
+V
+J
+402.93 606.79 403.72 615.63 402.72 624.82 400.86 629.84 417.85 633.07 419.68 627.16 419.89 620.95
+ 419.68 608.57 8 Y
+J
+403.92 606.89 402.93 606.79 403.02 607.78 3 L
+0 X
+N
+[1.376 2.753] 1.376 I
+403.02 607.78 403.63 614.64 2 L
+N
+J
+403.63 614.64 403.72 615.63 403.61 616.63 3 L
+N
+[1.448 2.896] 1.448 I
+403.61 616.63 402.83 623.83 2 L
+N
+J
+402.83 623.83 402.72 624.82 402.37 625.76 3 L
+N
+[1.675 3.35] 1.675 I
+402.37 625.76 401.21 628.9 2 L
+N
+J
+401.21 628.9 400.86 629.84 401.85 630.02 3 L
+N
+[1.912 3.823] 1.912 I
+401.85 630.02 416.87 632.88 2 L
+N
+J
+416.87 632.88 417.85 633.07 418.15 632.11 3 L
+N
+[2.093 4.187] 2.093 I
+418.15 632.11 419.38 628.11 2 L
+N
+J
+419.38 628.11 419.68 627.16 419.71 626.16 3 L
+N
+[2.106 4.212] 2.106 I
+419.71 626.16 419.85 621.95 2 L
+N
+J
+419.85 621.95 419.89 620.95 419.87 619.95 3 L
+N
+[2.075 4.151] 2.075 I
+419.87 619.95 419.7 609.57 2 L
+N
+J
+419.7 609.57 419.68 608.57 418.68 608.47 3 L
+N
+[1.856 3.712] 1.856 I
+418.68 608.47 403.92 606.89 2 L
+N
+J
+401.9 606.79 402.72 615.63 401.69 624.82 399.83 629.84 416.85 633.07 418.65 627.16 418.86 620.95
+ 418.65 608.57 8 Y
+7 X
+V
+J
+401.9 606.79 402.72 615.63 401.69 624.82 399.83 629.84 416.85 633.07 418.65 627.16 418.86 620.95
+ 418.65 608.57 8 Y
+J
+402.89 606.89 401.9 606.79 401.99 607.78 3 L
+0 X
+N
+[1.377 2.754] 1.377 I
+401.99 607.78 402.63 614.64 2 L
+N
+J
+402.63 614.64 402.72 615.63 402.61 616.63 3 L
+N
+[1.449 2.897] 1.449 I
+402.61 616.63 401.8 623.83 2 L
+N
+J
+401.8 623.83 401.69 624.82 401.34 625.76 3 L
+N
+[1.675 3.35] 1.675 I
+401.34 625.76 400.18 628.9 2 L
+N
+J
+400.18 628.9 399.83 629.84 400.82 630.02 3 L
+N
+[1.915 3.83] 1.915 I
+400.82 630.02 415.87 632.88 2 L
+N
+J
+415.87 632.88 416.85 633.07 417.14 632.11 3 L
+N
+[2.089 4.178] 2.089 I
+417.14 632.11 418.36 628.11 2 L
+N
+J
+418.36 628.11 418.65 627.16 418.68 626.16 3 L
+N
+[2.106 4.212] 2.106 I
+418.68 626.16 418.82 621.95 2 L
+N
+J
+418.82 621.95 418.86 620.95 418.84 619.95 3 L
+N
+[2.075 4.151] 2.075 I
+418.84 619.95 418.67 609.57 2 L
+N
+J
+418.67 609.57 418.65 608.57 417.65 608.47 3 L
+N
+[1.856 3.712] 1.856 I
+417.65 608.47 402.89 606.89 2 L
+N
+J
+389 623.59 424.6 625.5 424.6 602.92 389 603.13 4 Y
+7 X
+V
+J
+389 623.59 424.6 625.5 424.6 602.92 389 603.13 4 Y
+J
+389 622.59 389 623.59 390 623.64 3 L
+0 X
+N
+[1.979 3.958] 1.979 I
+390 623.64 423.6 625.45 2 L
+N
+J
+423.6 625.45 424.6 625.5 424.6 624.5 3 L
+N
+[1.871 3.742] 1.871 I
+424.6 624.5 424.6 603.92 2 L
+N
+J
+424.6 603.92 424.6 602.92 423.6 602.93 3 L
+N
+[1.976 3.953] 1.976 I
+423.6 602.93 390 603.12 2 L
+N
+J
+390 603.12 389 603.13 389 604.13 3 L
+N
+[1.678 3.357] 1.678 I
+389 604.13 389 622.59 2 L
+N
+J
+424.71 625.5 425.51 624.09 425.51 603.66 424.71 602.92 4 Y
+7 X
+V
+J
+424.71 625.5 425.51 624.09 425.51 603.66 424.71 602.92 4 L
+J
+424.71 625.5 425.51 624.09 425.51 623.19 3 L
+2 Z
+0 X
+N
+[1.511 3.525] 1.511 I
+425.51 623.19 425.51 604.56 2 L
+N
+J
+425.51 604.56 425.51 603.66 424.71 602.92 3 L
+N
+J
+398.45 615.11 408.31 615.49 410.29 615.08 410.29 614.05 408.43 614.17 398.45 613.84 6 Y
+7 X
+V
+J
+398.45 615.11 408.31 615.49 410.29 615.08 410.29 614.05 408.43 614.17 398.45 613.84 6 Y
+J
+399.45 613.88 398.45 613.84 398.45 615.11 399.45 615.15 4 L
+0 Z
+0 X
+N
+[1.574 3.148] 1.574 I
+399.45 615.15 407.32 615.45 2 L
+N
+J
+407.32 615.45 408.31 615.49 409.29 615.29 3 L
+N
+[0.008 0.015] 0.008 I
+409.29 615.29 409.31 615.28 2 L
+N
+J
+409.31 615.28 410.29 615.08 410.29 614.05 408.43 614.17 407.43 614.14 5 L
+N
+[1.597 3.194] 1.597 I
+407.43 614.14 399.45 613.88 2 L
+N
+J
+408.4 615.29 408.4 614.67 2 L
+7 X
+V
+J
+408.4 615.29 408.4 614.67 2 L
+2 Z
+0 X
+N
+J
+401.22 621.53 409.4 622.03 409.4 616.85 401.22 616.41 4 Y
+7 X
+V
+J
+401.22 621.53 409.4 622.03 409.4 616.85 401.22 616.41 4 Y
+J
+401.22 620.53 401.22 621.53 402.22 621.59 3 L
+0 Z
+0 X
+N
+[1.24 2.48] 1.24 I
+402.22 621.59 408.4 621.97 2 L
+N
+J
+408.4 621.97 409.4 622.03 409.4 621.03 3 L
+N
+[1.591 3.182] 1.591 I
+409.4 621.03 409.4 617.85 2 L
+N
+J
+409.4 617.85 409.4 616.85 408.4 616.79 3 L
+N
+[1.239 2.479] 1.239 I
+408.4 616.79 402.22 616.46 2 L
+N
+J
+402.22 616.46 401.22 616.41 401.22 617.41 3 L
+N
+[1.561 3.123] 1.561 I
+401.22 617.41 401.22 620.53 2 L
+N
+J
+401.78 621.2 408.84 621.65 408.84 617.17 401.78 616.79 4 Y
+7 X
+V
+J
+401.78 621.2 408.84 621.65 408.84 617.17 401.78 616.79 4 Y
+J
+401.78 620.2 401.78 621.2 402.78 621.27 3 L
+0 X
+N
+[2.54 5.08] 2.54 I
+402.78 621.27 407.85 621.58 2 L
+N
+J
+407.85 621.58 408.84 621.65 408.84 620.65 3 L
+N
+[1.238 2.475] 1.238 I
+408.84 620.65 408.84 618.17 2 L
+N
+J
+408.84 618.17 408.84 617.17 407.85 617.12 3 L
+N
+[2.538 5.077] 2.538 I
+407.85 617.12 402.78 616.84 2 L
+N
+J
+402.78 616.84 401.78 616.79 401.78 617.79 3 L
+N
+[1.208 2.416] 1.208 I
+401.78 617.79 401.78 620.2 2 L
+N
+J
+470.61 626.12 508.65 628.15 508.65 548 470.61 552.1 4 Y
+7 X
+V
+J
+470.61 626.12 508.65 628.15 508.65 548 470.61 552.1 4 Y
+J
+470.61 625.12 470.61 626.12 471.61 626.17 3 L
+0 X
+N
+[1.805 3.609] 1.805 I
+471.61 626.17 507.65 628.1 2 L
+N
+J
+507.65 628.1 508.65 628.15 508.65 627.15 3 L
+N
+[1.906 3.812] 1.906 I
+508.65 627.15 508.65 549 2 L
+N
+J
+508.65 549 508.65 548 507.66 548.11 3 L
+N
+[1.813 3.626] 1.813 I
+507.66 548.11 471.61 551.99 2 L
+N
+J
+471.61 551.99 470.61 552.1 470.61 553.1 3 L
+N
+[1.895 3.79] 1.895 I
+470.61 553.1 470.61 625.12 2 L
+N
+J
+508.65 628.15 524 624.88 524 557.43 508.65 548 4 Y
+7 X
+V
+J
+508.65 628.15 524 624.88 524 557.43 508.65 548 4 Y
+J
+508.65 627.15 508.65 628.15 509.63 627.94 3 L
+0 X
+N
+[1.711 3.423] 1.711 I
+509.63 627.94 523.02 625.09 2 L
+N
+J
+523.02 625.09 524 624.88 524 623.88 3 L
+N
+[2.045 4.091] 2.045 I
+524 623.88 524 558.43 2 L
+N
+J
+524 558.43 524 557.43 523.15 556.91 3 L
+N
+[2.002 4.003] 2.002 I
+523.15 556.91 509.51 548.52 2 L
+N
+J
+509.51 548.52 508.65 548 508.65 549 3 L
+N
+[1.906 3.812] 1.906 I
+508.65 549 508.65 627.15 2 L
+N
+J
+471.85 601.39 506.42 601.39 506.42 578.9 471.85 581.13 4 Y
+7 X
+V
+J
+471.85 601.39 506.42 601.39 506.42 578.9 471.85 581.13 4 Y
+J
+471.85 600.39 471.85 601.39 472.85 601.39 3 L
+0 X
+N
+[1.916 3.831] 1.916 I
+472.85 601.39 505.42 601.39 2 L
+N
+J
+505.42 601.39 506.42 601.39 506.42 600.39 3 L
+N
+[1.863 3.726] 1.863 I
+506.42 600.39 506.42 579.9 2 L
+N
+J
+506.42 579.9 506.42 578.9 505.42 578.96 3 L
+N
+[1.92 3.84] 1.92 I
+505.42 578.96 472.85 581.07 2 L
+N
+J
+472.85 581.07 471.85 581.13 471.85 582.13 3 L
+N
+[1.66 3.319] 1.66 I
+471.85 582.13 471.85 600.39 2 L
+N
+J
+471.85 578.9 506.42 576.45 506.42 554.55 471.85 558.05 4 Y
+7 X
+V
+J
+471.85 578.9 506.42 576.45 506.42 554.55 471.85 558.05 4 Y
+J
+471.85 577.9 471.85 578.9 472.85 578.82 3 L
+0 X
+N
+[1.921 3.841] 1.921 I
+472.85 578.82 505.42 576.52 2 L
+N
+J
+505.42 576.52 506.42 576.45 506.42 575.45 3 L
+N
+[1.81 3.619] 1.81 I
+506.42 575.45 506.42 555.55 2 L
+N
+J
+506.42 555.55 506.42 554.55 505.42 554.65 3 L
+N
+[1.926 3.852] 1.926 I
+505.42 554.65 472.85 557.95 2 L
+N
+J
+472.85 557.95 471.85 558.05 471.85 559.05 3 L
+N
+[1.713 3.426] 1.713 I
+471.85 559.05 471.85 577.9 2 L
+N
+J
+524 622.44 508.65 625.5 470.61 623.66 3 L
+J
+524 622.44 523.12 622.62 2 L
+2 Z
+N
+[1.539 3.59] 1.539 I
+523.12 622.62 509.54 625.33 2 L
+N
+J
+509.54 625.33 508.65 625.5 507.76 625.46 3 L
+N
+[1.625 3.791] 1.625 I
+507.76 625.46 471.51 623.71 2 L
+N
+J
+471.51 623.71 470.61 623.66 2 L
+N
+J
+506.42 625.3 506.42 548.28 2 L
+J
+506.42 625.3 506.42 624.4 2 L
+N
+[1.777 4.146] 1.777 I
+506.42 624.4 506.42 549.18 2 L
+N
+J
+506.42 549.18 506.42 548.28 2 L
+N
+J
+471.85 623.66 471.85 551.9 2 L
+J
+471.85 623.66 471.85 622.76 2 L
+N
+[1.794 4.186] 1.794 I
+471.85 622.76 471.85 552.8 2 L
+N
+J
+471.85 552.8 471.85 551.9 2 L
+N
+J
+484.92 597.91 491.96 597.91 491.96 593.32 484.92 593.5 4 Y
+7 X
+V
+J
+484.92 597.91 491.96 597.91 491.96 593.32 484.92 593.5 4 Y
+J
+484.92 596.91 484.92 597.91 485.92 597.91 3 L
+0 Z
+0 X
+N
+[2.518 5.037] 2.518 I
+485.92 597.91 490.96 597.91 2 L
+N
+J
+490.96 597.91 491.96 597.91 491.96 596.91 3 L
+N
+[1.297 2.593] 1.297 I
+491.96 596.91 491.96 594.32 2 L
+N
+J
+491.96 594.32 491.96 593.32 490.96 593.35 3 L
+N
+[2.519 5.039] 2.519 I
+490.96 593.35 485.92 593.47 2 L
+N
+J
+485.92 593.47 484.92 593.5 484.92 594.5 3 L
+N
+[1.208 2.416] 1.208 I
+484.92 594.5 484.92 596.91 2 L
+N
+J
+484.72 575.21 491.9 574.71 491.9 570.18 484.72 570.89 4 Y
+7 X
+V
+J
+484.72 575.21 491.9 574.71 491.9 570.18 484.72 570.89 4 Y
+J
+484.72 574.21 484.72 575.21 485.71 575.15 3 L
+0 X
+N
+[2.601 5.201] 2.601 I
+485.71 575.15 490.9 574.78 2 L
+N
+J
+490.9 574.78 491.9 574.71 491.9 573.71 3 L
+N
+[1.267 2.534] 1.267 I
+491.9 573.71 491.9 571.18 2 L
+N
+J
+491.9 571.18 491.9 570.18 490.9 570.28 3 L
+N
+[2.609 5.219] 2.609 I
+490.9 570.28 485.71 570.79 2 L
+N
+J
+485.71 570.79 484.72 570.89 484.72 571.89 3 L
+N
+[1.164 2.328] 1.164 I
+484.72 571.89 484.72 574.21 2 L
+N
+J
+485.28 574.74 491.34 574.33 491.34 570.65 485.28 571.21 4 Y
+7 X
+V
+J
+485.28 574.74 491.34 574.33 491.34 570.65 485.28 571.21 4 Y
+J
+485.28 573.74 485.28 574.74 486.27 574.68 3 L
+0 X
+N
+[2.04 4.079] 2.04 I
+486.27 574.68 490.34 574.4 2 L
+N
+J
+490.34 574.4 491.34 574.33 491.34 573.33 3 L
+N
+[0.84 1.68] 0.84 I
+491.34 573.33 491.34 571.65 2 L
+N
+J
+491.34 571.65 491.34 570.65 490.35 570.74 3 L
+N
+[2.045 4.091] 2.045 I
+490.35 570.74 486.27 571.12 2 L
+N
+J
+486.27 571.12 485.28 571.21 485.28 572.21 3 L
+N
+[0.767 1.533] 0.767 I
+485.28 572.21 485.28 573.74 2 L
+N
+J
+483.1 568.47 492.49 567.53 492.49 566.32 483.1 567.32 4 Y
+7 X
+V
+J
+483.1 568.47 492.49 567.53 492.49 566.32 483.1 567.32 4 Y
+J
+484.09 567.22 483.1 567.32 483.1 568.47 484.09 568.37 4 L
+0 X
+N
+[1.488 2.976] 1.488 I
+484.09 568.37 491.49 567.63 2 L
+N
+J
+491.49 567.63 492.49 567.53 492.49 566.32 491.49 566.43 4 L
+N
+[1.489 2.978] 1.489 I
+491.49 566.43 484.09 567.22 2 L
+N
+J
+483.39 591.76 492.49 591.47 492.49 590.14 483.39 590.64 4 Y
+7 X
+V
+J
+483.39 591.76 492.49 591.47 492.49 590.14 483.39 590.64 4 Y
+J
+484.39 590.59 483.39 590.64 483.39 591.76 484.39 591.73 4 L
+0 X
+N
+[1.421 2.841] 1.421 I
+484.39 591.73 491.49 591.5 2 L
+N
+J
+491.49 591.5 492.49 591.47 492.49 590.14 491.49 590.2 4 L
+N
+[1.422 2.845] 1.422 I
+491.49 590.2 484.39 590.59 2 L
+N
+J
+490.96 591.35 490.96 590.64 2 L
+7 X
+V
+J
+490.96 591.35 490.96 590.64 2 L
+2 Z
+0 X
+N
+J
+485.57 597.5 491.34 597.5 491.34 593.73 485.57 593.88 4 Y
+7 X
+V
+J
+485.57 597.5 491.34 597.5 491.34 593.73 485.57 593.88 4 Y
+J
+485.57 596.5 485.57 597.5 486.57 597.5 3 L
+0 Z
+0 X
+N
+[1.885 3.771] 1.885 I
+486.57 597.5 490.34 597.5 2 L
+N
+J
+490.34 597.5 491.34 597.5 491.34 596.5 3 L
+N
+[0.884 1.769] 0.884 I
+491.34 596.5 491.34 594.73 2 L
+N
+J
+491.34 594.73 491.34 593.73 490.34 593.76 3 L
+N
+[1.886 3.773] 1.886 I
+490.34 593.76 486.57 593.86 2 L
+N
+J
+486.57 593.86 485.57 593.88 485.57 594.88 3 L
+N
+[0.811 1.621] 0.811 I
+485.57 594.88 485.57 596.5 2 L
+N
+J
+491.37 567.53 491.37 566.82 2 L
+7 X
+V
+J
+491.37 567.53 491.37 566.82 2 L
+2 Z
+0 X
+N
+[1.625 3.25] 0 I
+502.53 625.53 503.29 627.56 0.38 RR
+V
+0 Z
+N
+[1.625 3.25] 0 I
+502.32 625.53 503.09 627.56 0.38 RR
+7 X
+V
+0 X
+N
+J
+484.94 620.52 491.97 620.73 491.97 616.14 484.94 616.09 4 Y
+7 X
+V
+J
+484.94 620.52 491.97 620.73 491.97 616.14 484.94 616.09 4 Y
+J
+484.94 619.52 484.94 620.52 485.94 620.55 3 L
+0 X
+N
+[2.52 5.04] 2.52 I
+485.94 620.55 490.98 620.7 2 L
+N
+J
+490.98 620.7 491.97 620.73 491.97 619.73 3 L
+N
+[1.297 2.593] 1.297 I
+491.97 619.73 491.97 617.14 2 L
+N
+J
+491.97 617.14 491.97 616.14 490.97 616.13 3 L
+N
+[2.518 5.037] 2.518 I
+490.97 616.13 485.94 616.09 2 L
+N
+J
+485.94 616.09 484.94 616.09 484.94 617.09 3 L
+N
+[1.215 2.43] 1.215 I
+484.94 617.09 484.94 619.52 2 L
+N
+J
+483.39 613.04 492.49 613.04 492.49 614.66 483.42 614.46 4 Y
+7 X
+V
+J
+483.39 613.04 492.49 613.04 492.49 614.66 483.42 614.46 4 Y
+J
+484.42 614.48 483.42 614.46 483.39 613.04 484.39 613.04 4 L
+0 X
+N
+[1.42 2.839] 1.42 I
+484.39 613.04 491.49 613.04 2 L
+N
+J
+491.49 613.04 492.49 613.04 492.49 614.66 491.49 614.64 4 L
+N
+[1.414 2.827] 1.414 I
+491.49 614.64 484.42 614.48 2 L
+N
+J
+490.96 614.25 490.96 613.54 2 L
+7 X
+V
+J
+490.96 614.25 490.96 613.54 2 L
+2 Z
+0 X
+N
+J
+485.57 620.05 491.34 620.19 491.34 616.63 485.57 616.63 4 Y
+7 X
+V
+J
+485.57 620.05 491.34 620.19 491.34 616.63 485.57 616.63 4 Y
+J
+485.57 619.05 485.57 620.05 486.57 620.08 3 L
+0 Z
+0 X
+N
+[1.886 3.772] 1.886 I
+486.57 620.08 490.34 620.16 2 L
+N
+J
+490.34 620.16 491.34 620.19 491.34 619.19 3 L
+N
+[0.777 1.554] 0.777 I
+491.34 619.19 491.34 617.63 2 L
+N
+J
+491.34 617.63 491.34 616.63 490.34 616.63 3 L
+N
+[1.885 3.771] 1.885 I
+490.34 616.63 486.57 616.63 2 L
+N
+J
+486.57 616.63 485.57 616.63 485.57 617.63 3 L
+N
+[0.709 1.418] 0.709 I
+485.57 617.63 485.57 619.05 2 L
+N
+J
+472.23 623.47 506.39 625.3 506.39 603.63 472.23 603.83 4 Y
+V
+J
+472.23 623.47 506.39 625.3 506.39 603.63 472.23 603.83 4 Y
+J
+472.23 622.47 472.23 623.47 473.23 623.52 3 L
+N
+[1.894 3.788] 1.894 I
+473.23 623.52 505.39 625.24 2 L
+N
+J
+505.39 625.24 506.39 625.3 506.39 624.3 3 L
+N
+[1.788 3.576] 1.788 I
+506.39 624.3 506.39 604.63 2 L
+N
+J
+506.39 604.63 506.39 603.63 505.39 603.63 3 L
+N
+[1.891 3.783] 1.891 I
+505.39 603.63 473.23 603.83 2 L
+N
+J
+473.23 603.83 472.23 603.83 472.23 604.83 3 L
+N
+[2.205 4.41] 2.205 I
+472.23 604.83 472.23 622.47 2 L
+N
+J
+499.03 615.7 506.39 615.08 506.39 605.89 499.03 605.28 4 Y
+3 X
+V
+J
+499.03 615.7 506.39 615.08 506.39 605.89 499.03 605.28 4 Y
+J
+499.03 614.7 499.03 615.7 500.02 615.61 3 L
+0 X
+N
+[2.693 5.387] 2.693 I
+500.02 615.61 505.39 615.16 2 L
+N
+J
+505.39 615.16 506.39 615.08 506.39 614.08 3 L
+N
+[1.437 2.874] 1.437 I
+506.39 614.08 506.39 606.89 2 L
+N
+J
+506.39 606.89 506.39 605.89 505.39 605.81 3 L
+N
+[2.693 5.387] 2.693 I
+505.39 605.81 500.02 605.36 2 L
+N
+J
+500.02 605.36 499.03 605.28 499.03 606.28 3 L
+N
+[1.685 3.369] 1.685 I
+499.03 606.28 499.03 614.7 2 L
+N
+J
+506.39 609.75 504.12 609.37 504.12 604.66 506.39 603.63 4 Y
+4 X
+V
+J
+506.39 609.75 504.12 609.37 504.12 604.66 506.39 603.63 4 Y
+J
+506.39 608.75 506.39 609.75 505.4 609.58 3 L
+0 X
+N
+[0.15 0.299] 0.15 I
+505.4 609.58 505.11 609.53 2 L
+N
+J
+505.11 609.53 504.12 609.37 504.12 608.37 3 L
+N
+[1.355 2.711] 1.355 I
+504.12 608.37 504.12 605.66 2 L
+N
+J
+504.12 605.66 504.12 604.66 505.03 604.24 3 L
+N
+[0.245 0.49] 0.245 I
+505.03 604.24 505.48 604.04 2 L
+N
+J
+505.48 604.04 506.39 603.63 506.39 604.63 3 L
+N
+[2.062 4.124] 2.062 I
+506.39 604.63 506.39 608.75 2 L
+N
+J
+499.03 617.94 506.39 617.52 2 L
+4 X
+V
+J
+499.03 617.94 499.92 617.89 2 L
+2 Z
+7 X
+N
+[2.388 5.572] 2.388 I
+499.92 617.89 505.49 617.57 2 L
+N
+J
+505.49 617.57 506.39 617.52 2 L
+N
+J
+478.36 606.49 479.18 615.34 478.15 624.52 476.33 629.54 493.28 632.77 495.14 626.86 495.35 620.65
+ 495.14 608.28 8 Y
+V
+J
+478.36 606.49 479.18 615.34 478.15 624.52 476.33 629.54 493.28 632.77 495.14 626.86 495.35 620.65
+ 495.14 608.28 8 Y
+J
+479.35 606.59 478.36 606.49 478.45 607.48 3 L
+0 Z
+0 X
+N
+[1.377 2.754] 1.377 I
+478.45 607.48 479.09 614.34 2 L
+N
+J
+479.09 614.34 479.18 615.34 479.07 616.33 3 L
+N
+[1.449 2.897] 1.449 I
+479.07 616.33 478.26 623.53 2 L
+N
+J
+478.26 623.53 478.15 624.52 477.81 625.46 3 L
+N
+[1.67 3.34] 1.67 I
+477.81 625.46 476.67 628.6 2 L
+N
+J
+476.67 628.6 476.33 629.54 477.31 629.73 3 L
+N
+[1.908 3.816] 1.908 I
+477.31 629.73 492.3 632.58 2 L
+N
+J
+492.3 632.58 493.28 632.77 493.58 631.82 3 L
+N
+[2.098 4.196] 2.098 I
+493.58 631.82 494.84 627.81 2 L
+N
+J
+494.84 627.81 495.14 626.86 495.17 625.86 3 L
+N
+[2.106 4.213] 2.106 I
+495.17 625.86 495.31 621.65 2 L
+N
+J
+495.31 621.65 495.35 620.65 495.33 619.65 3 L
+N
+[2.075 4.151] 2.075 I
+495.33 619.65 495.16 609.28 2 L
+N
+J
+495.16 609.28 495.14 608.28 494.14 608.17 3 L
+N
+[1.86 3.719] 1.86 I
+494.14 608.17 479.35 606.59 2 L
+N
+J
+477.36 606.79 478.15 615.63 477.15 624.82 475.3 629.84 492.28 633.07 494.11 627.16 494.32 620.95
+ 494.11 608.57 8 Y
+7 X
+V
+J
+477.36 606.79 478.15 615.63 477.15 624.82 475.3 629.84 492.28 633.07 494.11 627.16 494.32 620.95
+ 494.11 608.57 8 Y
+J
+478.35 606.89 477.36 606.79 477.45 607.78 3 L
+0 X
+N
+[1.376 2.753] 1.376 I
+477.45 607.78 478.06 614.64 2 L
+N
+J
+478.06 614.64 478.15 615.63 478.04 616.63 3 L
+N
+[1.448 2.896] 1.448 I
+478.04 616.63 477.26 623.83 2 L
+N
+J
+477.26 623.83 477.15 624.82 476.8 625.76 3 L
+N
+[1.675 3.35] 1.675 I
+476.8 625.76 475.64 628.9 2 L
+N
+J
+475.64 628.9 475.3 629.84 476.28 630.02 3 L
+N
+[1.912 3.823] 1.912 I
+476.28 630.02 491.3 632.88 2 L
+N
+J
+491.3 632.88 492.28 633.07 492.58 632.11 3 L
+N
+[2.093 4.187] 2.093 I
+492.58 632.11 493.81 628.11 2 L
+N
+J
+493.81 628.11 494.11 627.16 494.14 626.16 3 L
+N
+[2.106 4.212] 2.106 I
+494.14 626.16 494.28 621.95 2 L
+N
+J
+494.28 621.95 494.32 620.95 494.3 619.95 3 L
+N
+[2.075 4.151] 2.075 I
+494.3 619.95 494.13 609.57 2 L
+N
+J
+494.13 609.57 494.11 608.57 493.11 608.47 3 L
+N
+[1.856 3.712] 1.856 I
+493.11 608.47 478.35 606.89 2 L
+N
+J
+476.33 606.79 477.15 615.63 476.12 624.82 474.27 629.84 491.28 633.07 493.08 627.16 493.28 620.95
+ 493.08 608.57 8 Y
+7 X
+V
+J
+476.33 606.79 477.15 615.63 476.12 624.82 474.27 629.84 491.28 633.07 493.08 627.16 493.28 620.95
+ 493.08 608.57 8 Y
+J
+477.32 606.89 476.33 606.79 476.42 607.78 3 L
+0 X
+N
+[1.377 2.754] 1.377 I
+476.42 607.78 477.06 614.64 2 L
+N
+J
+477.06 614.64 477.15 615.63 477.04 616.63 3 L
+N
+[1.449 2.897] 1.449 I
+477.04 616.63 476.23 623.83 2 L
+N
+J
+476.23 623.83 476.12 624.82 475.77 625.76 3 L
+N
+[1.675 3.35] 1.675 I
+475.77 625.76 474.61 628.9 2 L
+N
+J
+474.61 628.9 474.27 629.84 475.25 630.02 3 L
+N
+[1.915 3.83] 1.915 I
+475.25 630.02 490.3 632.88 2 L
+N
+J
+490.3 632.88 491.28 633.07 491.57 632.11 3 L
+N
+[2.089 4.178] 2.089 I
+491.57 632.11 492.79 628.11 2 L
+N
+J
+492.79 628.11 493.08 627.16 493.11 626.16 3 L
+N
+[2.106 4.212] 2.106 I
+493.11 626.16 493.25 621.95 2 L
+N
+J
+493.25 621.95 493.28 620.95 493.27 619.95 3 L
+N
+[2.075 4.151] 2.075 I
+493.27 619.95 493.1 609.57 2 L
+N
+J
+493.1 609.57 493.08 608.57 492.08 608.47 3 L
+N
+[1.856 3.712] 1.856 I
+492.08 608.47 477.32 606.89 2 L
+N
+J
+463.43 623.59 499.03 625.5 499.03 602.92 463.43 603.13 4 Y
+7 X
+V
+J
+463.43 623.59 499.03 625.5 499.03 602.92 463.43 603.13 4 Y
+J
+463.43 622.59 463.43 623.59 464.43 623.64 3 L
+0 X
+N
+[1.979 3.958] 1.979 I
+464.43 623.64 498.03 625.45 2 L
+N
+J
+498.03 625.45 499.03 625.5 499.03 624.5 3 L
+N
+[1.871 3.742] 1.871 I
+499.03 624.5 499.03 603.92 2 L
+N
+J
+499.03 603.92 499.03 602.92 498.03 602.93 3 L
+N
+[1.976 3.953] 1.976 I
+498.03 602.93 464.43 603.12 2 L
+N
+J
+464.43 603.12 463.43 603.13 463.43 604.13 3 L
+N
+[1.678 3.357] 1.678 I
+463.43 604.13 463.43 622.59 2 L
+N
+J
+499.14 625.5 499.94 624.09 499.94 603.66 499.14 602.92 4 Y
+7 X
+V
+J
+499.14 625.5 499.94 624.09 499.94 603.66 499.14 602.92 4 L
+J
+499.14 625.5 499.94 624.09 499.94 623.19 3 L
+2 Z
+0 X
+N
+[1.511 3.525] 1.511 I
+499.94 623.19 499.94 604.56 2 L
+N
+J
+499.94 604.56 499.94 603.66 499.14 602.92 3 L
+N
+J
+472.88 615.11 482.74 615.49 484.72 615.08 484.72 614.05 482.86 614.17 472.88 613.84 6 Y
+7 X
+V
+J
+472.88 615.11 482.74 615.49 484.72 615.08 484.72 614.05 482.86 614.17 472.88 613.84 6 Y
+J
+473.88 613.88 472.88 613.84 472.88 615.11 473.88 615.15 4 L
+0 Z
+0 X
+N
+[1.574 3.148] 1.574 I
+473.88 615.15 481.74 615.45 2 L
+N
+J
+481.74 615.45 482.74 615.49 483.72 615.29 3 L
+N
+[0.008 0.015] 0.008 I
+483.72 615.29 483.74 615.28 2 L
+N
+J
+483.74 615.28 484.72 615.08 484.72 614.05 482.86 614.17 481.86 614.14 5 L
+N
+[1.597 3.194] 1.597 I
+481.86 614.14 473.88 613.88 2 L
+N
+J
+482.83 615.29 482.83 614.67 2 L
+7 X
+V
+J
+482.83 615.29 482.83 614.67 2 L
+2 Z
+0 X
+N
+J
+475.65 621.53 483.83 622.03 483.83 616.85 475.65 616.41 4 Y
+7 X
+V
+J
+475.65 621.53 483.83 622.03 483.83 616.85 475.65 616.41 4 Y
+J
+475.65 620.53 475.65 621.53 476.65 621.59 3 L
+0 Z
+0 X
+N
+[1.24 2.48] 1.24 I
+476.65 621.59 482.83 621.97 2 L
+N
+J
+482.83 621.97 483.83 622.03 483.83 621.03 3 L
+N
+[1.591 3.182] 1.591 I
+483.83 621.03 483.83 617.85 2 L
+N
+J
+483.83 617.85 483.83 616.85 482.83 616.79 3 L
+N
+[1.239 2.479] 1.239 I
+482.83 616.79 476.65 616.46 2 L
+N
+J
+476.65 616.46 475.65 616.41 475.65 617.41 3 L
+N
+[1.561 3.123] 1.561 I
+475.65 617.41 475.65 620.53 2 L
+N
+J
+476.21 621.2 483.27 621.65 483.27 617.17 476.21 616.79 4 Y
+7 X
+V
+J
+476.21 621.2 483.27 621.65 483.27 617.17 476.21 616.79 4 Y
+J
+476.21 620.2 476.21 621.2 477.21 621.27 3 L
+0 X
+N
+[2.54 5.08] 2.54 I
+477.21 621.27 482.28 621.58 2 L
+N
+J
+482.28 621.58 483.27 621.65 483.27 620.65 3 L
+N
+[1.238 2.475] 1.238 I
+483.27 620.65 483.27 618.17 2 L
+N
+J
+483.27 618.17 483.27 617.17 482.27 617.12 3 L
+N
+[2.538 5.077] 2.538 I
+482.27 617.12 477.21 616.84 2 L
+N
+J
+477.21 616.84 476.21 616.79 476.21 617.79 3 L
+N
+[1.208 2.416] 1.208 I
+476.21 617.79 476.21 620.2 2 L
+N
+J
+324.18 626.12 362.22 628.15 362.22 548 324.18 552.1 4 Y
+7 X
+V
+0 X
+N
+362.22 628.15 377.57 624.88 377.57 557.43 362.22 548 4 Y
+7 X
+V
+0 X
+N
+325.42 601.39 359.99 601.39 359.99 578.9 325.42 581.13 4 Y
+7 X
+V
+0 X
+N
+325.42 578.9 359.99 576.45 359.99 554.55 325.42 558.05 4 Y
+7 X
+V
+0 X
+N
+377.57 622.44 362.22 625.5 324.18 623.66 3 L
+2 Z
+N
+359.99 625.3 359.99 548.28 2 L
+N
+325.42 623.66 325.42 551.9 2 L
+N
+338.49 597.91 345.53 597.91 345.53 593.32 338.49 593.5 4 Y
+7 X
+V
+0 Z
+0 X
+N
+338.29 575.21 345.47 574.71 345.47 570.18 338.29 570.89 4 Y
+7 X
+V
+0 X
+N
+338.85 574.74 344.91 574.33 344.91 570.65 338.85 571.21 4 Y
+7 X
+V
+0 X
+N
+336.67 568.47 346.06 567.53 346.06 566.32 336.67 567.32 4 Y
+7 X
+V
+0 X
+N
+336.96 591.76 346.06 591.47 346.06 590.14 336.96 590.64 4 Y
+7 X
+V
+0 X
+N
+344.53 591.35 344.53 590.64 2 L
+7 X
+V
+2 Z
+0 X
+N
+339.14 597.5 344.91 597.5 344.91 593.73 339.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

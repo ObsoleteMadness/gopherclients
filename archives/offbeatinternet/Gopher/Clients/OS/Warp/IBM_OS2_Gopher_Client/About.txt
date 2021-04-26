@@ -1,0 +1,59 @@
+IBM OS/2 Gopher Client
+(ver 1.61)
+Abandonware
+
+
+There are many changes to the client from version 1.04; some of the
+most significant are:
+ 
+*  True multithreading in all TCP/IP processing
+ 
+*  The default representation of a Gopher menu now uses icons; you can
+   have multiple windows on screen at once.
+ 
+*  Mouse Button 2 brings up a popup menu pertaining to the current item
+   or the current menu.
+ 
+*  Printing (though it's NOT multithreaded and is only to LPT1) from the
+   viewer window
+ 
+*  You can specify a viewer program for any Gopher type (see the Options
+   notebook)
+ 
+*  Speed improvements
+ 
+*  Rexx support to supply the name of a file to be saved or downloaded
+ 
+*  Lots of fit and finish improvements
+ 
+There's a complete change log in the GOPHER.CHA file inside the ZIPfile.
+ 
+===== 
+ 
+What's not in this version?
+ 
+*  Gopher+ support
+ 
+*  SOCKS support
+ 
+*  Better documentation
+ 
+*  Proper integration of the online help back to the code
+ 
+*  Proper printing
+ 
+*  More fit and finish
+ 
+*  Proper PH (phonebook) support
+ 
+
+
+==========================================================
+==========================================================
+
+PLEASE NOTE:
+
+The Gopher Clients for "Windows 3.x" will ALSO work 
+under "OS/2 2.x" and above.
+
+

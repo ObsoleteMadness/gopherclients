@@ -1,0 +1,9 @@
+The following PC servers for DOS are availble:
+
+   ka9q/     A gopher server based on Phil Karn's ka9q internet server.
+   hamburg/  A gopher server that uses the Clarkson/Crynwr packet drivers.
+             and includes a gateway to Paradox for searches.
+
+Check out the os2, Windows and WinNT directories for more servers that run
+under on the PC platform.
+

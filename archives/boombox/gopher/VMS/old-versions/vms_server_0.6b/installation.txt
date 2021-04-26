@@ -1,0 +1,55 @@
+This file will address the installation of the VMS gopher server.
+
+1)  FTP the files from the pub/gopher/VMS directory on gopher.micro.umn.edu
+     (probably already done if you are reading this)
+
+2)  Put the source files somewhere on your system.
+
+3)  Compile the source code.  Determine if you are going to compile with VAXC
+    or wil GCC.  Then use the command procedure compile like this:
+
+        $ @compile gcc                      (to use GCC to compile)
+     or
+        $ @compile cc                       (to use VAXC to compile)
+
+4)  Next link the executable.  There will be some warnings which can be 
+    ignored.  You will need to modify this file to get the correct
+    options file for the link.  Use MULTINETOPT for Multinet, UCX for
+    UCX, and WINS for Wollongong.
+
+        $ @link_server
+
+5)  Decide where the gopher data directory will be and create that directory.
+    Then assign a logical name to that directory similar to this:
+
+    $ assign/system/exec/trans=(conc,term) $1$dua0:[gopher_data.] gopher_root
+
+    The server looks for its files in the gopher_root directory tree.  You
+    should also read the server.doc file.  It is copied here to help give some
+    direction as to how to create text files and link files for the server.
+    Although it is written to the unix system, it explains what a link file
+    is and what should be in it to some extent.
+
+    In the gopher_root logical name definition, the physical device name must
+    be specified.  I have not had a server work where the device name was
+    given by some other logical, even an exec mode logical.  This was found
+    the hard way by a lot of people trying to set up a server and defining 
+    something like userw:[gopher.data.] and the server just simply disappears.
+    I think that needs some work too to get some sort of message out about 
+    why the server is dying.
+
+6)  Start the gopher server.  Look at the procedure start_gopher.com before
+    starting the server.
+
+    $ @start_gopher $1$dua2:[gopher_data.] gopher_root:[000000] 70 -
+         sys$manager:gopher.log
+
+    The sys$manager and sys$system logicals/directories can be replaced with
+    wherever you want the gopher server to put these.  The log is kept open
+    by the server.  I hope to fix this at some point.  The security file
+    might not work.  I have not tried to do anything with it.
+
+7)  Hopefully you now have a gopher server running on port 70.  Put some files
+    in the gopher_data directory and then telnet to your machine on port 70
+    and type a <return> and see if the server lists out the files you have
+    there.  Now add things to your server to make it do more things.

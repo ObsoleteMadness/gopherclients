@@ -1,0 +1,34 @@
+GopherVR for MacOS X
+(ver 0.5.1)
+Freeware
+
+
+GopherVR is a 3-D virtual reality interface to Gopherspace, for 
+MacOS X versions 10.4 through 10.11 (PowerPC or Intel).  GopherVR   
+allows you to "walk around a Gopher server", and get a graphic view 
+of its contents using a simple VR-type world.  
+
+GopherVR was originally released unfinished (in a version for Motif-
+based X11), then promptly abandoned.  This newer version of GopherVR 
+is based on the original source code, and has been updated with some 
+additional features and some critical bug fixes.  It contains a 
+launcher that maintains a Dock icon, and autostarts X11.  Place the 
+program into your /Applications folder.
+
+==========
+
+NOTE: Running GopherVR on a Macintosh running OS X version 10.4 or above 
+requires that you first install "X11" (which should already be on the 
+system) and "OpenMotif" (which you possibly do not have).  I am offering 
+copies of OpenMotif-Mac (ver 2.1.32), which you can download if necessary:
+
+OpenMotif-Mac_10-4_2-1-dmg.zip = For PowerPC or Intel Mac OS X version 10.4.
+OpenMotif-Mac_10-5_2-1-dmg.zip = For Mac OS X versions 10.5 - 10.11.
+
+This modified distribution of IST OpenMotif 2.1.32 runs from "Applications".   
+It interfaces correctly with SIP, and is compatible with a PowerPC or i386. 
+The Zip file includes all binaries, libraries, and development headers.
+
+To install, open the disk image and drag the folder to /Applications. 
+Do not change any names or relative paths.
+

@@ -1,0 +1,52 @@
+This directory contains:
+     mailchk.c
+     mailcall.hqx
+     and this readme file.
+
+Mailchk and MailCall were written by Chris McNeil (cjm@unb.ca).
+
+Mailchk is a udp based unix daemon that works with Mac POPmail II (version
+2.02a or later) and MailCall.  MailCall is a small (70k RAM) background
+only-application that queries the Mailchk daemon every 4 minutes to ask
+if new mail has arrived.  If there is any new mail, MailCall will
+rotate the Apple icon with a small envelope icon using Notification
+Manager until the Mac user fetches the mail using POPmail.
+
+You can only (currently) use MailCall and mailchk if your mail server
+is a unix machine.  You cannot use it with MailStop servers.
+
+1.  Open mailchk.c and edit the line: 
+
+ char *MAILCK ="/bin/grep -c '^From ' /usr/mail/.
+
+so that the path of grep and the mail spool directories are correct for
+your machine.
+
+2.  To install mailchk, make mailchk and move it to /usr/local/etc/ or some
+other convenient location.  Put the following line in /etc/services file
+mailchk         2371/udp
+
+Put a line similar to the  following  in /etc/inetd.conf file
+mailchk dgram   udp     wait    root    /usr/local/etc/mailchk
+
+3.  Then restart  inetd by kill -1 process id
+
+
+4.  Using MailCall.
+Start up POPmail and fetch your mail.  This will create a settings file
+for MailCall to use when checking for mail.
+
+For System 6 (with MultiFinder) users, place the MailCall application
+somewhere on your hard disk.  Select it and make it the startup
+application (Set Startup menu item under Special menu).  
+
+For System 7, drop the MailCall application into the Startup Items
+folder within the System Folder.
+
+In either case, restart your Mac to get MailCall going.
+
+Thats all.
+Chris McNeil
+cjm@jupiter.csd.unb.ca
+
+Bugs to cjm@unb.ca and to popmail@boombox.micro.umn.edu

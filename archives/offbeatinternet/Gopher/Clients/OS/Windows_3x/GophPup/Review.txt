@@ -1,0 +1,11 @@
+GophPup
+
+Reviewed 7/29/08 by: Avery M.
+
+
+This is an interesting client... it provides useful information in
+gopher menus, it supports everything including Gopher+, and it even
+includes an HTTP browser! However, the graphics are better suited to
+Windows 3.1 than 2000 or XP.
+
+

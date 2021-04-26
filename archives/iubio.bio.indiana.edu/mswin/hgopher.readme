@@ -1,0 +1,329 @@
+		  README for HGOPHER (Hampson's Gopher) 
+
+	A Gopher Client For Windows 3.1  Version Beta 1.0
+
+	Please read the Copyright notices at the end of this document
+
+Welcome
+
+Here is a Gopher Client for windows 3.1.
+Note this is an Beta test release and as such the documentation
+and online help is poor.
+
+However if you would like to try it feel free and have fun!
+
+Send comments or problems to m.hampson@ic.ac.uk
+If you find this product useful please let me know
+as it gives me the will to continue.
+
+Changes since Alpha Release
+
+	* Winsock version is now available
+	* Product has been renamed since gopher was a bit
+	  generic - for want of anything better I am now 
+	  calling in Hampson's Gopher or hgopher.
+	* Telnet now spawned with IP address rather than
+	  host name (for systems without DNS)
+	* Book marks can now be edited and created. This
+	  allows you to build your own gopher items
+
+Requirements
+	
+    WINSOCK VERSION
+
+	* MS Windows 3.1  (not tested with Windows 3.0)
+	  Or Windows NT.
+	* Winsock DLL and TCP/IP+Packet support layer.
+	* See later for a list of Winsock tested versions.
+
+    PC NFS VERSION
+	
+	* MS Windows 3.1 (not tested with Windows 3.0)
+	* PC NFS Version 4 or version 5 (may work with other versions)
+          NOTE: you can also use the Winsock version with PC NFS 5.0
+                and I suggest you do, as support for the native PC NFS
+                version may be withdrawn at some point.
+
+
+Features
+
+	* Bookmarks with editing 
+	* DNS capability
+	* Vendor name lookup capability
+	* Text, image, telnet, tn3270 capability
+          (providing you have other public domain or PC NFS products)
+	* Index capability
+	* copy to file capability
+	
+	* No CSO support yet
+	* No Sound support yet
+	* No PostScript support yet (although I looks like it does)
+	* No MIME support yet
+
+
+Installation
+
+	Available for ANON FTP from lister.cc.ic.ac.uk
+	Change to directory pub/wingopher and collect the files
+
+	readme.txt
+	hgopher.exe   [Winsock Version]      (Binary mode required)
+	hngopher.exe  [Sun PC NFS Version]   (Binary mode required)
+
+	Then read the readme.txt file (This file)
+
+	copy the  executable file to where ever you keep binaries
+	create a program item for in from Program Manager (if you like)
+	Execute it
+
+Troubleshooting
+    
+    WINSOCK VERSION
+
+	The first time you start it hgopher may not be able to 
+	connect to a server or will probably connect to the wrong
+	server
+	Use the Options menu to config it as follows
+
+	Gopher Options
+	
+	Set the name and path of your favorite gopher server
+	Change the viewers to the viewers of your choice 
+	(Note that PostScript does not work yet)
+	The default text viewer "notepad" can only view small
+	files - change to write or something else if you wish to
+	view larger files.
+
+	Select a directory for temp files that already exists
+
+	Hit the save button to save these setting between sessions
+	Hit the OK button to use these setting now
+
+	use "go home" from the command menu to get the main menu 
+	from your default gopher.
+
+	Network setup
+	
+	Set whether you are using DNS or the Vendor look up
+	service - If your vendor supports DNS lookup themselves
+	I suggest you use their service as the inbuilt DNS has
+	been shown not to work on some (most) Winsock versions. 
+
+	If you are using the Winsock version with PC NFS you must
+        use the inbuilt DNS as Sun have not only not bothered to
+	implement DNS support but their own NIS does not function
+	with their Winsock either (at least at the release level
+	I have).
+	
+	If using the inbuilt DNS remember to use IP addresses and
+	not host names.
+
+    PC NFS VERSION
+
+	Make sure at least RTM is loaded before you start Windows
+
+	The first time you start it hngopher may not be able to 
+	connect to a server or will probably connect to the wrong
+	server
+	Use the Options menu to config it as follows
+
+	Gopher Options
+	
+	Set the name and path of your favorite gopher server
+	Change the viewers to the viewers of your choice 
+	(Note that PostScript does not work yet)
+	The default text viewer "notepad" can only view small
+	files - change to write or something else if you wish to
+	view larger files.
+
+	Select a directory for temp files that already exists
+
+	Hit the save button to save these setting between sessions
+	Hit the OK button to use these setting now
+
+	use "go home" from the command menu to get the main menu 
+	from your default gopher.
+
+	Network setup
+	
+	Set whether you are using DNS or the Vendor name lookup
+	- with Sun this is NIS  - DNS is better.
+	Add up to 3 local DNS servers and your local domain
+	Hit OK. Remember to use IP addresses not hostnames.
+
+
+Usage
+
+	I am assuming its pretty easy to use (Sorry!) - but here
+	are some of the non obvious function
+
+
+	To fetch an item double click on it
+	To get to the previous item - double click previous item
+	You can highlight an item with a single click and explicitly
+	fetch it from the command menu (previous is also a command
+	menu item) or save it as a book mark
+	
+	While fetching an item a transfer state button appears
+	giving the connection status. While waiting to connect
+	windows freezes (this is not true of the Winsock version
+        in that case just this application is busy) 
+        during the transfer
+	windows should behave normally. You can click on this
+	button to abort the transfer. You can have up to 3 
+	transfers going but only the last is active.
+
+	History (command menu) shows you where you have been
+	Flip (command menu) or right hand mouse button takes
+	you back to the main menu. Flip or right hand mouse button
+	from the main menu takes you to the bookmark menu.
+	you can load and save bookmarks to files - You can also
+	select a bookmark file to load on startup.
+
+	Menu's are cached - default time 10 minutes you can change
+	this from gopher options
+
+	
+Winsock implementations tested against
+
+Thanks to alot of help from my Alpha testers on the Net I have
+been able to verify that the gopher works with several Winsock
+implementations. The state of play is as follows
+
+	Lanera		- Verified to work
+	Distinct	- Verified to work
+	Netmange	- Believed to work
+	PC NFS 5.0      - Verified to work
+	PCTCP 2.11	- Verified to work
+	PCTCP 2.2	- Verified to work - However if you get a message
+			  like PCTCPAPI052: get_kernel_info: Bad net_dope
+                          structure 0x1ae01197, try getting a newer version
+		          of their winsoc dll via ANON ftp
+			  vax.ftp.com:/pub/winsockapi/FTPSoftware/winsock.dll.
+	SuperTcp 3.56   - Verified to work
+	Windows NT      - Verified to work under Beta version
+
+If you find it works (or doesn't work) on a different Implementation 
+please let me know.
+
+Known Bugs
+
+
+        Bug #2 ??? prefix for CSO object is incorrect
+        Bug #4 Problem co existing with Vista Exceed
+	Bug #5 Inbuilt DNS fails under some Winsock Implementations
+	Bug #6 Bombs sometimes if you exit while transfer of directory
+               in progress
+	Bug #7 Under Distinct - randomly crashes occasionally
+
+Requests for Enhancements
+(lots - would be interested in feedback as to priority)
+
+	Better GUI
+	Stop IDLE/RCV flashing in no data
+	On connection abort don't show data
+	....
+
+In the Pipe Line
+
+	If there is enough interest in the product the following might 
+	happen.
+
+	* CSO and other gopher types supported (do people really need CSO)
+	* News support
+	* A Decent displayer to replace notepad (Any out there)
+	* A groovier GUI
+	* True multi transfer capability
+	* Non blocking connects
+	* Online help
+	* Gopher+ features
+
+----------------------------------------------------------------------------
+	CopyRight notices 
+
+	This version of gopher is not available in source code
+	form, however future versions maybe.
+----------------------------------------------------------------------------
+
+ * Copyright (c) 1993  Martyn Hampson
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *	This product includes software developed by Martyn Hampson
+ * 4. The name Martyn Hampson
+ *    may NOT be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL Martyn Hampson  BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+Some sections of the gopher code are modified versions of existing
+software. I include the copyright notices attached to that software below.
+
+* The Resolver routines *
+
+/*
+ * Copyright (c) 1985, 1988 Regents of the University of California.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *	This product includes software developed by the University of
+ *	California, Berkeley and its contributors.
+ * 4. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+* Misc utility routines (from Xgopher) *
+
+* Allan Tuchman, University of Illinois at Urbana-Champaign     
+*                Computing and Communications Services Office   
+* Copyright 1992 by                                             
+*           the Board of Trustees of the University of Illinois 
+* Permission is granted to freely copy and redistribute this    
+* software with the copyright notice intact.                    
+
+
+
+
+

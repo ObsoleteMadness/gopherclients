@@ -1,0 +1,57 @@
+AmigaNOSGW6.LZH is Graham Walter's version of AmigaNOS (TCP/IP for Amiga),
+modified to make use of extra external client programs. Graham has also
+developed the Gopher (external) client program that requires THIS version
+of AmigaNOS.
+
+With the use of AmigaGuide (which IS required and is NOT included)
+and the requisite support files (from John Heaton's archive),
+this provides Commodore Amiga users with a very nice GUI based Gopher
+client (along with other asundry TCP/IP functions).
+
+I have added a few comment files to the original archive from Graham, as
+well as a few extra "Bookmarks".
+
+
+Comments on the Gopher client and/or AmigaNOSGW should be directed to:
+
+  agopher@gwalter.demon.co.uk
+
+The original archive (I have NOT changed his programs) is available from:
+
+  newgate.demon.co.uk  (158.152.1.68)
+
+
+AmigaNOS (v2.9n) is John Heaton's version of AmigaNOS which does NOT
+support external clients, hence - no Gopher, but has evolved to include
+some extra/different control functions than Graham's (Graham's, however,
+has an ARexx port).
+
+John's archive includes ALL of the files that BOTH his version AND
+Graham's version require to run (Graham's version does NOT include any
+of these files), so, you will need to get John's archive as well. Make
+SURE that if you keep/use BOTH AmigaNOS programs, that Graham's is named
+AmigaNOSGW and all references to it (eg; default of just AmigaNOS) are
+also, likewise changed.
+
+Comments on AmigaNOS should be directed to John Heaton at:
+
+   John_Heaton@nessie.mcc.ac.uk
+
+John's archive is available via anonymous FTP from:
+
+   dir.mcc.ac.uk  (130.88.200.4)
+
+
+Comments about THIS archive should be directed to me. Also, I will be willing
+to answer questions about either of these packages or about TCP/IP on Amiga's
+in general. Note, however, that I canNOT tell you who to contact to get access
+to the Internet (in case this file reaches you by some other means).
+
+You may contact "me", Jim Dutton, at: jimd@slip106.termserv.siu.edu.
+
+
+--- 12 Dec 93
+
+AmigaGuide is available via anonymous FTP from ftp.wustl.edu in their
+systems/amiga/aminet/text/hyper directory as either Aguide34.lzh or
+amigaguide.lzh.

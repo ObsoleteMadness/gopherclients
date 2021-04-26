@@ -1,0 +1,34 @@
+In this directory are subdirectories containing the current 
+versions of internet Gopher clients and servers. 
+Unfortunately, there is minimal documentation for the
+software; but have faith, we are working on it.
+
+The internet Gopher uses a simple client/server protocol
+that can be used to publish and search for information held
+on a distributed network of hosts. Gopher clients
+have a seamless view of the information in the gopher 
+world even though the information is distributed over many 
+different hosts. Clients can either navigate through a 
+hierarchy of directories and documents -or- ask an index
+server to return a list of all documents that contain one 
+or more words. Since the index server does full-text searches
+every word in every document is a keyword.
+
+If you want to test a gopher client without setting up
+your own gopher server you should configure the client to
+talk to "gopher.micro.umn.edu" at port 70. This will 
+allow you to explore the distributed network of gopher
+servers at the University of Minnesota. You can try the
+Unix client by telneting to consultant.micro.umn.edu and
+logging in as "gopher".
+
+If you decide to run a gopher server and would like it to
+appear in the list of "other gophers" at gopher.micro.umn.edu
+send an e-mail to gopher@boombox.micro.umn.edu and we will add
+your gopher to the list of gophers.
+
+Bug reports, comments, suggestions, etc. should be e-mailed to
+the Gopher development team at:
+
+	  gopher@boombox.micro.umn.edu
+

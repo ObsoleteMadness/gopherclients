@@ -1,0 +1,235 @@
+______________________________________________________
+
+                     GopherCON '95
+______________________________________________________
+
+This workshop/conference will be an excellent opportunity to 
+learn about next-generation information system technologies 
+such as GopherVR and the IICM's Hyper-G system in an informal 
+workshop setting.
+
+Highlights of GopherCON '95 will include new technology such 
+as 3D user interfaces, applying spatial document clustering to 
+searching document collections, and hypermedia technologies 
+including the IICM's Hyper-G system (which supports Gopher, HTTP, 
+and Hyper-G clients and hypermedia authoring tools for hypertext 
+and video). 
+
+GopherCON '95 will be a workshop-format meeting with limited 
+attendance to promote discussion. Because attendance is limited, 
+we suggest that you register as soon as possible.
+
+______________________________________________________
+
+                     GopherCON '95
+                     Agenda
+______________________________________________________
+
+
+Friday June 9
+-------------
+
+  8:00 -  9:00     REGISTRATION
+
+  9:00 -  9:15     Introduction and welcome 
+  9:15 - 10:30     New U of M Gopher developments:
+                      GopherVR and VRML    [1]
+                      Gopher and OpenDoc   [6]
+                      IICM, NCSA and Gopher collaboration  [3]
+ 10:30 - 10:45     Break
+ 10:45 - 11:15     Document Clustering for GopherVR  [4]
+ 11:15 - 11:45     Customizing Unix Servers for 3D   [7]
+
+ 11:45 -  1:00     Lunch    
+
+  1:00 -  2:00     GopherSurfer, AppleSearch, and GopherVR  [8]
+  2:00 -  2:30     The Hyper-G Information System           [2]
+  2:30 -  3:00     Break
+  3:00 -  3:30     The New/Improved Jughead  [14]
+  3:30 -  4:00     Blue Skies Gopher         [13]
+  4:00 -  4:15     Break
+  4:15 - ??:??     Open forum/Gopher protocol issue discussion
+
+
+Saturday June 10
+----------------
+
+  9:00 -  9:30     Integrating Gopher and WWW              [10]
+  9:30 - 10:00     Linux as a low cost Gopher/HTTP Server  [12]
+ 10:00 - 10:30     Multiple item search with Gopher/WAIS   [16]
+ 10:30 - 10:45     Break
+ 10:45 - 11:15     Integrating Gopher into the Library Env.[15]
+ 11:15 - 11:45     Gopher gateway Z39.50 and Isite          [9]
+
+ 11:45 -  1:00     Lunch    
+
+  1:00 -  1:30     Defence Industry Supply Center Gopher [17]
+  1:30 -  2:00     Gopher searching large databases      [11]
+  2:00 -  2:30     Screen Scraping for fun and profit     [5]
+  2:30 -  2:45     Closing
+
+
+ 
+
+______________________________________________________
+
+                 GopherCON '95
+                 Session Descriptions
+______________________________________________________
+
+
+[1]--------------
+GopherVR and VRML
+-----------------
+Next-generation user interfaces for Internet navigation will incorporate 
+3D scenes as both a graphical document type and as a way to visualize 
+relationships in a collection of documents (GopherVR). The new GopherVR 
+clients make it possible to view and navigate current Gopher servers' 
+document and link collections as 3D scenes, and Gopher+ servers can 
+easily give GopherVR clients hints about how to display the scene 
+representing a Gopher directory. GopherVR opens up a new visual 
+vocabulary for representing the relationships between items in Gopher, 
+while preserving Gopher traditional strength in serving low-end clients 
+with low bandwidth links.
+
+This session is an overview of the design rationale and engineering 
+tradeoffs in the current GopherVR clients, how GopherVR hierarchies and 
+VRML documents address complimentary problems, and future directions for 
+GopherVR and VRML development.
+
+
+[2]---------------------------
+The Hyper-G Information system 
+------------------------------
+Klaus Schmaranz <kschmar@iicm.tu-graz.ac.at>)
+
+Currently, the most popular Internet information systems use 
+distributed menus and searching (Gopher) or hypertext documents (WWW) to 
+represent information spaces. The IICM at the Technical University in Graz, 
+Austria has developed Hyper-G, a second generation information system which 
+combines a structured hierarchy with hypermedia documents.Hyperlinks are 
+supported in all document types including text, images, movies, 3D scenes 
+and PostScript.
+
+One of the most interesting features of Hyper-G is that links between 
+documents and directories are two-way links, so it is possible to traverse 
+the link in either direction. This makes it easy to view the collection of 
+all documents that point to a given directory or document (a good way of 
+finding related documents). Two-way links also make it possible to 
+automatically update hypertext references when a document moves; this is
+a problem that is not handled well by either Gopher or WWW currently.
+
+This session covers the Hyper-G system architecture, how Hyper-G clients
+work, and an overview of authoring hypermedia in Hyper-G to be served to 
+Gopher, WWW, and Hyper-G clients, and will be presented by a member of the 
+Hyper-GJdevelopment group from Graz.
+
+
+[3]-----------------------------------------------
+Update on the IICM, NCSA, and Gopher collaboration
+--------------------------------------------------
+The Hyper-G, NCSA Mosaic, and Gopher developers recently announced a joint 
+development effort to produce VRweb 3D VRMLJclients for use with Gopher, 
+Hyper-G and Mosaic clients. This session is an update on the progress of 
+this effort.
+
+
+[4]-----------------------------
+Document Clustering for GopherVR
+--------------------------------
+One of the reasons for developing GopherVR is to make it possible to 
+represent relationships between documents in a collection by spatially 
+grouping the documents in a 3D scene. The is a particularly interesting 
+technique when applied to searching and browsing a document collection. 
+This session covers how we are clustering documents on GopherVR-aware 
+servers, and how other search engines can use GopherVR clients to display 
+clusters of documents.
+
+
+[5]-------------------------------
+Screen Scraping for Fun and Profit
+----------------------------------
+Screen scraping (harvesting information from 3270 terminal sessions) is one 
+way to to provide an easy-to-use Gopher interface to information that is 
+only available via a terminal-based interface. This session covers how a 
+Unix gopher gateway was written to efficiently harvest information student 
+grade information from 3270 terminal sessions, reformat the information, 
+and present it via Gopher. If you have legacy systems that are not going to 
+migrate to client/server technology anytime soon, you may want to apply 
+these techniques to free your data without creating a shadow database system. 
+
+
+[6]-----------------------------------
+Gopher and OpenDoc component documents
+--------------------------------------
+The philosophy of the Gopher developers at the University of Minnesota has 
+always been to develop small, modular applications, and OpenDoc's component 
+architecture is a good match for this philosophy. This session will include 
+an overview of OpenDoc and how we plan to integrate Gopher with OpenDoc 
+documents.
+
+
+[7]------------------------------------
+Customizing Unix servers for 3D clients
+---------------------------------------
+This sessions covers how to customize an existing Unix server for GopherVR 
+clients. You'll find out how easy it is to take an existing Unix Gopher 
+server and have it return a +3D: attribute to specify a 3D scene.
+
+
+[8]-----------------------------------
+GopherSurfer, AppleSearch and GopherVR
+--------------------------------------
+An update on the popular Macintosh Gopher server software, how to integrate 
+this software with the AppleSearch full-text search engine and how to make 
+your GopherSurfer 3D-savvy.
+ 
+
+[9]-------------------------------
+Gopher gateway to Z39.50 and Isite
+----------------------------------
+Z39.50 servers are commonly used for library online catalogs, and there has 
+been a Gopher gateway to Z39.50 catalogs for the last year. This session 
+covers new developments in integrating Gopher with Z39.50 and Isite.
+
+
+[10]----------------------
+Integrating Gopher and WWW
+--------------------------
+HTMLJpages are a popular document format, while Gopher hierarchies are fast 
+to navigate and let you associate abstracts, alternate views, and other 
+meta information with any type of document. This session looks at how to 
+publish HTMLJdocuments from Gopher servers and point Gopher links at 
+HTMLJdocuments on WWW servers to serve the widest possible community and 
+take advantage of the strengths for both Gopher and WWW. 
+
+
+[11]----------------------------------------------------------
+Using Gopher for Structured Searching of a Very Large Database
+--------------------------------------------------------------
+This session covers how to use FreeWais-SF and Gopher+ electronic forms
+to publish and make searchable (by field) a very large database. Gopher+ 
+forms make it possible to search on fields without exposing the user to 
+FreeWAIS-SF syntax. The database published was the Books in Print 
+database.
+ 
+
+[12]-----------------------------------------------
+Champagne Tastes on a Beer Budget
+Linux as a Low Cost Option for a Gopher/HTTP Server
+---------------------------------------------------
+Steven Kirby <kirby@rhett.libs.uga.edu>
+
+This session will discuss the University of Georgia Libraries' experience 
+running a Gopher and HTTP server under the Linux operating system. Our 
+server (gopher://scarlett.libs.uga.edu) has been in production for over a 
+year and has served over a quarter of a million transaction without a hitch, 
+despite the fact that the machine our Gopher server runs on is a lowly 
+386DX-40 mhz system with 8 megabytes of memory and a 420 Mbyte IDE hard 
+disk. This session will address a number of issues relating to running a 
+Gopher server under Linux, including hardware options, obtaining and 
+installing Linux, and selecting Gopher server software that is appropriate 
+to a particular site's needs.  This session will be of interest to persons 
+and organizations who prefer the stability and functionality of a 
+Unix-based Gopher server, but whose budgets might not be able to 
+accommodate a workstation or server to run a commercial variant of                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

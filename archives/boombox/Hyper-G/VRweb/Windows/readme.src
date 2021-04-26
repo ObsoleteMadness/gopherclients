@@ -1,0 +1,62 @@
+VRweb 0.53 Beta
+===============
+
+This is the source code of VRweb a VRML browser for Microsoft Windows.
+
+VRweb is a joint project between IICM (Hyper-G team), NCSA (mosaic), and the
+Gopher team. For copyright and license please read
+
+Installation:
+=============
+
+To install VRweb source, copy the zip file to your root directory of that drive
+you want the source tree to and unzip the archive with 
+
+unzip vrw_src
+
+The makefile can be found in \hyperg\viewer\scene.
+
+System requirements:
+====================
+
+VRweb for Windows is a Win32s MFC 3.0 application and was developed with 
+Microsoft Windows NT with Microsoft Visual C++ 2.1. Other Compilers (capable of
+MFC 3.0) and operating systems (Windows 95) are possible, but no Makefile is 
+supplied.
+
+The code is based on single threaded MFC libraries. If you did not install
+them you have to build them. (PLease look at the README in msvc20\mfc\src)
+
+Beta limitations:
+=================
+
+Because of being Beta some features are not implemented yet (but will in near 
+future):
+
+* Fly to mode is not implemented with VRML scenes
+* No help available
+* The user interface will be fine tuned
+* No standard light source in VRML scenes
+* No network support (hyperg, http)
+* No unzip support
+* No WWWAnchor and WWWInline support
+
+Support:
+========
+
+Please send all bug reports to the mail alias vrweb-bugs@iicm.tu-graz.ac.at or
+directly to me: gorasche@iicm.tu-graz.ac.at
+
+or
+
+subscribe the  VRweb mailing list with a mail to listproc@iicm.tu-graz.ac.at 
+and the message body
+
+subscribe vrweb YourNameHere
+
+To unsubscribe send a mail to the same address and exchange subscribe with
+unsubscribe. Mails to the list then can be sent to vrweb@iicm.tu-graz.ac.at.
+
+
+Gerbert Orasche
+Graz, August 4th 1995

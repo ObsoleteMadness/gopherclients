@@ -1,0 +1,25 @@
+March 1993.
+
+There are two gopher-penninfo gateways:
+
+       Gophtech: the gateway which allows Gopher clients to
+access information in PennInfo (TechInfo) server.
+
+       Techinpher: the gateway which allows PennInfo
+(TechInfo) clients to access information in GopherSpace.
+
+Both have been developed and run on the Ultrix operating
+system; portability to other systems is uknown.
+
+The techinpher gateway has exited unexpectedly on a number of
+occasions, so I consider it to still be beta (if not alpha).
+If you've never built, installed & run the TechInfo server
+(the software from MIT), you probably will find the
+techinpher gateway to be very cryptic.
+
+Please read the copyright information carefully.  Some of the
+modules for the techinpher gateway are copyrighed by MIT
+(based on version 3.1 of their code).
+
+Report bugs, bug fixes, enhancements, missing modules, and so
+forth to penninfo-gopher@dccs.upenn.edu.

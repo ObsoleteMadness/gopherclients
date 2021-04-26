@@ -1,0 +1,881 @@
+
+This is a set of patches to Internet Gopher for biology data 
+formats including Genbank and EMBL sequence databanks.  You can apply 
+it to the gopher0.7 distribution from ftp to boombox.micro.umn.edu, 
+look for gopher.tar.Z, with Larry Wall's patch program (available at 
+many unix ftp sites), in this way:
+   % ls
+    gopher-bio.patch  gopher0.7/
+   % patch -p < gopher-bio.patch
+
+You will also need to obtain the WAIS software for indexing, and the
+wais-bio.patch to install the biology data formats.
+				-- Don Gilbert
+~~~~~~~~~~~~~
+
+Only in gopher0.7: NeXT
+Only in gopher0.7: README
+Only in gopher0.7: Radio
+Only in gopher0.7: client
+Only in gopher0.7: doc
+Only in gopher0.7: fanout-server
+Common subdirectories: gopher0.7/index-server and gopher-bio/index-server
+Only in gopher0.7: misc
+Common subdirectories: gopher0.7/server and gopher-bio/server
+Only in gopher0.7: shell-utils
+diff -bwcr gopher0.7/index-server/Makefile gopher-bio/index-server/Makefile
+*** gopher0.7/index-server/Makefile	Fri Feb  7 18:44:46 1992
+--- gopher-bio/index-server/Makefile	Sun Feb 16 12:30:26 1992
+***************
+*** 8,24 ****
+  	  ../ir/zprot.o ../ir/zutil.o ../ir/irsearch.o ../ir/ztype1.o \
+  	  ../ir/docid.o
+  
+! TRIE	= ../ir/trie.o
+  
+  WAISINV	= ../ir/sersrch.o ../ir/irhash.o ../ir/irinv.o
+  WAISSER = ../bin/libftw.a
+  MYWAIS  = Waisindex.o
+  
+! WAISOBJ = $(WAISGEN) $(WAISINV) $(WAISSER) $(MYWAIS) $(TRIE)
+  
+  
+  CC	= cc
+! CCFLAGS	= -g
+  LDFLAGS	=
+  #
+  LIBS	= -lm
+--- 8,27 ----
+  	  ../ir/zprot.o ../ir/zutil.o ../ir/irsearch.o ../ir/ztype1.o \
+  	  ../ir/docid.o
+  
+! ##? TRIE	= ../ir/trie.o
+  
+  WAISINV	= ../ir/sersrch.o ../ir/irhash.o ../ir/irinv.o
+  WAISSER = ../bin/libftw.a
+  MYWAIS  = Waisindex.o
+  
+! ##? WAISOBJ = $(WAISGEN) $(WAISINV) $(WAISSER) $(MYWAIS) $(TRIE)
+! WAISOBJ = $(WAISGEN) $(WAISINV) $(WAISSER) $(MYWAIS)
+  
+  
+  CC	= cc
+! #CCFLAGS = -g 
+! ##  dgg, added LISTFILE flag
+! CCFLAGS	= -g -DLISTFILE
+  LDFLAGS	=
+  #
+  LIBS	= -lm
+Only in gopher-bio/index-server: Makefile.O
+diff -bwcr gopher0.7/index-server/Waisindex.c gopher-bio/index-server/Waisindex.c
+*** gopher0.7/index-server/Waisindex.c	Fri Feb  7 18:44:46 1992
+--- gopher-bio/index-server/Waisindex.c	Mon Feb 24 16:31:02 1992
+***************
+*** 7,14 ****
+     Heavily hacked by Paul Lindner (lindner@boombox.micro.umn.edu)
+     Do you even recognize this Brewster? :-)
+  
+! */
+  
+  #define _search_c
+  
+  #include <ctype.h>
+--- 7,16 ----
+     Heavily hacked by Paul Lindner (lindner@boombox.micro.umn.edu)
+     Do you even recognize this Brewster? :-)
+     
+!    dgg -- mods by d.gilbert (gilbert@bio.indiana.edu) for search list files for genbank
+  
++ --*/
++ 
+  #define _search_c
+  
+  #include <ctype.h>
+***************
+*** 54,59 ****
+--- 56,62 ----
+       char score[6];
+       static char ReturnLine[512];
+       float  closeness;
++      int   maxRetrieveHits, maxShowHits;
+  
+       if (DEBUG) 
+  	  logfile = stderr;   /** Log wais error messages to console **/
+***************
+*** 78,105 ****
+  	  return(false);
+       }
+       
+!      parameters.max_hit_retrieved = 200;
+  
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+       
+       search_result = false;
+-      
+       search_result |= search_for_words(SearchWords, db, 0);
+       
+       if (search_result == true) {
+  	  /* the search went ok */
+  	  hit best_hit;
+  	  
+  	  finished_search_word(db);
+  	  if (DEBUG)
+  	       printf("After finished_search\n");
+  
+! 	  for (i = 0; i < 200; i++){ 
+  	       if (0 != next_best_hit(&best_hit, db))
+  		    break;		/* out of hits */
+  	       if (i == 0)
+  		    maxRawScore = best_hit.weight;
+! 	       if (best_hit.weight > 0){
+  		    long lines,length;
+  
+  		    char** type = NULL;
+--- 81,161 ----
+  	  return(false);
+       }
+  
+!      maxRetrieveHits= kMaxRetrieveHits;
+!      maxShowHits= kMaxShowHits;
+       
++ #ifdef LISTFILE
++      strcpy(ReturnLine,SearchWords); /* dgg, save for listfile */
++ 
++      /* dgg -- extract numbers to set kMaxRetrieveHits and kMaxShowHits
++  	we want a symbol code, like
++ 	   'blue and not red >100.10'   
++      */
++      cp= strchr(SearchWords, '>');
++      if (cp!=NULL) {
++        *cp++= 0; /* cut out numbers for word search */
++        i= atoi(cp);
++        if ((i>0) && (i<kMaxMaxRetrieveHits)) maxRetrieveHits= i;
++        cp= strchr(cp, '.');
++        if (cp!=NULL) {
++          cp++;
++          i= atoi(cp);
++          if ((i>0) && (i<maxRetrieveHits)) maxShowHits= i;
++ 	 }
++        }
++ #endif
++      
++      parameters.max_hit_retrieved = maxRetrieveHits;
++ 
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+            
+       search_result = false;
+       search_result |= search_for_words(SearchWords, db, 0);
+       
+       if (search_result == true) {
+  	  /* the search went ok */
+  	  hit best_hit;
++ 	  long hitcount;   /* dgg */
++ 	  FILE *hitfile;
++ 	  char hitfilename[256];
+       
+  	  finished_search_word(db);
+  	  if (DEBUG)
+  	       printf("After finished_search\n");
+  
+! #ifdef LISTFILE   /* dgg */
+! 	  hitcount=0;
+!           hitfile= NULL;
+! 	  if (strlen(LISTHost)>0) {
+!      	    strcpy( hitfilename, LISTPath);  
+! 	    strcat( hitfilename, TEMPLISTNAME);
+! 	    mktemp( hitfilename);
+! 	    hitfile= fopen( hitfilename, "w");
+! 	    if (hitfile!=NULL) {
+!               fprintf(hitfile, "#  List of entries, and [match score], for search string:\n");
+!               fprintf(hitfile, "#>    '%s'\n",ReturnLine);
+! 	      fprintf(hitfile, "#\n");
+! 	      }
+! 	    if (DEBUG)
+!                printf("hitfile=%s, isopen=%d\n",hitfilename, (hitfile!=NULL));
+! 	    }
+! #endif
+! 
+! 	  for (i = 0; i < maxRetrieveHits; i++){ 
+  	       if (0 != next_best_hit(&best_hit, db))
+  		    break;		/* out of hits */
+  	       if (i == 0)
+  		    maxRawScore = best_hit.weight;
+! 
+! #ifdef LISTFILE /* dgg */
+! 	       if ((best_hit.weight > 0) && (hitfile!=NULL)) {
+! 	       	 hitcount++;
+! 		 ZapCRLF(best_hit.headline);  
+! 		 fprintf(hitfile, "%s\t [%3d] \n",  best_hit.headline,  best_hit.weight);
+! 		 }
+! #endif
+! 
+! 	       if ((best_hit.weight > 0) && (i < maxShowHits)) {
+  		    long lines,length;
+  
+  		    char** type = NULL;
+***************
+*** 184,189 ****
+--- 240,267 ----
+  
+  	       }
+  	  }
++ 	/* end for i=0..maxHits */
++ 	
++ #ifdef LISTFILE /* dgg */
++ 	if (hitfile!=NULL) {   
++ 	  fclose( hitfile);
++ 	  if (hitcount>kMinListHits) {
++ 	    cp = strstr(hitfilename, LISTPath);
++ 	    if (cp == NULL) cp = "Error in ListData!";
++ 	    else cp += strlen(LISTPath);
++ 	    sprintf(ReturnLine, "0%s%d\t%s\t%s\t%s\t%s",
++ 		 "Long list of matching items, count=", hitcount,
++ 		  cp, LISTHost, LISTPort);
++ 	    writestring(sockfd, ReturnLine);
++ 	    writestring(sockfd, "\r\n");
++ 	    }
++ 	  else
++ 	    unlink(hitfilename);
++     /* !? don't have any good way to erase these temp files after gopher user
++     	  is done -- just plan on nightly cron job ? */
++ 	  }
++ #endif
++ 
+       }
+       else {
+  	  /* something went awry in the search */
+diff -bwcr gopher0.7/index-server/gindexd.c gopher-bio/index-server/gindexd.c
+*** gopher0.7/index-server/gindexd.c	Fri Feb  7 18:44:48 1992
+--- gopher-bio/index-server/gindexd.c	Mon Feb 24 16:39:42 1992
+***************
+*** 3,9 ****
+--- 3,11 ----
+   * pp 284-5 Stevens UNIX Network Programming
+   */
+  
++ 
+  #include "gindexd.h"
++ void LOGGopher();
+  
+  
+  char Zehostname[128];
+***************
+*** 48,59 ****
+       extern int optind;
+       int errflag =0;
+       static char *Hostdata = "hostdata";
+  
+       /** Clear out the socket structure **/
+       bzero((char *) &serv_addr, sizeof(serv_addr));
+       pname = argv[0];
+  
+!      while ((c = getopt(argc, argv, "DH:Ii:p:d:")) != -1)
+  	  switch (c) {
+  	  case 'D':
+  	       DEBUG = TRUE;
+--- 50,62 ----
+       extern int optind;
+       int errflag =0;
+       static char *Hostdata = "hostdata";
++      static char *Listdata = "listdata";  /* dgg */
+  
+       /** Clear out the socket structure **/
+       bzero((char *) &serv_addr, sizeof(serv_addr));
+       pname = argv[0];
+  
+!      while ((c = getopt(argc, argv, "DH:L:Ii:l:p:d:")) != -1)
+  	  switch (c) {
+  	  case 'D':
+  	       DEBUG = TRUE;
+***************
+*** 64,70 ****
+  	       break;
+  	       
+  	  case 'H':
+! 	       Hostdata = optarg;
+  	       break;
+  
+  	  case 'i':
+--- 67,85 ----
+  	       break;
+  	       
+  	  case 'H':
+! 	       Hostdata = optarg; break;
+! 	       
+! 	  case 'L':
+! 	       Listdata = optarg; break;
+! 
+! 	  case 'l':
+! 	       if (*optarg == '/')
+! 		    strcpy(LOGFile, optarg);
+! 	       else {
+! 		    getwd(LOGFile);
+! 		    strcat(LOGFile, "/");
+! 		    strcat(LOGFile, optarg);
+! 	       }
+  	       break;
+  	       
+  	  case 'i':
+***************
+*** 79,85 ****
+  	       DatabaseName = optarg;
+  	       break;
+  
+- 		    
+  	  case '?':
+  	  case 'h':
+  	       errflag++;
+--- 94,99 ----
+***************
+*** 92,99 ****
+  	  exit(-1);
+       }
+  
+       if ((errflag)  || MyIndexDirectory == NULL) {
+! 	  fprintf(stderr,"Usage: %s [-D] \n", argv[0]);
+  	  exit(-1);
+       }
+  
+--- 106,116 ----
+  	  exit(-1);
+       }
+  
++     if (*LOGFile != '\0' && !RunFromInetd)
++ 	  printf("Logging to File %s\n", LOGFile);
++ 	  
+      if ((errflag)  || MyIndexDirectory == NULL) {
+! 	  fprintf(stderr,"Usage: %s [-D] [-l logfile] \n", argv[0]);
+  	  exit(-1);
+       }
+  
+***************
+*** 105,110 ****
+--- 122,151 ----
+  	  perror("Could not stat index directory"), exit(-1);
+       }
+  
++      if (getuid() != 0) {
++ 	  fprintf(stderr, "Gindexd uses the privileged call chroot().  Please become root.\n");
++ 	  exit(-1);
++      }
++ 
++      /** Open up the LOGFile  
++          **Warning!** we have to do this over because the daemon_start
++          function closes all fd's
++ 
++ 	 This part just checks to see if the files exist...
++       **/
++ 
++      if (*LOGFile != '\0') {
++ 	  LOGFileHandle = fopen(LOGFile, "a");
++ 	  
++ 	  if (LOGFileHandle == NULL) {
++ 	       printf("Can't open the logfile: %s\n", LOGFile);
++ 	       exit(-1);
++ 	  }
++ 
++ 	  fclose(LOGFileHandle);
++      }
++ 
++ 
+       Hostfile = fopen(Hostdata, "r");
+  
+       if (Hostfile == NULL)
+***************
+*** 135,148 ****
+  	       ShowHeadline = TRUE;
+  	  } else if (0 == strcmp(line, "ShowDate")) {
+  	       ShowDate = TRUE;
+! 	  } else
+! 	       fprintf(stderr, "Malformed hostdata file\n"), exit(-1);
+       }
+  
+       if (DEBUG == FALSE && RunFromInetd == FALSE)
+            daemon_start(0);
+  
+  
+       if (RunFromInetd) {
+  	  while(do_command(0, MyIndexDirectory)!=0);
+  	  exit(0);
+--- 176,217 ----
+  	       ShowHeadline = TRUE;
+  	  } else if (0 == strcmp(line, "ShowDate")) {
+  	       ShowDate = TRUE;
+! 	  } else fprintf(stderr, "Malformed hostdata file\n"), exit(-1);
+       }
++      fclose( Hostfile);
+       
++ #ifdef LISTFILE
++      Hostfile = fopen(Listdata, "r");
++      if (Hostfile != NULL) {
++ 	
++      if (fgets(LISTHost, 64, Hostfile) == NULL) *LISTHost=0; /* key we don't want list */  
++      ZapCRLF(LISTHost);
++      
++      if (fgets(LISTPort, 10, Hostfile) == NULL) *LISTHost=0; 
++      ZapCRLF(LISTPort);
++      if (atoi(LISTPort)==0) *LISTHost=0;
++ 
++      if (fgets(LISTPath, 256, Hostfile) == NULL) *LISTHost=0;
++      ZapCRLF(LISTPath);
++      
++      fclose( Hostfile);
++      }
++ #endif
++ 
+       if (DEBUG == FALSE && RunFromInetd == FALSE)
+            daemon_start(0);
+  
++      if (LOGFile[0] != '\0') {
++ 	  LOGFileHandle = fopen(LOGFile, "a");
+  	  
++ 	  if (LOGFileHandle == NULL) {
++ 	       printf("Can't open the logfile: %s\n", LOGFile);
++ 	       exit(-1);
++ 	  }
++ 	  if (!RunFromInetd)
++ 	       LOGGopher(-1, "Starting gopher daemon\n");
++      }
++ 
+       if (RunFromInetd) {
+  	  while(do_command(0, MyIndexDirectory)!=0);
+  	  exit(0);
+***************
+*** 202,208 ****
+--- 271,335 ----
+  
+  
+  
++ /* see gopherd.c */
+  
++ inet_netnames(sock, sin, host_name)
++         int                     sock;
++         struct sockaddr_in      *sin;
++         char                    *host_name;
++ {
++         u_long                  net_addr;
++         struct hostent          *hp;
++         struct netent           *np;
++ 
++         net_addr = inet_netof(sin->sin_addr);   /* net_addr in host order */
++         np = getnetbyaddr(net_addr, AF_INET);
++ 
++         hp = gethostbyaddr((char *) &sin->sin_addr.s_addr,
++                 sizeof (sin->sin_addr.s_addr), AF_INET);
++ 
++         if (hp != NULL)
++                 (void) strcpy(host_name, hp->h_name);
++         else
++                 (void) strcpy(host_name, inet_ntoa(sin->sin_addr));
++ }
++ 
++ /*
++  * This finds the current peer and the time and  jams it into the
++  * logfile (if any) and adds the message at the end
++  */
++ 
++ void
++ LOGGopher(sockfd, message)
++   int sockfd;
++   char *message;
++ {
++      struct sockaddr sa;
++      int             length;
++      static char     host_name[256];
++      time_t          Now;
++      char *cp;
++ 
++      host_name[0] = '\0';
++ 
++      if (LOGFileHandle != NULL) {
++      
++ 	  if (sockfd > -1) {
++ 	       length = sizeof (sa);
++ 	       getpeername(sockfd, &sa, &length);
++ 	       inet_netnames(sockfd, &sa, host_name);
++ 	  }
++ 
++ 	  time(&Now);
++ 	  cp = ctime(&Now);
++ 	  ZapCRLF(cp);
++ 
++ 	  fprintf(LOGFileHandle, "%s %s : %s\n", cp, host_name, message);
++ 	  fflush(LOGFileHandle);
++      }
++ }
++ 
++ 
+  int
+  do_command(sockfd, AIndexDirectory)
+    int sockfd;
+***************
+*** 210,216 ****
+  {
+       char inputline[MAXLINE];
+       int length;		/* Length of the command line */
+!      char out_line[MAXLINE];    /* for outgoing messages */
+       FILE *foofile;
+       
+       length = readline(sockfd, inputline, MAXLINE); /** Get the line **/
+--- 337,343 ----
+  {
+       char inputline[MAXLINE];
+       int length;		/* Length of the command line */
+!      char logline[MAXLINE];     
+       FILE *foofile;
+       
+       length = readline(sockfd, inputline, MAXLINE); /** Get the line **/
+***************
+*** 232,237 ****
+--- 359,369 ----
+  	  return(0);
+       }
+       
++      
++       /*** Log it -- dgg ***/
++      strcpy(logline, "query: ");
++      strcat(logline, inputline);
++      LOGGopher(sockfd, logline);
+       
+       /* Okay, now we have the argument, let's process it. */
+       
+diff -bwcr gopher0.7/index-server/gindexd.h gopher-bio/index-server/gindexd.h
+*** gopher0.7/index-server/gindexd.h	Fri Feb  7 18:44:48 1992
+--- gopher-bio/index-server/gindexd.h	Sun Feb 23 18:42:07 1992
+***************
+*** 4,9 ****
+--- 4,10 ----
+  #include <sys/types.h>
+  #include <sys/socket.h>
+  #include <netinet/in.h>
++ #include <netdb.h>  
+  #include <arpa/inet.h>
+  #include <pwd.h>
+  #include <errno.h>
+diff -bwcr gopher0.7/index-server/globals.h gopher-bio/index-server/globals.h
+*** gopher0.7/index-server/globals.h	Fri Feb  7 18:44:48 1992
+--- gopher-bio/index-server/globals.h	Sun Feb 23 18:03:16 1992
+***************
+*** 26,31 ****
+--- 26,56 ----
+  EXTERN boolean ShowHeadline INIT(FALSE);
+  EXTERN boolean ShowDate INIT(FALSE);
+  
++ EXTERN char      LOGFile[256];	/* dgg */
++ EXTERN FILE      *LOGFileHandle INIT(NULL);
++ 
++ #ifdef LISTFILE    /* dgg, to keep longer list of hits for user */
++ #define	TEMPLISTNAME	"/tmplist.XXXXXX"   
++ 				/* ^^^ this is the file created w/ mktemp for user's full list */
++ 				/* it sits at end of LISTPath, where there is a gopherd server to */
++ 				/* fetch it, similar to how INDEXPath... words with hostdata file */
++ 				/* NOTE: we currently don't erase these, since they need to live beyond */
++ 				/* life of this program, but use a root cron job to clean them up */
++ EXTERN char    LISTPath[256];
++ EXTERN char    LISTHost[64];
++ EXTERN char    LISTPort[10];
++ 				
++ 				/* for Waisindex.c */
++ #define kMaxRetrieveHits 50    /* dgg, patch for hit list file */
++ #define kMaxMaxRetrieveHits 10000	/* we don't ever want to generate any more than this */
++ #define	kMaxShowHits	15	  /* average user doesn't need long list ?*/
++ #define kMinListHits	10	  /* less than this, don't need hitlistfile */
++ 
++ #else
++ #define kMaxRetrieveHits	200  /* defaults before added LISTFILE */
++ #define	kMaxShowHits	200	 
++ #define kMinListHits	200	 
++ #endif
+  
+  /*** Prototypes n' externals ****/
+  
+diff -bwcr gopher0.7/server/Makefile gopher-bio/server/Makefile
+*** gopher0.7/server/Makefile	Fri Feb  7 18:44:45 1992
+--- gopher-bio/server/Makefile	Sun Feb 23 18:01:11 1992
+***************
+*** 4,17 ****
+  # return a FQDN.
+  #
+  
+! DATA 	= /home/mudhoney/gopher-data
+! DOMAIN 	= .micro.umn.edu
+  
+  OBJS	= error.o util.o globals.o gopherd.o daemon.o special.o gopherstruct.o
+  
+  CC	= cc
+  #
+! CCFLAGS	= -g -DDATA_DIRECTORY=\"$(DATA)\" -DDOMAIN_NAME=\"$(DOMAIN)\"
+  LDFLAGS	=
+  
+  #
+--- 4,24 ----
+  # return a FQDN.
+  #
+  
+! # dgg, added -DNOSHELLS to here and to special.c to prevent
+! # shell scripts from being run (as *root*)!
+  
++ ##DATA 	= /home/mudhoney/gopher-data
++ ##DOMAIN 	= .micro.umn.edu
++ DATA 	= /bio/gopher-data
++ ##DATA 	= /bio/archive
++ DOMAIN 	= .bio.indiana.edu.
++ 
+  OBJS	= error.o util.o globals.o gopherd.o daemon.o special.o gopherstruct.o
+  
+  CC	= cc
+  #
+! ##CCFLAGS	= -g -DDATA_DIRECTORY=\"$(DATA)\" -DDOMAIN_NAME=\"$(DOMAIN)\"
+! CCFLAGS	= -g -DNOSHELLS -DDATA_DIRECTORY=\"$(DATA)\" -DDOMAIN_NAME=\"$(DOMAIN)\"
+  LDFLAGS	=
+  
+  #
+diff -bwcr gopher0.7/server/conf.h gopher-bio/server/conf.h
+*** gopher0.7/server/conf.h	Fri Feb  7 18:44:45 1992
+--- gopher-bio/server/conf.h	Mon Feb 17 16:45:30 1992
+***************
+*** 28,35 ****
+  */
+  
+  #ifndef DOMAIN_NAME
+! #define DOMAIN_NAME ".micro.umn.edu"
+! /*#define DOMAIN_NAME "" /**/
+  #endif
+  
+  /*
+--- 28,34 ----
+  */
+  
+  #ifndef DOMAIN_NAME
+! #define DOMAIN_NAME "" /**/
+  #endif
+  
+  /*
+***************
+*** 39,45 ****
+  */
+  
+  #ifndef DATA_DIRECTORY
+! #define DATA_DIRECTORY "/u3/gopher-data"
+  #endif
+  
+  /*
+--- 38,44 ----
+  */
+  
+  #ifndef DATA_DIRECTORY
+! #define DATA_DIRECTORY "/home/gopher-data"
+  #endif
+  
+  /*
+***************
+*** 81,87 ****
+  ** also act as a gopher index server.
+  */
+  
+! #define BUILTIN_SEARCH /**/
+  
+  /*
+  ** Uncomment *one* of the following search engines.  
+--- 80,86 ----
+  ** also act as a gopher index server.
+  */
+  
+! /*#define BUILTIN_SEARCH /**/
+  
+  /*
+  ** Uncomment *one* of the following search engines.  
+diff -bwcr gopher0.7/server/gopherd.c gopher-bio/server/gopherd.c
+*** gopher0.7/server/gopherd.c	Fri Feb  7 18:44:46 1992
+--- gopher-bio/server/gopherd.c	Sun Feb 23 18:01:03 1992
+***************
+*** 11,16 ****
+--- 11,17 ----
+  char Zedomainname[MAXHOSTNAMELEN];
+  
+  int GopherPort = GOPHER_PORT;
++ boolean LogAll = FALSE;
+  
+  void
+  main(argc, argv)
+***************
+*** 39,45 ****
+       strcpy(Data_Dir, DATA_DIRECTORY);
+  
+   
+!      while ((c = getopt(argc, argv, "DIHl:s:")) != -1)
+  	  switch (c) {
+  	  case 'D':
+  	       DEBUG = TRUE;
+--- 40,46 ----
+       strcpy(Data_Dir, DATA_DIRECTORY);
+  
+   
+!      while ((c = getopt(argc, argv, "DIHal:s:")) != -1)
+  	  switch (c) {
+  	  case 'D':
+  	       DEBUG = TRUE;
+***************
+*** 63,68 ****
+--- 64,73 ----
+  	       }
+  	       break;
+  	       
++ 	  case 'a':   /* dgg */
++ 	  	LogAll= TRUE;
++ 		break;
++ 		
+  	  case 's':
+  	       if (*optarg == '/')
+  		    strcpy(SecurityFile, optarg);
+***************
+*** 81,87 ****
+  
+  
+       if (errflag) {
+! 	  fprintf(stderr, "Usage: %s [-DI] [-s securityfile] [-l logfile] <datadirectory> <port>\n", argv[0]);
+  	  exit(-1);
+       }
+  
+--- 86,92 ----
+  
+  
+       if (errflag) {
+! 	  fprintf(stderr, "Usage: %s [-DIL] [-s securityfile] [-l logfile] <datadirectory> <port>\n", argv[0]);
+  	  exit(-1);
+       }
+  
+***************
+*** 343,349 ****
+       char Zeline[MAXLINE];
+       char outputline[MAXLINE];
+       char Title[MAXLINE];
+!      long Startbyte=0, Endbyte, Bytecount;
+  
+  
+       Mailfile = fopen(Mailfname, "r");
+--- 348,354 ----
+       char Zeline[MAXLINE];
+       char outputline[MAXLINE];
+       char Title[MAXLINE];
+!      long Startbyte=0, Endbyte, Bytecount=0; /* dgg added =0 to Bytecount */
+  
+  
+       Mailfile = fopen(Mailfname, "r");
+***************
+*** 498,504 ****
+  	       capability.  ***/
+  
+  	  listdir(sockfd, "/");
+! 	  LOGGopher(sockfd, "Root Connection");
+  	  return(0);
+  	  break;
+  
+--- 503,509 ----
+  	       capability.  ***/
+  
+  	  listdir(sockfd, "/");
+! 	  if (LogAll) LOGGopher(sockfd, "Root Connection");
+  	  return(0);
+  	  break;
+  
+***************
+*** 516,532 ****
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, inputline+1);
+  
+! 	  /** Log it **/
+  	  strcpy(logline, "retrieved directory ");
+  	  strcat(logline, inputline+1);
+  	  LOGGopher(sockfd, logline);
+! 
+  	  break;
+  
+  
+  	  /** This is for my builtin searching stuff. **/
+  
+! #ifndef BUILTIN_SEARCH
+       case '7':
+  	  /*** It's an index capability ***/
+  	  Do_IndexTrans(sockfd, inputline+1);
+--- 521,537 ----
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, inputline+1);
+  
+! 	  if (LogAll) { /** Log it **/
+  	    strcpy(logline, "retrieved directory ");
+  	    strcat(logline, inputline+1);
+  	    LOGGopher(sockfd, logline);
+! 	    }
+  	  break;
+  
+  
+  	  /** This is for my builtin searching stuff. **/
+  
+! #ifdef BUILTIN_SEARCH
+       case '7':
+  	  /*** It's an index capability ***/
+  	  Do_IndexTrans(sockfd, inputline+1);
+***************
+*** 593,598 ****
+--- 598,607 ----
+  
+  	  printfile(sockfd, oldcp, startbyte, endbyte);
+  	  
++ 	  /*** Log it ***/
++ 	  sprintf(logline, "retrieved Start: %d, End: %d  File: %s\n", startbyte, endbyte, oldcp);
++ 	  LOGGopher(sockfd, logline);
++ 
+  	  break;
+       }
+       default:
+***************
+*** 619,628 ****
+  	       /* it's a directory */
+  	       listdir(sockfd, inputline);
+  
+! 	       /* Log it */
+  	       strcpy(logline, "retrieved directory ");
+  	       strcat(logline, inputline);
+  	       LOGGopher(sockfd, logline);
+  
+  	       break;
+  	  }
+--- 628,638 ----
+  	       /* it's a directory */
+  	       listdir(sockfd, inputline);
+  
+! 	       if (LogAll) { /* Log it */
+  	         strcpy(logline, "retrieved directory ");
+  	         strcat(logline, inputline);
+  	         LOGGopher(sockfd, logline);
++ 	         }
+  
+  	       break;
+  	  }
+diff -bwcr gopher0.7/server/special.c gopher-bio/server/special.c
+*** gopher0.7/server/special.c	Fri Feb  7 18:44:46 1992
+--- gopher-bio/server/special.c	Mon Feb 17 16:42:53 1992
+***************
+*** 55,60 ****
+--- 55,64 ----
+  	  return pp;
+       }
+  
++ /* dgg, this may be big security hole, as script is run as 'root',
++    and my system, for instance, has gopher overlayed on anon ftp
++    diretory w/ write permissions */
++ #ifndef NOSHELLS
+       /* Script? */
+       if (isshellscript(s)) {
+  	  s[strlen(s)-1] = '\0';
+***************
+*** 71,76 ****
+--- 75,81 ----
+  	  
+  	  return pp;
+       }
++ #endif
+  
+       return (FILE *)0;
+  }

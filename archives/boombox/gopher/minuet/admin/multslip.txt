@@ -1,0 +1,54 @@
+ ===========================================
+   SLIP, Minuet, Multiple Users    ( DOS )
+ ===========================================
+
+As e-mail becomes more popular, we are seeing more worksites where many
+people in the office have to share the same computer.
+
+What do you need to do to have many users of Minuet on the same computer
+without placing multiple copies of Minuet on the hard disk? How is this
+done with a SLIP connection.
+
+1.  Establish a modem connection for the computer. Use either a data 
+    phone (ADI modem), or a modem connected to a standard phone line.
+    (See separate instructions for using a DIRECT connection.)
+
+2.  Follow the normal install procedure as described in the "PC SLIP
+    Quick Start Instructions" handout to install the software.
+
+  NOTE: You must be using PHONE.EXE version 2.3. When you are in 
+        "SLIP SETUP", press Alt-Spacebar and then press Enter.  
+        A dialog box will tell you the version you have installed.
+
+
+To Set Up Each User
+-------------------
+1.  Assign a unique 3-letter ID code to each user.  
+    A user's initials work well for this purpose.  For example, 
+       Mortimer A. Snerd  ---> MAS
+       Jane B. Doe        ---> JBD
+
+2.  The user types:
+
+       slip minuet HisOrHerInitials
+
+    for example:
+
+       slip minuet JBD
+
+    PHONE will establish a SLIP connection if necessary, and Minuet will
+    automatically make a separate subdirectory for the user in C:\MAIL\.
+
+3.  Set up Minuet as usual. That is, fill in the E-Mail Address
+    and Password fields in the "Setup/User" dialog box.
+    NOTE:  Leave the Subdirectory for mail field EMPTY.
+
+4.  Each time you want to run Minuet type:
+ 
+       slip minuet HisOrHerInitials
+
+
+To set up a second user, quit Minuet and type "slip minuet XYZ" where 
+"XYZ" is the name or initials of the second user. (A new subdirectory 
+is automatically created.) Go to the Setup/User menu in Minuet and set
+up the E-Mail Address and Password as usual. That's all there is to it!

@@ -1,0 +1,52 @@
+>From bronze!sunflower.bio.indiana.edu!gilbertd Wed Feb 12 21:46:35 EST 1992
+Article: 1999 of bionet.software
+Xref: bronze bionet.software:1999 iu.general:310
+Newsgroups: bionet.software,iu.general
+Path: bronze!sunflower.bio.indiana.edu!gilbertd
+From: gilbertd@sunflower.bio.indiana.edu (Don Gilbert)
+Subject: IUBio Archive thru internet Gopher
+Message-ID: <1992Feb13.023656.13616@bronze.ucs.indiana.edu>
+Keywords: experimental
+Sender: news@bronze.ucs.indiana.edu (USENET News System)
+Nntp-Posting-Host: sunflower.bio.indiana.edu
+Organization: Biology, Indiana University - Bloomington
+Date: Thu, 13 Feb 92 02:36:56 GMT
+Lines: 35
+
+The IUBio Biology Archive is now available thru internet Gopher.
+Try it out and see how you like it.
+
+The current gopher setup for it is experimental and will change. 
+The archive is available more traditionally via anonymous ftp
+to ftp.bio.indiana.edu.   I will be adding gopher &/or WAIS
+indexing and other goodies as time permits.
+
+>From gopher software, you can reach the IUBio gopher at the
+same location you find the ftp archive.  Using the gopher unix
+curses client this would look like:
+  % gopher ftp.bio.indiana.edu
+
+>From the gopher Mac client, use the menu to change the setup
+from "gopher.micro.umn.edu" to "ftp.bio.indiana.edu", same
+port 70.
+  
+If you have a gopher server, you can add a tunnel to this one
+with this .link file:
+ Name=IUBio Biology Archive, Indiana University (experimental)
+ Type=1
+ Port=70
+ Path=1/
+ Host=ftp.bio.indiana.edu
+ 
+As a reminder, there is client software for many computers, including
+Mac, PC, NeXT, Unix text or xwindow, and VMS.
+If you want to get the most recent releases of the gopher software,
+you can get these via anonymous ftp from boombox.micro.umn.edu in
+the /pub/gopher directory.
+
+-- Don Gilbert,  IUBio archivist
+-- 
+Don Gilbert                                     gilbert@bio.indiana.edu
+biocomputing office, biology dept., indiana univ., bloomington, in 47405
+
+

@@ -1,0 +1,8 @@
+Archimedes Gopher Client
+(ver ?)
+Freeware
+
+
+Supposedly designed by just reading RFC1436 (the Gopher protocol RFC). 
+
+

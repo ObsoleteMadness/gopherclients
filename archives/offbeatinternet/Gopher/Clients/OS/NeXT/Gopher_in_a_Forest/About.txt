@@ -1,0 +1,10 @@
+Gopher in a Forest
+(ver 0.5)
+Freeware
+
+
+Supports the creation of custiom Objects, for modifying the way that 
+gopherspace appears.  
+
+
+

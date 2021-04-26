@@ -1,0 +1,9 @@
+GopherApp
+(ver 2.2b43)
+Freeware
+
+
+GopherApp is written by Don Gilbert.  It provides a Finder-like link
+to Gopher services.  Gopher+ is supported.  
+
+

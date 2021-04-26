@@ -1,0 +1,23 @@
+There are numerous version of Unix-based software.  Popular older
+varients are SunOS, HP-UX, and IRIX.  Popular newer varients are Linux 
+and Macintosh OSX.  There are also several interfaces such as CURSES 
+and X-windows.  Some versions may require extra tools, such as Python.  
+
+The software listed here is all Unix-based.  However not all may
+work on your particular flavor of Unix.  You may have to modify the 
+source code before you compile.  
+
+As I no longer operate a Unix-based system, I am unable to confirm the 
+suitability of any of this software.  Use at your own risk.  
+
+
+==========
+
+If anyone knows where I can obtain more un-corrupted versions of 
+GopherVR for Unix (I already have the IRIX version of GopherVR), 
+it would be most helpful.  There were at least 7 variants;
+for AIX, Alpha-OSF, IRIX, Lunix, Solaris (both for Sparc and i386 
+processors), and SunOS.  Version numbering had reached at least 0.2.
+
+
+

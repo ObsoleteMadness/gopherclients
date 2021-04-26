@@ -1,0 +1,285 @@
+
+This is a patch to the unix gopher server, gopherd version 2.04, that
+will change various things:
+
+  Add file date+size display in title.
+
+  Let gopher- clients see all view files, while gopher+ clients see
+  only one item plus multiple view choices.
+
+  Prevent gopher- clients from running ASK scripts (which they can't
+  send ASK data to).
+
+  User specified maximum hits in wais searching, rather than fixed
+  limit of 256 matches.
+
+  Use wais data files that are indexed outside of gopher-data directory tree.
+
+
+Also available by ftp/gopher to ftp.bio.indiana.edu:/util/gopher/ as gopher204+iubio.patch
+
+You can apply this patch with Larry Wall's patch program (available at 
+many unix ftp sites), in this way, at the directory containing gopher2.04/
+   % patch -p < gopher204+iubio.patch
+
+-- Don Gilbert
+
+
+
+diff -bwcr gopher2.04/gopherd/gopherd.c go+iubio204/gopherd/gopherd.c
+*** gopher2.04/gopherd/gopherd.c	Fri Aug  6 09:42:49 1993
+--- go+iubio204/gopherd/gopherd.c	Mon Aug 16 18:37:05 1993
+***************
+*** 816,821 ****
+--- 816,822 ----
+  
+  
+       if (Gdefusername && Setuid_username(Gdefusername)== FALSE)
++       if (getuid() == 0) /* ++dgg patch, failing when it shouldn't here...!? */
+  	Abortoutput(sockfd, "Can't set UID!"), exit(-1);
+  
+  #endif  /* UMNDES */
+***************
+*** 956,970 ****
+       case 'g':
+  	  /*** It's some kind of file ***/
+  
+  	  /*** Is it binary??  ***/
+! 	  if (view == NULL) 
+  	       printfile(sockfd, Selstr+1, 0, -1, CMDisGplus(cmd));
+! 
+! 
+  	  if (GSisText(NULL, view))
+  	       printfile(sockfd, Selstr+1, 0, -1, CMDisGplus(cmd));
+  	  else
+  	       send_binary(sockfd, Selstr+1, CMDisGplus(cmd));
+  	       
+  	  /*** Log it ***/
+  	  LOGGopher(sockfd, "retrieved file %s", Selstr+1 );
+--- 957,978 ----
+       case 'g':
+  	  /*** It's some kind of file ***/
+  
++ 
+  	  /*** Is it binary??  ***/
+! /* ++dgg   this way *works* when view == NULL */
+! 	  if (view == NULL) {
+! 	       if (*Selstr != '0') 
+! 		send_binary(sockfd, Selstr+1, CMDisGplus(cmd));   
+! 	       else
+  		printfile(sockfd, Selstr+1, 0, -1, CMDisGplus(cmd));
+! 	    }
+!           else {   
+  	  if (GSisText(NULL, view))
+  	       printfile(sockfd, Selstr+1, 0, -1, CMDisGplus(cmd));
+  	  else
+  	       send_binary(sockfd, Selstr+1, CMDisGplus(cmd));
++ 	  } 
++ /* dgg-- */
+  
+  	  /*** Log it ***/
+  	  LOGGopher(sockfd, "retrieved file %s", Selstr+1 );
+***************
+*** 1356,1361 ****
+--- 1364,1405 ----
+  }
+  
+   
++ /* ++dgg addition for date+time in title line */
++  
++ void
++ GSaddDateNsize(ge, statbuf)
++    GopherObj *ge;
++    struct stat  statbuf;
++  {
++      int           fd, i;
++       char         longname[256];
++       char         *cdate, *ti, *fp;
++      
++         switch (GSgetType(ge)) {
++              case '1': /*** It's a directory ***/
++              case '7': /*** It's an index ***/
++              case 'f': /*** ftp link ***/
++              case 'e': /*** exec link ***/
++              case 'h': /*** www link ***/
++              case 'w': /*** wais link ***/
++              case 'm':
++                 break;
++        
++              default :
++                 {
++                 cdate= ctime( &statbuf.st_mtime); /* last mod time */
++                 cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
++                 sprintf( longname, "%s  [%s%s%s, %ukb]", GSgetTitle(ge),
++                    cdate+8,cdate+4,cdate+22, (statbuf.st_size+1023) / 1024);
++                 GSsetTitle(ge,longname);
++                 }
++                 break;
++         }
++  }     
++ /* dgg-- */
++      
++      
++ 
+  /*
+   * Load up a gopher directory from the file system 
+   */
+***************
+*** 1494,1499 ****
+--- 1538,1545 ----
+  	  if (GSgetTitle(gs) == NULL)
+  	       GSsetTitle(gs, filename);
+  	 
++          GSaddDateNsize(gs, statbuf);  /* ++dgg */
++  
+  	  /*** Add views, prefixes et al.. ***/
+  	  if (GDCBlockExtension(Config, filename, ext)) {
+  	       char *tmpstr = GSgetPath(gs);
+***************
+*** 1528,1533 ****
+--- 1574,1581 ----
+  	       strcpy(Pathp, Prefix);
+  	       strcpy(Pathp+strlen(Prefix), newpath);
+  	   
++            if (isGplus) {
++            /*^^^^^^^^^^ ++dgg  patch to show all view files to -client */
+  	       /*** Strip extension off of pathname***/
+  	       Pathp[strlen(Prefix)+strlen(newpath)-strlen(EXgetExt(ext))]= '\0';
+  	       GSsetPath(gs, Pathp);
+***************
+*** 1553,1559 ****
+--- 1601,1615 ----
+  			 lang = GDCgetLang(Config);
+  		    GSaddView(gs, EXgetView(ext), lang, statbuf.st_size);
+  	       }
++ /* ++dgg */    
+              }                                                            
++             else {
++                AddItem = TRUE;
++                GSsetPath(gs, Pathp);
++                GSsetType(gs, EXgetObjtype(ext));
++              } 
++ /* dgg-- */    
++ 	  } 
+  	  else if (AddItem) {
+  	       int num;
+  	       char type;
+***************
+*** 2014,2020 ****
+--- 2070,2092 ----
+  
+  
+   
++ /* ++dgg   test if file is ASK script */
++ boolean
++ IsAskfile( pathname)
++   char *pathname;
++ {
++    struct stat statbuf;
++    static char tmpfile[512];
+       
++   strcpy( tmpfile, pathname);
++   strcat( tmpfile, ".ask"); /* hack -- should do fancy lookup in Config */
++   if (!rstat( tmpfile, &statbuf)) return TRUE;
++   else return FALSE;
++ 
++ }
++ /* dgg-- */
++ 
++ 
+  /*
+  ** This function opens the specified file, starts a zcat if needed,
+  ** and barfs the file across the socket.
+***************
+*** 2047,2052 ****
+--- 2119,2135 ----
+  	  return;
+       }
+  
++  /* ++dgg  patch to block ASK calls from -clients */
++      if (IsAskfile(pathname)) {
++         if (!Gplus) {
++            /* print error notice to -client */
++           char badclientline[256];
++           sprintf(badclientline, "\nThis ASK item requires a gopher+ client\n", pathname);  
++           Abortoutput(sockfd, badclientline);
++           return;
++           }
++         } 
++ /* dgg-- */
+  
+       if ( (ZeFile = rfopen(pathname, "r")) == NULL) {
+  	  /*
+
+
+
+diff -bwcr gopher2.04/gopherd/Waisindex.c go+iubio204/gopherd/Waisindex.c
+*** gopher2.04/gopherd/Waisindex.c	Tue Jul 27 00:27:37 1993
+--- go+iubio204/gopherd/Waisindex.c	Wed Aug 11 19:32:36 1993
+***************
+*** 243,248 ****
+--- 243,264 ----
+  
+       parameters.max_hit_retrieved = 256;
+  
++ 
++ #ifdef BIO
++       /* check query string for ">max_retrieve" number */
++       {
++       int  ihit;
++       char *hit= strrchr( SearchWords, '>');
++       if ((hit != NULL) && (hit > SearchWords) && isdigit(*(++hit)) ) {
++         ihit= atoi( hit);
++         if (ihit>0) {
++           parameters.max_hit_retrieved = ihit;
++  	 *(--hit) = '\0';  /* drop rest of string */
++  	 }
++         }
++       }
++ #endif
++ 
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+       
+       search_result = false;
+***************
+*** 282,292 ****
+--- 298,335 ----
+  
+  		    /*** Strip off the first part of the path in the filename*/
+  		    /*** Plus it gets rid of weird automount things... ***/
++ /* ++dgg */	    
++ /* lindner code----
+  		    Selstrout =strstr(best_hit.filename, INDEXPath);
+  		    if (Selstrout == NULL)
+  			 Selstrout = "Error in Hostdata!";
+  		    else
+  			 Selstrout += strlen(INDEXPath);
++ ---- */	
++     /* "PLEEZ, OH PLEEZ, let me use wais's real pathnames" -- sez dgg ! */
++     /* let INDEXPath = "/real/path/to/wais-src;/gopher/path/to/wais-src" */
++     /* and after cutting out /real/path; prepend /gopher/path */
++  		    {
++ 		      char newpath[512];
++  		      char *prefix= strchr(INDEXPath, ';');
++  		      if (prefix != NULL) {
++   			 *prefix++= '\0'; /* terminate /real/path */
++  			 cp= strstr(best_hit.filename, INDEXPath);
++  			 if (cp==NULL) cp= "Error in Hostdata INDEXPath";
++  			 else cp += strlen(INDEXPath);
++  			 strcpy( newpath, prefix);
++  			 strcat( newpath, cp);
++  			 cp= newpath;
++  			 *(--prefix)= ';'; /* put it back for next user */
++  			}
++                        else {
++  		        cp =strstr(best_hit.filename, INDEXPath);
++  		        if (cp == NULL) cp = "Error in Hostdata!";
++  		        else cp += strlen(INDEXPath);
++  			}
++ 		    Selstrout= cp;
++  		    }
++ /* dgg-- */
+  		    
+  
+                      sprintf(score,"%3d ",best_hit.weight);
+

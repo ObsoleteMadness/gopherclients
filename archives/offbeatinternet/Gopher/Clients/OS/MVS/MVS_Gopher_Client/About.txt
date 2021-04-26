@@ -1,0 +1,16 @@
+MVS Gopher Client and Server
+(ver 3r1)
+Freeware
+
+
+These distribution files contain both a Gopher client and Gopher server 
+for the IBM MVS (MVS/XA) mainframe operating system (because I have no
+ability to separate the client from the server).  
+
+
+This software is offered in two variants:
+
+ If you have a C compiler, then use.... gopher.ggmvs.distrib.cntl.v3r1
+ If you don't have a C compiler, use... gopher.ggmvs.distobj.cntl.v3r1
+
+

@@ -1,0 +1,16 @@
+#!/usr/local/bin/perl
+# Chad Adams  03-Jan-93  build newsgroups dbm file for gonntp
+# build-newsgroups-db /usr/local/news/newsgroups dotall-file
+#
+#   *********** run this with "rebuild" script *************
+#
+dbmopen(nga, "../usr/lib/newsgroups", 0644);
+while(<>) {
+	chop;
+	($ng, @rest) = split(/[ \t]/);
+	while($#rest > -1 && @rest[0] eq '') { shift(@rest) }
+	$d = join(' ', @rest);
+	print "$ng - >$d<\n";
+	$nga{$ng} = $d;
+}
+dbmclose(nga);

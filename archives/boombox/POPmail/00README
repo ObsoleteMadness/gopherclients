@@ -1,0 +1,14 @@
+This directory contains:
+   POPmail for the Macintosh (A POP2/POP3 and IMAP e-mail client)
+   WS_POPmail for Windows (a POP3 client for Windows 3.11 and Windows 95)
+   Lab versions of Macintosh and Windows POPmail clients
+   popd (a POP2 daemon for unix)
+   MailStop (a POP2/SMTP mail server for the Mac)
+
+For bugs or help, send e-mail to:
+    popmail@boombox.micro.umn.edu
+
+
+For a PC-DOS e-mail client check out "Minuet" in /pub/pc/minuet
+
+

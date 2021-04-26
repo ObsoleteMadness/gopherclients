@@ -1,0 +1,630 @@
+-------------------------------------------------------------------
+NOTE:  This software is free for University or non-commercial use.
+       If you wish to use this for commercial purposes or wish to
+       distribute modified versions of this software, please contact
+       Phil Karn    <karn@chicago.Qualcomm.COM>
+       Copyright (c) 1991 Phil Karn, KA9Q
+-------------------------------------------------------------------
+
+This file is a short introduction to setting up and using Ka9Q NOS
+(CWRU/BIOC v1.92 - axa12) as a Mail(POP2/POP3/SMTP)and Gopher server
+on a PC.  Also included are sample configuration files for my
+installation of NOS.
+
+The accompanying file (NOS192.ZIP) has been compressed with
+PKZIP 2.04g
+------------------------------------------------------------------
+Release notes CWRU/BIOC NOS:
+
+The version of NOS used is (CWRU/BIOC v1.92 - axa12).
+This version was compiled with the following things in mind.
+
+v1.92 (April, 1993)
+After much trial and error, I finally got the POP2 server working
+with the University of Minnesota POPmail/PC and POPMail/Mac
+clients.  For this I thank Chris McNeil (cmcneil@mta.ca) for his
+help, and also Kai Getrost (kai@pyrite.som.cwru.edu) for sending me
+his modified FINGERD.C for G1EMM NOS that gave me a couple ideas.
+
+v1.91 (March, 1993)
+Chris McNeil's Gopher server for Ka9Q added.  A *big* thank-you to
+Farhad Anklesaria (fxa@boombox.micro.umn.edu) for helping me get
+in touch with Chris, and also to Chris McNeil for very graciously
+providing the code and helping to get it compiled okay.  Without
+his help and assistance, this version would not be possible.
+
+v1.86
+BOOTP fixed as described by Steven Johnson to correctly recognize
+a 32-bit IP address.
+
+v1.85
+BOOTP and BOOTPD support added.  BOOTP is not supported in Pa0GRI
+2.0m and N1BEE 921225v0.85s-beta distribution releases.
+
+v1.8
+a) Optimized for POP3/SMTP function.  During compiling extraneous
+servers like ax25, pop2, nntp etc. were left undefined.
+b) Support for only the packet driver interface.  Other interfaces
+such as ASY, KISS, PI, EAGLE, SCC etc. were also left undefined.
+c) The base code for this version is from N1BEE v0.85s-beta, which
+has a fully functional POP3 server, unlike other versions of NOS
+such as WG7J 1.07b where POP3 function is broken.
+d) The code for the SMTP server is from WG7J 1.07b since that
+version includes the "smtp t4" command, which is very useful (see
+later)
+e) The SMTPSERV.C has been modified as described by Jacob DeGlopper
+(jrd5@po.cwru.edu) to bounce incoming mail that is directed at
+non-existent users.  Previous versions of Ka9Q do not have this
+feature.
+f) This version was compiled for 286 and higher computers.
+g) We find that it is very stable as a mail-server
+h) This version (and configuration files provided below) are to be
+used with POP3 clients such as POPmail/PC and POPmail/Mac.  It is
+*not* expected that any users will want to actually telnet into the
+NOS mailbox and check their mail.
+-------------------------------------------------------------------
+Manual for CWRU/BIOC NOS:
+
+The manual for this version of NOS is NOS_1229.MAN (for Pa0GRI 2.0m)
+since N1BEE v0.85s-beta is based on Pa0GRI 2.0m (Pa0GRI 920730)
+
+In addition, users may wish to use The NOSView online documentation
+system.
+
+These installation instructions in this file attempt to be as complete
+as possible for a quick installation of CWRU/BIOC NOS.
+
+NOTE:  The configuration files provided with in this document are
+EXAMPLES.  You *must* modify them for NOS to work at your site.
+-------------------------------------------------------------------
+This file includes the following sections:
+
+Hardware                 - the computer, number of users etc.
+NOS Directory Structure  - the directories to create
+NOS.BAT                  - the batch file to invoke NOS with
+AUTOEXEC.NOS file        - the basic configuration file
+POPUSERS file            - the POP2/POP3 passwords file
+FTPUSERS file            - the FTP/TELNET passwords file
+ALIAS                    - mail aliases and NOS
+CONFIG.KBD               - configure the keyboard for NOS
+GOPHER                   - configuring the Gopher server
+-------------------------------------------------------------------
+The Computer:
+
+I am using NOS on a FastData 386-40 computer with 4 megs of RAM and
+175 meg HD.  The computer is being used as a mail server
+(POP2/POP3/SMTP), Gopher, and FTP server.  I estimate that this
+computer can very easily support about 100 users receiving mail.
+
+This version of NOS needs atleast a 286 to run on.  Based on my
+experience, I would recommend that the minimum system be a 386SX
+with 2 megs of RAM.  NOS performance dramatically improves with the
+use of a DISK CACHE - such as SMARTDrive 4.0 from Windows 3.1.
+I would recommend using a 512K - 1024K disk-cache
+
+NOS has been installed on this computer such that users can use PC
+and Macintosh POP2/3 clients (POPmail/PC and POPmail/Mac).  These
+programs have been developed at the University of Minnesota and can
+be obtained via anonymous FTP to boombox.micro.umn.edu
+
+The Univ. of Minn. PC and Macintosh Gopher clients can also be obtained 
+from that site.
+-------------------------------------------------------------------------
+NOS directory structure:
+
+Create the following directories:
+
+\NOS - the AUTOEXEC.NOS, ALIAS, POPUSERS, FTPUSERS, and
+           CONFIG.KBD files reside here.
+\NOS\SPOOL
+\NOS\SPOOL\HELP - the help files go here (if desired)
+\NOS\SPOOL\MAIL - mail messages go here
+\NOS\SPOOL\MQUEUE - outgoing mail work files
+\NOS\SPOOL\RQUEUE - isn't used
+\NOS\SPOOL\TEMP - temporary files get created here
+\NOS\FINGER - if desired, the users finger files can go here
+\NOS\SPOOL\rewrite - outgoing mail addresses get re-written based on
+                     the rules in this file (this is not a directory!)
+\PUBLIC - files available for anonymous FTP go in this directory and
+          subdirectories under it.
+\GOPHER - files for the Gopher server go in this directory and it's
+          subdirectories
+-------------------------------------------------------------------------
+NOS.BAT file:
+
+@echo off
+SET TZ=EST
+SET TMP=C:\NOS\SPOOL\TEMP
+cd\nos
+nos -d/nos -s50 autoexec.nos
+cd\
+c:\nos.bat
+
+This file essentially runs NOS in a loop.  NOS.BAT is run from
+AUTOEXEC.BAT
+-------------------------------------------------------------------------
+AUTOEXEC.NOS
+
+You can use the "#" to comment a line in any configuration file that
+is used by NOS.  AUTOEXEC.NOS is broken into two sections below.
+Section 1a - network node configuration using BOOTP
+Section 1b - network node configuration without BOOTP
+Section 2 - the rest of AUTOEXEC.NOS independent of configuration method
+-------------------------------------------------------------------------
+Section 1a) -- Configuring NOS using BOOTP
+
+# AUTOEXEC.NOS for (CWRU/BIOC v1.92 - axa12) NOS
+# configured by Ashok Aiyar.
+#
+attach packet 0x60 pk0 5 1500  # packet driver at 0x60, 5 buffers, MTU=1500)
+ifconfig pk0 broadcast 255.255.255.255
+bootp pk0
+host name biochemistry.cwru.edu
+domain suffix cwru.edu.
+domain verbose on
+domain translate off     # don't turn name translation on
+domain cache size 20
+domain cache wait 300
+domain retry 1
+domain maxwait 90
+#
+
+Notes:
+a) For bootp to work, you must initially set a broadcast address of
+   255.255.255.255 -- the correct value is received from the BOOTP
+   server.
+b) I have to specify a full hostname as the name received from our
+   BOOTP server is just "biochemistry".  Several others have also
+   reported a problem with the node-name received during BOOTP, and
+   I am working on a fix.  Also a domain suffix is not provided by
+   the BOOTP server, and hence is entered here.
+-------------------------------------------------------------------------
+Section 1b) -- Configuring NOS without using BOOTP
+
+# AUTOEXEC.NOS for (CWRU/BIOC v1.92 - axa12) NOS
+# configured by Ashok Aiyar.
+#
+# basic host configuration
+hostname biochemistry.cwru.edu
+ip address 129.22.152.44
+domain suffix cwru.edu.
+#
+# domain nameserver (DNS) configuration
+domain addserver 129.22.4.1   # secondary nameserver
+domain addserver 129.22.4.3   # primary nameserver
+domain verbose on
+domain translate off     # don't turn name translation on
+domain cache size 20
+domain cache wait 300
+domain retry 1
+domain maxwait 90
+#
+# host interface configuration - Cabletron card with packet driver
+attach packet 0x60 pk0 5 1500  # packet driver at 0x60, 5 buffers, MTU=1500
+ifconfig pk0 ipaddr 129.22.152.44 netmask 255.255.0.0 broadcast 129.22.255.255
+route add default pk0 129.22.1.1
+route add 129.22.0.0/16 pk0
+#
+-------------------------------------------------------------------------
+Section 2 -- The rest of AUTOEXEC.NOS - whether you use BOOTP or not
+
+# configuring memory parameters
+watch on
+watchdog on
+memory thresh 7168
+memory efficient yes
+memory ibufsize 3072
+memory nibufs 10
+#
+# TCP/IP parameters
+ip rtimer 60
+ip ttl 255
+tcp window 2048
+tcp mss 1460
+tcp irtt 10000
+#
+# unattended operation
+attended off
+mbox maxmsg 100     # each user can store upto 100 messages
+mbox expert on
+mbox password "password"      # password for remote sysop operation
+#
+# let's maintain a log!
+log \nos\spool\net.log
+#
+# telnet client accept echo request from remote server
+echo accept
+#
+# SMTP parameters
+smtp batch no
+smtp gateway po.cwru.edu
+smtp maxclients 40
+smtp mode route
+smtp quiet yes
+smtp timer 60
+smtp t4 120
+smtp usemx yes
+smtp sendlzw off
+# smtp server checks to see if there is any mail to send every 60
+# seconds.  If a particular host/connection is down, then the
+# "smtp t4" command causes the mail to be sent via the defined smtp
+# gateway after a defined period of time in seconds (120 seconds)
+# "smtp usemx" causes MX records to be used while sending.
+# NOS can use lzw compression during sending/receiving mail.  To
+# ensure compatibility with all SMTP servers, you should probably
+# turn sendlzw off using the command "smtp sendlzw off"
+#
+# remote reset/exit/kick parameters
+start remote
+remote -s password
+# If the server appears to be stuck and you want to kick/restart it,
+# from a remote site using Ka9Q, the command would be
+# "remote -k password biochemistry.cwru.edu kick|reset|exit"
+#
+# FTP client/server - binary transfer mode
+ftype image
+#
+# start the servers
+start ftp
+start smtp
+start echo
+start discard
+start pop2
+start pop3
+start finger
+start telnet
+start gopher
+#
+# map the keyboard
+source c:\nos\config.kbd
+#
+# lock the console
+lock password "password"      # password to unlock console with
+lock      # console gets locked automatically
+-------------------------------------------------------------------------
+POPUSERS file - resides in \NOS directory
+
+#POP passwords format
+#user:password:
+ashok:password1:
+jonathan:password2:
+-------------------------------------------------------------------------
+ALIAS file - resides in \NOS directory
+
+#Mail aliases can be used to forward mail, or send the same message
+#to a group of users.  Three examples are shown below:
+#Example 1: Mail sent to this user gets forwarded to another address
+alias1         someone@po.cwru.edu
+#
+#Example 2: Mail sent to this "user" gets forwarded to several users
+alias2         ashok marty samantha david
+#
+#Example 3: Mail sent to this user gets forwarded to another group of users
+faculty        richard martin jonathan mulchand david karen vernon
+               pieter ganesh jerry bill joyce menachem
+#
+
+-------------------------------------------------------------------------
+FTPUSERS file - resides in \NOS directory used
+
+Okay, here's where the weird stuff begins.  For some reason, when I
+compile NOS with Jacob's modifications to SMTPSERV.C, this file must
+have the following format for all those users who use POPmail/PC or
+POPmail/Mac to be able to send mail to other users within the system.
+
+user1 user1 / 128
+user2 user2 / 128
+
+Finally, since Jacob's code causes the FTPUSERS file to be read for
+incoming mail, it is imperative that every alias that is uses in the
+ALIAS file also have an entry in FTPUSERS.
+
+The format for all other users (eg. FTP etc.) is below
+
+#FTP/TELNET access passwords format
+#user password /directory_access_to protection
+#some protection levels are
+#1 - read access only
+#3 - read/write but not delete
+#7 - read/write/delete
+#127 - remote sysop access
+#128 - this user is banned from Telnet access to mailbox
+#
+examples:
+ashok password1 /public 1
+# read-only access to files in public directory (and subdirectories)
+jonathan password2 / 7
+# read/write/delete access to files everywhere (root and below)
+anonymous * /bioc407 1
+# no password, allowed to read files in bioc407 directory
+
+Since, I provide anonymous and other FTP access, here is what my
+file actually looks like (some portions have been excluded for
+brevity).  However note that there are three sections, usernames
+with FTP access, all the POP2/POP3 users, and all the aliases
+defined in the ALIAS file.
+
+-- begin FTPUSERS --
+#
+# [ftp-accounts]
+anonymous * /public 1
+ftp * /public 1
+bioc password /bioc 3
+root password / 127      # remote sysop access
+# [mail-accounts]
+ashok ashok / 128
+marty marty / 128
+jonathan jonathan / 128
+# [aliases]
+alias1 alias1 / 128
+alias2 alias2 / 128
+faculty faculty / 128
+#
+-- end FTPUSERS --
+-------------------------------------------------------------------------
+CONFIG.KBD - resides in \NOS directory.  Is taken as a Source file
+in AUTOEXEC.NOS so that it can be altered as desired without messing
+with the rest of AUTOEXEC.NOS.  More details are in NOS_1229.MAN
+
+# mapping F1 through F4
+fkey 59 "session 1\n"
+fkey 60 "session 2\n"
+fkey 61 "session 3\n"
+fkey 62 "session 4\n"
+# mapping F5 through F8; F10 is always escape to console
+fkey 63 "tcp status\n"
+fkey 64 "mem status\n"
+fkey 65 "status\n"
+fkey 66 "smtp list\n"
+#
+-------------------------------------------------------------------------
+Finger files - these are optional and go in the \NOS\FINGER
+directory.  There is one file for each user and the file has the
+same name as the USERS name - i.e if my machine has four users -
+ASHOK, JONATHAN, DAVID, and JEANNE, I have 4 finger files in the
+\NOS\FINGER directory.  These files would be:
+ASHOK
+JONATHAN
+DAVID
+JEANNE
+Since I start the finger server when I load NOS, if someone was to
+finger the user ashok@biochemistry.cwru.edu, this is information that
+they would see
+
+Username: ashok                            In Real Life: Ashok Aiyar
+Telephone: x3300                           Room: West 409/410
+
+The finger file ASHOK is a plain text file that can contain any
+information.  On my NOS site, the file for each user contains their
+username, their "real-life" name, their office room number and their
+telephone number.
+-------------------------------------------------------------------------
+The \nos\spool\rewrite file is an important file.  This file rewrites
+outgoing mail addresses as desired.  This is particularly useful, if
+you want to route mail through a particular SMTP gateway.  When is
+this useful.  For example, a couple weeks ago, my campus SMTP gateway
+was not sending mail to BITNET sites, at which point it was useful for
+me to add the following two lines to the REWRITE file.
+
+*@*.bitnet $1%$2.BITNET@cunyvm.cuny.edu
+*@*.BITNET $1%$2.BITNET@cunyvm.cuny.edu
+
+This is what my rewrite file currently looks like
+
+*@*.bitnet $1%$2.BITNET@cunyvm.cuny.edu
+*@*.BITNET $1%$2.BITNET@cunyvm.cuny.edu
+*@biochemistry $1@biochemistry.cwru.edu
+*@meds38956 $1@biochemistry.cwru.edu
+*@meds38956.cwru.edu $1@biochemistry.cwru.edu
+-------------------------------------------------------------------------
+Configuring the GOPHER server:
+
+Create a directory at the root level of your PC hard drive called
+exactly "GOPHER".  This must be the same hard drive that contains the
+server program: nos192.exe. The rest of these instructions assume that
+the hard drive is called C:  (if not, make the necesssary substitutions
+when reading this document).  The contents of the directory C:\gopher
+(and any subdirectories therein) will be available to gopher clients.
+
+Create a file in the gopher directory called "ginfo".  This file
+contains a description of the items in the gopher directory.  Every
+subdirectory under GOPHER that you wish to display on the Gopher
+server menu must have it's own "ginfo" file.
+
+Each line in the GINFO file describes an item.  The format of each
+line is as follows:
+
+<type><display string>TAB<type><file ident>TAB<host name>TAB<port>
+
+Types of items:
+0=text file
+1=directory
+2=CSO PhoneBook
+3=Error
+4=Macintosh Binhexed file
+5=PC Binary
+etc.
+<type> is the gopher item type character.  Character 0 means a file,
+1 indicates a directory, etc.  The <display string> is the string
+that will be visible to the gopher client user.  The <file ident>
+is a curious beast:  it starts with the drive name, say c:,
+followed by the full path of the file starting INSIDE the gopher
+directory.  The directory separators are slashes (as in UNIX)
+rather than backslashes (as in messDOS).  The TAB denotes an actual
+ASCII TAB character.  Many common DOS word processors strip out the
+tabs and replace them with spaces; you need to leave the tabs inside.
+
+An example ginfo file with three items (the # denotes an ASCII TAB
+here and in all the other examples below):
+
+0About this Gopher#0c:/help.txt#foo.moo.umn.edu#70
+1An example directory#1c:/stuff#foo.moo.umn.edu#70
+1An example link##gopher.tc.umn.edu#70
+
+Also THE LAST LINE IN THE GINFO FILE MUST JUST CONTAIN A PERIOD
+FOLLOWED by a CR OR LF.  (not shown above... but it must be there
+to terminate the file).
+
+The first item is a file (type character 0) that the user
+will see as "About this Gopher".  The actual DOS full
+pathname of this file is C:\gopher\help.txt.  The file
+ident here is "c:/help.txt" (look at that carefully one
+more time). Note that a type character precedes the file
+ident, and no tab is between them.  The file lives on THIS
+server, since this server's name (foo.moo.umn.edu) and port
+(70 is the default gopher port) follow.
+
+The second item is a directory (type 1) that the user will
+see as "An example directory".  The actual DOS full
+pathname of this directory is C:\gopher\stuff.  The file
+ident here is "c:/stuff".  Again, note the type char right
+before it.  This directory too, lives on THIS server as
+evidenced by the local name and port.
+
+The third item is also a directory.  The user will see
+this as "An example link".  The directory is not on this
+server at all; that is to say, it is a link to a directory
+on another server.  In this instance, it  points to the
+gopher server running on a machine called gopher.micro.umn.edu
+at port 70.  Note the null selector string.
+
+If you wish users to be able to see items inside the subdirectory
+(the second item), you will also have to create a ginfo file
+in the C:\gopher\stuff subdirectory.  In other words, a ginfo
+file is a "gopher's view" of the contents of any directory.
+
+For more information on gopher item type characters, links,
+etc., you SHOULD browse through the short document
+on the internet Gopher protocol.  This is available via
+gopher or by anonymous ftp from boombox.micro.umn.edu
+(look in the /pub/gopher directory tree).
+
+I have included some the GINFO files from my Gopher server as
+examples of GINFO files (some items from each GINFO file are
+deleted for brevity)
+
+---------------
+C:\GOPHER\GINFO
+(root directory for GOPHER)
+
+0About this Gopher#0c:/gopher.txt#biochemistry.cwru.edu#70
+1POPmail, Gopher and other TCP/IP programs#1c:/pop#biochemistry.cwru.edu#70
+1Other Gophers and Information Services#1c:/gopher#biochemistry.cwru.edu#70
+1Search for E-mail Addresses#1c:/whois#biochemistry.cwru.edu#70
+.
+---------------
+C:\GOPHER\POP\GINFO
+(example configuration for downloading binhexed, and binary files)
+
+0Read Me First	0c:/pop/readme.txt#biochemistry.cwru.edu#70
+4Macintosh TurboGopher 1.05 (binhex)#0c:/pop/tgoph105.hqx#biochemistry.cwru.edu#70
+5PC Gopher III (pkzip)#9c:/pop/pcg3.zip#biochemistry.cwru.edu#70
+5Latest POPmail/PC executable#9c:/pop/popmail.exe#biochemistry.cwru.edu#70
+1Connect to BoomBox - Home of POPmail and Gopher##boombox.micro.umn.edu#70
+.
+
+Note that for download PC Binaries, to maintain open TCP connection,
+a combination of item-type 5 & 9 is used.  In contrast, since Mac
+Binhexed files are ASCII, a combination of 4 & 0 is used.
+---------------
+C:\GOPHER\GOPHER\GINFO
+(examples of links to other Gophers and Telnet links)
+
+0Read Me First#0c:/gopher/readme.txt#biochemistry.cwru.edu#70
+1Mother of All Gophers @ U. of Minnesota##gopher.tc.umn.edu#70
+1Other Gophers through U of M.#1/Other Gopher and Information Servers#gopher.tc.umn.edu#70
+8World Wide Web##info.cern.ch#23
+8University of Saskatchewan HYTELNET#hytelnet#access.usask.ca#23
+.
+
+Note that you can directly connect to a sub-menu at another Gopher
+site.  For Telnet connections, the TCP port is defined.  In one case
+(World Wide Web) no username is required, and in the other
+(Hytelnet), the user will be prompted to use the login "hytelnet"
+when the item is selected.
+---------------
+C:\GOPHER\WHOIS\GINFO
+(example of setting up a type 7 - search item, and other links)
+
+0Finding E-mail Addresses#0c:/whois/whois.txt#biochemistry.cwru.edu#70
+7WHOIS Searches at CWRU (experimental)#whois whois.cwru.edu#gopher.nd.edu#8001
+1WHOIS Searches at other institutions#1/Phone Books/WHOIS Searches#gopher.tc.umn.edu#70
+8NetFind Searches (server at Univ. of Colorado, Boulder)#netfind#bruno.cs.colorado.edu#0
+.
+
+Since CWRU's WHOIS database is not directly available via Gopher but
+is available on a standard whois server (port 43), I am using the
+service at Univ. of Notre Dame to contact the whois server at CWRU,
+and present it as a text file on a new menu.  Upon clicking on that
+file, the search text is presented, and a direct connection with
+CWRU's WHOIS server retrieves the appropriate information.  Yeah, I
+know it's convoluted, but when I did it I thought it was kind of
+neat :-)
+---------------
+-------------------------------------------------------------------------
+Using TED3.COM:
+
+I have found TED3 to be an excellent, small ASCII editor that saves
+ASCII <tabs> as <tabs> and not as spaces.  This is crucial during
+the creation of a GINFO file.  WARNING: DOS EDIT will convert <tabs>
+to spaces (DOS 5.0 edit and DOS 6.0 edit)
+
+To insert an ASCII tab with TED3, just hit the <tab> key.  This is
+simpler than the previously recommended EasyEdit, although the
+latter is also an excellent small text editor.  One other feature of
+TED3.  It doesn't impose limitations on the length of any line.  In
+contrast EasyEdit appears to have a line length limitation.
+
+NOTE:  The last line in your GINFO file must contain a period
+all by itself, immediately followed by a CR or LF.
+
+The accompanying TED3 documentation has more on TED3.  Remember
+to use Binary transfer mode while getting the file TED3.ZIP
+-------------------------------------------------------------------------
+Caveats:
+
+The GINFO file specifies the type and selector string that
+gopher clients use to retrieve files and directories located
+inside the PC's gopher directory.  Naughty clients can NOT
+manufacture a bogus selector string and attempt to climb outside
+of the gopher directory tree, ie. the server will not let them.
+In this respect, the server is secure.  However, if a file or
+directory exists inside the gopher directory tree, then even
+though the ginfo file does not explicitly advertise it, if a
+client knows of its existence, it can manufacture a selector
+string and successfully retrieve the file or directory.
+
+We're calling it a "feature".    :-)
+SO NOTE:  ANY item inside the gopher directory subtree is
+          potentially available to gopher clients.  Just
+          because the ginfo file does not contain it does
+          not mean it is secure or inaccessible.
+-------------------------------------------------------------------------
+Acknowledgements and whom to contact:
+
+This help file and CWRU/BIOC NOS was put together by Ashok Aiyar.
+I am currently at the Department of Biochemistry, CWRU Medical
+School.
+
+The Gopher server code was generously provided by Chris McNeil
+(cmcneil@mta.ca).  Chris was also very helpful in making sure that
+everything compiled okay, and worked well.  His advice in getting
+the POP2 server to work okay is also gratefully acknowledged.
+
+Farhad Anklesaria (fxa@boombox.micro.umn.edu) has also been
+extremely helpful at every step along the way, and his help and
+advice is also mcuh appreciated.  Thanks Farhad.
+
+Much of the Gopher documentation was culled from a document put
+together by the Gopher team and Chris McNeil.
+
+I can be reached at: <ashok@biochemistry.cwru.edu>
+
+From the previous Gopher Documentation:
+
+Bugs and/or questions may be directed to the Gopher team at:
+  <gopher@boombox.micro.umn.edu>
+
+We will forward any hard questions to Chris McNeil :-)
+-------------------------------------------------------------------------
+

@@ -1,0 +1,136 @@
+      GophTrac -- A PC Gopher Server Directory Manager
+
+           by Rod Potter, York University, Canada
+
+This is a beta version of GophTrac, a simple (I hope) front end 
+database application for creating and managing GINFO files for 
+the Ka9Q PC Gopher server. If there is interest, this application 
+could be easily adapted to work with Gunter Hille's server. 
+
+Why?
+----
+Well, there is already a nice front end for the Mac Gopher server 
+and my programming experience and tools are limited to the PC. I 
+don't know if anything exists for other platforms, yet. I know a 
+few people who would like to see a Unix front end. 
+
+Disclaimer
+----------
+This is BETA Software. I've been using it to manage a simple non-
+production gopher server and it seems to work fine. You may not 
+agree. Since this program reads and writes GINFO files, you are 
+strongly advised to backup your hard drive -- or at least 
+experiment on a non-production system. I take no responsibility.
+
+
+Installation
+-------------
+1) Make a directory on your hard drive called "GOPHTRAC"
+
+2) Copy all of the files in this archive to the GOPHTRAC 
+   Directory
+
+
+Configuration
+-------------
+GophTrac needs to know where your gopher server resides. 
+Typically this will be "C:\GOPHER" or "D:\GOPHER". The program 
+also needs to know your local machine name and the default PORT 
+you use for your Gopher server (usually 70). 
+
+To configure these parameters, run GophTrac and select the 
+Maintenance/Configure menu:
+
+1) Run GophTrac by typing "GOPHTRAC" at the DOS command line.
+
+2) Use the PC arrow keys or type "M" to select the Maintenance 
+   menu. Then select the Configure menu.
+
+3) Plug in the requested information.
+
+
+Using GophTrac
+--------------
+GophTrac tries to manage your GINFO files in a number of ways:
+
+a) When you process a new directory (that has no GINFO file) it 
+will create a working database (GOPHTRAC.DBF) which contains that 
+directory's file names, default machine names and port numbers. 
+GophTrac's Editing and Browsing functions let you correct and 
+fill in these details.
+
+b) If there is already a GINFO file in the selected directory, 
+GophTrac will build the working database (as above) and compare
+it with the existing GINFO file. This information will be merged 
+into a new database (GINFO.DBF) so you can edit it. 
+
+c) If you have ADDED files to a gopher directory, GophTrac will 
+create a GINFO entry. If you have removed file(s) from a gopher 
+directory, GophTrac will remove the corresponding GINFO entry 
+when it builds the working database.
+
+d) When a working GINFO.DBF database has been edited, GophTrac 
+will prompt you to see if you want to UPDATE that directory's 
+GINFO file. The program simply outputs the appropriate fields to 
+rebuild the GINFO file.
+
+
+Processing Directories
+----------------------
+GophTrac lets you work with one directory at a time. Select the 
+Directory command and use the up and down arrow keys to select 
+a gopher directory. Press Enter so see the files in the 
+directory. Press enter again to begin processing. This is what 
+the program does.
+
+A) EXISTING DIRECTORY (Has a GINFO File)
+   - Imports the GINFO file into GINFO.DBF
+   - Imports all files names into GOPHTRAC.DBF
+   - Compares them
+   - Adds/removes file entries from the GINFO database as 
+     necessary
+   - Let's you browse and edit this database
+   - Asks for your blessing to rebuild the GINFO file
+
+This version does not understand DIRECTORY items. If there are 
+type 1 items in an existing GINFO file, GophTrac will not touch 
+them. 
+
+
+B) NEW DIRECTORY (No GINFO File)
+   - Creates a bare bones GINFO.DBF file based on files on the 
+     directory
+   - Lets you browse and edit this database
+   - Asks for your blessing to build a new GINFO file
+
+Again, since the program does not know what a directory is, it 
+will ignore them when it creates the new GINFO file. This will be 
+fixed soon.
+
+
+Futures
+-------
+As I said, this is Beta. This serves my purposes, but I'd be 
+interested in some feedback before going further.
+
+a) GophTrac only understands Type 0 objects (files). It does not 
+yet capture and create GINFO entries for directories or other 
+objects. 
+
+b) Order. I need to add an ORDER field, so that items can be 
+prioritized.
+
+c) A File Manager. It would be nice to be able to use GophTrac to 
+Copy/Move/Delete files within the Gopher tree.
+
+d) Windows/Windows NT versions. Maybe.
+
+That's about it. Suggestions/criticisms would be appreciated:
+
+Rod Potter, rodp@orion.yorku.ca
+Computing and Communications Services
+York University
+
+
+
+

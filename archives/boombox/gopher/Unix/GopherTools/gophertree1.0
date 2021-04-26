@@ -1,0 +1,223 @@
+#!/usr/local/bin/perl
+# gophertree v1.0
+# Prints pretty indented listings of a Gopher menu tree
+# Copyright (C) 1992, Trustees of Michigan State University
+# 
+# Modifications:
+# Original author unknown
+# 07/07/92 Boone      Major conversion from gopherls
+# 08/14/92 Boone      Fixes: 
+#                        added code to allow command line limit on recursion 
+#                           depth
+#                        quit indenting after 15 levels to avoid filling the
+#                           title field with spaces
+#                        changed to use IP address instead of hostname when
+#                           checking for off-host links; this should make
+#                           aliased machine names (e.g. gopher.someschool.edu)
+#                           work much better
+#                     Enhancements:
+#                        Added option to list only directories
+#                        Changed limit on number of items listed to apply to
+#                           all types except directories, instead of just
+#                           files; still no per-type limits though
+#                        Changed command line processing to use Getopts, 
+#                        allowing better option processing
+# End Modifications
+
+require "getopts.pl";
+
+sub dokill
+{
+    kill 9,$child if $child;
+}
+
+sub Opengopher
+{
+    $sockaddr++;
+    local($them,$port) = @_;	
+    $them = 'localhost' unless $them;
+
+    $AF_INET = 2;
+    $SOCK_STREAM = 1;
+
+    $SIG{'INT'} = 'dokill';
+
+    $sockaddr = 'S n a4 x8';
+
+    chop($hostname = `hostname`);
+
+    ($name,$aliases,$proto) = getprotobyname('tcp');
+    ($name,$aliases,$port) = getservbyname($port,'tcp')
+	unless $port =~ /^\d+$/;;
+    ($name,$aliases,$type,$len,$thisaddr) = gethostbyname($hostname);
+    ($name,$aliases,$type,$len,$thataddr) = gethostbyname($them);
+
+    $this = pack($sockaddr, $AF_INET, $sockaddr, $thisaddr);
+    $that = pack($sockaddr, $AF_INET, $port, $thataddr);
+
+    # Make the socket filehandle.
+    socket(S, $AF_INET, $SOCK_STREAM, $proto) || die $!;
+
+    # Give the socket an address.
+    bind(S, $this) || die $!;
+
+    # Call up the server.
+    connect(S,$that) || die $!;
+
+    # Set socket to be command buffered.
+    select(S); $| = 1; select(STDOUT);
+
+}
+
+sub GetList 
+{
+	local($CurrentHost, $Port, $Path, $indent) = @_;
+	local(@dirx, $Name, $Obj, $fname, $ftype, $fhost, %i, $truncated);
+	&Opengopher($CurrentHost, $Port);
+	print S "$Path\n";
+	@dirx = <S>;
+	close(S);
+	$truncated = 0;
+	foreach (@dirx) 
+	{
+		last if /^\./;
+		chop; chop;
+		($ObjName, $Path, $CurrentHost, $Port) = split('\t', $_);
+		$Name = substr($ObjName, 1);
+		$Obj = substr($ObjName, 0, 1);
+		$fname = $indent . $Name;
+		$ftype = "";
+		$ftype = "File" if ($Obj eq "0");
+		$ftype = "Dir" if ($Obj eq "1");
+		$ftype = "Phone" if ($Obj eq "2");
+		$ftype = "Error" if ($Obj eq "3");
+		$ftype = "MacHqx" if ($Obj eq "4");
+		$ftype = "PcHqx" if ($Obj eq "5");
+		$ftype = "Uue" if ($Obj eq "6");
+		$ftype = "Index" if ($Obj eq "7");
+		$ftype = "Telnet" if ($Obj eq "8");
+		$ftype = "Bin" if ($Obj eq "9");
+		$ftype = "File" if ($Obj eq "R");
+		$ftype = "TN3270" if ($Obj eq "T");
+		$ftype = "File" if ($Obj eq "e");
+		$ftype = "Ftp" if ($Obj eq "f");
+		$ftype = "HTML" if ($Obj eq "h");
+		$ftype = "Info" if ($Obj eq "i");
+		$ftype = "Mail" if ($Obj eq "m");
+		$ftype = "Sound" if ($Obj eq "s");
+		$ftype = "Index" if ($Obj eq "w");
+		$fhost = $CurrentHost;
+
+		$writeme = 1;
+		if ((! $opt_d) && ($Obj ne "1") && ($i{$Obj} > $breaklong))
+		{
+			$writeme = 0;
+			$truncated = 1;
+		}
+		if ($Obj eq "i")		{ $writeme = 0; }
+		if ($opt_d && ($Obj ne "1"))	{ $writeme = 0; }
+		if ($writeme)			{ write; }
+
+		if ($hostable{$CurrentHost} eq "")
+		{
+			$hostable{$CurrentHost} =
+				unpack("L", (gethostbyname($CurrentHost))[4]);
+		}
+
+		if (($Obj eq "1") && 
+			($hostable{$CurrentHost} eq $hostable{$firsthost}) && 
+			(($Port != $firstport) || ($Path != ""))) 
+		{
+			$newindent = $indent;
+			if ($depth < $nomoreindent)
+			{
+				$newindent .= $iadd;
+			}
+			$depth++;
+			if ($depth <= $maxdepth)
+			{
+				&GetList($CurrentHost, $Port, 
+					$Path, $newindent);
+			}
+			$depth--;
+		}
+
+		$i{$Obj}++;
+	}
+	if ($truncated) 
+	{
+		print "$indent    . . .\n";
+		--$-;
+	}
+}
+
+# **************************************************************************
+# * Main
+# **************************************************************************
+
+# Parse command line
+
+	&Getopts("b:l:dr:");
+	if ($#ARGV < 1) 
+	{
+		print "Usage: gophertree [-d -bn -ln -rn] host port path\n";
+		exit(1);
+	}
+
+	$firsthost = $CurrentHost = $ARGV[0];
+	$firstport = $Port = $ARGV[1];
+	$Path = "";
+	if ($#ARGV == 2) 
+	{
+		$Path = $ARGV[2];
+	}
+
+# Initialize some variables
+
+	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+	$today = $mon+1 . "/" . $mday . "/" . $year;
+
+	$^ = 'TOP';         # Report header format
+	$~ = 'STDOUT';      # Report body format
+	$indent = "";       # Goes in front of description to indicate treeness
+	$depth = 1;         # How deep into the maze are we?
+	$hostable{$firsthost} = unpack("L", (gethostbyname($firsthost))[4]);
+
+# CHANGE--User-configurable defaults
+
+	$breaklong = 15;    # CHANGE--Where to break long lists
+	$= = 55;            # CHANGE--Lines per page
+	$iadd = "  ";       # CHANGE--Amount to indent each new level
+	$nomoreindent = 15; # CHANGE--How far down before we quit indenting
+	$maxdepth = 999;    # CHANGE--How deep to go before "pruning" layers
+
+# Stuff command line changes into the config variables
+
+	if ($opt_b) { $breaklong = $opt_b; }
+	if ($opt_l) { $= = $opt_l; }
+	if ($opt_r) { $maxdepth = $opt_r; }
+
+# Real work
+
+	&GetList($CurrentHost, $Port, $Path, $indent);
+	exit(0);
+
+#
+# Formats
+#
+
+format TOP =
+
+MSU Gopher Road Map                      Host: @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+$firsthost
+Last Update: @<<<<<<<                                               Page: @>>
+$today $%
+
+Lev Name                                       Type   Destination
+--- ------------------------------------------ ------ -------------------------
+.
+
+format STDOUT =
+@>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<
+$depth $fname $ftype $fhost
+.

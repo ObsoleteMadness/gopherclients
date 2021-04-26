@@ -1,0 +1,88 @@
+                              Table of Contents
+
+    1. How to test the gateway works
+    2. Statistics
+    3. The log file
+
+
+1. How to test that the gateway is working
+
+Telnet to the host running the gateway at the port number
+that you used during installation, and press RETURN.
+
+Example:
+
+telnet gopher.upenn.edu 70
+
+You should see output like this:
+
+0About this Internet Gopher	Goph-TI-Gateway	lam.dccs.upenn.edu	70
+1About PennInfo	M penninfo-srv.upenn.edu 9000 836	lam.dccs.upenn.edu	70
+1About the University of Pennsylvania	M penninfo-srv.upenn.edu 9000 852	lam.dccs.upenn.edu	70
+1What's New on PennInfo	M penninfo-srv.upenn.edu 9000 1627	lam.dccs.upenn.edu	70
+7Keyword search all nodes at this TechInfo server	K penninfo-srv.upenn.edu 9000 	lam.dccs.upenn.edu	70
+7Keyword search the items in this menu	K penninfo-srv.upenn.edu 9000 0	lam.dccs.upenn.edu	70
+1World Wide TechInfo	worldwide-techinfo	lam.dccs.upenn.edu	70
+1World Wide Gopher	1/Other Gopher and Information Servers	gopher.tc.umn.edu	70
+
+.
+Connection closed by foreign host.
+
+Specifically, look for these things
+    1) "About this Internet Gopher"
+    2) the main menu of the local Techinfo server
+    3) keyword search items
+    4) World wide techinfo
+    5) World wide gopher
+    6) the last line has just a period on it
+
+If you don't get this output, read the DEBUGLOG file to see
+if there's a message that indicates the problem.  If the
+DEBUGLOG doesn't exist, then create an empty one, make it
+owned by DAEMON, and try the test again.  If the file is
+still empty, then check the spelling of the full filename
+of the gateway executable in /etc/inetd.conf.  If that
+doesn't show what the problem is, check the inetd.conf file
+to make sure that you've got 3 items after the full
+filename of the executable.
+
+If all of the items show up except for #3 & #4, then the
+gateway was unable to contact the LOCALTI_SERVER at the
+LOCALTI_PORT and get the main menu.  Check the spelling of
+the domain name of the LOCALTI_SERVER.  Make sure that the
+TechInfo server is up.
+
+If it still doesn't work, send me email...
+
+
+2. Statistics (optional)
+
+The logfile contains useful information.  Once every month
+or so, it'd be nice to have a summary of the usage of the
+gateway.
+
+I've written a csh script, stats, which computes the total
+number of connections, and the number of UPENN and
+non-UPENN connections.
+
+Install the "stats" script somewhere, say
+/usr/local/bin/gopher-ti-gw-stats, and run it to make sure
+it works.
+
+Once it works, add a line to crontab.  For example:
+0 0 1 * * /usr/local/bin/gopher-ti-gw-stats /usr/local/logs/gopher-techinfo-gw | /usr/ucb/mail -s "Gopher-Techinfo GW Stats" root
+#
+# send the stats on the first of the month to root
+#
+
+
+3. The DEBUGLOG file needs to be erased on a regular basis.
+   I wrote a script, called cleanuplog, which mails the log
+   file to someone who cares if there are FatalErrors in
+   the log, and then removes it.
+
+   Running this script once a month is probably often
+   enough.  Install the script.  Since the script is
+   normally silent, you should check it once in a while to
+   make sure that it actually ran.
+

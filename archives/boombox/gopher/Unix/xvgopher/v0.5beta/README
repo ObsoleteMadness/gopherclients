@@ -1,0 +1,13 @@
+This is release 0.5beta of xvgopher.
+There are four different distribution types:
+
+	shars:			xvgopher.shar.??
+	compressed tar:		xvgopher.tar.Z
+	zipped tar:		xvgopher.tar.z
+	sun3 static executable:	xvgopher.sun3.Z
+	sun4 static executable:	xvgopher.sun4.Z
+
+The xvgopher-hierarchy.gif is a picture of the inheritance tree used
+in the sources of xvgopher.
+
+Mail comments/questions to xvgopher@gopher.sdsu.edu

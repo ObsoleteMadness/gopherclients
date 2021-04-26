@@ -1,0 +1,27 @@
+Changes:                                                                        
+                                                                                
+ 07 Aug 93 - Version 2 Release 2                                                
+                                                                                
+             Remote FTP Gateway                                                 
+             Enhanced CSO client option                                         
+             Configurable GOPHERRC: domain and telnet may be specified          
+             Object-code-only distribution for those without C compilers        
+             Improvements to TSO GOPHER exec for users without XPROC            
+              or without C runtime in linklist                                  
+             DD:ddname(member) works now for nested PDS member                  
+              references, making installing the ABOUT PDS simpler               
+             "E" and "P" work without "S" having to be done first               
+                                                                                
+ 20 Mar 93 - Version 2 Release 1                                                
+                                                                                
+             Improved browse function                                           
+             Printing support                                                   
+             Bookmark support                                                   
+             New commands: PRT, INFO, MENU, BOOKMARK                            
+             Configurable startup parameter file                                
+             Ability to run multiple servers on same MVS                        
+                                                                                
+ 07 Dec 92 - Customizations to support SNS/TCPAccess                            
+                                                                                
+ 19 Oct 92 - Improvements in initial startup and GOPHERRC customization         
+                                                                                

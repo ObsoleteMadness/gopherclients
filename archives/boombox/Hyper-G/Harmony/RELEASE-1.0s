@@ -1,0 +1,183 @@
+RELEASE-1.0s                                                 13 Jun 95
+                                                         Keith Andrews
+
+
+
+		    Release Notes for Harmony 1.0s
+		    ==============================
+
+
+Release 1.0s of Harmony is a snapshot pre-release of Harmony 1.0 to
+make recent improvments and new features available on an experimental
+basis, before final testing for release 1.0 is completed.
+
+This document describes enhancements, bug fixes, and other release
+information for Harmony Release 1.0s.
+
+
+
+Enhancements/Changes
+--------------------
+
+In Rel 1.0s
+
+o Harmony now supports Hyper-G annotations.
+
+o It is possible to create a new text document from scratch, without
+  having to import a dummy document first.
+
+o The Harmony Local Map has an Options panel and can now display
+  parent/child relationships, annotations, inline images, textures,
+  etc. in addition to standard referential hyperlink relationships.
+
+o The Harmony Film Player now supports circular link anchors.
+
+o The Harmony Text Viewer has a View Source command, which displays
+  the HTF source of the current document.
+
+o The Harmony 3D Scene Viewer is now available in a MESA/X11 version
+  for Linux and Sun Solaris (as well as for SGI Irix and DEC OSF/1 in
+  both OpenGL and MESA/X11 versions).
+
+o The Harmony Administrator (haradmin) is an experimental new tool to
+  help Hyper-G system administrators maintain user accounts, groups,
+  etc. Normal users can use haradmin to add/change their own passwords
+  and hosts.
+
+
+
+In Rel. 1.0b
+
+o The Harmony Session Manager can now create and delete collections
+  and insert and delete documents (File Insert).
+
+o The Harmony Text Viewer supports interactive editing of text
+  documents using your favourite text editor (by default emacs),
+  including a preview facility.
+
+o Multiple anchors in a text document can be selected for deletion
+  simultaneously (Shift-Left-Click).
+
+o The Harmony Text Viewer now allows inline images to be interactively
+  deleted (Ctrl-Left-Click to select, Anchors Delete) as well as
+  created.
+
+o The Harmony Image Viewer supports circular and elliptical anchors in
+  addition to rectangles.
+
+o The field editor widget now supports pasting of text from the X
+  paste buffer (middle mouse click).
+
+o Transparent inline GIFs are really transparent.
+
+o The Harmony icons are now compiled into the binaries and not loaded
+  from TIFF files.
+
+o A "Go To" function in the Session Manager accepts collection names
+  and W3, Gopher, and telnet URLs. (NB. Remote W3 and Gopher documents
+  are fetched according to the Hyper-G philosophy via the local
+  Hyper-G server and not directly).
+
+o The Harmony Session Manager now recognises and handles the
+  PresentationHints attribute. In particular, a collection member
+  document with CollectionHead as presentation hint is recognised as
+  descriptive head of the collection and is opened automatically when
+  the collection is opened.
+
+o The Harmony Film Player allows you to interactively adjust
+  brightness using gamma correction.
+
+
+
+
+Bug Fixes
+---------
+
+In Rel. 1.0s
+
+o The "Could not read magic number file!" bug has been fixed.
+
+o The Linux Text Viewer problem has been fixed.
+
+o Links pointing to a destination within the same document are now
+  handled properly.
+
+o Numerous other minor changes and fixes.
+
+
+
+
+In Rel. 1.0b
+
+o The marked rectangle in the Image Viewer (e.g. when creating a link
+  anchor) is now visible.
+
+o The Text Viewer handles J.UCS documents correctly.
+
+o On 8-bit displays, inline images are now dithered using the standard
+  Harmony colour table.
+
+o The PostScript Viewer should now Save and Print properly.
+
+
+
+
+
+Known Bugs
+----------
+
+o When collection members are accessed individually (e.g. via
+  hyperlinks), the collection browser displays them in order of
+  access, not in the correct sort order (sequence).
+
+o In some circumstances, particularly on a slow line with a fast user,
+  the Session Manager is still in the process of fetching metadata
+  from the server, when the user clicks on a new document, which
+  causes the dialogue box "Get Children Error: prior request not
+  finished" to appear. The solution is: slow down, take it easy --
+  give your software time to rest...
+
+  This problem is especially noticable in Harmony versions supporting
+  the 3D information landscape (i.e. SGI and DEC Alpha), where the SM
+  has to fetch the children of each collection -- we are working on
+  alleviating it.
+
+o The PostScript Viewer has a very hefty appetite for temporary disk
+  space (about 1MB per PostScript page). The PostScript Viewer uses
+  GhostScript to generate page images in PBM binary format.
+  Unfortunately, if no space is left, GhostScript just waits for some
+  to become free, so the PostScript Viewer looks like it has hung
+  up. This will be much better once smaller, compressed page images
+  are generated.
+
+o The Text Viewer sometimes leaves temporary inline image files in
+  /tmp (or the configured temporary directory).
+
+o Very large numbers of inline images (hundreds) in a text cause
+  difficulties.
+
+o The Information Lasndscape is not totally in sync with the Session
+  Manager's collection browser. In particular, commands like Home and
+  Close All cause problems.
+
+
+
+
+Known Limitations
+-----------------
+
+o Harmony does not yet support HTML forms.
+
+o Double-buffering provides flimmer-free screen update, but consumes
+  relatively large amounts of RAM on your X terminal. If your
+  machine/X-terminal has relatively little RAM for its X server, you
+  may want to turn double-buffering off (Harmony*double_buffered:
+  off).
+
+o Harmony does not currently make use of shared libraries. These will
+  be introduced where possible to minimise code size.
+
+o The Text Viewer cannot yet Save or Print in PostScript format.
+  (A shaky provisional implementation was taken out of Release 1.0b).
+
+o There is still almost no documentation and help.

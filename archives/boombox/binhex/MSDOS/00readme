@@ -1,0 +1,27 @@
+PC BinHex 1.3    University of Minnesota 1992-1993
+
+Overview:
+
+This Utility encodes binary files into a plain text format and 
+decodes the resulting files into their original state. The 
+encoding method used is called BinHex. This encoding method 
+works on any type of file, including formatted word processing 
+and spreadsheet files, graphics files, and even executable 
+files (i.e. programs or applications). The encoded file can 
+also be passed from computer to computer in its encoded form. 
+The encoding will remain intact and it will be equally 
+meaningless on all the machines until it is unencoded. To be 
+usable or readable it must be converted back to its original 
+format and be run on a compatible computer. This program is 
+compatible with the Macintosh version of BINHEX and with 
+POPMail (tm).
+
+Functions:
+
+F1: Access online help.
+
+F2: Bin2Hex - Converts a Binary File to a BinHex encoded File.
+
+F3: Hex2Bin - Converts a BinHex encoded File to a Binary File.
+
+Alt-X: Exit the program.

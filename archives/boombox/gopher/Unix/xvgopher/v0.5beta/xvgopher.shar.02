@@ -1,0 +1,1863 @@
+---- Cut Here and feed the following to sh ----
+#!/bin/sh
+# This is part 02 of a multipart archive
+# ============= GWDownload.cc ==============
+if test -f 'GWDownload.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWDownload.cc (File already exists)'
+else
+echo 'x - extracting GWDownload.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWDownload.cc' &&
+//
+// GWDownload.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWDownload class
+//
+#include "GWDownload.h"
+#include "xvgopher.h"
+#include "cursor.h"
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+X
+#define	KEY_TEXT_ITEM		20000
+#define	KEY_SAVE			20001
+#define	KEY_CANCEL			20002
+#define	KEY_OTHER			20003
+X
+X
+//***************************************************************************
+// GWDownload::GWDownload(Frame par, int download_type)
+//
+GWDownload::GWDownload(Frame par, int download_type)
+{
+X	parent = par;
+X	type = download_type;
+X	button = NULL;
+X	button_command = NULL;
+}
+X
+X
+//***************************************************************************
+// GWDownload::GWDownload(Frame par, int download_type, char  *btn, char *btncmd)
+//
+GWDownload::GWDownload(Frame par, int download_type, char  *btn, char *btncmd)
+{
+X	parent = par;
+X	type = download_type;
+X	button = btn;
+X	button_command = btncmd;
+}
+X
+X
+//***************************************************************************
+// void GWDownload::bin_save_notify(Panel_item item, Event *)
+// PURPOSE:
+//   We get here when the user wants to copy our temporary copy into a more
+//   permanent file.
+//
+void GWDownload::bin_save_notify(Panel_item item, Event *)
+{
+X	GWDownload	*gwindow = (GWDownload *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X	Gopher		*gopher = gwindow->gopher;
+X	Panel_item	txt = (Panel_item) xv_get(item, XV_KEY_DATA, KEY_TEXT_ITEM);
+X	int	fd = ::open((char *) xv_get(txt, PANEL_VALUE), O_CREAT | O_WRONLY, 0644);
+X	if (fd < 0)
+X	{
+X		gwindow->status("Unable to create file");
+X		return;
+X	}
+X
+X	//
+X	// Ok, we now have a new file we can write to.  We will just open the
+X	// temporary file and copy its contents block by block to the new file.
+X	//
+X	gwindow->status("Saving...");
+X	int old = ::open(gopher->filename, O_RDONLY);
+X	char	buffer[10240];
+X	int		n;
+X	while ((n = ::read(old, buffer, 10240)) > 0)
+X	{
+X		::write(fd, buffer, n);
+X	}
+X	::close(fd);
+X	::close(old);
+X	gwindow->status("File saved");
+}
+X
+X
+//***************************************************************************
+// void GWDownload::bin_cancel_notify(Panel_item, Event *)
+//
+void GWDownload::bin_cancel_notify(Panel_item item , Event *)
+{
+X	GWDownload	*gwindow = (GWDownload *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X	delete gwindow;
+X	Frame	frame = (Frame) xv_get(item, XV_KEY_DATA, KEY_FRAME);
+X	xv_destroy_safe(frame);
+}
+X
+X
+//***************************************************************************
+// void GWDownload::bin_other_notify(Panel_item, Event *)
+//
+void GWDownload::bin_other_notify(Panel_item item , Event *)
+{
+X	GWDownload	*gwindow = (GWDownload *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X	Gopher		*gopher = gwindow->gopher;
+X	Panel_item	txt = (Panel_item) xv_get(item, XV_KEY_DATA, KEY_TEXT_ITEM);
+X
+X	char		command[1000];
+X	sprintf(command, "%s %s &", gwindow->button_command, gopher->filename);
+X	system(command);
+X
+X	sprintf(command, "Started %s on %s", gwindow->button, gopher->filename);
+X	gwindow->status(command);
+}
+X
+X
+//***************************************************************************
+// Panel_setting GWDownload::bin_text_notify(Panel_item item, Event *event)
+//
+Panel_setting GWDownload::bin_text_notify(Panel_item item, Event *event)
+{
+X	bin_save_notify(item, event);
+X	return PANEL_NONE;
+}
+X
+X
+//***************************************************************************
+// int GWDownload::open(Response *resp)
+// PURPOSE:
+// This will create a prompt window
+//
+int GWDownload::open(Response *resp)
+{
+X	info = resp;
+X	compute_location(407, 107);
+X	frame = (Frame) xv_create(parent, FRAME_CMD,
+X		XV_X,							next_x,
+X		XV_Y,							next_y,
+X		XV_WIDTH,						407,
+X		XV_HEIGHT,						107,
+X		FRAME_LABEL,					"Saving a file",
+X		FRAME_CMD_PIN_STATE,			FRAME_CMD_PIN_IN,
+X		FRAME_SHOW_RESIZE_CORNER,		FALSE,
+X		XV_SHOW,						TRUE,
+X		FRAME_SHOW_FOOTER,				TRUE,
+X		FRAME_RIGHT_FOOTER,				info->get_server(),
+X		FRAME_DONE_PROC,				done_proc,
+X		FRAME_ACCELERATOR,				'q', quit_proc, frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X
+X	//
+X	// Create the text field and put a usable default name in it.
+X	//
+X	char	*p = strrchr(info->get_command(), '/');
+X	if (!p)
+X		p = info->get_command();
+X	else
+X		p++;
+X	char	*str = strdup(p);
+X	for (p = str; *p; p++)
+X		if (*p <= ' ' || *p > 126)
+X			*p = '_';
+X	Panel_item txt = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							16,
+X		XV_Y,							28,
+X		PANEL_LABEL_STRING,				"Save file as:",
+X		PANEL_VALUE_DISPLAY_LENGTH,		35,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_VALUE,					str,
+X		PANEL_NOTIFY_PROC,				bin_text_notify,
+X		XV_KEY_DATA,					KEY_FRAME,		frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		XV_KEY_DATA,					KEY_GOPHER,		gopher,
+X		PANEL_INACTIVE,					TRUE,
+X		NULL);
+X	delete str;
+X	xv_set(txt,
+X		XV_KEY_DATA,					KEY_TEXT_ITEM,	txt,
+X		NULL);
+X
+X	//
+X	// Create the buttons.  There may be two or three buttons.  We need to spread them
+X	// evenly to make it look better.
+X	//
+X	int		ob_x, sb_x, cb_x;
+X	if (button)
+X	{
+X		//
+X		// There will be three buttons
+X		//
+X		ob_x = 107;
+X		sb_x = 175;
+X		cb_x = 241;
+X	}
+X	else
+X	{
+X		//
+X		// Only two buttons
+X		//
+X		sb_x = 141;
+X		cb_x = 207;
+X	}
+X	Panel_item sb = (Panel_item) xv_create(panel, PANEL_BUTTON,
+X		XV_X,							sb_x,
+X		XV_Y,							64,
+X		PANEL_LABEL_STRING,				"Save",
+X		PANEL_NOTIFY_PROC,				bin_save_notify,
+X		XV_KEY_DATA,					KEY_FRAME,		frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		XV_KEY_DATA,					KEY_GOPHER,		gopher,
+X		XV_KEY_DATA,					KEY_TEXT_ITEM,	txt,
+X		PANEL_INACTIVE,					TRUE,
+X		NULL);
+X	Panel_item cb = (Panel_item) xv_create(panel, PANEL_BUTTON,
+X		XV_X,							cb_x,
+X		XV_Y,							64,
+X		PANEL_LABEL_STRING,				"Cancel",
+X		PANEL_NOTIFY_PROC,				bin_cancel_notify,
+X		XV_KEY_DATA,					KEY_FRAME,		frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		XV_KEY_DATA,					KEY_TEXT_ITEM,	txt,
+X		PANEL_INACTIVE,					TRUE,
+X		NULL);
+X	Panel_item	ob = NULL;
+X	if (button)
+X	{
+X		ob = (Panel_item) xv_create(panel, PANEL_BUTTON,
+X			XV_X,							ob_x,
+X			XV_Y,							64,
+X			PANEL_LABEL_STRING,				button,
+X			PANEL_NOTIFY_PROC,				bin_other_notify,
+X			XV_KEY_DATA,					KEY_FRAME,		frame,
+X			XV_KEY_DATA,					KEY_GWINDOW,	this,
+X			XV_KEY_DATA,					KEY_TEXT_ITEM,	txt,
+X			PANEL_INACTIVE,					TRUE,
+X			NULL);
+X	}
+X
+X	//
+X	// Associate the panel items with the frame so we can get at them later on
+X	//
+X	xv_set(frame,
+X		XV_KEY_DATA,					KEY_SAVE,		sb,
+X		XV_KEY_DATA,					KEY_CANCEL,		cb,
+X		XV_KEY_DATA,					KEY_OTHER,		ob,
+X		XV_KEY_DATA,					KEY_TEXT_ITEM,	txt,
+X		NULL);
+X	//
+X	// Now we need to build the connection and get information from it
+X	//
+X	frame_busy(frame);
+X	status("Building connection...");
+X	gopher = new Gopher(this);
+X	if (gopher->open(info->get_server(), info->get_port()) == NOTOK)		// Connection
+X		return NOTOK;
+X	gopher->read(info->get_type(), info->get_command());					// Get info
+X
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// void GWDownload::display()
+// PURPOSE:
+//   This is called when the receive of a file has been completed.
+//
+void GWDownload::display()
+{
+X	//
+X	// Now make the items in the window active so that the file can be saved
+X	//
+X	frame_unbusy(frame);
+X	Panel_item	b = (Panel_item) xv_get(frame, XV_KEY_DATA, KEY_SAVE);
+X	xv_set(b, PANEL_INACTIVE, FALSE, NULL);
+X	b = (Panel_item) xv_get(frame, XV_KEY_DATA, KEY_CANCEL);
+X	xv_set(b, PANEL_INACTIVE, FALSE, NULL);
+X	b = (Panel_item) xv_get(frame, XV_KEY_DATA, KEY_TEXT_ITEM);
+X	xv_set(b, PANEL_INACTIVE, FALSE, NULL);
+X	b = (Panel_item) xv_get(frame, XV_KEY_DATA, KEY_OTHER);
+X	if (b)
+X		xv_set(b, PANEL_INACTIVE, FALSE, NULL);
+}
+X
+X
+SHAR_EOF
+chmod 0644 GWDownload.cc ||
+echo 'restore of GWDownload.cc failed'
+Wc_c="`wc -c < 'GWDownload.cc'`"
+test 7644 -eq "$Wc_c" ||
+	echo 'GWDownload.cc: original size 7644, current size' "$Wc_c"
+fi
+# ============= GWFile.cc ==============
+if test -f 'GWFile.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWFile.cc (File already exists)'
+else
+echo 'x - extracting GWFile.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWFile.cc' &&
+//
+// GWFile.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWFile class
+//
+#include "GWFile.h"
+#include "xvgopher.h"
+#include "cursor.h"
+#include <xview/textsw.h>
+X
+#define	KEY_TEXT_ITEM		20000
+#define	KEY_TYPE			20001
+#define	KEY_TEXT			20002
+#define	TYPE_SAVE			1
+#define	TYPE_MAIL			2
+X
+X
+//***************************************************************************
+// GWFile::GWFile(Frame par)
+//
+GWFile::GWFile(Frame par)
+{
+X	parent = par;
+}
+X
+X
+//***************************************************************************
+// static void menu_proc(Menu menu, Menu_item menu_item)
+//
+static void menu_proc(Menu menu, Menu_item menu_item)
+{
+X	char		*str = (char *) xv_get(menu_item, MENU_STRING);
+X	Panel_item	txt = (Panel_item) xv_get(menu, XV_KEY_DATA, KEY_TEXT_ITEM);
+X	Textsw	t = (Textsw) xv_get(menu, XV_KEY_DATA, KEY_TEXT);
+X	char		command[200];
+X
+X	if (strcmp(str, "Save...") == 0)
+X	{
+X		xv_set(txt,
+X			PANEL_LABEL_STRING,		"Save as:",
+X			XV_KEY_DATA,			KEY_TYPE,		TYPE_SAVE,
+X			XV_SHOW,				TRUE,
+X			NULL);
+X	}
+X	else if (strcmp(str, "Print") == 0)
+X	{
+X		//
+X		// First save the file
+X		//
+X		textsw_save(t, 0, 0);
+X		char name[200];
+X		name[0] = '\0';
+X		textsw_append_file_name(t, name);
+X
+X		//
+X		// This needs to use a user definable print method!!!
+X		//
+X		sprintf(command, "%s %s &", preferences.get_print_filter(), name);
+X		system(command);
+X	}
+X	else if (strcmp(str, "Mail...") == 0)
+X	{
+X		xv_set(txt,
+X			PANEL_LABEL_STRING,		"Mail to:",
+X			XV_KEY_DATA,			KEY_TYPE,		TYPE_MAIL,
+X			XV_SHOW,				TRUE,
+X			NULL);
+X	}
+}
+X
+X
+//***************************************************************************
+// static Panel_setting text_notify(Panel_item item, Event *event)
+//
+static Panel_setting text_notify(Panel_item item, Event *event)
+{
+X	event = event;
+X	char	*string = (char *) xv_get(item, PANEL_VALUE);
+X	Textsw	t = (Textsw) xv_get(item, XV_KEY_DATA, KEY_TEXT);
+X	GWindow	*gwindow = (GWindow *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X
+X	switch (xv_get(item, XV_KEY_DATA, KEY_TYPE))
+X	{
+X		case TYPE_SAVE:
+X			gwindow->status("Saving...");
+X			if (textsw_store_file(t, string, 0, 0) != 0)
+X			{
+X				//
+X				// Some problem occured...  Notify the user
+X				//
+X				gwindow->status("Unable to save!");
+X			}
+X			else
+X				gwindow->status("File saved");
+X			break;
+X		case TYPE_MAIL:
+X		{
+X			textsw_save(t, 0, 0);
+X			char name[200];
+X			name[0] = '\0';
+X
+X			Frame	frame = (Frame) xv_get(item, XV_KEY_DATA, KEY_FRAME);
+X			char	*subject = (char *) xv_get(frame, FRAME_LABEL);
+X
+X			textsw_append_file_name(t, name);
+X			gwindow->status("Mailing...");
+X			char	command[200];
+X			sprintf(command, "%s -s '%s' %s < %s", preferences.get_mail_filter(), subject, string, name);
+X			system(command);
+X			gwindow->status("File mailed");
+X			break;
+X		}
+X	}
+X	return PANEL_NONE;
+}
+X
+X
+//***************************************************************************
+// int GWFile::open(Response *resp)
+// PURPOSE:
+//   This will create a window in which a file will be displayed.  We will create
+//   a command frame with a textsw at the bottom.  The top will be a panel with
+//   a menu and a hidden text field.
+//
+int GWFile::open(Response *resp)
+{
+X	info = resp;
+X	compute_location(600, 500);
+X	frame = (Frame) xv_create(parent, FRAME_CMD,
+X		XV_X,							next_x,
+X		XV_Y,							next_y,
+X		XV_WIDTH,						600,
+X		XV_HEIGHT,						500,
+X		FRAME_LABEL,					info->get_title(),
+X		FRAME_CMD_PIN_STATE,			FRAME_CMD_PIN_IN,
+X		FRAME_SHOW_RESIZE_CORNER,		TRUE,
+X		XV_SHOW,						TRUE,
+X		FRAME_SHOW_FOOTER,				TRUE,
+X		FRAME_RIGHT_FOOTER,				info->get_server(),
+X		FRAME_DONE_PROC,				done_proc,
+X		FRAME_ACCELERATOR,				'q', quit_proc, frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X	textsw = (Textsw) xv_create(frame, TEXTSW,
+X		XV_X,						0,
+X		XV_Y,						29,
+X		NULL);
+X
+X	//
+X	// Child windows have a close button
+X	//
+X	dir_quit = xv_create(panel, PANEL_BUTTON,
+X		XV_X,						488,	// It will be relocated anyway...
+X		XV_Y,						4,
+X		PANEL_LABEL_STRING,			"Dismiss",
+X		PANEL_NOTIFY_PROC,			quit_proc,
+X		XV_KEY_DATA,				KEY_GWINDOW, this,
+X		NULL);
+X
+X	//
+X	// Create the menu and button which go in the panel...
+X	//
+X	Menu menu = (Menu) xv_create(NULL, MENU,
+X		MENU_NOTIFY_PROC,				menu_proc,
+X		MENU_STRINGS,					"Save...",
+X										"Print",
+X										"Mail...",
+X										NULL,
+X		NULL);
+X	xv_create(panel, PANEL_BUTTON,
+X		XV_X,							8,
+X		XV_Y,							4,
+X		PANEL_LABEL_STRING,				"Options",
+X		PANEL_ITEM_MENU,				menu,
+X		NULL);
+X
+X	//
+X	// Create the text item (which will not be visible until one of the options has been
+X	// selected)
+X	//
+X	Panel_item txt = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							128,
+X		XV_Y,							8,
+X		PANEL_LABEL_STRING,				"",
+X		PANEL_VALUE_DISPLAY_LENGTH,		40,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_NOTIFY_PROC,				text_notify,
+X		XV_SHOW,						FALSE,			// Invisible, initially
+X		XV_KEY_DATA,					KEY_FRAME,		frame,
+X		XV_KEY_DATA,					KEY_TEXT,		textsw,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X
+X	//
+X	// Attach the Frame to the menu so that we can see where we were created
+X	// when a menu option was selected.
+X	//
+X	xv_set(menu,
+X		XV_KEY_DATA,					KEY_FRAME,		frame,
+X		XV_KEY_DATA,					KEY_TEXT_ITEM,	txt,
+X		XV_KEY_DATA,					KEY_TEXT,		textsw,
+X		NULL);
+X
+X	//
+X	// Now we need to build the connection and get information from it
+X	//
+X	frame_busy(frame);
+X	gopher = new Gopher(this);
+X	if (gopher->open(info->get_server(), info->get_port()) == NOTOK)		// Connection
+X		return NOTOK;
+X	status("Got connection, Retrieving text...");
+X	gopher->read(info->get_type(), info->get_command());					// Get info
+X
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// void GWFile::display()
+//
+void GWFile::display()
+{
+X	frame_unbusy(frame);
+X	xv_set(textsw,
+X		TEXTSW_FILE,			gopher->filename,
+X		NULL);
+}
+X
+X
+SHAR_EOF
+chmod 0664 GWFile.cc ||
+echo 'restore of GWFile.cc failed'
+Wc_c="`wc -c < 'GWFile.cc'`"
+test 5861 -eq "$Wc_c" ||
+	echo 'GWFile.cc: original size 5861, current size' "$Wc_c"
+fi
+# ============= GWGopher.cc ==============
+if test -f 'GWGopher.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWGopher.cc (File already exists)'
+else
+echo 'x - extracting GWGopher.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWGopher.cc' &&
+//
+// GWGopher.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWGopher class
+//
+#include "GWGopher.h"
+#include "xvgopher.h"
+#include "cursor.h"
+#include <fcntl.h>
+#include <unistd.h>
+X
+#define	KEY_TEXT_ITEM		20000
+X
+X
+//***************************************************************************
+// GWGopher::GWGopher(Frame par)
+//
+GWGopher::GWGopher(Frame par)
+{
+X	parent = par;
+}
+X
+X
+//***************************************************************************
+// int GWGopher::open(Response *)
+// PURPOSE:
+//   This will create a dialog window to get information about a new gopher server
+//
+int GWGopher::open(Response *)
+{
+X	info = NULL;
+X	compute_location(407, 107);
+X	frame = (Frame) xv_create(parent, FRAME_CMD,
+X		XV_X,							next_x,
+X		XV_Y,							next_y,
+X		XV_WIDTH,						416,
+X		XV_HEIGHT,						128,
+X		FRAME_LABEL,					"Another Gopher",
+X		FRAME_CMD_PIN_STATE,			FRAME_CMD_PIN_OUT,
+X		FRAME_SHOW_RESIZE_CORNER,		FALSE,
+X		XV_SHOW,						TRUE,
+X		FRAME_SHOW_FOOTER,				FALSE,
+X		FRAME_DONE_PROC,				done_proc,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X
+X	//
+X	// Create all the panel items
+X	//
+X	server = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							32,
+X		XV_Y,							16,
+X		PANEL_LABEL_STRING,				"Server name:",
+X		PANEL_VALUE_DISPLAY_LENGTH,		30,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		NULL);
+X	port = (Panel_item) xv_create(panel, PANEL_NUMERIC_TEXT,
+X		XV_X,							43,
+X		XV_Y,							41,
+X		PANEL_LABEL_STRING,				"Server port:",
+X		PANEL_VALUE_DISPLAY_LENGTH,		5,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_MAX_VALUE,				30000,
+X		PANEL_MIN_VALUE,				1,
+X		PANEL_VALUE,					70,
+X		NULL);
+X	xv_create(panel, PANEL_BUTTON,
+X		XV_X,							185,
+X		XV_Y,							88,
+X		PANEL_LABEL_STRING,				"Start",
+X		PANEL_NOTIFY_PROC,				start_proc,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// void GWGopher::start_proc(Frame frame, Event *)
+// PURPOS:
+//   This gets called when the user presses 'q' in a window.
+//
+void GWGopher::start_proc(Frame frame, Event *)
+{
+X	GWGopher	*win = (GWGopher *) xv_get(frame, XV_KEY_DATA, KEY_GWINDOW);
+X
+X	int port = (int) xv_get(win->port, PANEL_VALUE);
+X	char *server = (char *) xv_get(win->server, PANEL_VALUE);
+X
+X	Response	*r = new Response("1");
+X	r->set_server(server);
+X	r->set_port(port);
+X	GWindow	*main_window = CreateWindow(r, win->frame);
+X	if (main_window)
+X		main_window->open(r);
+X
+X	xv_destroy_safe(frame);
+}
+X
+X
+SHAR_EOF
+chmod 0664 GWGopher.cc ||
+echo 'restore of GWGopher.cc failed'
+Wc_c="`wc -c < 'GWGopher.cc'`"
+test 2602 -eq "$Wc_c" ||
+	echo 'GWGopher.cc: original size 2602, current size' "$Wc_c"
+fi
+# ============= GWImage.cc ==============
+if test -f 'GWImage.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWImage.cc (File already exists)'
+else
+echo 'x - extracting GWImage.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWImage.cc' &&
+//
+// GWImage.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWImage class
+//
+#include "GWImage.h"
+#include "xvgopher.h"
+X
+X
+//***************************************************************************
+// GWImage::GWImage(Frame par)
+//
+GWImage::GWImage(Frame par) : GWDownload(par, GWDownload::BINARY, "View", preferences.get_image_filter())
+{
+}
+X
+X
+SHAR_EOF
+chmod 0644 GWImage.cc ||
+echo 'restore of GWImage.cc failed'
+Wc_c="`wc -c < 'GWImage.cc'`"
+test 472 -eq "$Wc_c" ||
+	echo 'GWImage.cc: original size 472, current size' "$Wc_c"
+fi
+# ============= GWIndex.cc ==============
+if test -f 'GWIndex.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWIndex.cc (File already exists)'
+else
+echo 'x - extracting GWIndex.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWIndex.cc' &&
+//
+// GWIndex.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWIndex class
+//
+#include "GWIndex.h"
+#include "xvgopher.h"
+#include "cursor.h"
+#include <fcntl.h>
+#include <unistd.h>
+X
+#define	KEY_TEXT_ITEM		20000
+X
+X
+//***************************************************************************
+// GWIndex::GWIndex(Frame par)
+//
+GWIndex::GWIndex(Frame par)
+{
+X	parent = par;
+}
+X
+X
+//***************************************************************************
+// Panel_setting GWIndex::index_notify(Panel_item item, Event *event)
+// PURPOSE:
+//   This is called whenever the user hits return on the text field.
+//   When this happens, we will use the string to send to the server
+//   and then we can wait for the server to send us the results of the
+//   search.
+//
+Panel_setting GWIndex::index_notify(Panel_item item, Event *event)
+{
+X	event = event;
+X	//
+X	// We need to build the connection and get information from it
+X	//
+X	GWIndex	*gwindow = (GWIndex *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X
+X	gwindow->status("Performing search...");
+X
+X	//
+X	// Build a new command string to send to the server.  This means that we just add
+X	// a tab and the string in our text field to the command.
+X	//
+X	char	new_command[10000];
+X
+X	Response	*r = new Response("1Results of search");
+X	r->set_server(gwindow->info->get_server());
+X	r->set_port(gwindow->info->get_port());
+X	sprintf(new_command, "%s\t%s",
+X				gwindow->info->get_command(),
+X				(char *) xv_get(item, PANEL_VALUE));
+X	r->set_command(new_command);
+X	GWindow *sub = CreateWindow(r, gwindow->frame);
+X
+X	gwindow->status("");
+X	return PANEL_NONE;
+}
+X
+X
+//***************************************************************************
+// int GWIndex::open(Response *resp)
+// PURPOSE:
+//   This will create a prompt window
+//
+int GWIndex::open(Response *resp)
+{
+X	info = resp;
+X	char	frame_title[2000];
+X	sprintf(frame_title, "Index search: %s", info->get_title());
+X	compute_location(407, 107);
+X	frame = (Frame) xv_create(parent, FRAME_CMD,
+X		XV_X,							next_x,
+X		XV_Y,							next_y,
+X		XV_WIDTH,						407,
+X		XV_HEIGHT,						107,
+X		FRAME_LABEL,					frame_title,
+X		FRAME_CMD_PIN_STATE,			FRAME_CMD_PIN_IN,
+X		FRAME_SHOW_RESIZE_CORNER,		FALSE,
+X		XV_SHOW,						TRUE,
+X		FRAME_SHOW_FOOTER,				TRUE,
+X		FRAME_RIGHT_FOOTER,				info->get_server(),
+X		FRAME_DONE_PROC,				done_proc,
+X		FRAME_ACCELERATOR,				'q', quit_proc, frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X
+X	(Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							16,
+X		XV_Y,							28,
+X		PANEL_LABEL_STRING,				"Search for:",
+X		PANEL_VALUE_DISPLAY_LENGTH,		35,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_NOTIFY_PROC,				index_notify,
+X		XV_KEY_DATA,					KEY_FRAME,		frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		XV_KEY_DATA,					KEY_GOPHER,		gopher,
+X		NULL);
+X
+X	return OK;
+}
+X
+SHAR_EOF
+chmod 0644 GWIndex.cc ||
+echo 'restore of GWIndex.cc failed'
+Wc_c="`wc -c < 'GWIndex.cc'`"
+test 2924 -eq "$Wc_c" ||
+	echo 'GWIndex.cc: original size 2924, current size' "$Wc_c"
+fi
+# ============= GWInfo.cc ==============
+if test -f 'GWInfo.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWInfo.cc (File already exists)'
+else
+echo 'x - extracting GWInfo.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWInfo.cc' &&
+//
+// GWInfo.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWInfo class
+//
+#include "GWInfo.h"
+X
+//***************************************************************************
+// GWInfo::GWInfo(Frame par)
+//
+GWInfo::GWInfo(Frame par)
+{
+X	parent = par;
+}
+X
+X
+//***************************************************************************
+// int GWInfo::open(Response *resp)
+//   Create a little popup which contains information about a response.
+//
+int GWInfo::open(Response *resp)
+{
+X	info = resp;
+X	char	frame_title[2000];
+X	sprintf(frame_title, "Info for '%s'", info->get_title());
+X	compute_location(390, 180);
+X	frame = (Frame) xv_create(parent, FRAME_CMD,
+X		XV_X,							next_x,
+X		XV_Y,							next_y,
+X		XV_WIDTH,						390,
+X		XV_HEIGHT,						180,
+X		FRAME_LABEL,					frame_title,
+X		FRAME_CMD_PIN_STATE,			FRAME_CMD_PIN_IN,
+X		FRAME_SHOW_RESIZE_CORNER,		FALSE,
+X		XV_SHOW,						TRUE,
+X		FRAME_DONE_PROC,				done_proc,
+X		FRAME_ACCELERATOR,				'q', quit_proc, frame,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X
+X	//
+X	// Create the textsw in the window with the text describing the item.
+X	//
+X	char	buffer[10240];
+X	sprintf(buffer, "Name=%s\nType=%c\nPort=%d\nPath=%s\nHost=%s\n",
+X		info->get_title(),
+X		info->get_type(),
+X		info->get_port(),
+X		info->get_command(),
+X		info->get_server());
+X	xv_create(frame, TEXTSW,
+X		XV_X,							0,
+X		XV_Y,							0,
+X		XV_WIDTH,						390,
+X		XV_HEIGHT,						180,
+X		TEXTSW_CONTENTS,				buffer,
+X		TEXTSW_IGNORE_LIMIT,			TEXTSW_INFINITY,
+X		TEXTSW_READ_ONLY,				TRUE,
+X		NULL);
+X
+X	return OK;
+}
+X
+SHAR_EOF
+chmod 0644 GWInfo.cc ||
+echo 'restore of GWInfo.cc failed'
+Wc_c="`wc -c < 'GWInfo.cc'`"
+test 1679 -eq "$Wc_c" ||
+	echo 'GWInfo.cc: original size 1679, current size' "$Wc_c"
+fi
+# ============= GWList.cc ==============
+if test -f 'GWList.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWList.cc (File already exists)'
+else
+echo 'x - extracting GWList.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWList.cc' &&
+//
+// GWList.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+//   This  file  contains  the  routines  of the GWList class which
+//   deal with the opening of windows.
+//
+#include "GWList.h"
+#include "xvgopher.h"
+#include "cursor.h"
+#include "icons.h"
+#include "GWBookmarks.h"
+#include "GWInfo.h"
+#include <stream.h>
+#include <string.h>
+#include <xview/svrimage.h>
+#include <xview/icon.h>
+#include <xview/defaults.h>
+X
+X
+static long	double_click_timeout = defaults_get_integer("openwindows.multiclicktimeout", "OpenWindows.MultiClickTimeout", 4) * 100;
+X
+//***************************************************************************
+// GWList::GWList()
+//   Do generic initialization.  This should be called from any derived constructor.
+//
+GWList::GWList()
+{
+X	parent = NULL;
+X	dir_list = NULL;
+X	dir_quit = NULL;
+X	current_selected = -1;
+}
+X
+X
+//***************************************************************************
+// void GWList::frame_event(Xv_Window window, Event *event, Notify_arg)
+//   This is where we will take care of window resize events.  This is rather
+//   messy because XView does not allow for arbitrarily sized scrolling lists.
+//   Instead we have to specify the height in rows, not in pixels like the width
+//
+void GWList::frame_event(Xv_Window window, Event *event, Notify_arg)
+{
+X	if (event_action(event) == WIN_RESIZE)
+X	{
+X		//
+X		//   The  window  has  been  resized. We need to resize the list and
+X		//   relocate the quit button.
+X		//
+X		GWList *gwindow = (GWList *) xv_get(window, XV_KEY_DATA, KEY_GWINDOW);
+X		int width = (int) xv_get(window, XV_WIDTH);
+X		int height = (int) xv_get(window, XV_HEIGHT);
+X
+X		//
+X		//   If  you  can figure out the formula for the number of rows, you
+X		//   deserve a raise!!!
+X		//
+X		xv_set(gwindow->dir_list,
+X			PANEL_LIST_WIDTH,				width - 30,
+X			PANEL_LIST_DISPLAY_ROWS,		(int) ((height - 61.69) / 18.91) + 1,
+X			NULL);
+X
+X		//
+X		//   Ok,  we  have resized the list. Now relocate the quit or dismiss button if
+X		//   it is present.
+X		//
+X		if (gwindow->dir_quit)
+X			xv_set(gwindow->dir_quit,
+X				XV_X,							width - 10 - (gwindow->parent ? 69 : 47),
+X				NULL);
+X	}
+}
+X
+X
+//***************************************************************************
+// int GWList::open(Response *resp)
+// PURPOSE:
+//   This will create a window with a panel at the top and a scrolling list
+//   at the bottom.  The panel will be empty.
+//   The only special thing that is taken care of is that when there is no
+//   parent, the window will be a real window, while if there is a parent,
+//   the window will be a command window.
+//
+int GWList::open(Response *resp)
+{
+X	info = resp;
+X	if (!parent)
+X	{
+X		//
+X		// This is the main window
+X		//
+X		char version[200];
+X		sprintf(version, "XvGopher %s.  Root Directory", VERSION);
+X		frame = (Frame) xv_create(NULL, FRAME,
+X			XV_WIDTH,					WINDOW_WIDTH,
+X			XV_HEIGHT,					WINDOW_HEIGHT,
+X			FRAME_LABEL,				version,
+X			NULL);
+X		panel = (Panel) xv_create(frame, PANEL,
+X			NULL);
+X		assign_icon(frame);
+X
+X		//
+X		// The main window has a quit button
+X		//
+X		dir_quit = xv_create(panel, PANEL_BUTTON,
+X			XV_X,						468,	// It will be relocated anyway...
+X			XV_Y,						8,
+X			PANEL_LABEL_STRING,			"Quit",
+X			PANEL_NOTIFY_PROC,			quit_proc,
+X			XV_KEY_DATA,				KEY_GWINDOW, this,
+X			NULL);
+X	}
+X	else
+X	{
+X		//
+X		// We are creating a child window
+X		//
+X		compute_location(WINDOW_WIDTH, WINDOW_HEIGHT);
+X		frame = xv_create(parent, FRAME_CMD,
+X			XV_X,						next_x,
+X			XV_Y,						next_y,
+X			XV_WIDTH,					WINDOW_WIDTH,
+X			XV_HEIGHT,					WINDOW_HEIGHT,
+X			FRAME_LABEL,				info->get_title(),
+X			FRAME_CMD_PIN_STATE,		FRAME_CMD_PIN_IN,
+X			FRAME_DONE_PROC,			done_proc,
+X			FRAME_SHOW_RESIZE_CORNER,	TRUE,
+X			NULL);
+X		panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X
+X		//
+X		// Child windows have a close button
+X		//
+X		dir_quit = xv_create(panel, PANEL_BUTTON,
+X			XV_X,						468,	// It will be relocated anyway...
+X			XV_Y,						8,
+X			PANEL_LABEL_STRING,			"Dismiss",
+X			PANEL_NOTIFY_PROC,			quit_proc,
+X			XV_KEY_DATA,				KEY_GWINDOW, this,
+X			NULL);
+X	}
+X
+X	//
+X	//   Now  some  things  which  need  to  be  set for both FRAMEs and
+X	//   FRAME_CMDs
+X	//
+X	xv_set(frame,
+X		FRAME_SHOW_FOOTER,				TRUE,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		FRAME_MIN_SIZE,					280, 118,
+X		FRAME_MAX_SIZE,					0, 0,
+X		WIN_EVENT_PROC,					frame_event,
+X		WIN_CONSUME_EVENTS,
+X				WIN_NO_EVENTS,
+X				WIN_RESIZE,
+X				NULL,
+X		NULL);
+X
+X	//
+X	// Create the scrolling list.  Make it so that 0 or 1 rows can be selected.
+X	//
+X	dir_list = (Panel_item) xv_create(panel, PANEL_LIST,
+X		XV_X,							8,
+X		XV_Y,							36,
+X		PANEL_LIST_WIDTH,				500,
+X		PANEL_LIST_DISPLAY_ROWS,		15,
+X		PANEL_NOTIFY_PROC,				list_notify,
+X		PANEL_READ_ONLY,				TRUE,
+X		PANEL_CHOOSE_ONE,				TRUE,
+X		PANEL_CHOOSE_NONE,				TRUE,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// void GWList::list_notify(Panel_item item, char *, caddr_t cd, Panel_list_op op, Event *event, int row)
+//   This is called when the mouse is clicked in the scrolling list.
+//   We will determine if this is a double click or not.  If it is,
+//   we need to create a new window to display the data.
+//
+void GWList::list_notify(Panel_item item, char *, caddr_t cd, Panel_list_op op, Event *event, int row)
+{
+X	static long		prev_click_time = 0;
+X	static int		previous_row = -1;
+X	long			click_time = event->ie_time.tv_sec * 1000 +
+X								 event->ie_time.tv_usec / 1000;
+X	GWList			*gwindow = (GWList *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X
+X	if (op == 0)
+X	{
+X		//
+X		// The currently selected row was deselected.
+X		//
+X		gwindow->current_selected = -1;
+X		gwindow->row_deselect(row, (Response *) cd);
+X	}
+X	else
+X	{
+X		//
+X		// A new row was selected.
+X		//
+X		gwindow->current_selected = row;
+X		gwindow->row_select(row, (Response *) cd);
+X	}
+X
+X	if (row == previous_row)
+X	{
+X		//
+X		// Check if this is a double click
+X		//
+X		if (click_time - prev_click_time < double_click_timeout)
+X		{
+X			//
+X			// It is.  Start a new window.
+X			//
+X			Response	*r = new Response((Response *) cd);
+X			GWindow	*sub;
+X			if (preferences.get_remove_children())
+X				sub = CreateWindow(r, gwindow->frame);
+X			else
+X				sub = CreateWindow(r, !gwindow->parent ? gwindow->frame : gwindow->parent);
+X
+X			prev_click_time = 0;
+X			previous_row = -1;
+X
+X			//
+X			// Make sure that the current item is now selected.
+X			// It can happen that the user double clicked on an item which was
+X			// not yet selected.  The first click will selected and the second
+X			// click will deselect it.  After the second click, we will fall through
+X			// to this point, so now we want to select the row again.
+X			xv_set(item, PANEL_LIST_SELECT, row, TRUE, NULL);
+X			gwindow->row_select(row, (Response *) cd);
+X			return;
+X		}
+X	}
+X	previous_row = row;
+X	prev_click_time = click_time;
+}
+X
+X
+static unsigned short icon_bits[] = {
+#include "icons/gopher.icon"
+};
+static unsigned short icon_mask_bits[] = {
+#include "icons/gopher.icon.mask"
+};
+X
+//***************************************************************************
+// void GWList::assign_icon(Frame frame)
+//
+void GWList::assign_icon(Frame frame)
+{
+X	//
+X	//   The main frame needs an icon. Give it a good one!
+X	//
+X	Icon			ic;
+X	Server_image	icon, icon_mask;
+X
+X	icon = (Server_image) xv_create(NULL, SERVER_IMAGE,
+X		XV_WIDTH,					64,
+X		XV_HEIGHT,					64,
+X		SERVER_IMAGE_BITS,			icon_bits,
+X		NULL);
+X	icon_mask = (Server_image) xv_create(NULL, SERVER_IMAGE,
+X		XV_WIDTH,					64,
+X		XV_HEIGHT,					64,
+X		SERVER_IMAGE_BITS,			icon_mask_bits,
+X		NULL);
+X	ic = (Icon) xv_create(frame, ICON,
+X		ICON_IMAGE,					icon,
+X		ICON_MASK_IMAGE,			icon_mask,
+X		NULL);
+X	xv_set(frame,
+X		FRAME_ICON,					ic,
+X		NULL);
+}
+X
+X
+//***************************************************************************
+// void GWList::row_deselect(int, Response *)
+//
+void GWList::row_deselect(int, Response *)
+{
+}
+X
+X
+//***************************************************************************
+// void GWList::row_select(int, Response *)
+//
+void GWList::row_select(int, Response *)
+{
+}
+X
+X
+//***************************************************************************
+// void GWList::show_item_info_proc(Menu, Menu_item mi)
+//   Create a little popup which displays the information about the currently
+//   selected item.
+//
+void GWList::show_item_info_proc(Menu, Menu_item mi)
+{
+X	GWList		*gwindow = (GWList *) xv_get(mi, XV_KEY_DATA, KEY_GWINDOW);
+X
+X	GWInfo		*list = new GWInfo(gwindow->frame);
+X	if (gwindow->current_selected == -1)
+X	{
+X		//
+X		// No row is selected.  We will assume we want to display info
+X		// about the window itself.
+X		//
+X		list->open(new Response(gwindow->info));
+X	}
+X	else
+X	{
+X		//
+X		// Some row was selected.  Display info about this item.
+X		//
+X		Response		*r;
+X		r = (Response *) xv_get(gwindow->dir_list, PANEL_LIST_CLIENT_DATA, gwindow->current_selected);
+X		list->open(r);
+X	}
+}
+SHAR_EOF
+chmod 0664 GWList.cc ||
+echo 'restore of GWList.cc failed'
+Wc_c="`wc -c < 'GWList.cc'`"
+test 8870 -eq "$Wc_c" ||
+	echo 'GWList.cc: original size 8870, current size' "$Wc_c"
+fi
+# ============= GWPref.cc ==============
+if test -f 'GWPref.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWPref.cc (File already exists)'
+else
+echo 'x - extracting GWPref.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWPref.cc' &&
+//
+// GWPref.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWPref class
+//
+#include "xvgopher.h"
+#include "GWPref.h"
+#include "Preferences.h"
+X
+GWPref	*gwpref;
+X
+X
+//***************************************************************************
+// GWPref::GWpref(Frame par)
+//
+GWPref::GWPref(Frame par)
+{
+X	parent = par;
+}
+X
+X
+//***************************************************************************
+// GWPref::~GWpref()
+//
+GWPref::~GWPref()
+{
+}
+X
+X
+//***************************************************************************
+// void GWPref::done_proc(Frame frame)
+//   This gets called whenever a command frame is destroyed.  In the case
+//   of the preferences window, we only need to hide the window.
+//
+void GWPref::done_proc(Frame frame)
+{
+X	xv_set(frame,
+X		XV_SHOW,						FALSE,
+X		NULL);
+}
+X
+X
+//***************************************************************************
+// int GWPref::open(Response *)
+//   Create the preferences window.
+//
+int GWPref::open(Response *)
+{
+X	compute_location(600, 500);
+X	frame = (Frame) xv_create(parent, FRAME_CMD,
+X		XV_X,							next_x,
+X		XV_Y,							next_y,
+X		XV_WIDTH,						447,
+X		XV_HEIGHT,						248,
+X		FRAME_LABEL,					"Preferences",
+X		FRAME_CMD_PIN_STATE,			FRAME_CMD_PIN_OUT,
+X		FRAME_SHOW_RESIZE_CORNER,		FALSE,
+X		XV_SHOW,						FALSE,
+X		FRAME_SHOW_FOOTER,				FALSE,
+X		FRAME_DONE_PROC,				(void (*)(Frame)) done_proc,
+X		XV_KEY_DATA,					KEY_GWINDOW,	this,
+X		NULL);
+X	panel = (Panel) xv_get(frame, FRAME_CMD_PANEL);
+X
+X	int	value = preferences.get_popup_bookmarks() * 2 |
+X				preferences.get_remove_children();
+X
+X	choices = (Panel_item) xv_create(panel, PANEL_CHECK_BOX,
+X		XV_X,							16,
+X		XV_Y,							8,
+X		PANEL_LAYOUT,					PANEL_VERTICAL,
+X		PANEL_CHOICE_STRINGS,			"Remove all child windows when parent is unpinned",
+X										"Popup Bookmarks at startup",
+X										NULL,
+X		PANEL_VALUE,					value,
+X		NULL);
+X
+X	play = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							16,
+X		XV_Y,							76,
+X		PANEL_VALUE_DISPLAY_LENGTH,		30,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_LABEL_STRING,				"Sound play command:",
+X		NULL);
+X	image = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							14,
+X		XV_Y,							101,
+X		PANEL_VALUE_DISPLAY_LENGTH,		30,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_LABEL_STRING,				"Image view command:",
+X		NULL);
+X	telnet = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							48,
+X		XV_Y,							126,
+X		PANEL_VALUE_DISPLAY_LENGTH,		30,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_LABEL_STRING,				"Telnet command:",
+X		NULL);
+X	print = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							59,
+X		XV_Y,							151,
+X		PANEL_VALUE_DISPLAY_LENGTH,		30,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_LABEL_STRING,				"Print command:",
+X		NULL);
+X	mail = (Panel_item) xv_create(panel, PANEL_TEXT,
+X		XV_X,							62,
+X		XV_Y,							176,
+X		PANEL_VALUE_DISPLAY_LENGTH,		30,
+X		PANEL_VALUE_STORED_LENGTH,		80,
+X		PANEL_LABEL_STRING,				"Mail command:",
+X		NULL);
+X
+X	xv_create(panel, PANEL_BUTTON,
+X		XV_X,							197,
+X		XV_Y,							208,
+X		PANEL_LABEL_STRING,				"Apply",
+X		XV_KEY_DATA,					KEY_GWINDOW, this,
+X		PANEL_NOTIFY_PROC,				apply,
+X		NULL);
+X
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// void GWPref::show()
+//
+void GWPref::show()
+{
+X	xv_set(mail,
+X		PANEL_VALUE,					preferences.get_mail_filter(),
+X		NULL);
+X	xv_set(print,
+X		PANEL_VALUE,					preferences.get_print_filter(),
+X		NULL);
+X	xv_set(telnet,
+X		PANEL_VALUE,					preferences.get_telnet_command(),
+X		NULL);
+X	xv_set(image,
+X		PANEL_VALUE,					preferences.get_image_filter(),
+X		NULL);
+X	xv_set(play,
+X		PANEL_VALUE,					preferences.get_play_filter(),
+X		NULL);
+X	xv_set(frame,
+X		XV_SHOW,						TRUE,
+X		NULL);
+}
+X
+X
+//***************************************************************************
+// void GWPref::apply(Panel_item item, Event *)
+//   Read the changes made to the preferences panel and put them in our
+//   database.
+//
+void GWPref::apply(Panel_item item, Event *)
+{
+X	GWPref	*gw = (GWPref *) xv_get(item, XV_KEY_DATA, KEY_GWINDOW);
+X
+X	int	value = (int) xv_get(gw->choices, PANEL_VALUE);
+X	preferences.set_remove_children(value & 1);
+X	preferences.set_popup_bookmarks(value & 2);
+X
+X	preferences.set_mail_filter((char *) xv_get(gw->mail, PANEL_VALUE));
+X	preferences.set_print_filter((char *) xv_get(gw->print, PANEL_VALUE));
+X	preferences.set_play_filter((char *) xv_get(gw->play, PANEL_VALUE));
+X	preferences.set_image_filter((char *) xv_get(gw->image, PANEL_VALUE));
+X	preferences.set_telnet_command((char *) xv_get(gw->telnet, PANEL_VALUE));
+X
+X	//
+X	// Finally, remove the window.
+X	//
+X	xv_set(gw->frame,
+X		XV_SHOW,						FALSE,
+X		NULL);
+}
+X
+X
+SHAR_EOF
+chmod 0644 GWPref.cc ||
+echo 'restore of GWPref.cc failed'
+Wc_c="`wc -c < 'GWPref.cc'`"
+test 4701 -eq "$Wc_c" ||
+	echo 'GWPref.cc: original size 4701, current size' "$Wc_c"
+fi
+# ============= GWSound.cc ==============
+if test -f 'GWSound.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWSound.cc (File already exists)'
+else
+echo 'x - extracting GWSound.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWSound.cc' &&
+//
+// GWSound.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWSound class
+//
+#include "GWSound.h"
+#include "xvgopher.h"
+X
+X
+//***************************************************************************
+// GWSound::GWSound(Frame par)
+//
+GWSound::GWSound(Frame par) : GWDownload(par, GWDownload::BINARY, "Play", preferences.get_play_filter())
+{
+}
+SHAR_EOF
+chmod 0644 GWSound.cc ||
+echo 'restore of GWSound.cc failed'
+Wc_c="`wc -c < 'GWSound.cc'`"
+test 469 -eq "$Wc_c" ||
+	echo 'GWSound.cc: original size 469, current size' "$Wc_c"
+fi
+# ============= GWTelnet.cc ==============
+if test -f 'GWTelnet.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWTelnet.cc (File already exists)'
+else
+echo 'x - extracting GWTelnet.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWTelnet.cc' &&
+//
+// GWTelnet.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the GWTelnet class
+//
+#include "GWTelnet.h"
+#include "xvgopher.h"
+#include <fcntl.h>
+#include <unistd.h>
+X
+X
+//***************************************************************************
+// GWTelnet::GWTelnet(Frame par)
+//
+GWTelnet::GWTelnet(Frame par)
+{
+X	parent = par;
+}
+X
+X
+//***************************************************************************
+// int GWTelnet::open(Response *resp)
+// PURPOSE:
+//   This is called when a telnet record has been received.  We need to start a
+//   terminal emulator and start telnet in it (to the correct host...)
+//
+int GWTelnet::open(Response *resp)
+{
+X	char	command[2000];
+X	char	new_title[2000];
+X	int		port;
+X
+X	info = resp;
+X	if (info->get_port() == 0)
+X		port = 23;			// There seems to be a problem with Mark Boyns.  He didn't want to fix this in the gopher files!
+X	else
+X		port = info->get_port();
+X	if (*info->get_command())
+X		sprintf(new_title, "%s (login as %s)", info->get_title(), info->get_command());
+X	else
+X		strcpy(new_title, info->get_title());
+X	sprintf(command, preferences.get_telnet_command(),
+X				new_title,
+X				info->get_server(),
+X				port,
+X				info->get_type());
+X	system(command);
+X	return OK;
+}
+X
+X
+SHAR_EOF
+chmod 0644 GWTelnet.cc ||
+echo 'restore of GWTelnet.cc failed'
+Wc_c="`wc -c < 'GWTelnet.cc'`"
+test 1331 -eq "$Wc_c" ||
+	echo 'GWTelnet.cc: original size 1331, current size' "$Wc_c"
+fi
+# ============= GWindow.cc ==============
+if test -f 'GWindow.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWindow.cc (File already exists)'
+else
+echo 'x - extracting GWindow.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWindow.cc' &&
+//
+// GWindow.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the Window class
+//
+#include "GWBinary.h"
+#include "GWDirectory.h"
+#include "GWBookmarks.h"
+#include "GWFile.h"
+#include "GWIndex.h"
+#include "GWSound.h"
+#include "GWImage.h"
+#include "GWTelnet.h"
+#include "Connection.h"
+#include <unistd.h>
+#include <xview/notice.h>
+#include "xvgopher.h"
+#include "icons.h"
+#include "cursor.h"
+X
+int GWindow::next_x = 0;
+int GWindow::next_y = 0;
+X
+X
+//***************************************************************************
+// char *good_strtok(char *str, char *term)
+// PURPOSE:
+//   This is a replacement for the standard strtok() which has a MAJOR
+//   problem when it comes to having multiple delimiters in a row.
+//   This one will return after EVERY terminator that is found.
+//
+char *good_strtok(char *str, char *term)
+{
+X	static char	*string;
+X	if (str)
+X	{
+X		string = str;
+X	}
+X
+X	if (string == NULL || *string == '\0')
+X		return NULL;
+X
+X	char *p = string;
+X	while (*string && strchr(term, *string) == NULL)
+X		string++;
+X	if (*string)
+X		*string++ = '\0';
+X	return p;
+}
+X
+X
+//***************************************************************************
+// GWindow::GWindow()
+//
+GWindow::GWindow()
+{
+X	gopher = NULL;
+X	frame = parent = NULL;
+X	panel = NULL;
+X	info = NULL;
+}
+X
+X
+//***************************************************************************
+// GWindow::~GWindow()
+//
+GWindow::~GWindow()
+{
+X	if (gopher)
+X		delete gopher;
+X	if (info)
+X		delete info;
+X
+X	//
+X	// If this is the parent of all windows, also delete the bookmarks so that
+X	// all changes get written to disk.
+X	//
+X	if (!parent)
+X		delete bookmarks;
+X
+X	xv_destroy_safe(frame);
+}
+X
+X
+//***************************************************************************
+// void GWindow::main_loop()
+// PURPOSE:
+//    This is the main loop for the windowing program.
+//    When we return from this, the program should terminate
+//
+void GWindow::main_loop()
+{
+X	xv_main_loop(frame);
+}
+X
+X
+//***************************************************************************
+// void GWindow::display()
+// PURPOSE:
+//    Display information from the gopher server in our window
+//
+void GWindow::display()
+{
+X	frame_unbusy(frame);
+}
+X
+X
+//***************************************************************************
+// int GWindow::open(Response *resp)
+//
+int GWindow::open(Response *resp)
+{
+X	resp = resp;
+X	printf("ERROR!!!  THIS SHOULD NEVER HAPPEN!\n");
+X	exit(42);
+X	return 0;
+}
+X
+X
+//***************************************************************************
+// void GWindow::quit_proc(Frame frame, Event *event)
+// PURPOS:
+//   This gets called when the user presses 'q' in a window.
+//
+void GWindow::quit_proc(Frame frame, Event *event)
+{
+X	event = event;
+X	GWindow	*win = (GWindow *) xv_get(frame, XV_KEY_DATA, KEY_GWINDOW);
+X	delete win;
+X	xv_destroy_safe(frame);
+}
+X
+X
+//***************************************************************************
+// void GWindow::done_proc(Frame frame)
+// PURPOSE:
+//   This gets called whenever a command frame is destroyed.  We need to
+//   clean up the associated GWindow structure.  Since we want all children
+//   to go away as well, we will call this function recursively on our subframes.
+//
+void GWindow::done_proc(Frame frame)
+{
+X	if (!frame)
+X		return;
+X	GWindow	*win = (GWindow *) xv_get(frame, XV_KEY_DATA, KEY_GWINDOW);
+X	Frame	subframe = (Frame) xv_get(frame, FRAME_NTH_SUBFRAME, 1);
+X	done_proc(subframe);
+X	delete win;
+X	xv_destroy_safe(frame);
+}
+X
+X
+//***************************************************************************
+// void GWindow::status(char *str)
+// PURPOSE:
+//   Display an informative message in the footer of the window
+//
+void GWindow::status(char *str)
+{
+X	xv_set(frame,
+X		FRAME_LEFT_FOOTER,				str,
+X		NULL);
+}
+X
+X
+//***************************************************************************
+// void GWindow::compute_location(int width, int height)
+// PURPOSE:
+//   Compute the location of the next window.  The size of the next window is
+//   given so that we can make sure that the whole window is displayed on the
+//   screen.
+//
+void GWindow::compute_location(int width, int height)
+{
+X	GWindow	* gwindow = (GWindow *) xv_get(parent, XV_KEY_DATA, KEY_GWINDOW);
+X	static int	first_time = 2;
+X
+X	if (!gwindow->parent && first_time)
+X	{
+X		//
+X		// The current window is the second window of the program.  This is because
+X		// our parent doesn't have a parent.
+X		//
+X		next_x = (int) xv_get(parent, XV_X);
+X		next_y = (int) xv_get(parent, XV_Y);
+X		first_time--;
+X	}
+X
+X	//
+X	// We now have next_x and next_y to work with as the location of the previous window.
+X	// Now we need to increment them and possibly wrap them if the window will not fit
+X	// on the screen.
+X	//
+X	next_x += 10;
+X	next_y += 25;
+X
+X	//
+X	// Get the size of the screen.  We will use the parent frame for this since
+X	// we are not sure that our frame has been initialized, yet.
+X	//
+X	Display	*dpy = (Display *) xv_get(parent, XV_DISPLAY);
+X	int screen_width = DisplayWidth(dpy, DefaultScreen(dpy));
+X	int screen_height = DisplayHeight(dpy, DefaultScreen(dpy));
+X	if (next_x + width + 20 > screen_width)
+X		next_x = 0;
+X	if (next_y + height + 40 > screen_height)
+X		next_y = 0;
+}
+X
+X
+//***************************************************************************
+// GWindow *CreateWindow(Response *resp, Frame par)
+// PURPOSE:
+//   This function will create a new window which will display the
+//   data specified in the arguments correctly.
+//
+GWindow *CreateWindow(Response *resp, Frame par)
+{
+X	GWindow	*gw;
+X
+X	switch (resp->get_type())
+X	{
+X		case GOPHER_FILE:
+X			gw = new GWFile(par);
+X			break;
+X		case GOPHER_DIRECTORY:
+X			gw = new GWDirectory(par);
+X			break;
+X		case GOPHER_SPECIAL:
+X			gw = new GWDirectory(par);
+X			break;
+X		case GOPHER_SOUND:
+X			gw = new GWSound(par);
+X			break;
+X		case GOPHER_BIN:
+X			gw = new GWBinary(par);
+X			break;
+X		case GOPHER_CSO:
+X		case GOPHER_ERROR:
+X			xv_create(par, NOTICE,
+X				NOTICE_MESSAGE_STRINGS,		"XvGopher currently doesn not support this",
+X											NULL,
+X				NOTICE_BUTTON_YES,			"Bummer",
+X				NOTICE_BLOCK_THREAD,		TRUE,
+X				NOTICE_LOCK_SCREEN,			TRUE,
+X				XV_SHOW,					TRUE,
+X				NULL);
+X			return NULL;
+X			break;
+X		case GOPHER_BINHEX:
+X		case GOPHER_DOS:
+X		case GOPHER_UU:
+X			gw = new GWBinary(par);
+X			break;
+X		case GOPHER_INDEX:
+X			gw = new GWIndex(par);
+X			break;
+X		case GOPHER_TELNET:
+X			gw = new GWTelnet(par);
+X			break;
+X		case GOPHER_IMAGE:
+X			gw = new GWImage(par);
+X			break;
+X		case GOPHER_REDUNDANT:
+X		default:
+X			printf("Sorry, '%c' not implemented, yet!\n", resp->get_type());
+X			return NULL;
+X	}
+X	if (gw->open(resp) == OK)
+X		return gw;
+X	else
+X	{
+X		delete gw;
+X		return NULL;
+X	}
+}
+X
+X
+//***************************************************************************
+// void GWindow::nothing_found()
+// PURPOSE:
+//   This function will create a new window which will display the
+//   data specified in the arguments correctly.
+//
+void GWindow::nothing_found()
+{
+X	xv_create(parent, NOTICE,
+X		NOTICE_BLOCK_THREAD,			TRUE,
+X		NOTICE_LOCK_SCREEN,				TRUE,
+X		NOTICE_MESSAGE_STRINGS,			"Nothing was found!", NULL,
+X		NOTICE_BUTTON_YES,				"Bummer",
+X		XV_SHOW,						TRUE,
+X		NULL);
+X	delete this;
+}
+X
+X
+//***************************************************************************
+// void GWindow::list_full()
+//   This will create a popup telling the user that the scrolling list is full.
+//   I have imposed a limit because xview will hang when a scrolling list gets
+//   more than a couple thousand entries in it.
+//
+void GWindow::list_full()
+{
+X	xv_create(frame, NOTICE,
+X		NOTICE_MESSAGE_STRINGS,		"The scrolling list is full.  Sorry",
+X									NULL,
+X		NOTICE_BUTTON_YES,			"Oh well",
+X		NOTICE_BLOCK_THREAD,		TRUE,
+X		NOTICE_LOCK_SCREEN,			TRUE,
+X		XV_SHOW,					TRUE,
+X		NULL);
+}
+X
+X
+SHAR_EOF
+chmod 0664 GWindow.cc ||
+echo 'restore of GWindow.cc failed'
+Wc_c="`wc -c < 'GWindow.cc'`"
+test 7751 -eq "$Wc_c" ||
+	echo 'GWindow.cc: original size 7751, current size' "$Wc_c"
+fi
+true || echo 'restore of Gopher.cc failed'
+echo End of part 2, continue with part 3
+exit 0

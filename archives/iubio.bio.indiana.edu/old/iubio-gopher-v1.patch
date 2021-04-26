@@ -1,0 +1,487 @@
+
+This is a difference file for the Gopher source, version 1.01, as available
+via ftp to boombox.micro.umn.edu. 
+
+It includes changes to work properly with my WAIS modifications, as 
+well as the data+size patch, and a few other minor additions.
+
+See the ftp/gopher archive at ftp.bio.indiana.edu, /util/gopher/iubio*
+for more information.
+
+You can apply this patch with Larry Wall's patch program (available at 
+many unix ftp sites), in this way, at the directory containing gopher1.01/
+   % patch -p < bintypes.patch
+
+-- Don Gilbert (gilbertd@bio.indiana.edu)
+
+  	
+diff -bwcr gopher1.01/Makefile.config gophbio1/Makefile.config
+*** gopher1.01/Makefile.config	Thu Jun 11 18:57:54 1992
+--- gophbio1/Makefile.config	Fri Oct 30 13:09:59 1992
+***************
+  
+***************
+*** 47,54 ****
+  #
+  # Add -DLOADRESTRICT if you want to restrict access based on load avg.
+  #     (Note you'll need to add -lkvm in SERVERLIBS)
+  
+! SERVEROPTS	= # -DLOADRESTRICT
+  
+  
+  #--------------------------------------------------
+--- 49,59 ----
+  #
+  # Add -DLOADRESTRICT if you want to restrict access based on load avg.
+  #     (Note you'll need to add -lkvm in SERVERLIBS)
++ # -DFILESTATS to include file [date,size] in titles (dgg)
++ # -DBIO == enable BIO modifications (dgg)
++ # -DLOGLOTS == enable verbose logging (dgg, cut down on logging)
+
+! SERVEROPTS	= -DBIO -DFILESTATS # -DLOADRESTRICT
+  
+  
+  #--------------------------------------------------
+
+
+diff -bwcr gopher1.01/gopherd/Waisindex.c gophbio1/gopherd/Waisindex.c
+*** gopher1.01/gopherd/Waisindex.c	Mon Jun 22 11:23:39 1992
+--- gophbio1/gopherd/Waisindex.c	Mon Nov  2 12:40:56 1992
+***************
+*** 26,31 ****
+--- 24,30 ----
+  #include "../ir/irext.h"
+  #include "../ir/irsearch.h"
+  #include "../ir/docid.h"
++ #include "../ir/irtfiles.h"  /* dgg -- for wordDelimiter */
+  #include <math.h>
+  
+  
+***************
+*** 64,71 ****
+       float  closeness;
+       GopherDirObj *gd;
+       GopherObj    *gs;
+       
+- 
+       gs = GSnew();
+       gd = GDnew(32);
+  
+--- 63,70 ----
+       float  closeness;
+       GopherDirObj *gd;
+       GopherObj    *gs;
++      char  newpath[256]; 
+  
+       gs = GSnew();
+       gd = GDnew(32);
+  
+***************
+*** 99,106 ****
+  	  return;
+       }
+       
+!      parameters.max_hit_retrieved = 256;
+  
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+       
+       search_result = false;
+--- 98,133 ----
+  	  return;
+       }
+       
+! #ifdef BIO		/* dgg */
+!   {
+!     char *cp= read_delimiters( db);  /* use data-specific delim, available */
+!     if (cp != NULL) { 
+!       strcpy( gDelimiters, cp); 
+!       wordDelimiter= wordbreak_user; 
+!       }
+!     else 
+!       wordDelimiter= wordbreak_notalnum;
+!   }
+! #else
+!   wordDelimiter= wordbreak_notalnum;  /* wordDelimiter used only ifdef BIO ? */
+! #endif
+  
++      parameters.max_hit_retrieved = 100;  /* was 256, dgg */
++ #ifdef BIO
++      /* check query string for ">max_retrieve" number */
++      {
++      int  ihit;
++      char *hit= strrchr( SearchWords, '>');
++      if ((hit != NULL) && (hit > SearchWords) && isdigit(*(++hit)) ) {
++        ihit= atoi( hit);
++        if (ihit>0) {
++          parameters.max_hit_retrieved = ihit;
++ 	 *(--hit) = '\0';  /* drop rest of string */
++ 	 }
++        }
++      }
++ #endif
++ 
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+       
+       search_result = false;
+***************
+*** 114,120 ****
+  	  if (DEBUG)
+  	       printf("After finished_search\n");
+  
+! 	  for (i = 0; i < 200; i++){ 
+  	       if (0 != next_best_hit(&best_hit, db))
+  		    break;		/* out of hits */
+  	       if (i == 0)
+--- 141,147 ----
+  	  if (DEBUG)
+  	       printf("After finished_search\n");
+  
+! 	  for (i = 0; i < parameters.max_hit_retrieved /* 200*/; i++){  /* dgg fix */
+  	       if (0 != next_best_hit(&best_hit, db))
+  		    break;		/* out of hits */
+  	       if (i == 0)
+***************
+*** 135,147 ****
+  
+  		    /*** Strip off the first part of the path in the filename*/
+  		    /*** Plus it gets rid of weird automount things... ***/
+- 		    cp =strstr(best_hit.filename, INDEXPath);
+- 		    if (cp == NULL)
+- 			 cp = "Error in Hostdata!";
+- 		    else
+- 			 cp += strlen(INDEXPath);
+  		    
+! 
+                      sprintf(score,"%3d ",best_hit.weight);
+  
+                      waislog(0,99,"%s: Score %3d:%s",SearchWords,best_hit.weight,cp);
+--- 162,189 ----
+  
+  		    /*** Strip off the first part of the path in the filename*/
+  		    /*** Plus it gets rid of weird automount things... ***/
+  	
+!    /* "PLEEZ, OH PLEEZ, let me use wais's real pathnames" -- sez dgg ! */
+!    /* let INDEXPath = "/real/path/to/wais-src;/gopher/path/to/wais-src" */
+!    /* and after cutting out /real/path; prepend /gopher/path */
+! 		    {
+! 		      char *prefix= strchr(INDEXPath, ';');
+! 		      if (prefix != NULL) {
+!  			 *prefix++= '\0'; /* terminate /real/path */
+! 			 cp= strstr(best_hit.filename, INDEXPath);
+! 			 if (cp==NULL) cp= "Error in Hostdata INDEXPath";
+! 			 else cp += strlen(INDEXPath);
+! 			 strcpy( newpath, prefix);
+! 			 strcat( newpath, cp);
+! 			 cp= newpath;
+! 			 *(--prefix)= ';'; /* put it back for next user */
+! 			}
+!                       else {
+! 		        cp =strstr(best_hit.filename, INDEXPath);
+! 		        if (cp == NULL) cp = "Error in Hostdata!";
+! 		        else cp += strlen(INDEXPath);
+! 			}
+! 		    }
+                      sprintf(score,"%3d ",best_hit.weight);
+  
+                      waislog(0,99,"%s: Score %3d:%s",SearchWords,best_hit.weight,cp);
+
+diff -bwcr gopher1.01/gopherd/gopherd.c gophbio1/gopherd/gopherd.c
+*** gopher1.01/gopherd/gopherd.c	Wed Jun 24 18:31:51 1992
+--- gophbio1/gopherd/gopherd.c	Mon Nov  2 00:32:42 1992
+  
+***************
+*** 448,456 ****
+          struct hostent          *hp;
+          struct netent           *np;
+  
+!         net_addr = inet_netof(sin->sin_addr);   /* net_addr in host order */
+          np = getnetbyaddr(net_addr, AF_INET);
+! 
+          hp = gethostbyaddr((char *) &sin->sin_addr.s_addr,
+                  sizeof (sin->sin_addr.s_addr), AF_INET);
+  
+--- 453,464 ----
+          struct hostent          *hp;
+          struct netent           *np;
+  
+! /* dgg -- causing problems ?? */
+! 		/* net_addr in host order */
+! /*
+!         net_addr = inet_netof(sin->sin_addr);   
+          np = getnetbyaddr(net_addr, AF_INET);
+! */
+          hp = gethostbyaddr((char *) &sin->sin_addr.s_addr,
+                  sizeof (sin->sin_addr.s_addr), AF_INET);
+  
+***************
+*** 689,695 ****
+  
+       if (length <= 0) {
+  	  close(sockfd);
+! 	  err_quit("getcommand: readline error");
+       }
+       
+       ZapCRLF(inputline);
+--- 698,708 ----
+  
+       if (length <= 0) {
+  	  close(sockfd);
+! #ifdef LOGLOTS
+! 	  err_quit("getcommand: readline error");  /* dgg, too verbose in log*/
+! #else
+! 	  exit(1);
+! #endif
+       }
+       
+       ZapCRLF(inputline);
+***************
+*** 771,782 ****
+       case '1':
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, selstr+1);
+! 
+  	  /** Log it **/
+  	  strcpy(logline, "retrieved directory ");
+  	  strcat(logline, selstr+1);
+  	  LOGGopher(sockfd, logline);
+! 
+  	  break;
+  
+       case '7':
+--- 784,795 ----
+       case '1':
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, selstr+1);
+! #ifdef LOGLOTS	
+  	  /** Log it **/
+  	  strcpy(logline, "retrieved directory ");
+  	  strcat(logline, selstr+1);
+  	  LOGGopher(sockfd, logline);
+! #endif
+  	  break;
+  
+       case '7':
+***************
+*** 813,824 ****
+  	  ***/
+  
+  	  process_mailfile(sockfd, selstr + 1);
+! 
+  	  /** Log it **/
+  	  strcpy(logline, "retrieved maildir ");
+  	  strcat(logline, selstr+1);
+  	  LOGGopher(sockfd, logline);
+! 
+  	  break;
+  
+       case 'R':
+--- 826,837 ----
+  	  ***/
+  
+  	  process_mailfile(sockfd, selstr + 1);
+! #ifdef LOGLOTS
+  	  /** Log it **/
+  	  strcpy(logline, "retrieved maildir ");
+  	  strcat(logline, selstr+1);
+  	  LOGGopher(sockfd, logline);
+! #endif
+  	  break;
+  
+       case 'R':
+***************
+*** 928,939 ****
+  	  case 1:
+  	       /* it's a directory */
+  	       listdir(sockfd, selstr);
+! 
+  	       /* Log it */
+  	       strcpy(logline, "retrieved directory ");
+  	       strcat(logline, inputline);
+  	       LOGGopher(sockfd, logline);
+! 
+  	       break;
+  	  }
+       }
+--- 941,952 ----
+  	  case 1:
+  	       /* it's a directory */
+  	       listdir(sockfd, selstr);
+! #ifdef LOGLOTS
+  	       /* Log it */
+  	       strcpy(logline, "retrieved directory ");
+  	       strcat(logline, inputline);
+  	       LOGGopher(sockfd, logline);
+! #endif
+  	       break;
+  	  }
+       }
+
+***************
+*** 1064,1070 ****
+--- 1073,1087 ----
+       char *cp;
+       static char Selstr[512];
+  
++ #define NEXTBIN   18           /* dgg added bin type suffixes */
++      static char *extBin[] = { ".arc", ".arj", ".bck", ".bin",  ".exe", 
++           /* ".com", ".hyp", ".lzh", ".pak",".pct", */ /* << ?? msdos only? */
++              ".gif", ".pict", ".ps", ".tiff", ".tif", 
++ 	           ".jfif", ".jpeg", ".jpg",
++              ".tar", ".Z", ".tar-z", ".zip", ".zoo"};
++      int  extType;
+  
++      
+       if (ServerPath != NULL)	     /* Don't overwrite existing path if any */
+  	  *ServerPath = Selstr; 
+  
+***************
+*** 1113,1118 ****
+--- 1130,1136 ----
+  	  }
+  #endif
+  
++ /*----- dgg replaced this
+  	  else if ((strcmp((char*)filename+strlen(filename)-6,".tar.Z"))== 0){
+  	       *ObjType = "9";
+  	       *Selstr = '9';
+***************
+*** 1119,1125 ****
+--- 1137,1165 ----
+  	       strcpy(Selstr + 1, newpath);
+  	       return;
+  	  }
++ ---------*/
++ /* dgg: add more types based on name suffix: */
++      for (extType = 0; extType < NEXTBIN; extType++) {    
++ 	  int match;
++           match = strcasecmp(filename+strlen(filename) 
++ 			- strlen(extBin[extType]), extBin[extType]);
++           if (match == 0) {
++               *ObjType = "9";
++               *Selstr = '9';
++               strcpy(Selstr + 1, newpath);
++               return;
++           }
++      }
+  
+  	  /*** Test and see if the thing exists... ***/
+  	  
+  	  if ((Zefilefd = ropen(filename, O_RDONLY)) < 0) {
+***************
+*** 1183,1190 ****
+--- 1223,1277 ----
+  }
+  
+  
++ #ifdef FILESTATS
++ /* dgg addition, should be in gopherstruct.c ? */
+  
++ void
++ GDaddDateNsize(gd)
++   GopherDirObj *gd;
++ {
++      int 	   fd, i;
++      char  	   longname[256]; 
++      STATSTR	   buf;  /* gopherism == struct stat */
++      GopherStruct  *ge;
++      char	   *cdate, *ti, *fp;
+       
++      for (i=0; i<GDgetTop(gd); i++) {
++ 	ge= GDgetEntry(gd, i);
++ 	switch (GSgetType(ge)) {
++ 	     case '1': /*** It's a directory ***/
++ 	     case '7': /*** It's an index ***/
++ 	     case 'f': /*** ftp link ***/
++ 	     case 'e': /*** exec link ***/
++ 	     case 'h': /*** www link ***/
++ 	     case 'w': /*** wais or whois link ***/
++ 		break;
++ 		
++ 	     case 's':  /*** It's a sound ***/
++ 	     case '0':  /*** It's a generic file ***/
++ 	     case '9':  /*** It's a binary file ***/
++ 	     default :
++ 		fp= GSgetPath(ge);
++ 		if (fp == 0) break; 
++ 		/* !NOTE: listdir has done "rchdir(pathname)" at this call*/
++ 		/* if (*fp != '/') fp= fp+1; -- vers0, skip type char */
++ 		if ((fp = strrchr( fp, '/')) == 0) break;
++ 		while (*fp == '/') fp= fp+1; /*  basename only */
++ 		if (rstat(fp, &buf) == 0) {  
++ 			cdate= ctime( &buf.st_mtime); /* last mod time */
++ 			cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
++ 			sprintf( longname, "%s  [%s%s%s, %ukb]", GSgetTitle(ge),
++ 			  cdate+8,cdate+4,cdate+22, (buf.st_size+1023) / 1024);
++ 			GSsetTitle(ge,longname);
++ 			}
++ 		break;
++ 		}
++ 	} 	  
++ }
++ #endif
++ 
++ 
+  /*
+  ** This function lists out what is in a particular directory.
+  ** it also outputs the contents of link files.
+***************
+*** 1327,1332 ****
+--- 1414,1425 ----
+  	  }
+       }
+  
++ 
++    
++ #ifdef FILESTATS
++       GDaddDateNsize( SortDir);   /* dgg */
++ #endif
++  
+       GDsort(SortDir);
+  
+       if (UsingHTML)  {
+***************
+*** 1344,1349 ****
+--- 1437,1443 ----
+       else
+  	  GDtoNet(SortDir, sockfd);
+  
++  
+        writestring(sockfd, ".\r\n");
+  
+       /*
+***************
+*** 1502,1507 ****
+--- 1596,1627 ----
+  	  close(sockfd);
+  	  return;
+       }
++ 
++ #ifdef BIO
++    if (startbyte >= 0 && endbyte > 0){
++ 	/* look for "header" files for some of our data files */
++       char   *cp, headfile[512], fname[256];
++       
++       strcpy( headfile, pathname);
++       cp= strrchr( headfile, '/');   /* ! this is a unixism... */
++       if (cp != NULL) {	
++          strcpy( fname, cp+1);       /* save filename of "/my/path/filename" */
++ 	 strcpy( cp+1, ".header/");  /* to "/my/path/.header/" */
++ 	 strcat( headfile, fname);   /* to "/my/path/.header/filename"  */
++ 	 if ( (ZeFile = rfopen( headfile, "r")) != NULL) {
++ 	     while (fgets(inputline, MAXLINE, ZeFile) != NULL) {
++ 		  ZapCRLF(inputline);
++ 		  if (writestring(sockfd, inputline) <0)
++ 		       LOGGopher(sockfd, "Client went away"), exit(-1);
++ 		  if (writestring(sockfd, "\r\n"))
++ 		       LOGGopher(sockfd, "Client went away"), exit(-1);
++ 	
++ 	          }
++ 	    fclose(ZeFile);
++ 	    }
++         }
++    }
++ #endif
+  
+       if ( (ZeFile = rfopen(pathname, "r")) == NULL) {
+  	  /*
+

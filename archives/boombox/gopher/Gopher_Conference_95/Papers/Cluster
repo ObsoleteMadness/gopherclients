@@ -1,0 +1,418 @@
+			    GopherCluster:
+	    Document Visualization in the Third Dimension
+			     Paul Lindner
+		    lindner@boombox.micro.umn.edu
+			    GopherCon `95
+
+ABSTRACT
+
+In it's present form Gopher is a one-dimensional model; a simple
+linear list. By using three dimensions to display the same data we can
+visualize the innate relationships between documents. One way of
+visualizing a database of text documents is by putting similar
+documents close together in what we call a Cluster. This paper
+describes a new system, called "GopherCluster". This system attempts
+to build document clusters automatically by using an iterative force
+function.
+
+1. Introduction
+
+Until recently information systems such as Gopher and the
+World-Wide-Web have been confined to linear lists or graphical
+pages. These systems use real-life metaphors to visualize and organize
+information. Overall the book metaphor is the most
+popular. Infosystems routinely support the equivalent of:
+
+·	Table of contents
+·	Indices
+·	Footnotes 
+·	Quoted references to other material
+
+Recently we've started to see non-book metaphors for organizing
+information. The Blue-Skies Gopher client allows interactive spatial
+organizations of information based on links overlaid on a graphic
+image. Similar software, called clickable image maps, exists in World
+Wide Web software as well.
+
+Still, for most infosystems we're still stuck in the book frame of
+mind. Most lists of documents are simple linear listings of
+references; most infosystem indices mimic their real-world
+counterpart.
+
+The advent of three dimensional software that runs on inexpensive
+hardware should change this. With a third dimension it's possible to
+visualize information in ways never dreamed possible. Three
+dimensional Systems offer a three-fold increase in the number of
+dimensions that can be simultaneously represented.
+
+Consider the Gopher information system. The following are the traits
+of a Gopher reference:
+
+·	 Name of item
+·	 Location in list
+·	 Type of item
+·	 Abstract for item
+·	 Reference to a remote item.
+·	 Miscellaneous metainformation
+
+The World-Wide-Web adds the following traits to an information system
+
+·	 Font Size
+·	 Font Style (Bold, Italic, etc.)
+·	 Associated graphic icon
+
+When we move to the third dimension we gain many new traits to
+describe information.
+
+·	 Colors
+·	 Size in three dimensions
+·	 Abstract shape representation
+·	 Vertical position and size
+·	 Horizontal position and size
+·	 Depth position and size
+·	 Orientation of object
+·	 Associated text
+·	 Associated sounds and scores
+·	 Location of object relative to other objects
+
+We can map most of these traits to data within the information
+system. The height of an object can be mapped from the size of the
+document. The abstract shape can represent the type of the document,
+or a preview of what the document contains.
+
+A harder problem is mapping the relative location onto data within the
+information system. The software described in this paper seeks to do
+just that. Some information systems allow you to find the similarity
+between two documents. With this data in hand we set out to group the
+information into distinct separate areas called clusters.
+
+A cluster should be representative of a group of documents that are
+self similar. For instance a recipe information system could group all
+the cake recipes into one area and all the meat recipes in another and
+so on.
+
+The problem with clustering is how to do it efficiently for large sets
+of documents. We could do it manually. This organization would have
+the highest quality since human thought would go into the organization
+of the information. For large document sets we need to look beyond
+manual organization. A software solution is the most efficient
+answer. We hope that GopherCluster can fill this need.
+
+2. Our Clustering Algorithms
+
+2.1 Prior Work
+
+We did some literature searches for information on clustering in
+information systems but came up very short. It is a difficult problem
+to represent documents in clusters.
+
+Still, some work has been done in this area
+
+· Jussi Karlgren at the Sweden Institute of Computer Science (SICS)
+has done a lot of work in the area of clustering documents based on
+user behavior patterns.
+
+· Scatter-Gather is a system that organizes information into
+different `classes' that the administrator defines. It was developed
+at Xerox PARC.
+
+· There was at one time an implementation of clustering for the
+SMART system. This was one of the reasons we initially looked at
+it. However that code does not work on the current SMART code base.
+
+In most cases the focus of these studies was more on grouping items
+together than representing a scene in three dimensions. We're still
+looking for more prior work in this area.
+
+The social sciences have long done multivariate cluster analysis. This
+has allowed scientists in these fields to come up with generalizations
+of their data samples:
+
+·	Smokers have a high risk of cancer.
+·	Children in high income families score higher on standardized tests.
+·	People who eat bran muffins and sleep on their side are more likely to watch comedies on television.
+
+We found these algorithms and methods interesting, but we found it
+difficult to apply them to our problem. A number of factors kept us
+from using standardized clustering algorithms, including:
+
+· A lack of independent variables. Most cluster analysis systems
+assume you have a large set of data that you want to find clusters
+for. We only had the similarity between items.
+
+· We have no method of automatically generating the cluster
+attributes. This generally requires a semantic understanding of the
+content of the documents. This would require human understanding or a
+very good expert system.
+
+Most of the algorithms seem focused on grouping the items into
+clusters, not organizing and mapping them to a three dimensional
+representation. We want to use the human spatial senses to visualize
+the clusters, not a computer telling us where the clusters are.
+
+2.2. Our Algorithms
+
+Instead we set out on our own with a gut feeling of how clustering
+could be done. We had the following information:
+
+   Pd[x,y]     initial location of document d
+   S(Pd1,Pd2)   similarity of documents d1 and d2
+
+We can represent the similarities between documents as a matrix like this:
+
+TABLE 1. Matrix of similarity values
+
+d1
+d2
+d3
+d4 
+d1
+1
+0.34
+0.04
+0.55 
+d2
+0.34
+1
+0.22
+0.33 
+d3
+0.04
+0.22
+1
+0.08 
+d4
+0.55
+0.33
+0.08
+1
+
+We'll call this matrix Sim[d1,d2]
+
+We tried a number of approaches to clustering documents, most were
+unsatisfactory:
+
+· Our first try represented the x-axis as the similarity to the
+highest ranked document. The y-axis was represented as the similarity
+to the second highest ranked document. This didn't work well. We ended
+up with one big clump in most cases.
+
+· Next, we tried representing things in polar coordinates. Less
+relevant documents were farther away, more relevant ones are
+closer. Documents similar to the best document were swept out right to
+left. This really didn't generate clusters either. It was an
+interesting representation though.
+
+Neither approach generated what we would consider an actual cluster.
+
+Finally, we hit upon a method that seemed to work. We stopped thinking
+of ways to generate variables to plot onto the different axis. Instead
+we transformed our system into a physical model.
+
+We considered each document to be a mass on a two dimensional
+grid. This allowed us to map the similarity factors to a `force'
+between the two entities.  The following steps led us to what seemed
+to be actual clustering.
+
+1. Calculate the initial location of the documents on the grid. We
+find the square root of the number of documents and spread the
+documents over a square that size.
+
+2. Calculate the accumulated forces on each document. Each document
+pulls or pushes other documents based on their closeness.
+
+3. Move the documents to their new locations.
+
+4. Check to see if a significant portion of the documents are close
+together. Go back to step 2 if this hasn't happened.
+
+We used the following force functions to move the documents around
+given D= the number of documents:
+
+(EQ 1) Force functions used in GopherCluster
+
+The final location of the point is the sum of these two force
+equations. The first sums the attractive force between documents. The
+second function repels documents that get very, very close together so
+they're exactly one unit away.
+
+We stop the system when we reach a point where 50% of the documents
+are within two units of each other.  If we didn't do this, the system
+would congeal into one large clump.
+
+3. The Implementation
+
+We used the following tools to make the clustering searches happen
+·	The SMART Text Retrieval system
+·	The GopherVR software
+·	The Unix Gopher Server 
+·	Two perl scripts
+
+3.1 SMART
+
+The backbone of the whole clustering system is the SMART text
+retrieval system. SMART was developed at Cornell University to provide
+a solid framework for work in information retrieval. You can get more
+information about SMART by selecting the following URL:
+
+ <URL:ftp:ftp.cs.cornell.edu/pub/smart/>
+
+The reason we went with the SMART system instead of WAIS or other text
+indexing software was the capability of the SMART system to find the
+similarity between two documents. This provides the basis for our
+clustering algorithms.
+
+3.2 The GopherVR Software
+
+The GopherVR software is the method we used to actually view the
+clusters. Early development used gnuplot as a method of viewing
+clusters. The GopherVR software has the advantage of actually feeling
+like you're inside the scene, within the clusters.  The GopherVR
+software also allows you to get overviews of the scene and look at it
+in many different orientations.
+
+You can get GopherVR binaries by selecting this URL:
+
+<URL:gopher://boombox.micro.umn.edu/11/pub/gopher/Unix/GopherVR> or <URL:gopher://boombox.micro.umn.edu/11/pub/gopher/Macintosh-TurboGopher/TurboGopherVR> or
+
+3.3 The Unix Gopher Server
+
+The Unix Gopher Server provided us a way to pass the location,
+orientation and scale of items to the GopherVR client. It's mostly a
+go-between for the actual shell script and the client. The Unix Gopher
+Server can be gotten by selecting this URL:
+
+<URL:gopher://boombox.micro.umn.edu/11/pub/gopher/Unix/>
+
+3.4 Two Perl Scripts
+
+We wrote scripts in the perl language. This allowed us to rapidly
+develop and prototype many different clustering algorithms. The first
+script takes the search request and reformulates it into a Gopher
+Directory. This directory contains references to the second backend
+script that does the actual clustering.
+
+
+4. A Sample of Clustering
+
+The best way to try out the clustering software is to try it. Start
+your gophervr software and open the following URL:
+
+ <URL:gopher://huskerdu.micro.umn.edu:7070/11/Cluster>
+
+Select Clustering Search Tool and enter a few words that might be
+found in a recipe or movie index.  You'll get a scene that looks like
+this:
+
+FIGURE 1.\x13Starting a Cluster Search
+
+Select which database you'd like to search by clicking on it. You'll
+then see a scene that organizes documents into clusters based on their
+similarity of words. A sample search for winona in a movie review
+database returns the following list of items:
+
+·	BRAM STOKER'S DRACULA
+·	THE HOUSE OF THE SPIRITS
+·	BRAM STOKER'S DRACULA   
+·	LITTLE WOMEN
+·	REALITY BITES
+·	THE AGE OF INNOCENCE
+·	REALITY BITES 
+·	LITTLE WOMEN   
+·	BRAM STOKER'S DRACULA 
+·	THE AGE OF INNOCENCE 
+·	THE GODFATHER: PART III
+·	Winter Film Reviews   
+·	MISC: Academy Award Nominations (1994)
+·	MISC: Academy Award Nominations (1995)   
+·	VAN GOGH and THE BAD LIEUTENANT 
+·	MISC: The Most Memorable Films of 1994 
+·	MISC: 1994 Academy Awards Comments 
+·	MISC: Top Ten of 1994
+
+ The following figures show a clustered organization of the above set
+of documents:
+
+FIGURE 2.\x13Inside a Cluster Scene
+
+FIGURE 3.\x13An Overview of a Cluster Scene
+
+An interesting thing happens with this search. Both Little Women
+reviews end up next to each other. The miscellaneous non-movie review
+items group together in their own location. The Age of Innocence
+reviews are also grouped together.  Documents that you would expect to
+be clustered together are indeed clustered together.
+
+The other clusters seem to be distributed haphazardly. Still, they are
+grouped according to the actual text of the items. These clusters are
+harder to define. They could be caused by a similar writing style, or
+usage of similar words. They are still valid clusters. Classifying
+them is just more difficult.  Who knows why one of the Dracula movie
+reviews is by the Reality Bites movie review?
+
+A final set of documents are non-clustering.  They probably weren't
+similar enough to the other documents to cluster together.
+
+
+5. Problems
+
+The clustering algorithms do strange things with small sets of
+documents. Consider a search for `superman'. This results in two
+clusters. One that contains:
+
+·	An April Fools post called Gump Fiction
+·	A review of the Fantastic Four
+·	A review of Free Willy
+
+The other cluster had the following items:
+
+·	Surf Ninjas
+·	The Crow
+·	Robocop 3
+
+Obviously these don't have much in common.
+
+The other problem is caused by documents getting too close
+together. We don't want the items to overlap in the scene, so we scale
+the scene upwards depending on what the smallest distance is. This can
+lead to a vast plain of scattered documents. Try searching for
+`arnold' and you'll see this effect.
+
+The algorithms could be improved a bit. The determination of an ending
+state is pretty arbitrary. We could test to see if we're in a steady
+state, but that may take many, many iterations. Plus there's a good
+chance that the documents will end up in one big clump, or scatter to
+the far ends of the system.
+
+Yet another problem is caused by the initial positioning of the
+documents. We haven't done much initial testing, but it would seem
+that the clusters that result have a lot to do with the initial values
+of the documents.  This problem may be related to not letting the
+physical model run it's full course to a steady state.
+
+
+
+6. Future Directions
+
+The cluster software should definitely use a better algorithm. We've
+had good results with the current one, but don't have that gut level
+feeling that the math is entirely theoretically correct.
+
+We'd also like to cluster the whole set of documents instead of the
+limited set of documents that result from a search. This clsutering
+could be done ahead of time. It would also allow the administrator an
+opportunity to tune the clusters that the software might find, and
+give them appropriate names. We could add these cluster names to the
+scene above the location the documents are in.
+
+We'd also like to try this software on other databases.  We think that
+this software will have broad appeal for helping people find the
+information they need, and perhaps stumble across something else that
+is similar to the document they were looking for.
+
+
+7. Conclusion
+
+We hope that by exposing the innate relationships between documents
+people will have a much easier time finding the information they want.
+The GopherCluster software is a small step towards this goal.

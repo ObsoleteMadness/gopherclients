@@ -1,0 +1,12 @@
+Gopher_tools.tar.Z contain sources for the MORE and TELNET programs used
+by the gopher server software.  These programs do not include the ability
+to shell-escape from the Gopher client.
+
+These programs compile with simple cc on A/UX and Sun machines. 
+Telnet compiles with bsdcc on an RS/6000.
+
+Once compiled, simply place the programs in the gopher/bin directory of the
+gopher server.
+
+The gopher_tools in this directory are provided for your convenience but
+are not supported by the Gopher staff.

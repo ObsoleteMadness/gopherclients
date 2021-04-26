@@ -1,0 +1,185 @@
+Newsgroups: comp.infosystems.gopher
+Subject:+MENU block suggestion for graphic & document gopher menus 
+Summary: 
+Expires: 
+References: <2eit8e$14bb@msuinfo.cl.msu.edu>
+Sender: 
+Followup-To: 
+Distribution: 
+Organization: Biology, Indiana University - Bloomington
+Keywords: Gopher+
+
+
+Dear Gopher+ client developers & users with suggestions,
+
+I'd like to suggest a set of gopher+ block extensions that would let
+gopher links be located as hotspots within images or any arbitrary gopher
+document. This is an alternative to the not-yet-implemented (?)
+gview/gviewspot method envisioned by the Gopher team at U.Minnesota.  It
+is also an answer to the functionality of NCSA Mosaic's network hypertext.
+
+Since this is basically a client method, we need some consensus among
+client developers that this is a useful method to implement.  If this idea
+doesn't seem best, please suggest alternatives. 
+
+Reasons I rejected gview/gviewspot include (a) not yet implemented in any
+client, (b) would apparently require more server revisions, (c) would
+apparently require two fetches of data from server to get (1) image file
+and (2) directory data.
+
+My approach is to specify a set of block extensions, +MENU, +MENURECT,
++MENUBYTES, +MENUSTRING (maybe others as it develops), that can be
+attached to any current gopher document, including images and rich text. 
+The +MENU block contains any number of gopher+ links to other items, and
+the +MENURECT, etc, specify locations of the 'hotspots' of each gopher
+item within the image or text.
+
+The server side of this is already basically present in U.Minnesota's
+gopherd v2. In your /usr/local/etc/gopherd.conf file, add a line like
+
+  blockext .gopher+-menu  MENU
+
+Then let your gopherd server make a .cache+ file of any set of links or
+folder you want to have as a MENU block, and copy the .cache+ to 
+
+  some/path/my-graphic-folder.gopher+-menu  (for instance) 
+
+Then create an image (or rich-text or whatever) for that directory
+information, called
+
+   some/path/my-graphic-folder.gif  (for instance) 
+
+Now any gopher+ client can fetch this image, and if it uses "$" for the
+directory information, or uses "my-graphic-folder<tab>!" to get info for
+that item, it will get the contents of my-graphic-folder.gopher+-menu as a
++MENU block.  Note that the menu information is all shifted one space to
+right (see example below) so current gopher+ clients should not be
+confused by having this menu information contained within a super-menu.
+
+The "my-graphic-folder.gopher+-menu" file (or the original gopher directory
+it came from) now also needs to be editted to add lines such as +MENURECT
+to associate each item with a location in the my-graphic-folder.gif image.
+A MENURECT item here is just the (left, top, right, bottom) vertices of
+a hotspot rectangle within the image.  When Joe User clicks mouse within
+that rectangle, it will active the assocated gopher item as if he selected
+that item from a standard gopher menu.  Likewise MENUSTRING can specify
+a text string in some (rich) text document to associate a gopher item with.
+
+What the client needs to be able to do to deal with these MENU blocks are
+(a) display image from some format (GIF is suggested as most common
+standard), (b) locate user mouse clicks on the image, (c) link the MENU
+information to those clicks on the image, (d) respond to a gopher item
+selected from this image in essentially the same way as selections from
+a usual gopher menu.   
+
+This work looks fairly straight forward for a Mac/Macapp program.  I don't
+know if MSWindows or XWindows will have any special problems with this.
+
+For rich text documents (e.g. with fonts, styles, formatting), the same
+basic problems hold, but the data format differs. I'm suggesting
+Microsoft's Rich Text Format (RTF) as the most common  format that is
+readily available to produce documents in (mac and msdos, and some unix
+translators), and is reasonably easy to program to (see Paul DuBois'
+RTFreader software at gopher/ftp:ftp.primate.wisc.edu).
+
+P.S,  this format should be convertable to/from the HTML documents
+used by WWW, although several gopher+ extensions are not supported
+yet by HTML.
+
+-- don
+
+Here is an example link ---------------------------
+Try this to get the MENU block info:
+telnet ftp.bio.indiana.edu 70
+9/Gopher+TEST/go+incoming/graphic-menu	!
+------------------------------------------------------
+Type=I+
+Name=graphic-menu  [26Nov93, 15kb]  [26Nov93, 2kb]  [26Nov93, 10kb]
+Path=9/Gopher+TEST/go+incoming/graphic-menu
+Host=ftp.bio.indiana.edu
+Port=70
+Admin=Don Gilbert <Archive@Bio.Indiana.Edu>
+ModDate=Fri Nov 26 09:56:02 1993 <19931126095602>
+URL: gopher://ftp.bio.indiana.edu:70/I/9/Gopher+TEST/go+incoming/graphic-menu
+
+
+Size       Language      Document Type
+---------- ------------- ----------------------------
+14k        English (USA) image/gif
+9k         English (USA) image/JPEG
+
+
+
+
+Example---------------------------
++COMMENT:  
+   This MENU specifies a gopher+menu associated with any gopher item, esp. image or
+   text document.  The contents of a MENU block are just the contents that
+   gopher+ server sends to client, or those contained in a ".cache+" file created
+   by UMinn's gopherd.  You need to use a file suffix/extension like ".gopher+-menu"
+   and include the following line in your /usr/local/etc/gopherd.conf file:
+     blockext: .gopher+-menu MENU
+  
+   Implementation of these block names MENU, MENURECT, MENUBYTES, MENUSTRING and
+   MENUDEFAULT must be done in gopher+ clients that wish to support these methods.
+   With this implementation, gopher+ can serve graphic and (hyper-)text based menus.
+   One could even serve rich-text documents that mix styled text and graphics,
+   if gopher client software learns to display a rich-text document format.  I
+   plan to look at using Microsoft's RTF format.  
+   
+   Note that the MENURECT, MENUSTRING, etc, items which specify where an item
+   is must be *within* the MENU block itself.  You would do this by editing
+   the ".gopher+-menu" file from which this menu block is created.
+   
++MENU:
+ +INFO: 1Gopher+ Mol. Biology services	1/Gopher+TEST/go+molbio	ftp.bio.indiana.edu	70      +
+ +ADMIN:
+  Admin: Don Gilbert <Archive@Bio.Indiana.Edu>
+  ...
+  
++COMMENT:  
+   This MENURECT specifies the item's location rectangle on a gopher+ menu-image
+   Gopher+ clients must be modified to interpret this block.
+   +MENURECT: 
+   left  top  right bottom
++MENURECT:
+ 300 0 400 100
+ 
++COMMENT:  
+   This MENUDEFAULT specifies the an optional default item for any gopher+ menu-image 
+   or menu-text .
+   Gopher+ clients must be modified to interpret this block.
+   +MENUDEFAULT: 
++MENUDEFAULT:
+
++COMMENT:  
+   This MENUBYTES specifies the item's location as a byte range in a gopher+ menu-text
+   Gopher+ clients must be modified to interpret this block.  If 'stopbyte' is missing,
+   only the 'startbyte' location is indexed for the item location.
+    +MENUBYTES: 
+  startbyte  stopbyte
++MENUBYTES:
+ 100  500
+
++COMMENT:  
+   This MENULINE specifies the item's location as a line number and character range
+   in a gopher+ menu-text.  This is a modification of MENUBYTES to allow for
+   text that has newline translation and may differ in byte count on different
+   platforms.  'linenumber' indexes a line, from 0 at top, and 'startchar' and
+   'stopchar' index characters within that line.  If startchar & stopchar are
+   missing, the entire line is indexed.
+   Gopher+ clients must be modified to interpret this block.
+    +MENULINE: 
+  linenumber startchar  stopchar
++MENULINE:
+ 100  500
+ 
++COMMENT:  
+   This MENUSTRING specifies the item's location as a string in a gopher+ menu-text 
+   Gopher+ clients must be modified to interpret this block.  The string should
+   be enclosed in " or ' characters.  An optional repeat-value specifies which
+   occurence of the string to match, from the top of the text.
+    +MENUSTRING: 
+   "some string"  repeat-value
++MENUSTRING:
+ "bob was here"   3

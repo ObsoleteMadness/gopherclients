@@ -1,0 +1,535 @@
+
+%
+% File viegophr.tex
+%
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%+ INTERNET GOPHER, CLIENT & SERVER FOR IBM VM/CMS    (1992-06-19/15:00) +
+%+                                                                       +
+%+ Notes on installation and usage of the `Vienna' VM/CMS GOPHER System. +
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%
+% NOTE: This is not the original version of the document!
+%       Instead, this is the sequenced and stripped version of a
+%       hypertext file.
+%       The linear LaTeX version is provided for your convenience.
+%       For more information about the hypertext version contact the author.
+%       LaTeX is described in: (I'm not sure..)
+%         Leslie Lamport:  LaTeX, A document preparation system
+%         Addison Wesley
+%
+\documentstyle{article}
+\pagestyle{headings}
+
+% pagelayout ---------
+% \topmargin10mm
+% \headheight12mm
+% \headsep5mm
+% \topskip0mm
+% \textheight245mm
+% \textwidth175mm
+% \oddsidemargin17mm
+% \evensidemargin65mm
+% \marginparwidth46mm
+% \marginparsep5mm
+% \marginparpush5mm
+
+%needed???? yes...
+\newfont{\vsmtt}{cmtt8 scaled 1000} % very small type writer
+
+%\makeindex
+
+\begin{document}
+
+
+
+%% \pagenumbering{roman}
+\thispagestyle{empty}
+\title{VieGOPHER\\---\\A Gopher System for VM/CMS}
+\author{Gerhard Gonter}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+The Internet Gopher Protocol provides a simple, yet very effective
+method for distributed document search and retrieval.
+This document describes the usage of the client part of a
+system for IBM's operating system VM/CMS, called the VieGOPHER.
+
+The system can be distributed freely and is dedicated to the community
+of cyberspace.
+\end{abstract}
+
+%% no page breaks here, this should all fit on one page?
+%% \pagebreak[4]
+\tableofcontents
+%% \pagebreak[4]
+\listoftables
+\listoffigures
+%% \pagebreak[4]
+
+\newcommand{\SUBsection}[1]{\section{#1}}
+\newcommand{\SUBsubsection}[1]{\subsection{#1}}
+
+% ---------------------------------------------------------------------- 
+%% \setcounter{page}{1}
+%% \pagenumbering{arabic}
+
+
+
+\SUBsection{Using the Client}
+
+The gopher client is invoked by executing GOPHER.  If everything is set up
+properly, the root menu of your default server should appear within a
+few seconds.  Figure \ref{run.cl1} shows a root menu.  The beginning of
+a menu line contains an item marker, {\tt $<$F$>$} indicates a text file
+and {\tt $<$D$>$} indicates another menu or directory.
+Table \ref{supported.items} lists all item types that are supported
+by this client.  Please note that other servers might also provide
+different item types, these are flagged by a marker of the form
+{\tt $>$}{\sl{x}}{\tt{$<$}}.  A list of other know item types is provided
+in table \ref{supported.items}.
+
+%    * Fig: Root Index Screen
+%    * Programmable Function Keys
+%      * (1)
+%      * Fig: Programmable Function Keys
+%      * (2)
+%    * Bookmarks
+%    * saving items
+%    * Feedback
+%    * Outlook
+%    * temp files
+%    * Supported Item Types
+%    * Tbl: Supported Item Types
+
+
+\begin{figure}
+\caption{Root Index of a Gopher Server}\label{run.cl1}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{small}
+\begin{verbatim}
+ GOPHTMP  TMP0     A1  V 122  Trunc=122 Size=20 Line=1 Col=1 Alt=0
+====>
+<D> WU-Wien Gopher Information Service: Main Menu
+gopher.wu-wien.ac.at:70 <1>                                                  
+<F> About Internet Gopher (gopher.wu-wien.ac.at:70)
+<D> Local Info
+<F> ----------------------------------------------------------------------
+<D> Gophers around the house (Univ. Economics, Vienna)
+<D> Gophers around the place (Austrian Universities)
+<D> Gophers around the world (and other information services)
+<F> ----------------------------------------------------------------------
+<D> Early Music List: archives of EARLYM-L@AEARN.bitnet + rec.music.early
+<D> CERRO: the Central European Regional Research Organization
+<D> WAFE: Widget Athena Frontend
+<D> documents
+<D> services
+<D> external services
+<D> pointers                        (things you might also find elsewhere)
+<D> life, the NET and everything
+<D> The Guide!
+<F> ----------------------------------------------------------------------
+<D> VieGOPHER: VM/CMS Gopher Version
+ 1= Help      2=(altpfs)  3= GoBack  4= Disp->BMK   5= Curs->BMK   6= BMK  
+ 7= PageUP    8= PageDN   9= Save   10=            11= Display    12= Circle
+
+
+\end{verbatim}
+\end{small}
+\end{center}
+\rule{0mm}{2mm}
+\end{figure}
+ 
+
+
+\SUBsubsection{Programmable Function Keys}
+
+Basically, the user interface is `pure' {\sf XEDIT} with a customized
+PF-key setting.  How the keys are set up is shown in table \ref{PF.keys}.
+
+
+
+\begin{table}
+\caption{Programmable Function Keys}\label{PF.keys}
+\rule{0mm}{2mm} % see also * setup for the keys
+\begin{center}
+\noindent\begin{tabular}{|l|l|l|}
+\hline
+Key     & Label             & Description\\
+\hline\hline
+PF1     & {\tt Help}        & activate help menu (just for XEDIT)           \\
+PF2     & {\tt (altpfs)}    & assing PF 1-12 with functions of PF 13-24     \\
+PF3     & {\tt GoBack}      & quit the currently displayed item             \\
+PF4     & {\tt Disp-$>$BMK} & save a bookmark for the currently             \\
+        &                   & displayed item                                \\
+\hline
+PF5     & {\tt Curs-$>$BMK} & save a bookmark for the menu item that is in  \\
+        &                   & the line where the cursor currently is        \\
+PF6     & {\tt BMK}         & activate (display) bookmark file as a menu    \\
+PF7     & {\tt PageUP}      & go one page back (up)                         \\
+PF8     & {\tt PageDN}      & go one page forward (down)                    \\
+\hline
+PF9     & {\tt Save}        & save the item that is currently displayed     \\
+PF10    &                   & {\it unassigned yet, reserved ***}            \\
+PF11    & {\tt Display}     & display item of line where cursor is currently\\
+PF12    & {\tt Circle}      & switch to next active item                    \\
+\hline\hline
+PF13    & {\tt First}       & goto first screen if still active             \\
+PF14    & {\tt (basepfs)}   & assign PF 1-12 with base functions            \\
+PF15    & {\tt Exit}        & leave Gopher immediately                      \\
+PF16    &                   & {\it unassigned yet, reserved ***}            \\
+\hline
+PF17    & {\tt Split}       & split the screen                              \\
+PF18    & {\tt Join}        & join screens                                  \\
+PF19    & {\tt PageUP}      & go one page back (up)                         \\
+PF20    & {\tt PageDN}      & go one page forward (down)                    \\
+\hline
+PF21    & {\tt ShowRing}    & show active items in XEDIT ring               \\
+PF22    &                   & {\it unassigned yet, reserved ***}            \\
+PF23    & {\tt Setup}       & Setup some parameters for using Gopher        \\
+PF24    & {\tt Execute}     & execute command                               \\
+\hline\hline
+ENTER   &                   & display item of line where cursor currently is\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+PF24 triggers execution of general editor commands just like the ENTER
+key would do during a normal XEDIT session while the ENTER key has the
+same function as PF11, that is displaying the selected item.
+Activating the {\tt Display} function will make the
+Gopher client fetch the item described by the line of the menu where
+the cursor is currently in, the result is then displayed as a new XEDIT
+file. The file containing the menu is then still active, each fetched
+item adds another file to a so-called XEDIT file ring.
+
+Leaving a file with the {\tt GoBack} function ({\tt PF3}) causes that file
+to be removed from the editor ring and XEDIT will select another file from
+the ring for display.
+
+This kind of behaviour might lead the user to a tree-like view of the
+data space.  In reality --- whatever that term means --- is the user
+confronted with a quite chaotic, only partially tree like data space.
+One of the main features of the gopher protocol is the ability to point
+to other servers.  Thus most servers point to the central node in the
+world-wide gopher network, {\tt boombox.micro.umn.edu}, this server also
+maintains a list of other known gopher servers.  The result is a circle
+of servers pointing to each other, back and forth.
+
+
+
+\SUBsubsection{File Ring}
+
+The XEDIT file ring and the insertion and deletion strategy work like
+Ariadne's Thread.  However, the {\tt Circle} function allows the user
+to activate the next file in the editor file ring without quitting the
+current file.  The function {\tt ShowRing} (PF20) gives you a list of
+items in the XEDIT ring, you can select any item by placing the cursor
+in the appropriate line and pressing ENTER or PF11.  All in all, the
+XEDIT ring system is a perfect way to loose orientation in the
+Gopher-maze...  What was it that I wanted to explain now?  Ah yes,
+bookmarks!
+
+
+
+\SUBsubsection{Bookmarks ({\tt BMK})}
+
+After exploring Gopher Space for a while you will realize, that an
+enormous quantity of information is out there.  But where exactly
+did you see that particular piece of invaluable information?  You could
+write down it's `coordinates'.  By the way, coordinates in Gopher Space
+are three components that are found in a normal Gopher directory or menu:
+server name, port number and selector string.  The item type is useful
+for your client to know how a particular item should be presented, the
+fifth component of a directory is only of interest for the user, it is
+the so-called `display string' or name and should give you a clue about
+what you can expect from a particular item.
+
+VieGOPHER, like most other Gopher clients, allows you to take notes about
+the coordinates of an item you found.  This is usually called a bookmark,
+because it leads you back to the place where you found the information
+and is not a reproduction of the information itself.
+You can either take a bookmark for the item that is currently displayed
+(PF4) or you could request that the item which is in the menu line of the
+cursor should be transfered to the bookmark list (PF5).  The list of your
+bookmarks is stored in a file named {\tt GOPHER.BOOKMARK} and can be
+activated by pressing PF6 (the BMK function).  The bookmark file is then
+read and the file is added to the XEDIT file ring.
+
+\noindent Notes:
+\begin{itemize}
+\item   Save the bookmark file after modifying (editing) it using
+        the FILE command.
+\item   Be careful about activating and editing the bookmark file
+        and taking more bookmarks while the bookmark file is still
+        active in the XEDIT file ring.
+\item   Save bookmarks for WAIS search items from the menu.
+\end{itemize}
+
+
+
+\SUBsubsection{Saving items to a file}
+
+Text items can be stored in local files for later processing or printing.
+This is done by pressing PF9 (save) when displaying the text item
+of interest.  The text will be appended to the file {\tt GOPHER.SAVEFILE},
+together with a short header listing the gopher coordinates of the item.
+  Of course, the XEDIT commands {\tt SAVE}, {\tt FILE},
+and {\tt PUT} can be entered on the command line as normal.
+
+
+
+\SUBsubsection{Telnet}
+
+VieGOPHER supports the telnet types 8 for `normal' telnet and T for
+Telnet 3270.  IBM's {\tt TELNET.MODULE} is able to handle both types,
+so the client will call this program by default.
+
+It may be desireable,
+however, to configure another program to handle type 8 or type T
+sessions.  This can be done either at configuration time by specifying
+appropriate values for the ROSE-variables {\tt CL\_TELNET\_8} and
+{\tt CL\_TELNET\_T}.
+
+The user can overide this selections by assigning the programs he
+desires to the global variables {\tt TELNET-8} and {\tt TELNET-T},
+both are in the group {\tt GOPHER}.
+
+Please note, the ROSE-variables and the global variables must specify
+the complete name of the desired program.  For example, a user would
+use VieGOPHER's SETUP function or
+enter the following command to setup Arty Ecock's VT100 telnet emulator
+for `normal' telnet sessions:
+
+\begin{verbatim}
+GLOBALV SELECT GOPHER SETLP TELNET-8 TNVT100 EXEC
+\end{verbatim}
+
+
+
+\SUBsection{Supported Item Types}
+
+Table \ref{supported.items} list all currently supported item
+types.  Please be aware, some servers know item types that this
+client will not be able to process, other item types (like {\tt w})
+are not yet standardized and might be interpreted differently by
+the server on one side and the client on the other side.
+
+
+
+% Links: * edindex (type code overview)
+\begin{table}
+\caption{Supported Item Types}\label{supported.items}
+\rule{0mm}{2mm}
+\begin{minipage}{\textwidth}
+\begin{center}
+\begin{tabular}{|c|c|l|cl|}\hline
+type & marker & short           &\multicolumn{2}{l|}{actions on activation}\\
+\hline\hline
+0    & \verb/<F>/& File            & $\circ$ & retrieve                        \\
+     &        &                 & $\circ$ & display as plain text           \\
+\hline
+1    & \verb/<D>/& Directory       & $\circ$ & retrieve                        \\
+     &        &                 & $\circ$ & display as directory            \\
+\hline
+2    & \verb/CSO/    & CSO Phonebook\footnote{under construction,
+  limited support is provided} & $\circ$ & retrieve \\
+     &        &                 & $\circ$ & display as plain text           \\
+\hline
+7    & \verb/<S>/& search          & $\circ$ & prompt for search string        \\
+     &        &                 & $\circ$ & submit search selector to
+                               server\footnote{compatible with WAIS gateway}\\
+     &        &                 & $\circ$ & display result as directory     \\
+\hline
+w    & \verb/<S>/& search          & $\circ$ & prompt for search string        \\
+     &        &                 & $\circ$ & submit search selector to server\\
+     &        &                 & $\circ$ & display result as file          \\
+\hline
+8    & \verb/<T>/& Telnet          & $\circ$ & display selector string as a    \\
+     &        &                 &         & clue for logging in             \\
+     &        &                 & $\circ$ & start telnet session            \\
+\hline
+T    & \verb/<T>/& Telnet 3270\footnote{Type={\tt T} is now officially declared
+as 3270 telnet mode.  By default, types 8 and T are handled the same way as
+normal telnet, but this can be configured either at installation time or
+as a user setup option.}        & $\circ$ & display selector string as a    \\
+     &        &                 &         & clue for logging in             \\
+     &        &                 & $\circ$ & start telnet session            \\
+\hline
+i    & \verb/***/    & info            & & (no action on activation) \\
+%%%%%%%%%%%%%%%%%%% neither <B> nor <H> are currently used %%%%%%%%%%%%
+%%% \hline
+%%% B    & \verb/<B>/& BSS             & $\circ$ & retrieve                        \\
+%%%     &        &                 & $\circ$ & display as
+%%% file\footnote{sending the data to a file without displaying should be
+%%% implemented; transparent decoding would be a useful option} \\
+%%% \hline
+%%% H    & \verb/<H>/& Hypertext       & $\circ$ & retrieve                        \\
+%%%      &        &                 & $\circ$ & display as ordinary 
+%%%                file\footnote{hypertext information is not evaluated
+%%% by this client yet}    \\
+\hline
+\end{tabular}
+\end{center}
+\end{minipage}
+\end{table}
+
+
+
+\SUBsection{Global Variables}
+
+  The client uses two different types of global variables, permanent
+  ones, for storing setup parameters, in the file {\tt LASTING.GLOBALV}
+  and temporary ones in memory.
+ 
+ 
+
+
+\SUBsubsection{User Setup}
+
+Table \ref{clglv} on page \pageref{clglv} lists all the
+global variables that are used by the client.
+They are in the group GOPHER in the file {\tt LASTING.GLOBALV}
+and can be modified with the SETUP function built into the
+client (PF23: {\tt Setup}) or by calling the program GOPHSTP.
+
+%%% this part is obsolete already ... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%\noindent {\bf Attention:}
+%%% {\tt HOST}, {\tt ITYPE} and {\tt SEL}
+%%%     need to be set, accessed and modified using
+%%%     {\tt GLOBALVV.EXEC} since they will usually contain mixed
+%%%     case strings which can't be handled with GLOBALV.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\begin{table}
+\caption{Permanent Global Variables for the Client}\label{clglv}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}
+\hline  % --------------------------------------------------------------------
+% {\tt  KEEP\footnote{this feature is not fully implemented yet.}       } 
+%                    & define, if items should be kept and how long         \\
+% {\tt  ~~=ALL     } & keep all items                                       \\
+% {\tt  ~~=SESSION } & keeps items only during a session                    \\
+% {\tt  ~~={\sl{(none)}}} & don't keep any items [Default]                  \\
+% \hline % -------------------------------------------------------------------
+{\tt HOST}      & name of the GOPHER server to be accessed at startup       \\
+                & [Default: {\tt gopher.wu-wien.ac.at}]                     \\
+\hline % ---------------------------------------------------------------------
+{\tt PORT}      & port of the GOPHER server                                 \\
+                & [Default: {\tt 70}]                                       \\
+\hline % ---------------------------------------------------------------------
+{\tt ITYPE}     & item type of the first item to be fetched                 \\
+                & [Default: {\tt 1} ({\sl directory})]                      \\
+\hline % ---------------------------------------------------------------------
+{\tt SEL}       & selector string of the first item to be fetched           \\
+                & [Default: {\sl text}\footnote{set during installation
+                  as a ROSE definition}]                                    \\
+\hline % ---------------------------------------------------------------------
+{\tt DNAME}     & name of the startup menu                                  \\
+                & [Default: {\sl none}]                                     \\
+\hline % ---------------------------------------------------------------------
+{\tt BOOKMARK}  & name of the bookmark file                                 \\
+                & [Default: {\tt GOPHER BOOKMARK A}]                        \\
+\hline % ---------------------------------------------------------------------
+{\tt SAVEFILE}  & name of the file where items may be saved                 \\
+                & [Default: {\tt GOPHER SAVEFILE A}]                        \\
+\hline % ---------------------------------------------------------------------
+{\tt INFOLEVEL} & level of verbosity, amount of function key description    \\
+                & [Default: {\tt 5}]                                        \\
+\hline % ---------------------------------------------------------------------
+{\tt TELNET-8}  & name of the telnet program for items of {\tt Type=8}      \\
+                & [Default: {\tt TELNET MODULE}]                            \\
+\hline % ---------------------------------------------------------------------
+{\tt TELNET-T}  & name of the telnet program for items of {\tt Type=T}      \\
+                & [Default: {\tt TELNET MODULE}]                            \\
+\hline % ---------------------------------------------------------------------
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+ 
+
+
+\SUBsubsection{temporary variables}
+ 
+  Table \ref{clglv-t} on page \pageref{clglv-t} lists the client's
+  temporary global variables,
+  %%% they are in the group GOPHER in the special format 
+  %%% file {\tt LASTING.GLOBALXV}.
+  the CMS program GLOBALV keeps them in main memory.
+  %%% The Gopher program will purge this file
+  %%% at the end of every session.
+  These variables can not be accessed directly.
+
+
+\begin{table}
+\caption{Temporary Global Variables for the Client}\label{clglv-t}
+\rule{0mm}{2mm}
+\begin{center}
+\begin{minipage}{\textwidth}
+\begin{tabular}{|l|l|}\hline 
+{\tt  TMPCNT     } & number of the last item fetched (0..??)\\
+\hline
+{\tt  GHOST      } & host, port, type and selector of the last item fetched\\
+\hline
+{\tt  GI1:{\sl{$<$ty$>$}}  } &  directory entry of the item held in 
+                                file {\tt GOPHTMP.}{\sl{$<$ty$>$}}\\
+{\tt  GI2:{\sl{$<$ty$>$}}  } &  {\sl $<$ty$>$} is the file type of the
+                                XEDIT file in the ring\\ \hline
+{\tt  L{\sl{$<$ty$>$}}     } &  screen information for active item in
+                                XEDIT ring\\ 
+\hline
+\end{tabular}
+\end{minipage}
+\end{center}
+\end{table}
+
+\rule{0mm}{5mm}
+
+%%%\noindent {\bf Attention:}
+%%% {\tt GHOST}, {\tt GI1:}{\sl{$<$ty$>$}} and
+%%%     {\tt GI2:}{\sl{$<$ty$>$}}
+%%%     are set, accessed and modified by the client modules
+%%%     using {\tt GLOBALXV.EXEC} since they will usually contain mixed case
+%%%     strings, possibly even longer than 256 bytes, which can't be handled
+%%%     with GLOBALV or GLOBALVV.
+%%%{\tt  L{\sl{$<$ty$>$}}} is handled using GLOBALV.
+
+
+
+% -----------------------------------------------------------------------
+\section{Author's Address}\label{gg.addr}
+
+I can be reached --- for questions, remarks, job offers, etc. ---
+in the following ways:\\[2.5ex]
+
+\noindent\begin{tabular}{ll}
+email:          & $<$Gerhard.Gonter@wu-wien.ac.at$>$\\
+                & $<$GONTER@AWIWUW11.BITNET$>$\\[2ex]
+snail mail:     & Gerhard Gonter\\
+                & University of Economics, Vienna\\
+                & Augasse 2-6\\
+                & A-1090 Wien\\
+                & Austria, Europe\\[2ex]
+fax:            & +43/1/31336/702\\[2ex]
+phone:          & +43/1/31336/4111 \\
+\end{tabular}
+
+
+
+%\addcontentsline{toc}{section}{Index}
+%\begin{theindex}
+%\input{viegidx}
+%\end{theindex}
+
+\end{document}
+
+

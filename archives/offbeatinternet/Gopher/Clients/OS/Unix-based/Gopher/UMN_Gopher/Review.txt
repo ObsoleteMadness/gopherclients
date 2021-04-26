@@ -1,0 +1,42 @@
+UNIX/VAX Gopher
+
+--------
+Hardware
+--------
+
+Modem if communicating over UNT dial-up lines 
+Ethernet card if communicating on-campus
+
+--------
+Software
+--------
+
+Any terminal program that emulates a VT-100 terminal 
+Telnet if communicating on-campus 
+Packet Drivers or ODI with ODIPKT if using Telnet
+
+----------------
+Special Features
+----------------
+
+Unlimited viewer definition 
+Runs on any machine capable of using Telnet or a modem 
+Alternate views and electronic forms support 
+Autolaunches viewers when file is downloaded 
+Direct connect to remote Gopher sites 
+Good phone book query support with simple fill-in-the-field approach 
+Gripe capability to send mail back to an item's maintaine 
+Can download. mail., print or save files 
+Can be accessed from anywhere on the Internet or from your house 
+On-line help 
+On-screen context sensitive display of options
+
+----------------
+Problems or Bugs
+----------------
+
+One bookmark file supported only 
+All transactions within one window (limited ot VT-100 screen) 
+No multiple-transactions occurring simultaneously
+67 characters is the longest longest line that will be displayed 
+   in the UMN gopher without it getting shortened.

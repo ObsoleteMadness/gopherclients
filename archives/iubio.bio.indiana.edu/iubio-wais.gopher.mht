@@ -1,0 +1,109 @@
+From gilbertd Thu Apr 29 16:36:35 1993
+From: "Don Gilbert" <gilbertd>
+To: lle@spinoza.cse.ucla.edu
+Subject: Re: gopher and wais
+Cc: gilbertd
+Content-Length: 3589
+X-Lines: 100
+
+
+Getting wais to work with gopher requires careful attention to
+the sparse details in the gopher documentation.  I would rewrite
+some of this if it were my code, as many people stumble on setting this
+up, and it is very common to for me and others to get questions
+about this.
+
+First get wais working on your system.  Use waisindex and 
+waissearch with the default wais-sources/* files to be sure
+the wais stuff is working.  In my distribution there is a
+wais-sources/test index with some animals and colors.
+For instance, in my wais/ folder after making the files, I
+test like this:
+
+bin/waissearch -d wais-sources/test red and rooster
+
+
+You must be very careful with pathnames, as wais uses full
+pathnames in its index files.  You cannot move the data files
+after indexing them or neither wais nor gopher searches of
+these wais indices will work.  
+
+Gopher further complicates this pathname issue in that the
+indexing must be done within the gopher home directory
+(e.g., /usr/gopher-data or whatever you call it).
+
+Next, to get gopher to work with wais, you must compile gopher
+after compiling the wais binaries, and you must symbolicly link
+the wais subfolders bin/, ir/, lib/, ui/ and x/ into your gopher/
+source toplevel directory.  You must also compile them with the
+same compiler (gcc on one and sun cc on another doesn't work for
+me).
+
+Assuming your gopherd & wais programs compile okay, and that the
+waisindex and waissearch programs work on the wais/wais-sources
+test data, and you have moved your real data into your gopher-data/
+folder, then indexed it with waisindex and put the resulting index
+files into someplace like gopher-data/.indices/ named as you like
+(for instance my-data.src, my-data.inv, etc.)  then you must BY HAND
+CREATE a new file for gopher to use these wais indices properly
+called gopher-data/.indices/my-data.hostdata
+
+In this my-data.hostdata file you put three lines:
+gopher.server.internet.address
+gopher-server-port
+/full/path/to/gopher/root
+
+Or as an example from my gopher server:
+ftp.bio.indiana.edu
+70
+/usr/gopher-data
+
+For each wais indexing set of files you create with waisindex,
+you must create a new index.hostdata file by hand to go with it
+for the gopherd program to use.
+
+Then you can create a link file in your gopher data folder somewhere
+which points to this wais-created index file, something like
+
+% cat -> .link-to-wais
+#
+Name=Search My data
+Path=7/.indices/my-data
+Type=7
+Host=+
+Port=+
+#
+
+Notes here:  the Path must point to your newly created index files
+(but without the extentions like .src, .inv or .hostdata) and
+must start with "7" to indicate a search type.  Ditto for the
+Type value.  The Path is relative to the gopher root (drop the
+/usr/gopher-data which is the path to the top of your gopher
+root).
+
+If you want to use the IUBio extensions to wais, you need to pay
+a few attention to compile-type symbols in the Makefiles:
+
+The iubio-wais release is distributed with a Makefile that says
+something like
+
+CC=gcc
+...
+CFLAGS= ... -DBOOLEANS -DPARTIALWORDS -DLITERALS  #-DBIO
+
+These defaults will compile it with gcc and with the commonly
+prefered options.  If you know you want the additional features
+provided with the -DBIO flag, uncomment that option.
+
+If you don't want the -DBIO option, you are set with gopherd
+as well as wais.  If you do uncomment the -DBIO option in
+the wais Makefile, you must also uncomment a similar -DBIO
+option in the gopher Makefile.  The -DBIO option enables
+use of user delimiters in defining words, and a few other odds
+and ends that most gopher/wais servers don't care about.
+
+
+-- Don
+
+
+

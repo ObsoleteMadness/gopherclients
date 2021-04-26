@@ -1,0 +1,44 @@
+README.1ST      short overview about Amadeus
+amadeus.faq     frequently asked questions to Amadeus, bug fixes,
+                work-arounds, tips and tricks
+amadedoc.zip    Amadeus manual (pre-version), WinWord 6.0 format
+amadeww2.zip    Amadeus manual (pre-version), WinWord 2.0 format
+amamanps.zip    Amadeus manual (pre-version), PostScript format (300dpi)
+amadeus1.zip    Amadeus Win32s 1.25a - Disk, if you already have
+                installed Win32s 1.25a in your system or it has build-in
+                this features (Windows NT or Windows 95), then you don't 
+                need to download this zip, else unzip and copy it to disks
+                or a install sub-directory and start the setup with
+                'setup.exe' (you also need this for fileserver 
+                installation)
+amadeus2.zip    main Amadeus install disk, at least this disk and disk#3 
+                you will have to download to try out Amadeus (if you have 
+                already Win32s, don't have downloaded amadeus1.zip and 
+                don't want to do a fileserver installation, then start the
+                setup with 'setup2.exe')
+amadeus3.zip    second main Amadeus install disk.
+                There are some additional external programs like 'EWAN', 
+                a usefull telnet program and WinG.
+                WinG is a graphic library that is vital for running
+                Amadeus !
+amadeus4.zip    PostScrip Viewer disk, you will need this disk if you want
+                to view PostScript files with Amadeus.
+amadeus5.zip    last PostScript Viewer disk.
+amadeus6.zip    external 3D scene viewer (Windows NT 3.5x only!), 
+                stand-alone PostScript viewer, local-database Amadeus !
+
+changes.log     detailed log of changes made since version 0.78
+pkunzip.exe	you will need this to decompress the zip-files
+version.07x	release notes for versions 0.70 through 0.79
+version.080	release notes for version 0.80 beta
+version.081	release notes for version 0.81 beta
+version.083	release notes for version 0.83 beta
+version.084	release notes for version 0.84 beta
+version.085	release notes for version 0.85 beta
+version.086	release notes for version 0.86 beta
+version.new	release notes for newest version of Amadeus
+
+ldb_demo.zip    sample local database - you would need this, if you want to
+                test the local-database Amadeus ! (disk6)
+                Just unzip this into your Amadeus directory
+                (This is only a tiny demo database)

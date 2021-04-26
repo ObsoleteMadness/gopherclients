@@ -1,0 +1,207 @@
+#!/usr/local/bin/perl
+
+$Snoophosts   = "/usr/lib/snoophosts";
+$Snoopresult  = "/usr/lib/snoopresult";
+
+#$Snoophosts   = "/user2/lindner/snoop/snoophosts";
+#$Snoopresult  = "/user2/lindner/snoop/snoopresult";
+
+$Humans       = "gopher@your.site.here";
+$BeeperNo     = "xxx-xxxx";
+
+
+push(@message, "\n");
+sub OpenSock { 
+    local($them,$port,$query) = @_;
+    $them = 'localhost' unless them;
+    $port = 43 unless $port;
+
+    $AF_INET = 2;
+    $SOCK_STREAM = 1;
+
+    $SIG{'INT'} = 'dokill';
+
+    $sockaddr = 'S n a4 x8';
+
+    chop($hostname = `hostname`);
+
+    ($name,$aliases,$proto) = getprotobyname('tcp');
+    ($name,$aliases,$port) = getservbyname($port,'tcp')
+        unless $port =~ /^\d+$/;;
+    ($name,$aliases,$type,$len,$thisaddr) = gethostbyname($hostname);
+    ($name,$aliases,$type,$len,$thataddr) = gethostbyname($them);
+
+    $this = pack($sockaddr, $AF_INET, 0, $thisaddr);
+    $that = pack($sockaddr, $AF_INET, $port, $thataddr);
+
+    # Make the socket filehandle.
+    socket(SOCK, $AF_INET, $SOCK_STREAM, $proto) || return $!;
+
+    # Give the socket an address.
+    bind(SOCK, $this) || return $!;
+
+    # Call up the server.
+    connect(SOCK,$that) || return $!;
+
+    # Set socket to be command buffered.
+    select(SOCK); $| = 1; select(STDOUT);
+
+    # send the whois query
+    print SOCK "$query\r\n";
+    return "is up";
+}
+
+open(Snoophosts, "<$Snoophosts") || die "No hosts to snoop on\n";
+
+$SeverityLevel = 0;
+
+while (<Snoophosts>) {
+	chop;
+	next if /^#/;
+
+	($Host, $Port, $Importance) = split;
+
+        $key = "$Host $Port";
+
+	$Importance{$key} = $Importance;
+}
+
+#
+# Read the old status.
+#
+
+system("touch $Snoopresult");
+open(Snoopresult, "+<$Snoopresult");
+chop($OldSeverity = <Snoopresult>);
+
+while (<Snoopresult>) {
+	chop;
+	m/^(\S* \S*) (.*)$/;
+	$key = $1;
+	$status = $2;
+
+	$OldStatus{$key} = $status;
+}	
+#
+# Test each host/port
+#
+
+foreach (keys(%Importance)) {
+	$key = $_;
+
+	$Host = $_;   $Host =~ s/ .*$//;
+	$Port = $_;   $Port =~ s/^.* //;
+
+	
+	$result = &OpenSock($Host, $Port, "");
+	if ($result ne "is up") {
+		$SeverityLevel += $Importance{$_};
+        }
+	if ($result ne $OldStatus{$key}) {
+		if ($result eq "is up") {
+			push(@message, "$Host, port $Port came back up\n");
+		} else {
+			push(@message, "** $Host, port $Port went down: $result\n");
+		}
+	}
+
+	$Newstatus{$key} = $result;
+}
+
+#
+# Write out the new results file
+#
+seek(Snoopresult, 0, 0);
+truncate(Snoopresult,0);
+
+print Snoopresult $SeverityLevel . "\n";
+foreach $key (keys(%Importance)) {
+	print Snoopresult "$key $Newstatus{$key}\n";
+}
+		
+
+#
+# Okay, now lets inform the humans
+#
+
+if ($SeverityLevel == 0 && $OldSeverity != 0) {	
+	push(@message, "All machines are up again\n");
+	&DialBeeper(0);
+} else {
+        if ($#message > 0) {
+            push(@message, "Some machines are still down\n");
+        }
+}
+
+#
+# Mail to the humans a status report at the end of the day.
+#
+
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+
+if ($hour == 16 && $min < 15) {
+	open(Mail,"|mail $Humans");
+	print Mail "Subject: Gopher is alive\n\n";
+	foreach $key (keys(%Importance)) {
+       	 	print Mail "$key $Newstatus{$key}\n";
+	}
+}
+
+if ($#message > 0) {
+	open(Mail, "|mail $Humans");
+	print Mail "Subject: *** Gopher Trouble Update ***\n";
+	print Mail "Priority: Urgent\n\n";
+	print Mail @message;
+
+	print Mail "\nCurrently down Machines\n";
+	print Mail "-----------------------\n\n";
+	foreach $key (keys(%Importance)) {
+		if (!($Newstatus{$key} =~ /is up/)) {
+			print Mail "$key $Newstatus{$key}\n";
+		}
+	}
+}
+
+#
+# Ring the beeper
+#
+
+if ($SeverityLevel > 0 && $OldSeverity != $SeverityLevel) {
+	$severe = $SeverityLevel/10;
+	$severe = 1 if ($severe == 1);
+	$severe = 9 if ($severe > 9);	
+
+	$severe =~ s/\..*$//;
+	&DialBeeper($severe);
+}
+
+#
+#  Procedure to dial the beeper
+#
+
+sub DialBeeper {
+	local($Severity) = @_;
+ 	
+	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+	if ($hour < 10) { $hour = "0" . $hour;}
+	local($Num)= "$hour$min";
+
+	while ($i <5) {
+		$Num = $Num . $Severity;
+		$i ++;
+  	}
+
+#
+# fixed this to explicitly use the ATDT command because cu has been
+# intermittently pulse dialing (ATD rather than ATDT)
+#				-mpm
+#	open(BeeperCmd, "|cu -s 1200 $BeeperNo,,,,,$Num,>/dev/null  2>&1");
+	open(BeeperCmd, "|cu -s 1200 -l tty0 dir > /dev/null	2>&1");
+	print BeeperCmd "ATDT $BeeperNo,,,,,$Num,,\r";
+#
+#
+# end of patch (-mpm)
+#
+	print BeeperCmd "\r~.\r\r";
+	close BeeperCmd;
+}

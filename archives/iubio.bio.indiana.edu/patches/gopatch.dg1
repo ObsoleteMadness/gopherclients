@@ -1,0 +1,37 @@
+Patch #:	gopatch.dg1
+Type:		operational change
+Priority:	none
+Summary:	enable user selection of max docs returned in wais searches;
+Summary:	user interface in query is "my search words >999" 
+Summary:	where the ">999" selects up to 999 wais documents.
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg1
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/Waisindex.c
+
+*** gopher2.012/gopherd/Waisindex.c	Tue Mar  8 10:55:22 1994
+--- go212dg/gopherd/Waisindex.c	Wed Mar 30 10:14:19 1994
+***************
+*** 272,277 ****
+--- 272,291 ----
+  
+       parameters.max_hit_retrieved = 256;
+  
++  
++        /* dgg - check query string for ">max_retrieve" number */
++        {
++        int  ihit;
++        char *chit= strrchr( SearchWords, '>');
++        if ((chit != NULL) && (chit > SearchWords) && isdigit(*(++chit)) ) {
++          ihit= atoi( chit);
++          if (ihit>0) {
++            parameters.max_hit_retrieved = ihit;
++   	   *(--chit) = '\0';  /* drop rest of string */
++   	   }
++          }
++        }
++ 
+       set_query_parameter(SET_MAX_RETRIEVED_MASK, &parameters);
+       
+       search_result = false;

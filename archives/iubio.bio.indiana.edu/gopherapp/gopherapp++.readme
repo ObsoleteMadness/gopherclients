@@ -1,0 +1,63 @@
+
+GopherApp is an Internet information service program for Macintosh 
+computers.  It provides a Finder-like link to the range of Internet 
+Gopher services.  
+
+This release is a stable version 2 that includes fuller support for 
+Gopher+ ASK forms than other current gopher+ clients, and support for 
+multiple view formats. It includes multithreaded operations, for 
+handling several network connections at once.  Network interface code 
+has been optimized for both speedy use, and good operation on slow 
+dialup links. 
+
+To use GopherApp, your Mac must have a network connection to the 
+Internet, and it must have MacTCP installed.  You may obtain GopherApp 
+thru anonymous ftp to ftp.bio.indiana.edu, in folder /util/gopher
+/gopherapp, as gopherapp++.hqx.  You may also obtain updates using Gopher 
+to this same IUBio archive (ftp.bio.indiana.edu).  Look for a folder called "IUBio 
+Software+Data/GopherApp".
+
+GopherApp is written by Don Gilbert, using the MacApp extensible 
+Macintosh programming framework from Apple Computer.  It was derived 
+from a subset of a biosequence analysis program called SeqApp.
+
+GopherApp.Help is a plain text file which may be read from your favorite 
+wordprocessor.  If you have problems getting  GopherApp to launch,  
+please read GopherApp.Help.  GopherApp should work on all Mac models 
+from  Mac+, with System 7 and System 6 software (see section below).
+
+Comments, bug reports and suggestions for new features may be addressed 
+via e-mail to  	     Software@Bio.Indiana.Edu
+
+                                             -- Don Gilbert
+	
+History
+
+6Dec93, v2.2b43 -- New/Edit gopher link, corrected change of port# and gopher+ 
+flag
+
+29Nov93, v2.2b40 -- Update w/ various bug fixes and cosmetic changes (2 parts to
+prefs dialog now).  Added initial code for reading PICT and GIF images (this still 
+has bugs).  Program still bombs or fails in some cases.
+
+9 Nov 93, v 2.1b117  Stable beta release, still has known bugs but 
+usable.  Built on the pointer-based MacApp v 3.1a.  A lot of bugs from 
+the v 2.0b release have been chased out.  User-interface changes 
+include: 
++ view links by size, date, name, host, ...
++ "New gopher hole" is simplified way to connect to new gopher
++ "Find home of link" for Veronica users & other cases to locate root 
+server for any given gopher link
++ Matching gopher data to Mac applications has been cleaned up w/ Choose 
+Application button in New & Edit gopher links
++ Mapping of Gopher+ types to Mac types (in Prefs) changed & simplified.
++ Network preference "Use quickest gopher+ method" is for dialup 
+internet or other slow network links.  Cuts amount of data fetched with 
+each directory.
++ Get Info from link
++ Mail link maintainer
++ added support for moo-V and Note gopher types
+Non-interface changes
++ TCP code extensively revised
++ multithreading processes cleaned up
+ 

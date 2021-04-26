@@ -1,0 +1,71 @@
+
+	 Gateway from Internet Gophers  to TechInfo Services
+
+   This is a one way gateway from gopher protocol to TI protocol:
+   gopher client connects to this server and makes a request, this
+   program connects to a TechInfo server and gets the appropriate
+   information, sends the response to the client, and then closes 
+   the connection.
+
+   Request from gopher client          This program's response
+   --------------------------          -----------------------
+
+   blank line                           Local TechInfo Server's main menu, 
+                                        WorldWide TechInfo, and,
+                                        Univ of Minn Gopher
+
+   type tihost tiport tinodeid          Results of Techinfo transaction
+
+    worldwide-techinfo                  List of TechInfo servers
+
+    Goph-TI-Gateway                     Document -- about this gopher
+
+   Examples: In these examples, HOST is the FQDN of the host that
+   this program runs on, and PORT is the gopher port that this program
+   is listening on (from inetd).
+
+   Input:
+   blank line
+
+   Output:
+   0About this Gopher TAB Goph-TI-Gateway TAB HOST TAB PORT
+   1About PennInfo TAB M ti-srv.upenn.edu 9000 836 TAB HOST PORT
+   0Today's Weather TAB D ti-srv.upenn.edu 9000 7182 TAB HOST TAB PORT
+   1World wide TechInfo TAB worldwide-techinfo TAB HOST TAB PORT
+   1Univ of Minn Gopher TAB TAB gopher.micro.umn.edu TAB 70
+
+   Input:
+   worldwide-techinfo
+
+   Output:
+   1MIT TAB M tiserve.mit.edu 9000 0 TAB HOST TAB PORT
+   1University of Oslo TAB M xantos.uio.no 9000 0 TAB HOST TAB PORT
+
+   Input:
+   M ti-srv.upenn.edu 9000 0
+
+   Output:
+   1About PennInfo TAB M ti-srv.upenn.edu 9000 836 TAB HOST PORT
+   0Today's Weather TAB D ti-srv.upenn.edu 9000 7182 TAB HOST TAB PORT
+
+
+   Input:
+   D ti-srv.upenn.edu 9000 7182
+
+   Output:
+   {ascii text document}
+
+
+   Input:
+   K ti-srv.upenn.edu 9000 120 TAB internet gopher
+
+   Output:
+   0The Internet Gopher - What is it? TAB D ti-srv.upenn.edu 9000 3568 TAB HOST TAB PORT
+
+   This program is not standalone -- it's meant to be called from
+   inetd.
+
+
+READ the INSTALL and MAINT files to learn how to install
+and maintain the gateway.
+

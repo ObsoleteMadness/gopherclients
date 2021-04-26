@@ -1,0 +1,97 @@
+
+
+********** How to install the gopher-techinfo gateway **********
+
+1) Edit the file "gw.h" and change any #defines that need to
+   be changed.
+
+   DEBUGLOG		the filename where the gateway will write
+			debugging and statistics information.  The
+			gateway runs as userid "daemon", so make sure
+			daemon has write permission on this file.  If
+			necessary, create an empty file and change
+			owner to daemon.
+
+   MSGFILE		the filename of the "About this Gopher" item.
+			The gateway will read this file and send it to
+			the Gopher client.  See the file "MSG" for an
+			example.  DAEMON needs read permission for
+			this file.
+
+   LOCALTI_SERVER	the domain name of the local Techinfo server
+			The gateway connects to this server when a
+			gopher sends "" as the token.  At UPENN, the
+			name is penninfo-srv.upenn.edu.
+
+			if there's no local TechInfo, change this line to:
+#define LOCALTI_SERVER ""  /* there is no local techinfo */
+
+   LOCALTI_PORT		the port that the local TechInfo server
+			listens at (ignored if LOCALTI_SERVER is "").
+
+   LOCALTI_MAINMENU	the nodeid of the top menu of the local
+			Techinfo server (ignored if LOCALTI_SERVER is
+			"").  You can pick any menu's nodeid.
+
+
+   TISERVERS_HOST	the domain name of the host that knows the
+			list of TechInfo servers.
+
+   TISERVERS_PORT	the port at which the TISERVERS_HOST server
+			listens.
+
+   LOCALGOPHTITLE	the name(title) of a gopher server.  If
+			you don't want to point to any, set it to
+			"".  If you leave it blank, then
+			LOCALGOPHERSERVER, LOCALGOPHERPORT, and
+			LOCALGOPHERPATH are ignored.  Otherwise,
+			the gateway sends them along with the
+			title as part of the root menu.  The
+			local gopher file type must be a Gopher
+			Directory file (gopher type 1).  For the
+			local gopher server at UPENN, these three
+			values should be "gopher.upenn.edu", port
+			"70", and "".
+
+   SOURCES_MSGFILE	Name of file that describes how to view the
+			Gopher path & use it to see the TechInfo Source.
+
+   SOURCES_NODEID	Nodeid of the TechInfo document at LOCALTI_SERVER.
+			Ignored if there is no LOCALTI_SERVER.
+
+
+ 
+2) Compile the gateway code:
+	make -k
+
+3) Move the executable to /usr/local/bin or whatever is the convention
+   on your operating system.
+
+4) Edit /etc/services and add the gopher service to it, if it's not
+   already there:
+gophtech	71/tcp
+
+5) Edit /etc/inetd.conf and add the gophtech gateway to it.  The
+   gateway program takes two arguments: the domain name of the
+   localhost, and the port at which the gateway is listening.
+
+Example:
+
+gophtech stream tcp nowait /usr/local/bin/gophtech gophtech gopher-penninfo.upenn.edu gophtech
+
+6) Send a HUP to the inetd daemon so that it will re-read inetd.conf.
+
+7) Copy MSG and PROVIDERS to the right directory.
+
+   Give DAEMON the permission to read these files, since the gateway
+   runs as userid DAEMON.  chmod ugo+r .../{MSG,PROVIDERS}
+
+8) Define the domain name (or a CNAME) in the domain name system for
+   your site.  In the example I used above, it would be
+   gopher-penninfo.upenn.edu.
+
+9) The MSG file refers to a mail alias to report bugs with
+   the gophtech gateway (gopher-penninfo@dccs.upenn.edu).  Please
+   create the mail alias and be sure that at least murphy@dccs.upenn.edu
+   is on the list.  I don't know who, if anyone else, should be on
+   it.

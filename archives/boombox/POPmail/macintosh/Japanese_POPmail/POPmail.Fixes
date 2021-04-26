@@ -1,0 +1,14 @@
+POPmail II 2.2_J release 2    March 1, 1995
+
+  I forgot to include the font menus in the last release.
+So it is back in now.  Sorry.
+
+--------------------------------------------
+POPmail II 2.2_J            February 5, 1995
+
+Bug Fixes
+1.  Fixed the bug which caused user signature to be deleted
+    after posting a message.
+
+2.  Fixed bug where it reported incorrectly there was not enough disk
+    space to fetch messages.

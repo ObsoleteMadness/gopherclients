@@ -1,0 +1,39 @@
+Patch #:	gopatch.dg8
+Type:		operational change
+Priority:	none
+Summary:	show all view forms of a file to gopher- clients 
+Summary:	as separate files
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg8
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.c
+
+
+*** gopher2.012/gopherd/gopherd.c	Tue Mar  8 12:11:16 1994
+--- go212dg/gopherd/gopherd.c	Wed Mar 30 12:41:05 1994
+***************
+*** 1781,1786 ****
+--- 1803,1809 ----
+  	       strcpy(Pathp+strlen(Prefix), newpath);
+  	       
+  
++             if (isGplus) {     /* ++dgg : show all views to -client */
+   	       /*** Strip extension off of pathname***/
+  	       Pathp[strlen(Prefix)+strlen(newpath)-strlen(EXgetExt(ext))]= '\0';
+  	       GSsetPath(gs, Pathp);
+***************
+*** 1815,1820 ****
+--- 1838,1849 ----
+  			 lang = GDCgetLang(Config);
+  		    GSaddView(gs, EXgetView(ext), lang, statbuf.st_size);
+  	       }
++             }     				
++ 	    else {	 	/* ++dgg : show all views to -client */
++                 AddItem = TRUE;	 
++                 GSsetPath(gs, Pathp);	 	
++                 GSsetType(gs, EXgetObjtype(ext));
++ 		}	 			
+  	  } 
+  	  else if (AddItem) {
+  	       int num;

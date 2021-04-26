@@ -1,0 +1,8 @@
+BCGOPHER from Boston College offers less function than WSGOPHER. The 
+big icons take up more space and make the menus stretch out. Only one 
+menu is presented at a time, and the user must exit from a lower level 
+menu to go back and make another selection from a previous menu. 
+
+BCGOPHER is simple to use and configure, but WSGOPHER appears to be a 
+more attractive choice now, unless it breaks your WINSOCK package. 
+

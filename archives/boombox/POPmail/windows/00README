@@ -1,0 +1,12 @@
+WS_POPmail is a Windows Post Office Protocol (POP) client
+for windows version 3.1+ and Windows 95. To use WS_POPmail,
+you will need a network connection and a Winsock network
+driver.
+
+poparc.exe is a self-extracting archive containing the latest
+release version (version 1.06).
+
+Please send comments or bug reports to:
+     popmail@boombox.micro.umn.edu
+
+

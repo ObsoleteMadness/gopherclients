@@ -1,0 +1,17 @@
+0:PennInfo->Gopher Gateway::10,1001
+2:title:/penninfo/data/Techinpher/nothing:0
+10:About the PennInfo->Gopher Gateway::11,12,13,14
+11:Using the PennInfo->Gopher Gateway:/penninfo/data/Techinpher/PennInfo-Gopher:
+12:History of Gopher->PennInfo, PennInfo->Gopher:/penninfo/data/Techinpher/history:
+13:Known Bugs using PennInfo->Gopher Gateway:/penninfo/data/Techinpher/buglist:
+14:PennInfo->Gopher Gateway Wishlist:/penninfo/data/Techinpher/wishlist:
+19:PennInfo->Gopher Gateway Messages::1000,20,21,22,23,24,25,26,27,28
+20:GWMSG- Not all gopher file types are available:/penninfo/data/Techinpher/gtypesnotavail:
+21:GWMSG- You need a new TechInfo client:/penninfo/data/Techinpher/ticlient_telnet:
+22:GWMSG- Unknown Gopher file type:/penninfo/data/Techinpher/unknown_gtype:
+23:GWMSG- Only <?> items are searchable:/penninfo/data/Techinpher/searching:
+24:GWMSG- Gopher servers cannot show path to file:/penninfo/data/Techinpher/nopath:
+25:GWMSG- Gopher servers cannot show outline of file:/penninfo/data/Techinpher/nooutline:
+26:GWMSG- Use Search command to find items in above menu:/penninfo/data/Techinpher/searching:
+27:GWMSG- File is not a menu & cannot be expanded:/penninfo/data/Techinpher/menuexp:
+28:GWMSG- Selected Menu is not currently available:/penninfo/data/Techinpher/menunotavail:

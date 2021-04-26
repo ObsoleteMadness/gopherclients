@@ -1,0 +1,30 @@
+#  This is the snoophosts script
+#
+#  The format is:
+#
+#  <host> <port> <importance>
+#
+# importance is in the range of 1-100, 100 being highest.
+#
+consultant.micro 	23  	70
+consultant.micro	70	20
+gopherserver1.tc.umn.edu  	70     	100
+gopherserver2.tc.umn.edu  	70     	100
+gopherserver3.tc.umn.edu        70      100
+gopherserver4.tc.umn.edu        70      100
+catbox.micro		70	80
+joeboy.micro 		70      60
+ashpool.micro 		70     	50
+sprawl.micro		5000	50
+mrfrosty.micro 		70     	25
+mrfrosty.micro 		150     25
+mrfrosty.micro 		156     25
+mudhoney.micro 		70      50
+mailbox.mail  		70      30
+boombox.micro 		70      50
+mudhoney.micro		4325	31
+pinchy.micro            70      34
+pinchy.micro		4324	40
+ministry.micro          70      40
+ministry.micro          4324    40
+paperboy.micro		21	25

@@ -1,0 +1,217 @@
+______________________________________________________
+
+              Internet Gopher Conference '94
+                             
+                     sponsored by                             
+              The University of Minnesota 
+
+                   April 22 - 23, 1994
+                        at the
+               Radisson Hotel Metrodome
+                Minneapolis, Minnesota
+
+______________________________________________________
+
+The University of Minnesota is pleased to announce the Internet
+Gopher Conference '94. The major focus of this year's "GopherCon"
+will be:
+
+    - Bringing the new gopher administrator up to speed.
+      Much of the recent growth in gopherspace is coming 
+      from communities new to the Internet, including small
+      colleges and secondary education.
+    
+    - Showcasing interesting Gopher applications, including
+      clients, servers, tools, new subject areas (commercial, 
+      K-12, etc.)
+      
+    - A forum for gopher software developers to discuss 
+      new gopher attribute types, administrative
+      tools, and new functionality.
+
+We welcome folks from the gopher community who would like to make a 
+presentation, run a tutorial, showcase their application, or run a
+guided tour  of their service to do so.  Conference fees will be
+waived for presenters. For more information on presenting a
+session please send e-mail to gopher94@boombox.micro.umn.edu.
+
+The registration information and agenda follows:
+
+__________________________________________________
+You may attend any track on either Friday or Saturday. If you
+indicate in your registration information which tracks you are
+interested in, it would help us provide appropriate space.  
+
+The cost of the conference is $100 which includes lunch on Friday
+and Saturday and the conference t-shirt.  Registration will be be
+limited to 250 people.  To  reserve a spot for the conference, you
+can register directly via email to 
+          gopher94@boombox.micro.umn.edu.
+Please provide the following information:
+
+Name:
+Institution:
+Position:
+Tracks of Interest for Friday and Saturday:
+Mailing Address:
+Email Address:
+Phone Number:
+Fax Number:
+Emergency Contact & Phone:
+Hotel in Minneapolis where you will be staying:
+T-shirt Size:
+Number and Sizes of Additional Shirts at $15 each:
+Special Dietary Needs:
+
+You may register via email, however a check for the full
+registration fee and any additional t-shirts must be received by
+April 8 to guarantee your space.  Registrations received after
+this date will be accepted subject to space availability and be
+charged a late fee of $100.  We are unable to accept credit cards
+or cash.  Please make checks or money orders payable to the
+University of Minnesota and mail them to the following address:  
+
+Gopher Conference Registration
+Distributed Computing Services
+University of Minnesota
+152 Shepherd Laboratories
+100 Union Street, SE
+Minneapolis, MN  55455
+
+If you have any questions, please call 612/625-9339 or send email to
+ gopher94@boombox.micro.umn.edu
+
+Hotel reservations for the Radisson Hotel Metrodome can be made by
+calling the  hotel directly at 1-800-822-MPLS.  Please mention you
+are with the Gopher Conference to receive the conference rate of
+$69 for single occupancy and $79 for double.  Rooms for the
+conference are guaranteed to be available through  April 7;
+reservations after that date will be accepted based upon
+availability.  Airfare discounts are also available.  Contact
+Carlson Travel Consultants at  1-800-825-9190 to receive the Gopher
+Conference fares.
+__________________________________________________________________
+
+=========================================
+APRIL 22: Technical Tutorials and Forums
+----------------------------------------
+
+Morning General Session
+      8:00  Registration
+      9:00  Welcome - Dr. D.R. Riley, Associate V.P. & Associate Provost, 
+                      Academic Affairs, University of Minnesota
+GEN1  9:10  Gopherspace & the State of the Gopher
+            University of Minnesota Internet Gopher Development Team
+     10:15  Break
+GEN3 11:15  Archie - Peter Deutsch
+     12:00  Lunch 
+
+
+Afternoon tracks 1:30 - 4:30:
+
+    Room 1: New Gopher Administrators
+    ----------------------------------
+NG1  1:30 - 1:50  Introduction to Gopher Protocol - Dave Johnson
+NG2  1:50 - 2:15  Macintosh and DOS Servers - Dave Johnson
+NG3  2:20 - 3:00  A Gopher Server for VMS: How to Cook your VMS 
+                  Gopher Server - J. Lance Wilkinson          
+NG4  3:05 - 4:00  Unix Server and Client - Paul Lindner
+NG5  4:00 - 4:30 Public Access Clients, Security Issues - Paul Lindner
+
+
+    Room 2: Enhancing Content, Efficiency, Reliability
+    ---------------------------------------------------
+EQ1     o   Information Quality - Anders Gillner 
+EQ2     o   Making Sense of Veronica's Words - Nancy John
+EQ3     o   Quality of Service - Mitra
+        
+    Room 3: Developer Forum
+    ------------------------
+DEV1    An open forum discussion of gopher protocol and development 
+        issues
+
+
+-----------------------------------
+APRIL 23  Cool Gopher Applications
+-----------------------------------
+Morning tracks 9:00 - 12:00.
+
+    Room 1: Cool Gopher Apps (Client, Server, and Service Show & Tell)
+    -------------------------------------------------------------------
+APP1   9:00- 9:30   WinSock Implementation of Asynchronous Gopher+ 
+                    with multiple sessions in Super TCP - John Xu
+APP2   9:35-10:05   America Online's gateway to Gopher - 
+                    GUI gopher at 2400 baud - Mitra
+APP3  10:10-10:40   Gofer = Gopher+ + Token-based Tree Maintenance and  
+                    Much More - Andrew Scherpbier and Mark Boyns
+APP4  10:55-11:25   Gopher Access to Mainframe Based Administrative 
+                   Data and Class Rosters - Robert Cademy
+APP5  11:30-12:00  The AskERIC Virtual Library: A User-Driven 
+                   Service - Nancy Morgan
+   
+
+    Room 2: Even More Cool Gopher Apps
+    ------------------------------------
+APP6   9:00- 9:30  Minuet as a Gopher client - Earl Schleske
+APP7   9:35-10:05  Meet GINA - A face you will love at 
+                   first sight - Keith Vogt
+APP8  10:10-10:40  Blue Skies Gopher - Alan Steremberg
+APP9  10:55-11:25  WSGopher: a Windows Gopher+ client - David Brooks
+APP10 11:30-12:00  Gopher and the Mathematics Archives 
+                   - Larry Husch & Earl Fife
+
+
+    Room 3: Gophers of a Different Color
+    -------------------------------------
+COL1   9:00- 9:30  K-12: Using Gopher as a Learning Resource 
+                   Server - Michael Stuve
+COL2   9:35-10:05  Service Learning Across the USA: Establishing 
+                   a Service Learning Gopher - Charlie Bordreaux
+COL3  10:10-10:40  Children, Youth and Family gopher servers 
+                   - Bob Rubinyi
+COL4  10:55-11:25  Corporate Gophers: Schlumberger and its Information 
+                   GopherSpace - Rich Obrecht
+12:00 Lunch 
+
+Afternoon tracks 1:30 - 3:45
+
+    Room 1: Still More Cool Gopher Apps 
+    ------------------------------------
+APP11  1:30- 2:00  Jughead: A tool to search menus in your local 
+                   gopher menu space - Rhett "Jonzy" Jones
+APP12  2:05- 2:35  Running a Consolidated Gopher and WWW Server 
+                   - Michael Potter
+APP13  2:50- 3:20  Gopher Goes Interactive - embedding Usenet News 
+                   in Gopher - Stephen Trier
+APP14  3:25- 3:55  Growing the MIT Libraries Gopher: subject 
+                   classification and team building - Keith Morgan
+
+  
+    Room 2: Gophers of a Different Color (continued from morning session)
+    ----------------------------------------------------------------------
+COL5  1:30- 2:00  Library and Government Information via Gophers 
+                  Using LC MARVEL - Elizabeth Miller
+COL6  2:05- 2:35  LegiSlate and Gopher - Ed Stawick
+
+
+    Room 2: Server Tools and Maintenance
+    -------------------------------------
+STM1   2:50- 3:20  UNIX Server Construction and Maintenance for 
+                   Mac Users - Michael Fraase
+STM2   3:25- 3:55  Titling Menus with scripts and keystrokes (or 
+                   how to work with .names files and .cap directories) 
+                   - Paul Kramer
+
+    Room 3: Advanced Server Tools and Gateways
+    -------------------------------------------
+ADV1   1:30- 2:00  Gopher to SQL Gateway - Paul Lindner
+ADV2   2:05- 2:35  Gopher to Z39.50 1992 gateway - Danny Iacovou
+ADV3   2:50- 3:20  Current Contents database on Gopher - Bob Alberti
+ADV4   3:25- 3:55  Authentication & X.500 gopher gateway - Frank Grewe
+
+
+------------------------------------------------------------------------
+In addition to the scheduled sessions, rooms are available for informal 
+Birds-Of-a-Feather (BOF) sessions all day Saturday. BOF signups wil be 
+held during day 1 (Friday).
+------------------------------------------------------------------------

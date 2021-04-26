@@ -1,0 +1,74 @@
+From usenet.ucs.indiana.edu!sol.ctr.columbia.edu!usc!sdd.hp.com!nigel.msen.com!nigel.msen.com!not-for-mail Fri Aug  7 06:53:12 EST 1992
+Article: 19 of comp.infosystems.gopher
+Xref: usenet.ucs.indiana.edu alt.gopher:489 comp.infosystems.gopher:19
+Path: usenet.ucs.indiana.edu!sol.ctr.columbia.edu!usc!sdd.hp.com!nigel.msen.com!nigel.msen.com!not-for-mail
+From: emv@msen.com (Edward Vielmetti)
+Newsgroups: alt.gopher,comp.infosystems.gopher
+Subject: Welcome to comp.infosystems.gopher!
+Followup-To: comp.infosystems.gopher
+Date: 7 Aug 1992 01:18:35 -0400
+Organization: Msen, Inc. -- Ann Arbor, Michigan
+Lines: 57
+Message-ID: <15t13pINN4vb@nigel.msen.com>
+NNTP-Posting-Host: nigel.msen.com
+X-Newsreader: Tin 1.1 PL3
+
+Hello, and welcome to comp.infosystems.gopher.  The newgroup message went
+out yesterday, and we're going to migrate traffic over from the old
+alt.gopher group into the brand new "official" group.  
+
+gopher is a distributed information system.  The best phrase I've heard to
+describe it is as "internet duct tape" - wrap a little bit of gopher
+protocol around some files or some databases and hey presto you have an
+Internet Service.  As most people know information services on the
+internet are traditionally held together with spit and bailing wire, well,
+duct tape is an improvement.
+
+The newsgroup basically covers four areas of gopher development, which I'd
+list as 
+
+gopher clients.  Things that users run to connect to gopher servers. 
+There are lots of these out there right now; most of them follow pretty
+closely in spirit to the original unix and mac gopher clients, though some
+radical ones ("gopher in a forest" for NeXT) push a different approach. 
+The issues here are design, documentation and built-in help, bug fixes and
+improvements, human factors analysis, speed, robustness, and such.
+
+gopher servers.  Systems that speak the gopher protocol.  There are rather
+less server designs than client designs; most servers present essentially
+a file system point of view to the user, tho some are driven from
+databases.  A number of other data resources have been gatewayed into
+gopher (e.g. netnews) with interesting results.  The issues here are
+maintainability, shared resources access, logging and stats gathering,
+index and other wayfinding aids, etc.
+
+gopher protocol.  What clients and servers send back and forth to each
+other.  The gopher protocol is a ferociously simple ASCII protocol
+designed to make constructing clients and servers in an afternoon possible
+and even likely.  Various extensions to the base protocol have been
+proposed to handle more client feechurs, with varying degrees of
+acceptance.  Issues here are staying close to the One True Gopher Way
+with simple clients and servers without stopping people who want to do way
+cool advanced things from interoperating.
+
+gopherspace engineering.   This is a problem completely separate from any
+sort of technical issues; it's a question of how gopherspace should be
+designed, what it feels like, who has control, how easy is it to move
+around, what kind of cooperative systems-building can we end up with.  The
+questions here are those of groupware and computer-supported collaborative
+work, human factors and information systems design, resource discovery and
+current awareness tools, and so on.  Even if we end up throwing away the
+protocol and all of the clients the question of systems design (for the
+Internet, I suppose, and not just gopherspace) is a big one.
+
+Thanks to all 300+ who voted for the new group.  I'm going to ask some of
+the people who have built systems using gopher to speak up and say their
+piece about current projects and try to figure out where we go from here.
+
+  Edward Vielmetti, vice president for research, Msen Inc. emv@Msen.com
+        Msen Inc., 628 Brooks, Ann Arbor MI  48103 +1 313 998 4562
+"my other computers are in Minneapolis, Lansing, Cambridge, Reston, ..."
+
+
+
+

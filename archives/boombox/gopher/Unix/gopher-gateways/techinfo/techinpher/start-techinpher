@@ -1,0 +1,13 @@
+#!/bin/csh -f
+
+
+cd /usr/local/techinfo/techinpher/admin
+loop:
+	./techinpher -d -p 9001 >& out
+	set timestr = `date '+%h%d.%T.'`
+	mv -f core "core.$timestr"
+	mv -f out "out.$timestr"
+	/usr/ucb/mail -s "TechInpher gateway exited unexpectedly, core saved as core.$timestr" penninfo-gopher@dccs.upenn.edu < /dev/null
+	sleep 600
+	goto loop
+

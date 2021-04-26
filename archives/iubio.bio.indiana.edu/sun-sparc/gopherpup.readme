@@ -1,0 +1,31 @@
+
+GopherPup
+an Internet information client by Don Gilbert
+archived at <ftp://iubio.bio.indiana.edu/util/dclap/apps/gopherpup/>
+
+
+To work properly, you should fetch all the ancillary files here
+along with binaries of your choice.  Put them all in one folder
+with names as given:
+
+GopherPup       (mac or unix executable)
+GopherPup.go4   default network link document (bookmarks or hotlist)
+GopherPup.start default display document (netdoc/rtf format)
+GopherPup.help  help file (netdoc/rtf format)
+GopherPup.prefs preference information (read on 1st use)
+
+in that name-space challenged os, the names are
+gophpup.exe 
+gophpup.go4
+gophpup.hel
+gophpup.pre
+
+The application is available for these computer systems:
+gopherpup-mac-68k.hqx	Macintosh, 68000 processor
+gopherpup-mac-ppc.hqx	Macintosh, PowerPC processor	
+gopherpup-sun-sparc-stat.Z	Sun Sparcstation, static-linked Motif libraries
+gopherpup-sun-sparc-dyn.Z	Sun Sparcstation, dynamic-linked libraries
+gopherpup-sgi-mips.Z		SGI Irix, MIPS processor
+gopherpup-mswin-32.zip	Microsoft Windows, 32-bit, Intel processor
+gopherpup-mswin-16.zip	Microsoft Windows, 16-bit, Intel processor
+

@@ -1,0 +1,11 @@
+Gopher for Windows
+
+Reviewed 7/29/08 by: Avery M.
+
+
+This is a pretty good MDI version of what is essentially a terminal
+Gopher client. You can keep multiple menus and text documents open
+within the MDI, and ASCII art shows up correctly. However, compared to
+tabbed browsing it's kind of a pain to organize.
+
+

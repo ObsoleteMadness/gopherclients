@@ -1,0 +1,76 @@
+Using Gopher as a Learning Resource Server
+
+Presentation Overview
+GopherCon 1994
+
+Matthew J. Stuve
+University of Illinois at Urbana-Champaign 
+
+
+Abstract
+
+The UIUC Learning Resource Server (located at lynx.ed.uiuc.edu) contains 
+information related to the instructional, research, and service missions 
+of the College of Education. The server runs on a Macintosh computer 
+using the University of Minnesota's GopherSurfer software. It was one of 
+the first Gopher servers to address the needs of pre- and in-service 
+teachers as well as K-12 schools in general. The relevant K-12 resources 
+of the server will be demonstrated. In addition, our server is composed 
+of resources provided by numerous staff, faculty, and students within 
+the College from local K-12 schools. This form of "distributed server 
+management" will be explained in the context of Macintosh file sharing 
+on AppleTalk networks. Finally, guidance on the design, setup, and 
+management of Gopher servers in K-12 settings will be provided. 
+
+
+What is a Learning Resource Server?
+
+A Learning Resource Server (LRS) is a repository of information 
+pertaining to teaching and learning.  That information can come in many 
+forms, such as text, images, sounds, databases, and links to other 
+relevant servers.  An LRS can be thought of as a "window" on a community 
+of teachers and learners.  Our Learning Resource Server represents the 
+realization of a suite of desktop server technologies that are feasible 
+and scalable in a K-12 environment.
+
+
+How does the UIUC LRS serve and represent K-12 teachers and students?
+
+In addition to the practical functions a Gopher server can provide a 
+school district, virtual communities of teachers can set in motion 
+powerful learning activities that make use of networked resources.  Kids 
+can share the artifacts of their learning with their peers from other 
+countries and cultures.  Teachers and College faculty and can pool 
+relevant materials on a university-run server.
+
+
+Distributing server responsibilities on a "composite desktop server"
+
+The UIUC LRS represents a community of teacher educators, graduate 
+students, administrators, in-service and pre-service teachers, and K-12 
+students.  We have enabled access to the server via AppleShare and other 
+server technologies so that files can be added and deleted remotely 
+without always having to go through a single system administrator.  
+
+
+Creating K-12 Gopher servers
+
+The Macintosh provides and easy to use operating system upon which 
+teachers and administrators can create their own information server.  
+They can decide what resources are important for their intended 
+audience.
+
+
+For more information, contact:
+
+Address:	Office of Teaching TeleAppreticeships
+		Department of Educational Psychology
+		1310 S. Sixth St.
+		Champaign, IL  61820-6990
+Phone:	(217) 244-7005
+E-mail:	mstuve@uiuc.edu
+
+Documents from this presentation are available on the UIUC Learning 
+Resource Server.  Connect via Gopher to lynx.ed.uiuc.edu.  The Teaching 
+TeleApprenticeships project is supported by National Science Foundation 
+grant no. RED-9253423

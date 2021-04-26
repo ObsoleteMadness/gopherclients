@@ -1,0 +1,20 @@
+Gophie
+(ver 1.1)
+Freeware
+
+
+Gophie is a Gopher Browser for Windows written in 
+Java.  Gophie allows you to navigate Gopherspace, 
+read text, view images, and download files with the 
+integrated download manager.
+
+Gopher does NOT require installation.  Simply place 
+it in the folder that you wish to run it from, and 
+launch the EXE.  
+
+The Browser requires that a Java Runtime Environment 
+of version 8 or higher be installed on the computer.  
+I am including a complimentary 32-bit version of JRE 
+(version 8, update 151), which will install on Windows XP.  
+
+JRE 8 = Java_Runtime_Environment_(32bit)_v8_Update_151.zip

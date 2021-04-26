@@ -1,0 +1,594 @@
+GOPHER SURFER
+==============
+
+Gopher Surfer is an application that allows you to set up a Gopher+ Server on a Macintosh.  The resulting server is a full implementation of the Gopher+ protocol.
+
+This document covers the following topics:
+
+Setting Up a Server with Gopher Surfer
+Setting Up Information
+--Creating an Alias
+--File Formats
+--Linking
+--Alternate Views
+--ASK Documents
+File Management
+
+If you would like to learn more about the technical design of the Internet Gopher before setting up a server, you should read the following documents, which are available from the Mother Gopher Server: gopher.tc.umn.edu, port 70.  
+
+1) Overview of Gopher: DRAFT_Gopher_FYI_RFC.txt
+     Located in: Home Gopher Server
+                          Information About Gopher
+                              Gopher Protocol Information
+
+2) Internet Gopher protocol: protocol.txt or protocol.MacWriteII.hqx 
+   Located in: Home Gopher Server
+                        Information About Gopher
+                            Gopher Protocol Information
+
+3) Gopher+ protocol: Gopher+.txt, Gopher+.MacWriteII.hqx
+   Located in: Home Gopher Server
+                        Information About Gopher
+                            Gopher Protocol Information
+                                Gopher+
+
+
+REQUIREMENTS
+-----------------------------------------------
+In order to set up a Gopher+ Server using the Gopher Surfer application, you need to have a Macintosh running System 7.0.
+
+You will need to complete three tasks before installing the Gopher Surfer application.
+
+First, you will need to install and to configure MacTCP on your Macintosh.  MacTCP needs to be configured with a static IP address.  If you need assistance with configuring MacTCP, ask your network administrator.
+
+Second, you need to register a name for the Macintosh you will be using as a Gopher Server with your local domain name system (nameserver) administrator.  
+
+Third, you need to install the Thread Manager in your System Folder.
+
+********************************************************************
+SETTING UP A SERVER WITH GOPHER SURFER
+********************************************************************
+
+Before starting Gopher Surfer for the first time, drag the Thread Manager to your System folder; it ends up in the Extensions folder.  Then, restart your machine.  GOPHER SURFER WILL NOT WORK UNLESS THE THREAD MANAGER IS INSTALLED AND LOADED.  
+
+If the Thread Manager is not loaded, you will get an alert box.  You can continue to use Gopher Surfer in the Browse mode to organize files and to define item types and links, but it will not run as a gopher server.
+
+
+SETTING UP THE SERVER
+-----------------------------------------------
+Follow these steps to set up a Gopher+ Server using Gopher Surfer:
+
+1.  Double-click on the icon for the Gopher Surfer application.  A window will be displayed.
+
+2.  Type over the stuff that is in the text field boxes with information that is pertinent to your Gopher+ Server.  Characters may extend beyond the end of the box that delineates the text field.  Select the options that you wish to have for your server (options explained below).
+
+3.  Click on the Publish Directory button and select the folder that contains the files for your Gopher+ Server.  Click on the button directly below the file/folder list that says "Select folder-name." Note: if the entire name of the folder is too long to display on the button, the first and last part of the name will be displayed.
+
+4.  Organize and modify files that will appear on your server.  (See the section, SETTING UP INFORMATION.)
+
+5.  Click in the box next to "Run Gopher Server."
+
+6.  Save your changes and name your Gopher+ Server.  Your Macintosh is now a Gopher server!
+
+The window is explained below.
+
+Host Name: The domain name of the computer you are using for your server, which you should have already registered with your network administrator (see REQUIREMENTS).  The name must be a full domain name, such as boombox.micro.umn.edu.
+
+Host Port: The port that is specified for the Gopher process.  You should use 70, the port number allocated by the IANA.
+
+Publish Directory Button: Click on this button to designate the folder that will contain the files and folders to be published on your Gopher+ Server.  
+
+Run Gopher Server: Click in this box to start up your Gopher+ Server.  If this box is not checked, the Gopher+ Server will not run.
+
+Save Log Button: Click on this button to set up a file that will list all of the traffic on your Gopher+ Server.  
+
+Log by host name: When this box is checked, the connecting client computer is identified by its name.  Otherwise, clients are identified by their IP addresses.  NOTE: It is much faster NOT to identify by name.  
+
+Language: The default language of text items that are available on your server.  This is a pop-up menu.  If the language you wish is not in the list, please send an e-mail to gopher@boombox.micro.umn.edu and the development team will see what it can do.
+
+ISO Latin-1 characters: When this box is checked, the special characters on the Mac that are used to indicate accents are translated into ISO Latin-1.  Otherwise, these special characters might appear as garbage when viewed by someone with a Gopher Client that runs on another kind of computer.  NOTE: If you are using an Asian character set in your text files, do not check this option.
+
+Administrator: The person or group who is responsible for the server.  You may also include the department or institution that is maintaining the server and a telephone number.
+
+Organization: The organization that is maintaining the server.
+
+Site: The street address of the organization.
+
+Location: The city, state or providence, zip or postal code, and country where the server is located.
+
+Latitude/Longitude (optional): This information will be used in a future Gopher+ Server feature, which will display where the server is located on a map of the world.  
+
+The scrolling field displays the connections to the server as they happen.  Each connection is numbered consecutively.  
+
+NOTE: Under the Gopher menu, the following menu items are the same as the options found in the configuration dialog box.
+
+--Gopher Menu Item..........Option in Dialog Box
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+--Publish Directory..........Button labeled "Publish Directory"
+--Run as Gopher Server..........Check box next to "Run Gopher Server"
+--Log connections by Host Name..........Check box next to "Log by host name"
+--ISO Latin-1 Filtering..........Check box next to "ISO Latin-1 characters"
+
+
+RUNNING THE SERVER
+-----------------------------------------------
+If you've checked the box for "Run Gopher Server" and then saved the file, whenever you launch the Gopher Surfer and open the file that you just created (or double-click on its icon), your Macintosh will run as an Internet Gopher+ Server.  While running as a server, your Mac will make everything in the folder that you designated with "Publish Directory" available to Gopher Clients.  This includes files as well as subfolders and items that are pointed at by System 7 aliases.
+
+ACCESS DENIED
+-----------------------------------------------
+You've set up the server according to the instructions above, but when you try accessing it through a gopher client, you get the message "Access denied."  If this happens, you probably have the System 7 File Sharing option turned on for your machine.  In this case, you'll have to set up sharing permissions for the folder designated as the published directory, before you're on-line as a gopher server.  Read the section SETTING UP PERMISSIONS, for instructions on how to proceed.
+
+
+********************************************************************
+SETTING UP PERMISSIONS
+********************************************************************
+
+You can limit the access to your server or portions of your server using the Sharing Setup and the Users & Groups control panels in System 7.  If you are unfamiliar with these features in System 7, read the File Sharing section in the System 7 manual before doing anything.
+
+BASIC CONCEPTS
+-----------------------------------------------
+Using the System 7 access privileges, involves three steps.  
+
+1.  Turning on File Sharing.
+
+2.  Defining users.  There are three levels of users: the owner, a specific user or group, and everyone.  For the specific user/group you can select only one "user" from a list of registered users who have access.  However, that one "registered user" also can be a group, which is actually a collection of registered users.
+
+3.  Setting access for folders.  You cannot set access for a file.  
+
+In Gopher Surfer, a "user" can be defined using several formats (example uses a type B adddress format): 
+
+          An IP address 123.456.789.1
+          Permits access by a single machine
+
+          A subnet of the domain, 123.456.789
+          Permits access by IP addresses 123.456.789.1-255
+
+          An entire domain, 123.456.1-255.1-255 (example assumes a type B address).  
+          Permits access by IP addresses 123.456.1-255.1-255 
+
+To deny access to a User, type an exclamation point (!) before the name.  So, if you wish to exclude access from a machine with an IP address of 123.123.123.123, create a User with the name of "!123.123.123.123".  
+
+In authenticating an IP address, Gopher Surfer first checks for a match to a User/Group with denied access.  If the address is not specifically excluded, then Gopher Surfer checks to see if access is allowed.  So, if User "123.456" is given permission to access the server and a client is on a machine with an IP address of 123.456.612.101, it will be allowed to connect.  However, clients from 123.234.612.101 or 123.123.123.123 will be denied access.  The first, because it doesn't match "123.456" and the second because it matches "!123.123.123.123", the user that is excluded.
+
+After setting sharing permissions for one folder, you cannot set up sharing for the hard drive where the folder is located.  You can, however, set up different permissions for a subfolder inside the gopher server Published Directory folder.
+
+
+EVERYONE HAS ACCESS
+-----------------------------------------------
+Follow these steps if you wish to have all internet users access your server.  
+
+1.  Turn on the File Sharing feature in System 7.  From the Apple menu, choose Control Panels.  Double-click on the Sharing Setup control panel.  Set up your network identity.  Click on the Start button, and close the control panel.
+
+2.  Select the folder you've designated as the "Published Directory" of Gopher Surfer.  
+
+3.  From the File menu, choose Sharing.  The dialog box you'll see should have everything grayed out.  This is to prevent people from inadvertently sharing items.
+
+4.  Click in the check box next to "Share this item and its contents."
+
+5.  To share every item in the folder, including subfolders, click in the check box next to "Make all currently enclosed folders like this one."
+
+6.  To give permission to anyone who connects to your gopher server, make sure the following boxes are checked for "Everyone"
+
+           See Folders        (if this isn't checked, folders inside of the designated folder 
+                                       will not be seen by gopher clients.)
+           See Files       (if this isn't checked, gopher clients will see folders, but the 
+                                   files stored in folders will not be seen.)
+
+7.  Even though Gopher Server doesn't allow clients to make changes, you might want to uncheck the box for "Make Changes," especially if the server is connected to an AppleShare network.  
+
+8.  Click on the close box for the Sharing window.  An alert box will appear.  Click on the Save button.  If another alert box appears asking if you want all enclosed folders to have the same permissions, click on OK.
+
+ONLY AN IP ADDRESS
+RANGE HAS ACCESS
+-----------------------------------------------
+Follow these steps if you want to restrict access to a certain range of IP addresses.
+
+1.  Turn on the File Sharing feature in System 7.  From the Apple menu, choose Control Panels.  Double-click on the Sharing Setup control panel.  Set up your network identity.  Click on the Start button, and close the control panel.
+
+2.  Define the IP range.  From the Apple menu, choose Control Panels.  Double-click on Users & Groups.  From the File menu, choose New User.  Name this User the same as the domain you wish to allow access to your server.  For instance, if your domain is 123.456.1-255.1-255, you would name the User "123.456."  
+
+If you want to include more than one domain, create a User for each one.  Then, from the File menu, choose New Group and name it.  Drag the Users you wish to give permission to access to the Group icon.
+
+3.  Select the folder you've designated as the "Published directory" of Gopher Surfer.  
+
+4.  From the File menu, choose Sharing.  
+
+5.  Click in the check box next to "Share this item and its contents."
+
+6.  To share every item in the folder, click in the check box next to "Make all currently enclosed folders like this one."
+
+7.  To give permission to a specific IP range, uncheck all the boxes for "Everyone."  
+
+8.  For User/Group, select the User or Group you've set up in step 2.  Check the following boxes for User/Group.
+
+           See Folders        (if this isn't checked, folders inside of the designated folder 
+                                       will not be seen by gopher clients.)
+           See Files       (if this isn't checked, gopher clients will see folders, but the 
+                                   files stored in folders will not be listed.)
+
+9.  Even though Gopher Server doesn't allow clients to make changes, you might want to uncheck the box for "Make Changes," especially if the server is connected to an AppleShare network.  
+
+10.  Click on the close box for the Sharing window.  An alert box will appear.  Click on the Save button.  If another alert box appears asking if you want all enclosed folders to have the same permissions, click on OK.
+
+
+********************************************************************
+SETTING UP INFORMATION
+********************************************************************
+An important step in getting your server up and running is organizing the information that you wish to make available to others. 
+
+At the simplest level, all you have to do is drag plain text files into the folder that you designated with the Publish Directory button.  Any folder inside that folder will appear as a subfolder or a subdirectory to Gopher Clients.  The list of files and subfolders on your server will appear as a list to all gopher clients.  The files and subfolders are arranged in alphabetical order by the server.
+
+If you wish to use more sophisticated Gopher+ Server features, you have a number of options, such as giving a file a different name that is displayed to clients; posting files consisting of graphics, sounds, or movies/videos; linking to other Gopher Servers, CSO directories, or Telnet and TN 3270 sessions; making a file available in several different formats or languages (alternate views); searching for keywords; or gathering information via an electronic form (ASK file).
+
+
+ANOTHER NAME
+-----------------------------------------------
+Sometimes you may wish to have more control over what file names are displayed to gopher clients.  Gopher Surfer offers a feature that allows you to create a different name for display to gopher clients.  This feature creates a file called a "gopher alias," which is different from the System 7 alias.  A gopher alias allows a more descriptive name to be displayed or controls the file's order in the list that clients see.  
+
+To create a different name to be displayed to clients, follow these steps:
+
+1.  From the Gopher menu, choose Preview Gopher Tree.  The Preview Browser window appears; it shows what a Gopher client will see when connecting to your server.
+
+2.  Click on the file that you want to change.
+
+3.  From the Gopher menu, choose Change Display Name.  A dialog box appears with the actual name of the file along with a text field for the display name as it will appear to a client.
+
+4.  Type in the name you wish to be displayed to connecting Gopher clients.
+
+5.  Click on OK.  The name change will be reflected in the Preview Browser.
+
+When a client accesses your server, the gopher alias for the file is displayed, not its actual name.
+
+For example, let's say I want the first item that clients see on my server to be a text file called "Welcome." However, with an actual file name of "Welcome" the item appears 12th on the list.  So, I rename the file "1Welcome" and create a another name for that file called "Welcome." Now, when a client connects to my server, the first item displayed in the list will be "Welcome."
+
+To delete a gopher display name, follow these steps:
+
+1.  From the Gopher menu, choose Preview Gopher Tree.  
+
+2.  Click on the file that you want to return to its actual name.
+
+3.  From the Gopher menu, choose Delete Changes.  The other name will be deleted.
+
+In setting this feature, you don't have to working at the machine used as the server.  You can use your copy of Gopher Surfer to administer or setup items on another machine.
+
+
+FILES
+-----------------------------------------------
+Because Gopher Clients run on many different computers -- Mac, IBM and compatibles, NeXt, Sun, central system, etc. -- it's best to make sure that the information you're posting is in a format that can be easily viewed on any client.  
+
+The Gopher Server treats all files and folders as items.  The server identifies and displays a file's item type to a connecting Gopher client.  This is a list of the item types that the server automatically recognizes:
+
+---Item in Folder..........Item type
++++++++++++++++++++++++++++++++
+---Folders..........Folder
+---Text format..........File
+---PICT format..........Image
+---JPEG format..........Image
+---JFIF format..........Image
+---GIFf format..........GIF
+---ULAW format..........Basic Sound
+---MooV format* ..........Movie
+---MPEG format..........Movie
+---Other formats..........BinHex
+
+     * Needs platform-independent QuickTime format; if 
+        Macintosh-Only files, they will not be identified as 
+        a Movie item type but instead as a BinHex item type.
+
+You can offer information in other formats, such as a manual saved as a Microsoft Word file or a spreadsheet that was created in Excel.  In this case, the item type is identified as "BinHex" or Binary Hexadecimal, which needs to be transferred to and saved on the client's computer.  The file then can be viewed by using software that is installed on the client computer.  
+
+For example, let's say you wrote a manual, saved it in Microsoft Word, and included it on your Gopher+ Server.  If a person using a gopher client wants to view the manual, the file needs to be downloaded to his or her computer.  But, once it's downloaded, in order to open the file and to read the manual, the person would need to have Microsoft Word installed on the computer he or she is using.  Obviously, not every person who uses a gopher client owns Microsoft Word.  Keep this in mind when preparing files that you want to include on your server.
+
+There is a way to offer a file in so that any computer can view it as well as making it possible to obtain a version created by a specific application program.  See "Alternate Views" for more information.
+
+
+Other Item types
+-----------------------------------------------
+In addition to the item types of File, Folder, BinHex, Movie, Basic Sound, GIF, and Image, you can specify other item types that the server can display.  
+
+For instance, a file that is not text but some other kind of MS-DOS file will be displayed with an item type of BinHex.  To inform Gopher clients that this particular file is actually a DOS binary file you can change the item type to DOS Binary.  
+
+To accomplish this, follow these steps:
+
+1.  From the Gopher menu, choose Preview Gopher Tree.  The Preview Browser window appears; it shows what a Gopher client will see when connecting to your server.
+
+2.  Click on the file that you want to change.
+
+3.  From the Gopher menu, choose Change Item Type.  A dialog box appears with the item type of the file along with a pop-up list of possible item types available on a Gopher+ Server.
+
+4.  Drag until the item type you wish is selected.  
+
+5.  Click on OK.  The item type change will be reflected in the Preview Browser.
+
+Caution: When you change an item type of a file, you are overriding information.  Make sure that the item type you are specifying is appropriate.
+
+---Item type
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+---CSO Directory*........Initiates a CSO nameserver search
+---DOS Binary........Format for DOS compatible computers
+---UUEncode........Data format with 7 bits
+---Search*........Finds keywords in files
+---Telnet*........Initiates a Telnet session
+---Unix Binary........Format for UNIX operating systems
+---Plus Sound........Brings up alternate view directory before client 
+                              can retrieve sound
+---TN3270*........Initiates a TN3270 session
+---Plus ASK - File........Displays an electronic form
+---Plus ASK - Folder Directory*........Links to an authentication session
+                                                            when client selects a folder
+
+     * Used in conjunction with a Link (see next section)
+
+To change the item type to its original state, follow these steps:
+
+1.  From the Gopher menu, choose Preview Gopher Tree.  
+
+2.  Click on the file that you want to change.
+
+3.  From the Gopher menu, choose Delete Changes.  
+
+SYSTEM 7 ALIASES
+-----------------------------------------------
+If you wish to include items outside your published gopher folder, you can use System 7 aliases of CD-ROMs, fileservers, or files and folders located elsewhere on the server's drives.  You can also use System 7 aliases to allow reference to an item from several different locations within your published gopher folder.  To use a System 7 alias, follow these steps:
+
+1.  Make a System 7 alias of the item you wish to include on your gopher server.
+
+2.  If you wish, rename the alias you just created.  NOTE: You cannot create a "gopher alias" for a "System 7 alias."
+
+3.  Drag the System 7 alias to the Publish Gopher Folder.
+
+When a client requests an item represented by a System 7 alias, the security checking follows this process.  If the alias is for a file or document, Gopher Surfer resolves the alias to the real file and allows the client to retrieve it.  If the alias is for a folder or another volume outside the published gopher folder, it first resolves the alias to the actual item.  Then, it checks to see if the machine where the item is located has file sharing turned on.  If it is off, the client can see the contents of the folder or volume, but cannot retrieve it.  If file sharing is turned on, Gopher Surfer checks for the sharing permissions of the folder or volume and follows the access set for it (see the section, SETTING UP PERMISSIONS).
+
+
+CREATING LINKS
+-----------------------------------------------
+Within your server, you can create links to other resources available on the Internet, such as another Gopher server, an electronic phone directory, a central system, or an authentication session.  Typically, you would use this feature to create a folder on your server that would link the client to another Gopher server.
+
+To create a link, follow these steps:
+
+1.  From the Gopher menu, choose Preview Gopher Tree.  
+
+2.  From the Gopher menu, choose Create Link.  A dialog box is displayed.
+
+3.  In the "Title" box, type in the name that will be displayed on your server for the link.  In the "Other Host Name" box type the domain name to which you are linking.  In the "Other Host Port" box type the number for the port.  
+
+Information in the selector text box is optional.  You would fill this in if you want to go directly to a subfolder on a gopher server.
+
+Indicating whether the item is a Gopher+ server is also optional.  You should check this box only if you are linking to another Gopher server and you are certain that it set up to use the Gopher+ protocol.
+
+4.  Select the appropriate Item Type from the pull-down menu.  Possible choices include another Gopher Server (folder), an electronic phone book (CSO Directory), a keyword find engine (Search), a VT100 emulation connection to a central system (Telnet), or a TN3270 terminal emulation connection to an IBM mainframe (TN3270).  The file type, Plus ASK - FolderDirectory, has not been implemented in this version of Gopher Surfer.
+
+5.  Click on OK.
+
+Once you have created a link, you can edit it or delete it from your server.  To do this, follow these steps:
+
+1.  From the Gopher menu, choose Preview Gopher Tree.  
+
+2.  Click on the link that you want to change.
+
+3.  To edit the link: from the Gopher menu, choose Edit Link.  
+To delete the link: from the Gopher menu, choose Delete Link.
+
+When you set up links, be sure to specify the correct port and item type for the service to which you are connecting.  In addition, keep in mind that although many processes listen at a certain port, you cannot be sure that number is used for all services of a particular type.  If you don't know the port number for sure, do not guess.  Find out before setting up a link in your server.
+
+
+ALTERNATE VIEWS
+-----------------------------------------------
+The Alternate Views feature is used when you wish to have the same information on your server available in several different languages or formats.  For instance, you may wish to have a welcome message in several different languages.  Or, a manual available in several different application formats such as Microsoft Word, MacWrite II, MacWrite Pro, Nisus, PageMaker, and QuarkXPress.  
+
+To set up a file with alternate views, follow these steps:
+
+1.  Create a file with an item type that Gopher recognizes and displays.  Acceptable item types would include: 
+
+---Text files..........ASCII text (text only format)
+---Sound files..........ULAW
+---Graphics files..........GIFf, JPEG, JFIF, PICT, 
+---Multimedia files..........MPEG, or MooV 
+
+2.  Name the file and save it.
+
+For example, I'll first write a manual in TeachText, an application that saves its files in a text only format.  Then, I'll name it "POPmail Docs."
+
+2.  Save that file in a different format(s) or in a different language(s).
+
+In the example, I'll create other versions of the manual using Microsoft Word for the Macintosh.  I'll name this file to reflect the program that I used to create it: Application/MSWord.  
+
+3.  In the folder designated as the "published folder," create a new folder.  
+
+4.  Name the folder the same name as the first file (see step 1), but add the diamond character (option-shift-v) to the end of the name.  The diamond character signals the server that this directory is for alternate views and requires special handling.
+
+In the example, I'll create a new folder and name it "POPmail Docs×."
+
+5.  Drag all the different versions of the file into the folder.  
+
+In the example, I'll drag the files "POPmail Docs" and Application/MSWord into the folder named "POPmail Docs×."
+
+When a Gopher Client accesses your server, the text only formatted file named "POPmail Docs" will be displayed in the list.  When the client selects the file from the list, and then selects the alternate views feature, the files that you have created in other applications will be displayed.  Then, the Gopher Client user can transfer the file with alternate formatting to the client computer and open it by using software that is already installed on the client computer.
+
+Files in Different Formats
+-----------------------------------------------
+The valid file types and applications that are currently supported by the TurboGopher Client are listed below.  Others may be added to future versions of the program.
+
+        GOPHER+ FILE NAME......................APPLICATION
+        Application/MacWriteII.............MacWrite II
+        Application/MSWord...................Microsoft Word
+        Application/PDF...........................Aldus Acrobat Exchange
+        Application/Post.........................MacWrite II
+        Application/RTF............................Microsoft Word
+        Audio/Basic.....................................Ulaw Play 1.0.6
+        Image...................................................JPEGView 2.0
+        Image/GIF..........................................JPEGView 2.0
+        Image/JFIF........................................JPEGView 2.0
+        Image/JPEG.......................................JPEGView 2.0
+        Image/PICT.......................................JPEGView 2.0
+        Image/TIFF........................................Image 1.47
+        Text/tab-separated values.........Microsoft Excel
+        Video/MPEG........................................Sparkle 1.6
+        Video/QuickTime..............................Simple Player
+
+Files in Different Languages
+-----------------------------------------------
+To offer a different language version of a file, set it up as an alternate view and add one of the following character strings to the end of the filename.
+
+
+---STRING..........LANGUAGE/COUNTRY
+++++++++++++++++++++++++++++++++++++++
+---"Da_DK".........."Danish/Denmark"
+---"Nl_BE".........."Dutch/Belgium"
+---"Nl_NL".........."Dutch/Netherlands"
+---"En_GB".........."English/United Kingdom"
+---"En_US".........."English/United States"
+---"Fi_FI".........."Finnish/Finland"
+---"Fr_BE".........."French/Belgium"
+---"Fr_CA".........."French/Canada"
+---"Fr_CH".........."French/Switzerland"
+---"Fr_FR".........."French/France"
+---"De_CH".........."German/Switzerland"
+---"De_DE".........."German/Germany"
+---"El_GR".........."Greek/Greece"
+---"Is_IS".........."Icelandic/Iceland"
+---"It_IT".........."Italian/Italy"
+---"Jp_JP".........."Japanese/Japan"
+---"No_NO".........."Norwegian/Norway"
+---"Pt_PT".........."Portuguese/Portugal"
+---"Es_ES".........."Spanish/Spain"
+---"Sv_SE".........."Swedish/Sweden"
+---"Tr_TR".........."Turkish/Turkey"
+
+In the example, if I wanted to include an Italian translation of my manual, I would name it "textIt_IT" to indicate it was in text only format and Italian.
+
+A reminder that when posting files in a foreign language, especially one that includes accents, you usually need to check the "ISO Latin-1 characters" option when you set up your Gopher+ Server.  However, if your files are in an Asian language such as Japanese, that option should not be checked.
+
+
+ELECTRONIC FORMS
+-----------------------------------------------
+Sometimes you may wish to gather information by having people fill out a form.  Gopher Surfer offer a feature that allows you to create a file that is displayed as an electronic form.  So, when someone opens this item, an electronic form is displayed.  The person responds to the information that is requested in the electronic form.  The response is then saved in a text file in a folder that you designated.  If you wish, the data can be transferred to another application to be manipulated.  Or, you can set up the responses in a folder so that others can look at them.
+
+To create a file that will be displayed as an electronic form on your Gopher+ Server, you need to follow these steps:
+
+1.  Create a file that contain ASK commands (see next section for listing of commands).  You can use any word processor or text editor for this step.  Be sure to follow these rules when setting up the file:
+
+          --Each line must begin with a space <space> 
+          --Each line must end with a carriage return <CR> (no word wrapping).
+          --After a command, you must have a colon and at least one space.
+
+2.  Save the file as "text only" format.
+
+3.  Drag the file to the folder that has been designated as the Published Directory of your gopher server.
+
+4.  Create a folder to store the information gathered by responses to your electronic form.
+This folder can be stored anywhere on your hard drive.  If you want people accessing your server to see the responses, store it in the folder that has been designated as the Published Directory of your gopher server. 
+
+5.  Override the file's item type to "Plus Ask - File."  
+
+          --Switch to the Gopher Surfer application.
+          --From the Gopher menu, select Preview Gopher Tree.
+          --Click on the file you've just created.
+          --From the Gopher menu, select Change Item Type.
+          --Click on the Display Type pop-up menu.
+          --Drag down and select "Plus Ask - File
+          --Designate the folder in which you want the responses to be saved
+              (See step 1.)
+
+The response to the form is saved in a text file, which is named the same as the ASK file, and a number is appended to the end of the name -- so the first response is named "filename 1"; the second response, "filename 2"; the third, "filename 3"; etc.
+
+ASK Commands
+-----------------------------------------------
+The following commands can be used to create an ASK file.  The command is followed by its syntax and a brief explanation.  
+
+ATTENTION: The underscore character (_) denotes a "space" in the command syntax.
+
+Note
+_Note:_The text to display to the client<CR>
+Displays text to the client.  Used to provide instructions or information to the person who needs to fill out the form.
+
+Ask
+_Ask:_Text to display above the input box<CR>
+Creates a field (with a box around it) for the user to enter information.  The text that is entered in the syntax of the command is displayed above the boxed field where the information will be typed.
+
+AskP
+_AskP:_Text to display above the input box<CR>
+Creates a field for a user to enter a password.  The text that is typed in this field shows up as bullets (so others cannot easily see what is being typed).  
+
+
+AskL
+_AskL:_<CR>
+Creates a scrolling field that will accept up to 32K of text from the user.
+
+
+Choose
+_Choose:_Title<tab>Choice 1<tab>Choice 2<CR>
+Creates a list and prompts a user to select a item from a list by clicking in a bullet.  If you want to add more choices just repeat the <tab> Choice # sequence in the command syntax.
+
+Select
+_Select:_Title:Initial value <CR>
+Creates a check box for the user to indicate a yes/no response.  If the
+"initial value" used in the syntax is 0, the box is not checked; if 1, the box is checked.
+
+**********************************************************
+FILE MANAGEMENT
+**********************************************************
+The basic files types that are supported and recognized automatically by a Gopher+ Server are
+
+1.  Text -- TEXT (item type '0') advertised as a text file
+
+2.  Images -- GIFf (item type 'g'); GIFf, JPEG, JFIF, PICT (of type 'I') advertised as a graphic
+
+3.  Sounds -- ULAW (item type 's') advertised as a sound
+
+4.  Video -- MooV, MPEG (item type ';') advertised as a movie.
+If a MooV file is in Macintosh only format (i.e., has a resource fork), its icon will appear as a BinHex item rather than a video.
+
+5.  Folders -- (item type '1') advertised as a directory.  
+
+DISPLAYING FILES
+-----------------------------------------------
+When a client connects, the server looks at the items that are in the folder designated as the "published directory" in order to prepare the listing.  First, it checks the base type of a file to determine how it should be advertised to the client.  Then, it checks to see if there is an alias file.  If there is an alias, the server then checks it to see if it refers to a different name that needs to be displayed; a different item type; a link to a different server or port number; or a location to save the results of an ASK response.  The proper information line is constructed and sent to the client.
+
+If the item type is TEXT, GIFf, JPEG, JFIF, PICT, or ULAW, then the server advertises it as a corresponding gopher type.
+
+Else, if it is MPEG, the server advertises it as a gopher movie type.
+
+Else, if it is MooV without a resource fork, the server advertises it as a gopher movie type.
+
+Else, if it is MooV with a resource fork, the server advertises it as a BinHex type.
+
+Else, the server advertises it as a BinHex type.
+
+Because the Macintosh allows a maximum of 31 characters for a filename, a dialog box will appear when attempting to alter the display name or type if the file name is 31 characters in length.  So simply change the real file name to less than 31 characters and try again.
+
+ALTERNATE VIEWS
+-----------------------------------------------
+To set up alternate views, or multiple versions of a file, you need to have a file in one of the standard formats the Gopher+ Server recognizes: TEXT, ULAW, GIFf, JPEG, JFIF, PICT, MPEG, or MooV without a resource fork.  Name the folder the same name as the file, but add a diamond character (option-shift-v) to the end of the folder's name.  
+
+When a server encounters a folder with diamond character at the end of the name, it knows that it contains multiple views of a single file.  To the client, it advertises a file, not a directory.  When the client user goes to the Gopher menu and chooses Get Alternate Views, the client then sees the alternate versions of the file and can make a selection from the list.
+
+If an alternate view file has a defined language character string at the end of its name, the default language set up for the server is overridden.  
+
+ASK FILES
+-----------------------------------------------
+When you change a text file to an item type of 'Ask Plus,' you are adding a '?' instead of a plus flag.  When a client requests an ASK item, the server treats the file differently by sending some header information and displaying an electronic form with fields to fill out rather than a plain text file.  
+
+The alias also directs the gathered information to be saved in a specific location.  It names the subsequent files the same name as the ASK file with an appended space and number.  Each response is saved as a separate text file.  
+
+
+********************************************************************
+CREDITS
+********************************************************************
+Gopher Surfer is freeware developed by Distributed Computing Services at the University of Minnesota.  Copyright 1993.  
+
+If you have questions, bugs to report, or comments you can E-mail them to the Internet Gopher team at: 
+
+       gopher@boombox.micro.umn.edu 
+
+You can subscribe to gopher-news, an electronic mailing list we keep to inform interested folks of new versions of Gopher software.  Send your subscription request to: 
+
+       gopher-news-request@boombox.micro.umn.edu
+
+Licensing Information
+---------------------------------
+Copyright © 1993-94 University of Minnesota and its licensers.  All rights reserved.
+
+UNIVERSITY OF MINNESOTA'S LICENSER(S) MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE, REGARDING THE SOFTWARE.  UNIVERSITY OF MINNESOTAÕS LICENSER(S) DOES NOT WARRANT, GUARANTEE OR MAKE ANY REPRESENTATIONS REGARDING THE USE OR THE RESULTS OF THE USE OF THE SOFTWARE IN TERMS OF ITS CORRECTNESS, ACCURACY, RELIABILITY, CURRENTNESS OR OTHERWISE.  THE ENTIRE RISK AS TO THE RESULTS AND PERFORMANCE OF THE SOFTWARE IS ASSUMED BY YOU.  THE EXCLUSION OF IMPLIED WARRANTIES IS NOT PERMITTED BY SOME JURISDICTIONS.  THE ABOVE EXCLUSION MAY NOT APPLY TO YOU.
+
+IN NO EVENT WILL UNIVERSITY OF MINNESOTA'S LICENSER(S) AND THEIR DIRECTORS, OFFICERS, EMPLOYEES OR AGENTS (COLLECTIVELY UNIVERSITY OF MINNESOTAÕS LICENSER) BE LIABLE TO YOU FOR ANY CONSEQUENTIAL, INCIDENTAL OR INDIRECT DAMAGES (INCLUDING DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, AND THE LIKE) ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE EVEN IF UNIVERSITY OF MINNESOTAÕS LICENSER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.  BECAUSE SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.

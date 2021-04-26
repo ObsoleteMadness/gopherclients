@@ -1,0 +1,128 @@
+------------------------------------------------------
+TurboGopherVR 2.1a4 (FAT Binary) -  June 3, 1995
+
+- Two version of the fat binary - the version
+  TurboGopherVR 2.1a3 Fat/881 makes direct FPU
+  calls for speed on 68K Macs and the other version
+  (TurboGopherVR 2.1a3 Fat) will run on Macs that
+  do not have FPUs. On a non-FPU Mac, you will
+  have to be patient... but at least you can see 
+  the scenes.
+
+- This version understands how to parse Gopher+
+  +3D: attributes for location, orientation, and
+  scale, so the server admin has more control
+  over how the GopherVR scene is displayed. 
+
+- Smoother mouse tracking for PPC Mac when using 
+  the mouse to move through the 3D scene. When you
+  hold the mouse button down and drag through the
+  3D scene the amount of motion is proportional to 
+  the distance you have dragged from the location 
+  where the mouse button was originally pressed.
+  This isn't too noticable on 68K Macs, but is
+  a big improvement on PowerPC Macs.
+
+- To open items in the 3D scene you now double-click
+  on the objects. Too many people objected to opening
+  items by single clicking...
+
+- This version should be significantly more stable 
+  than previous versions since it doesn't mistakenly
+  free memory that it later access ;-)
+
+- It is possible to pause in mid-flight during the
+  jump, jump in place, overview, and flight into
+  new scenes. Hold down the spacebar to pause the 
+  flight motion.
+
+- The version which makes direct 68881 FPU calls
+  checks exits gracefully when run on a non-FPU
+  Mac.
+
+------------------------------------------------------
+TurboGopherVR 2.1a3 (FAT Binary) -  May 23, 1995
+
+- No changes for the PowerPC user, but folks with
+  68K Macs with FPUs (i.e. 68040s, or 68030s with
+  68881/68882 floating point unit) can now run
+  the program. Alas, if you don't have hardware
+  floating point support, you are still out of luck.
+
+------------------------------------------------------
+TurboGopherVR 2.1a3 -  May 4, 1995
+
+- Added a feature to make it easier to see the names
+  of objects in the 3D scenes. The View names 
+  command under the VR menu lets you browse the names
+  of the GopherSpaceVR objects by using the mouse to
+  place the pointer over the objects. A popup window
+  displays the object name, type, and (if available)
+  it's abstract. This should help with the complaints
+  that the Names written on the objects are hard to
+  read at oblique angles and when far away.
+
+- Added a way to go up into the air (and get back 
+  down again) while driving around a GopherVR scene.
+  Under the VR menu there are now Up and Down
+  commands. Being up in the air is like walking
+  around on stilts, so all the old navigation
+  tools continue to work. Note that you cannot go
+  underneath the ground no matter how hard you try.
+  This is for your own safety. There are millions
+  of gopher tunnels beneath the ground and many 
+  of the gophers moving through the tunnels reach
+  ballistic speeds. It's dangerous down there.
+
+- Fixed a nasty race condition which occurred when
+  multiple directory fetches where running
+  simultaneously. This typically happens when a
+  Gopher server is slow to respond, and the user
+  clicks on the icon many times or clicks on
+  other items. This problem was responsible for many 
+  of the reports of TurbGopherVR crashing when you
+  quit from the program.
+
+- In previous versions you could jump by clicking on
+  the ground. In the hands of naive users this is a
+  dangerous command, so it was removed. You can still 
+  jump forward by with selecting the appropriate option
+  from the VR menu, or by holding down the option key
+  while clikcing on the ground or sky. Other power-user
+  features can be found by reading the Help information
+  inside TurboGopherVR. Choose the Help option under 
+  the Gopher menu.
+
+
+------------------------------------------------------
+TurboGopherVR 2.1a2 -  March 31, 1995
+
+- Fixed bug the prevented downloading Mac binaries 
+  from GopherspaceVR window
+
+- Fixed bug that caused some text files to not have 
+  proper end of line marks if the file was fetches from 
+  GopherspaceVR window
+
+- Changed text placement on 3D icons to make the text
+  bigger in most cases. This should improve readability.
+
+- Handle the case where no name appears on 3D kiosk now;
+  scenes with no name are called "empty name"
+
+- When downloading a Mac binary the status window is no 
+  longer buried underneath the Gopherspace VR window
+
+- Strip leading spaces off of item names for display in 
+  GopherspaceVR. Some server admins add spaces to the 
+  front of item names to make them line up in gopher
+  directory listings. The problem is that this 
+  squeezes the text and makes it tiny and hard to read.
+
+
+------------------------------------------------------
+TurboGopherVR 2.1a1 -  March 30, 1995
+
+the first alpha-test release...
+------------------------------------------------------
+

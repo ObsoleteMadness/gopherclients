@@ -1,0 +1,987 @@
+:READ  GOPHER23 README   A1 GOPHER 10/15/92 10:09:53                            
+                                                                                
+I guess I'm at least as bad as anyone else about documentation.                 
+There are comments in the sample files.   Work is progressing                   
+on  "real"  documentation.                                                      
+                                                                                
+This package,  including both client (GOPHERC) and server (GOPHERD)             
+is available in several forms,  any one of which contains all you need:         
+                                                                                
+        GOPHER23 CARDDUMP  --  Cornell 'CARD' format                            
+        GOPHER23 TAR       --  Rice CMS TAR format (UNIX 'tar' compatible)      
+        GOPHER23 READCARD  --  punch it to yourself and run READCARD            
+        GOPHER23 PACKAGE   --  available via LISTSERV                           
+                                                                                
+Except!  that the READCARD deck does not contain executable MODULEs.            
+                                                                                
+ ------  ------  ------  ------  ------  ------  ------  ------  ------         
+                                                                                
+Setting up the client  (user end):                                              
+                                                                                
+Really there's not much to it.  Just have GOPHER EXEC on an ACCESSed            
+disk and the rest of the package on some other,  or the same,  disk.            
+GOPHER EXEC is site-tailorable and calls GOPHERC EXEC,  the real code.          
+Here at Rice,  we put most applications on their own minidisk  (makes           
+maintenance easier,  for us anyway),  and our GOPHER EXEC checks for            
+the existence of GOPHERC EXEC and does a LINK and ACCESS of the right           
+product disk(s) iff needed.                                                     
+                                                                                
+Setting up the server:                                                          
+                                                                                
+CMS Gopher server "directories" are defined by FILELIST files.                  
+FILELISTs within FILELISTs define sub-directories.  The "root"                  
+is typically <userid> FILELIST,  where <userid> is the VM userid                
+of the server virtual machine,  usually GOPHERD.                                
+                                                                                
+Everything after the filemode  (third word, presently ignored, BTW)             
+is considered a "relative path" and concatenated onto the end of the            
+path to the directory (FILELIST) which lists the file.   This path is           
+the "name" that the client displays,  unless the name is overridden in          
+a NAMES file  (or if the file is a GOPHER (link) file).   The filename          
+(first word) must be preceeded by at least one blank space in the               
+FILELIST.   An asterisk in column one defines a comment in the FILELIST.        
+(just like a standard CMS FILELIST,  so you can in fact use a Gopher            
+FILELIST as input to CMS' FILELIST EXEC)                                        
+                                                                                
+A GOPHER file (filetype GOPHER) is a "link" to another Gopher server.           
+The contents of a GOPHER (link) file are the same as for a UNIX                 
+Gopher link file,  of the form:                                                 
+                                                                                
+        name=Rice University CMS Gopher server                                  
+        host=RICEVM1.RICE.EDU                                                   
+        port=70                                                                 
+        path=1/                                                                 
+        type=1                                                                  
+                                                                                
+A NAMES file may accompany any FILELIST file,  providing overrides              
+to the default "type" and "name" values sent to the client(s).                  
+The NAMES file is also where pipeline specifications are defined,               
+if any,  for each file.                                                         
+                                                                                
+ ------  ------  ------  ------  ------  ------  ------  ------  ------         
+                                                                                
+There is a discussion list,  VMGOPHER@PUCC.Princeton.EDU.                       
+                                                                                
+There is another CMS Gopher (both server and client),  sometimes called         
+"the Vienna Gopher",  available from Gerhard Gonter <GONTER@AWIWUW11>.          
+                                                                                
+From:    WTS@MAINE.MAINE.EDU (Wayne Smith)                                      
+                                                                                
+        The basics, documents and FILELIST menus, is fairly easy to grasp,      
+        but the relationship of a NAMES file and its entries to a FILELIST      
+        file and its entries is not at all evident to the poor soul that        
+        just wants to provide an information service without much time          
+        invested (I.e., without subscribing to VMGOPHER).                       
+                                                                                
+A:      The easiest way to start is just name some plain-text files in          
+        GOPHERD FILELIST  (which are available to your GOPHERD service          
+        machine on an accessed disk or SFS directory).   Then try some          
+        "links"  (filetype GOPHER) and sub-menus  (filetype FILELIST).          
+        Then try some overrides  (with a NAMES file for the FILELIST            
+        to be overridden).                                                      
+                                                                                
+        It has been suggested that the whole thing be consolidated:             
+        from FILELIST/GOPHER/NAMES,  just have NAMES files.   In the            
+        long run,  this will probably work.   It's almost possible now,         
+        but still,  many may find FILELISTs easier to understand.               
+                                                                                
+Q:      How to I point to another server/menu?                                  
+A:      The easiest way is with a "link" file  (filetype GOPHER).               
+        When a link file shows-up in any FILELIST,  the contents of             
+        that file are read and the information specified is presented           
+        to the client for that particular menu item.                            
+                                                                                
+Q:      How does a GOPHER file differ from a "link" in a NAMES file?            
+A:      The NAMES file is far more extensive.   With CMS GopherD,               
+        you don't use "link" files to override the characteristics              
+        of other files in the menu  (as you would with a UNIX server).          
+        With CMS GopherD,  GOPHER (link) files are exclusively used to          
+        reference other network (usually non-local) resources,  while           
+        the NAMES file may apply to files which reside on your system           
+        and/or "links" or remote services which are mearly listed locally.      
+                                                                                
+Q:      Some folks have made it seem that their GOPHER server files             
+        are free for the taking ...  is there a GOPHER feature                  
+        to pull these in?                                                       
+A:      To "receive" an item,  press PF5.   The receive function                
+        will not overwrite an existing file  (though you can still              
+        view & SAVE from XEDIT).                                                
+                                                                                
+Q:      GOPHERD should document DISKWRIT in the prolog.                         
+A:      GOPHERD uses DISKWRIT to perform the same "reaccess" trick              
+        GONE EXEC does when you reconnect.   If disks appear to have            
+        changed,  they are reACCESSed so that GopherD has the latest            
+        revision of any files on said minidisks.                                
+                                                                                
+Q:      Why are the "STANDARD" translate-table files provided?                  
+        Are these for use with the server?                                      
+A:      The default ASCII<--->EBCDIC translation in VM TCP/IP (FAL) is          
+        not 100% correct for the majority of the VM/UNIX/VMS/DOS/Mac            
+        world we live in.   STANDARD TCPXLATE and TCPXLBIN provide              
+        a 1-for-1 translation between  de-facto "network EBCDIC"                
+        (codepage 1047)  and  "extended ASCII"  (ISO 8859-1).                   
+                                                                                
+Q:      If PhoneBk and Search are available, how do we use them?                
+A:      Presently,  CMS GopherD does not support PhoneBk and Search engines.    
+        The client (GOPHERC) is happy to utilize such servers on other hosts.   
+                                                                                
+Q:      Some GOPHERs restrict access or output to some clients;  how?           
+A:      Specify an "auth" value in the NAMES file.   The tag :auth.             
+        allows for control over any object in a menu  (defined by a             
+        FILELIST and/or NAMES file),  even the menu itself.                     
+                                                                                
+Q:      Is there anything different about your RXSOCKET?                        
+A:      RXSOCKET was created by Arty Ecock.   He maintains it.                  
+        Rice doesn't have any mods to RXSOCKET,  and Gopher doesn't             
+        need any special treatment from RXSOCKET.   If you find an              
+        RXSOCKET packaged with CMS Gopher to be out-of-date,  by all            
+        means,  use the current one or get the latest from Arty.                
+                                                                                
+        If you pick-up RXSOCKET MODULE from a UNIX FTP host,  you must          
+        "deblock" it back into its CMS form (record oriented) with:             
+                                                                                
+        PIPE DISK RXSOCKET U-MODULE | DEBLOCK CMS | DISK RXSOCKET MODULE        
+                                                                                
+ ------  ------  ------  ------  ------  ------  ------  ------  ------         
+                                                                                
+Thanks to:                                                                      
+                                                                                
+Yossie Silverman,  Jim Gerland,  Arty Ecock,  Serge Goldstein,                  
+Chuck Boeheim,  Wayne Smith,  Jim Colten,  Nick LaFlamme,  ...                  
+                                                                                
+(this list continues to grow,  and some have surely been left out)              
+                                                                                
+ ------  ------  ------  ------  ------  ------  ------  ------  ------         
+                                                                                
+Files associated with CMS Gopher 2.3:                                           
+                                                                                
+      GOPHER23 FILELIST                                                         
+      GOPHER23 NAMES                                                            
+      GOPHER23 README      (this file)                                          
+                                                                                
+client:                                                                         
+      GOPHER   EXEC                                                             
+      GOPHERC  EXEC                                                             
+      GOPHERC  REXX                                                             
+      GVM      EXEC                                                             
+      GVM      DIRECT                                                           
+                                                                                
+server:                                                                         
+      GOPHERD  EXEC                                                             
+      GOPHERD  REXX                                                             
+      GOPHERDM REXX                                                             
+      GOPHERDS REXX                                                             
+      GOPHERD  DIRECT                                                           
+                                                                                
+support:                                                                        
+      EXPAND   REXX        (expands tabs in plain text files)                   
+      DROPDOTS REXX        (removes trailing . lines from plain text)           
+      PRINT    REXX        (works kinda like regular CMS PRINT)                 
+      A2E      REXX        (ASCII to EBCDIC translation)                        
+      E2A      REXX        (EBCDIC to ASCII translation)                        
+      TCPA2E   REXX        (ASCII to EBCDIC translation)                        
+      TCPE2A   REXX        (EBCDIC to ASCII translation)                        
+      STANDARD TCPXLATE    (translate table in source form)                     
+      STANDARD TCPXLBIN    (translate table in object form)                     
+                                                                                
+support modules:                                                                
+      RXSOCKET MODULE      (TCP/IP socket interface to REXX EXECs)              
+      DISKWRIT MODULE      (tells if a R/O minidisk has been changed)           
+      _REFRESH EXEC        (reACCESSes changed R/O minidisks)                   
+                                                                                
+a tool for browsing Gopher FILELISTs directly:                                  
+      GL       EXEC                                                             
+                                                                                
+help files:                                                                     
+      GOPHER   HELPCMS                                                          
+      BROWSER  HELPGOPHER                                                       
+      VIEW     HELPGOPHER                                                       
+      FIND     HELPGOPHER                                                       
+      LOOKUP   HELPGOPHER                                                       
+      SEARCH   HELPGOPHER                                                       
+      BOOKMARK HELPGOPHER                                                       
+      BOOKLIST HELPGOPHER                                                       
+                                                                                
+serving CMS HELP via Gopher:                                                    
+      GOPHERDH REXX                                                             
+      GOPHERDI REXX                                                             
+      HELP     NAMES                                                            
+      NEWS     NAMES                                                            
+                                                                                
+general information:                                                            
+      GOPHER   PROTOCOL                                                         
+      GOPHERT  GIF         "Surfin' the InterNet"                               
+      GOPHER   COPYRIGHT                                                        
+                                                                                
+:READ  GOPHER23 FILELIST A1 GOPHER 10/15/92 09:36:01                            
+*                                                                               
+* This is CMS Gopher 2.3 (v2r3), client and server.                             
+* If you have any questions,  send e-mail to TROTH@RICEVM1.RICE.EDU.            
+*                                                                               
+                                                                                
+*                                                                               
+*       Copyright 1992 Richard M. Troth.   This software was developed          
+*       with resources provided by Rice University and is intended              
+*       to serve Rice's user community.   Rice has benefitted greatly           
+*       from the free distribution of software,  therefore distribution         
+*       of unmodified copies of this material is not restricted.                
+*       You may change your own copy as needed.   Neither Rice                  
+*       University nor any of its employees or students shall be held           
+*       liable for damages resulting from the use of this software.             
+*                                                                               
+                                                                                
+*                                                                               
+* You will need RXSOCKET and CMS Pipelines.     (5785-RAC)                      
+* You will need VM TCP/IP, V2 or later.         (5735-FAL)                      
+*                                                                               
+* This file is in CMS TAR compatible format.                                    
+* (in fact it was used to create gopher23.tar)                                  
+*                                                                               
+*     filename filetype fm relative_path (may be verbose)                       
+      GOPHER23 FILELIST *  gopher23.filelist                                    
+      GOPHER23 NAMES    *                                                       
+      GOPHER23 README   *                                                       
+*                                                                               
+* client:                                                                       
+      GOPHER   EXEC     *                                                       
+      GOPHERC  EXEC     *                                                       
+      GOPHERC  REXX     *                                                       
+      GVM      EXEC     *                                                       
+      GVM      DIRECT   *                                                       
+*                                                                               
+* server:                                                                       
+      GOPHERD  EXEC     *                                                       
+      GOPHERD  REXX     *                                                       
+      GOPHERDM REXX     *                                                       
+      GOPHERDS REXX     *                                                       
+      GOPHERD  DIRECT   *                                                       
+*                                                                               
+* support:                                                                      
+      EXPAND   REXX     *                                                       
+      DROPDOTS REXX     *                                                       
+      PRINT    REXX     *                                                       
+      A2E      REXX     *                                                       
+      E2A      REXX     *                                                       
+      TCPA2E   REXX     *                                                       
+      TCPE2A   REXX     *                                                       
+      STANDARD TCPXLATE *                                                       
+      STANDARD TCPXLBIN *                                                       
+*                                                                               
+* support modules:                                                              
+      RXSOCKET MODULE   *                                                       
+      DISKWRIT MODULE   *                                                       
+      _REFRESH EXEC     *                                                       
+*                                                                               
+* a tool for browsing Gopher FILELISTs directly:                                
+      GL       EXEC     *                                                       
+*                                                                               
+* help files:                                                                   
+      GOPHER   HELPCMS  *                                                       
+      BROWSER  HELPGOPHER *                                                     
+      VIEW     HELPGOPHER *                                                     
+      FIND     HELPGOPHER *                                                     
+      LOOKUP   HELPGOPHER *                                                     
+      SEARCH   HELPGOPHER *                                                     
+      BOOKMARK HELPGOPHER *                                                     
+      BOOKLIST HELPGOPHER *                                                     
+*                                                                               
+* serving CMS HELP via Gopher:                                                  
+      GOPHERDH REXX     *                                                       
+      GOPHERDI REXX     *                                                       
+      HELP     NAMES    *                                                       
+      NEWS     NAMES    *                                                       
+*                                                                               
+* general information:                                                          
+      GOPHER   PROTOCOL *                                                       
+      GOPHERT  GIF      *  mascot                                               
+      GOPHER  COPYRIGHT *                                                       
+*                                                                               
+* If you pick-up RXSOCKET or DISKWRIT from a UNIX FTP host,  you must           
+* "de-block" them back into their CMS form (record oriented) with:              
+*                                                                               
+*   PIPE DISK RXSOCKET U-MODULE | DEBLOCK CMS | DISK RXSOCKET MODULE            
+*   PIPE DISK DISKWRIT U-MODULE | DEBLOCK CMS | DISK DISKWRIT MODULE            
+*                                                                               
+:READ  GOPHER23 NAMES    A1 GOPHER 07/24/92 13:07:15                            
+*                                                                               
+* This is CMS Gopher 2.3 (v2r3), client and server.                             
+* If you have any questions,  send e-mail to TROTH@RICEVM1.RICE.EDU.            
+*                                                                               
+* You will need RXSOCKET and CMS Pipelines.     (5785-RAC)                      
+* You will need VM TCP/IP, V2 or later.         (5735-FAL)                      
+*                                                                               
+*                                                                               
+* An override, so that users can eyeball the filelist via Gopher:               
+*                                                                               
+:nick.GOPHER23  :fn.GOPHER23  :ft.FILELIST  :type.0                             
+*                                                                               
+*      ...  where changing the type to 0 makes it *not* a sub-directory.        
+*                                                                               
+:nick.SAMPLE    :fn.SAMPLE    :ft.GOPHER    :type.0                             
+                                            :name.sample.gopher                 
+:nick.SAMPLE    :fn.SAMPLE    :ft.FILELIST  :type.0                             
+                                            :name.sample.filelist               
+*                                                                               
+:READ  GOPHER   EXEC     A1 GOPHER 10/15/92 09:37:45                            
+/*                                                                              
+ *        Name: GOPHER EXEC                                                     
+ *     Purpose: VM InterNet Gopher client "wrapper" EXEC                        
+ *      Author: Rick Troth, Rice University, I/S VM Systems Support             
+ *        Date: 1992-Mar-25, Jun-02                                             
+ *                                                                              
+ *        Note: Tailor this locally to your own OBTAIN/DROP conventions         
+ */                                                                             
+                                                                                
+Parse Arg argstring                                                             
+                                                                                
+'STATE GOPHERC EXEC *'                  /*  this is how we access     */        
+If rc ^= 0 Then 'EXEC OBTAIN GOPHER'    /*  applications on RICEVM1   */        
+                                                                                
+If argstring = "" Then argstring = "is.rice.edu"                                
+'EXEC GOPHERC' argstring                                                        
+                                                                                
+/*  'EXEC DROP GOPHER'  */                                                      
+                                                                                
+Exit rc                                                                         
+                                                                                
+:READ  GOPHERC  EXEC     A1 GOPHER 10/14/92 14:40:51                            
+/*                                                                              
+ *        Name: GOPHERC EXEC                                                    
+ *              VM TCP/IP Network GOPHER Client command                         
+ *      Author: Rick Troth, Rice University, I/S VM Systems Support             
+ *              Major thanks to Arty Ecock for the wonderful RXSOCKET.          
+ *              Thanks to Serge Goldstein for help with many things.            
+ *        Date: 1992-May-29                                                     
+ */                                                                             
+                                                                                
+/*                                                                              
+ *      Copyright 1992 Richard M. Troth.   This software was developed          
+ *      with resources provided by Rice University and is intended              
+ *      to serve Rice's user community.   Rice has benefitted greatly           
+ *      from the free distribution of software,  therefore distribution         
+ *      of unmodified copies of this material is not restricted.                
+ *      You may change your own copy as needed.   Neither Rice                  
+ *      University nor any of its employees or students shall be held           
+ *      liable for damages resulting from the use of this software.             
+ */                                                                             
+                                                                                
+/*                                                                              
+ *       Calls:                                                                 
+ *              RXSOCKET MODULE   -- for TCP/IP network services                
+ *              PIPE     MODULE   -- for various I/O functions                  
+ *                                                                              
+ *              VM TCP/IP, V2 or later (through RXSOCKET)                       
+ *                                                                              
+ *              GOPHERC  REXX     -- pipeline stages                            
+ *              PRINT    REXX                                                   
+ *              EXPAND   REXX                                                   
+ *              DROPDOTS REXX                                                   
+ *              TCPA2E   REXX                                                   
+ *              TCPE2A   REXX                                                   
+ *                                                                              
+ *   Variables:                                                                 
+ *        host  -  the InterNet name of the machine hosting Gopher              
+ *        port  -  the TCP "port" number where the server listens               
+ *        path  -  something the Gopher server can key on for retrieval         
+ *        name  -  a "topic" in displayable (layman's) form                     
+ *        char  -  an indicator as to what type of record we're seeing          
+ *        mark  -  a symbolic representation of the record descriptor           
+ *                                                                              
+ *              All of the above may be "stemmed".                              
+ *                                                                              
+ *           i  -  a counter                                                    
+ *          ki  -  the number of items in a "menu"                              
+ *          ko  -  the number of the current item (ie: an offset)               
+ *          kl  -  lines available for viewing (always = rows - 6)              
+ *      errmsg  -  current error or informative message (if any)                
+ *                                                                              
+ *    GlobalVs:                                                                 
+ *        HOST  -  the host to connect to for the root menu                     
+ *        PORT  -  the port on that host for Gopher service                     
+ *        PATH  -  the path to the initial menu                                 
+ *        NAME  -  the name of the initial menu                                 
+ *      TELNET  -  the name of the CMS TELNET command  (user preference)        
+ *      TN3270  -  the name of the command TN3270 telnet connections            
+ *      VIEWER  -  the CMS command (XEDIT or BROWSE) used to view a file        
+ *   BOOKMARK.  -  prefix for all bookmark variables,  where what               
+ *                 follows the dot is the name of the bookmark                  
+ */                                                                             
+                                                                                
+gopher = "Gopher"                                                               
+                                                                                
+progid = "CMS Gopher 2.3.3"                                                     
+                                                                                
+Address "COMMAND"                                                               
+                                                                                
+Parse Source . . . . . arg0 .                                                   
+                                                                                
+'STATE RXSOCKET MODULE *'                                                       
+If rc ^= 0 Then Do                                                              
+    Say arg0 || ": You must have RXSOCKET to run" progid                        
+    Exit rc                                                                     
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+'STATE TCPIP DATA *'                                                            
+If rc ^= 0 Then Do                                                              
+    Say arg0 || ": You must have VM TCP/IP V2 to run" progid                    
+    Exit rc                                                                     
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+'STATE PIPE MODULE *'                                                           
+If rc ^= 0 Then Do                                                              
+    Say arg0 || ": You must have CMS Pipelines to run" progid                   
+    Exit rc                                                                     
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+Parse Arg host port path "(" options                                            
+                                                                                
+If host = "" & options = "" Then 'GLOBALV SELECT GOPHER GET PATH NAME'          
+                            Else name = ""                                      
+                                                                                
+If port = "" Then 'GLOBALV SELECT GOPHER GET PORT'                              
+If port = "" Then port = 70                                                     
+                                                                                
+If host = "" Then 'GLOBALV SELECT GOPHER GET HOST'                              
+If host = "" Then host = "gopher.micro.umn.edu"                                 
+                                                                                
+/* Save current host/port in case GLOBALV fails */                              
+ohost = host; oport = port; opath = path; oname = name                          
+                                                                                
+/* Initialize some variables */                                                 
+type = ''; bookmark = ''; first  = 'FIRST'; searchterm = ''                     
+bkl  = 0 ; tube     = ''; errmsg = '';      quit = 0                            
+                                                                                
+/* process options, if any */                                                   
+Do While options ^= ""                                                          
+    Parse Var options op options                                                
+    Upper op                                                                    
+    Select  /*  op  */                                                          
+        When    Abbrev("TOPIC",op,2)    | ,                                     
+                Abbrev("PATH",op,1)     Then Do                                 
+                    path = options                                              
+                    options = ""                                                
+                    End  /*  When  ..  Do  */                                   
+        When    Abbrev("TUBE",op,2)     Then                                    
+                    Parse Var options tube options                              
+        When    Abbrev("BOOKMARK",op,1) | ,                                     
+                Abbrev("BKMARK",op,3)   Then                                    
+                    Parse Var options bookmark options                          
+        When    Abbrev("BOOKLIST",op,5) | ,                                     
+                Abbrev("BKLIST",op,3)   Then Do                                 
+                    bkl = 1                                                     
+                    first = ''                                                  
+                    End  /*  When  ..  Do  */                                   
+        Otherwise errmsg = "Unrecognized option:" op                            
+        End  /*  Select  op  */                                                 
+    End  /*  Do  While  */                                                      
+opath = path                                                                    
+                                                                                
+/* Lookup initial bookmark, if any */                                           
+If bookmark<>'' Then Do                                                         
+    obk = bookmark                                                              
+    bookmark=Translate(Translate(bookmark,'.',' '))                             
+    'GLOBALV SELECT GOPHMARK GET' bookmark                                      
+    If (rc<>0 | bookmark = '') Then Do                                          
+        Say arg0 || ": Bookmark" obk "not found"                                
+        bookmark = ''                                                           
+        'CP SLEEP 2 SEC'                                                        
+        bkl = 1                                                                 
+        first = ''                                                              
+        End                                                                     
+    Else Do                                          /* david@ufl.edu */        
+        tbookmark = value(bookmark)                                             
+        Parse Var tbookmark ,                                                   
+            . '05'x host '05'x port '05'x path '05'x ,                          
+                    name '05'x type '05'x searchterm '05'x .                    
+        End  /* Else  Do  */                         /* david@ufl.edu */        
+   If host='' Then Do                                                           
+      Say arg0 || ": Bookmark" obk "not found"                                  
+      bookmark = ''                                                             
+      'CP SLEEP 1 SEC'                                                          
+      bkl = 1                                                                   
+      first = ''                                                                
+      host = ohost; port = oport; path = opath; name = oname                    
+   End                                                                          
+   Else first = ''                                                              
+End                                                                             
+                                                                                
+If name = "" Then Do                                                            
+    Parse Value Reverse(path) With name "/" .                                   
+    name = Reverse(name)                                                        
+    End  /*  If  ..  Do  */                                                     
+If name = "" Then name = "(root menu)"                                          
+                                                                                
+/* Initialize screen variables */                                               
+Call FSINIT tube                                                                
+                                                                                
+                                                                                
+/* Now go display first menu or file or bookmark list */                        
+Select                                                                          
+    When bkl Then                                                               
+        Call BKLIST                                                             
+    When type = 'file' Then                                                     
+        Call SHOW_FILE host, port, path, name, searchterm                       
+    When path = "" Then                                                         
+        Call SHOW_MENU host, port, path, name, first, searchterm                
+    When Left(path,1) = '1' Then                                                
+        Call SHOW_MENU host, port, path, name, first, searchterm                
+    When Left(path,1) = '/' Then                                                
+        Call SHOW_MENU host, port, path, name, first, searchterm                
+    Otherwise                                                                   
+        Call SHOW_FILE host, port, path, name, searchterm                       
+    End  /*  Select  */                                                         
+                                                                                
+/* On return, type out any final errmsg */                                      
+If errmsg ^= "" Then Say arg0 || ':' errmsg                                     
+                                                                                
+                                                                                
+Exit                                                                            
+                                                                                
+                                                                                
+                                                                                
+/* ----------------------------------------------------------- SHOW_MENU        
+ */                                                                             
+SHOW_MENU:          Procedure Expose fs. quit progid errmsg                     
+                                                                                
+Parse Arg host,port,path,name,first,searchterm                                  
+                                                                                
+'PIPE (END ?) VAR PATH' ,                                                       
+    '| TCPE2A' gopher '| APPEND LITERAL "' || '0D0A'x || '" | JOIN *' ,         
+    '| E: GOPHERC' host port,                                                   
+    '| DEBLOCK LINEND 0A | DROP LAST 1' ,                                       
+    '| CHANGE /' || '0D'x || '/' || '09'x || '/' ,                              
+    '| TCPA2E' gopher '| DROPDOTS | STEM STEM.' ,                               
+    '? E: | PAD' fs.scrcols-13 '| CHOP' fs.scrcols-13,                          
+    '| SPEC "' || '00C3'x || sba(1,12) || '" 1 1-67 NEXT',                      
+    '| FULLSCR' fs.tube 'NOREAD | HOLE'                                         
+                                                                                
+/* Ooopppsss...   empty directory */                                            
+If stem.0 = 0 Then Do                                                           
+    errmsg = "No files selected or no files available."                         
+    Return                                                                      
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+/* is it a server error? */                                                     
+If stem.0 = 1 & Left(stem.1,1) = '-' Then Do                                    
+    Parse Var stem.1 . "-" errmsg '05'x .                                       
+    Return                                                                      
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+/* process data from the server into a stemmed "menu" */                        
+ki = stem.0                                                                     
+Do i = 1 to ki                                                                  
+    Parse Var stem.i 1 char.i 2 name.i '05'x path.i '05'x,                      
+                                host.i '05'x port.i '05'x .                     
+    Select  /*  char.i  */                                                      
+        When char.i = "0" Then mark.i = "<document>"                            
+        When char.i = "1" Then mark.i = "<menu>"                                
+        When char.i = "2" Then mark.i = "<phonebk>"                             
+        When char.i = "3" Then mark.i = "<error>"                               
+        When char.i = "4" Then mark.i = "<MAC>"                                 
+        When char.i = "5" Then mark.i = "<DOS>"                                 
+        When char.i = "6" Then mark.i = "<UUE>"                                 
+        When char.i = "7" Then mark.i = "<search>"                              
+        When char.i = "8" Then mark.i = "<telnet>"                              
+        When char.i = "9" Then mark.i = "<binary>"                              
+        When char.i = "s" Then mark.i = "<sound>"                               
+        When char.i = "p" Then mark.i = "<PScript>"                             
+        When char.i = "r" Then mark.i = "<r-file>"                              
+        When char.i = "i" Then mark.i = "<info>"                                
+        When char.i = "M" Then mark.i = "<MIME>"                                
+        When char.i = "T" Then mark.i = "<tn3270>"                              
+        When char.i = "-" Then mark.i = "<error>"                               
+        When char.i = "+" Then mark.i = "<dup>"                                 
+        Otherwise              mark.i = "type =" char.i                         
+        End  /*  Select  char.i  */                                             
+    name.i = Strip(name.i)      /* for cosmetics */                             
+    name.i = clean(name.i)      /* for robustness */                            
+    host.i = Strip(host.i)      /* for robustness */                            
+    port.i = Strip(port.i)      /* for robustness */                            
+    End  /*  Do  While  ..  */                                                  
+char.0 = stem.0; mark.0 = stem.0; name.0 = stem.0                               
+path.0 = stem.0; host.0 = stem.0; port.0 = stem.0                               
+                                                                                
+/* display the "menu" and process user's response */                            
+row = 4; col = 12; kl = fs.scrrows - 6; ko = 1                                  
+needle = ""     /* may be re-used within this context */                        
+                                                                                
+Do Forever                                                                      
+                                                                                
+    wscreen = sba(0,-1) || field("BLUE","PROT") || sba(0,0) || progid ,         
+                        || sba(0,fs.scrcols-Length(host)) ,                     
+                        || host || ko || "/" || ki ,                            
+                        || sba(1,11) || field("WHITE","PROT","HIGH") ,          
+                        || sba(2,(fs.scrcols-Length(name))/2) ,                 
+                        || field("RED","HIGH","PROT") || name                   
+                                                                                
+    wscreen = wscreen   || sba(fs.scrrows-2,-1) ,                               
+                        || field("WHITE","HIGH","PROT") ,                       
+                        || Left(errmsg,fs.scrcols-1) ,                          
+                        || sba(fs.scrrows-1,-1) ,                               
+                        || field("BLUE","PROT") ,                               
+                        || "F1=Help F2=View F3=Back F6=Find" ,                  
+                           "F7=Up F8=Down F9=BKset F10=BKlst F12=Quit"          
+                                                                                
+    i = 1; j = ko                                                               
+    Do While i <= kl & j <= ki                                                  
+        wscreen = wscreen || sba(i+3,-1) ,                                      
+                          || field("BLUE","PROT","HIGH")                        
+        If char.i = 'i' Then                                                    
+        wscreen = wscreen || Left(name.j,fs.scrcols-1)                          
+                        Else                                                    
+        wscreen = wscreen || Left(mark.j,11) ,                                  
+                          || field("GREEN") ,                                   
+                          || Left(name.j,fs.scrcols-13)                         
+        i = i + 1;  j = j + 1                                                   
+        End                                                                     
+                                                                                
+    If j < ki Then wscreen = wscreen || sba(1,12) || "More"                     
+                                                                                
+                                                                                
+    rscreen = write_read(wscreen || sba(row,col) || '13'x)                      
+    Parse Var rscreen 1 aid 2 offset . '11'x rscreen                            
+    offset = fix(offset)                                                        
+    row = offset % fs.scrcols; col = offset // fs.scrcols                       
+                                                                                
+                                                                                
+    /* keep the row/col values within bounds */                                 
+    If  row      <   4       Then row = 4                                       
+    If  row      >   kl + 3  Then row = kl + 3                                  
+    If  row + ko >   ki + 4  Then row = ki + 4 - ko                             
+    col = 12    /* just reset it */                                             
+                                                                                
+    i = row + ko - 4                                                            
+    errmsg = ""                                                                 
+                                                                                
+    Select /* aid */                                                            
+        When  aid = '7D'x   /* enter */ | ,                                     
+              aid = 'F2'x   /*  PF2  */ | ,                                     
+              aid = 'C2'x   /*  PF14 */ | ,                                     
+              aid = '7B'x   /*  PF11 */ | ,                                     
+              aid = '4B'x   /*  PF23 */ Then Do                                 
+            Select /* char.i */                                                 
+                When char.i = "0" Then                                          
+                   Call SHOW_FILE host.i,port.i,path.i,name.i,searchterm        
+                When char.i = "1" Then                                          
+                    Call SHOW_MENU host.i,port.i,path.i,name.i,''               
+                When char.i = "2" Then                                          
+                    Call LOOKUP host.i,port.i,path.i,name.i                     
+                When char.i = "4" Then  /* MAC */                               
+                   Call SHOW_FILE host.i,port.i,path.i,name.i,searchterm        
+                When char.i = "5" Then  /* DOS */                               
+                   Call SHOW_FILE host.i,port.i,path.i,name.i,searchterm        
+                When char.i = "6" Then  /* UUE */                               
+                   Call SHOW_FILE host.i,port.i,path.i,name.i,searchterm        
+                When char.i = "7" Then                                          
+                    Call SEARCH host.i,port.i,path.i,name.i                     
+                When char.i = "8" Then                                          
+                    Call TELNET host.i,port.i,path.i,name.i                     
+                When char.i = "T" Then                                          
+                    Call TN3270 host.i,port.i,path.i,name.i                     
+                Otherwise errmsg = "Can't display this type of file."           
+                End /* Select char.i */                                         
+            End  /*  When ..  Do  */                                            
+        When  aid = 'F4'x   /*  PF4  */ | ,                                     
+              aid = 'C4'x   /*  PF16 */ Then Call PRINT_MENU path               
+        When  aid = 'F5'x   /*  PF5  */ | ,                                     
+              aid = 'C5'x   /*  PF17 */ Then Do                                 
+            Select /* char.i */                                                 
+                When char.i = "1" Then                                          
+                    Call SHOW_MENU host.i,port.i,path.i,name.i                  
+                When char.i = "2" Then                                          
+                    Call LOOKUP host.i,port.i,path.i,name.i                     
+                When char.i = "7" Then                                          
+                    Call SEARCH host.i,port.i,path.i,name.i                     
+                When char.i = "8" Then                                          
+                    Call TELNET host.i,port.i,path.i,name.i                     
+                When char.i = "T" Then                                          
+                    Call TN3270 host.i,port.i,path.i,name.i                     
+                Otherwise                                                       
+                    Call LOAD_FILE host.i,port.i,path.i,name.i,char.i           
+                End /* Select char.i */                                         
+            End  /*  When ..  Do  */                                            
+        When  aid = 'F6'x   /*  PF6  */ | ,                                     
+              aid = 'C6'x   /*  PF18 */ Then Call FIND_IN_MENU                  
+        When  aid = 'F7'x   /*  PF7  */ | ,                                     
+              aid = 'C7'x   /*  PF19 */ Then Do                                 
+            ko = Max(ko-kl+1,1)                                                 
+            row = 4                                                             
+            End  /*  When  ..  Do  */                                           
+        When  aid = 'F8'x   /*  PF8  */ | ,                                     
+              aid = 'C8'x   /*  PF20 */ Then Do                                 
+            ko = Min(ko+kl-1,ki)                                                
+            row = 4                                                             
+            End  /*  When  ..  Do  */                                           
+        When  aid = 'F9'x   /*  PF9  */ | ,                                     
+              aid = 'C9'x Then Call BKSET host,port,path,name,'menu',           
+                                          ,searchterm                           
+        When  aid = '7A'x   /*  PF10 */ | ,                                     
+              aid = '4A'x   /*  PF22 */ Then Call BKLIST                        
+        When  aid = '6D'x   /* clear */ | ,                                     
+              aid = '6E'x   /*  PA2  */ Then Do                                 
+            row = 4; col = 12                                                   
+            End  /*  When ..  Do  */                                            
+        When  aid = 'F3'x   /*  PF3  */ | ,                                     
+              aid = 'C3'x   /*  PF15 */ Then Leave                              
+        When  aid = '7C'x   /*  PF12 */ | ,                                     
+              aid = '4C'x   /*  PF24 */ | ,                                     
+              aid = 'F0'x   /* sysrq */ | ,                                     
+              aid = '6C'x   /*  PA1  */ Then quit = 1                           
+        When  aid = 'F1'x   /*  PF1  */ | ,                                     
+              aid = 'C1'x   /*  PF13 */ Then Call HELP "BROWSER"                
+        When  aid = '00'x               Then                                    
+              errmsg = "Error reading from the terminal"                        
+        Otherwise errmsg = "Unassigned function key" c2x(aid)                   
+        End /* Select aid */                                                    
+                                                                                
+    If quit Then Leave                                                          
+                                                                                
+    End  /*  Do  Forever  */                                                    
+                                                                                
+Return                                                                          
+                                                                                
+                                                                                
+                                                                                
+/* -------------------------------------------------------------- TELNET        
+ */                                                                             
+TELNET:   Procedure Expose fs. errmsg progid                                    
+                                                                                
+If fs.tube ^= "" Then Do                                                        
+    errmsg = "Can't TELNET from this screen"                                    
+    Return                                                                      
+    End /* If .. Do */                                                          
+                                                                                
+Parse Arg host,port,path,name                                                   
+'VMFCLEAR'                                                                      
+Say progid "TELNET" host port                                                   
+Say name                                                                        
+If path ^= "" Then Do                                                           
+    Say "login with:" path                                                      
+/*  'BEEP'                                                                      
+    Say "Press CLEAR to continue ... "  */                                      
+    Say "Press ENTER to continue ... "                                          
+    Parse External                                                              
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+If port = "0" Then port = ""                                                    
+'GLOBALV SELECT GOPHER GET TELNET'                                              
+If telnet = "" Then telnet = "TELNET"                                           
+Address "CMS" telnet host port                                                  
+'VMFCLEAR'                                                                      
+                                                                                
+Return                                                                          
+                                                                                
+                                                                                
+                                                                                
+/* -------------------------------------------------------------- TN3270        
+ *  This is almost exactly the same as the  TELNET  routine,  but we            
+ *  let the user run a different program,  specified in global var              
+ *  TN3270,  if they wish.                                                      
+ */                                                                             
+TN3270:   Procedure Expose fs. errmsg progid                                    
+                                                                                
+If fs.tube ^= "" Then Do                                                        
+    errmsg = "Can't TELNET from this screen"                                    
+    Return                                                                      
+    End /* If .. Do */                                                          
+                                                                                
+Parse Arg host,port,path,name                                                   
+'VMFCLEAR'                                                                      
+Say progid "TN3270" host port                                                   
+Say name                                                                        
+If path ^= "" Then Do                                                           
+    Say "login with:" path                                                      
+    Say "Press ENTER to continue ... "                                          
+    Parse External                                                              
+    End  /*  If  ..  Do  */                                                     
+                                                                                
+If port = "0" Then port = ""                                                    
+'GLOBALV SELECT GOPHER GET TN3270'                                              
+If tn3270 = "" Then Do                                                          
+    'GLOBALV SELECT GOPHER GET TELNET'                                          
+    If telnet = "" Then telnet = "TELNET"                                       
+    tn3270 = telnet                                                             
+    End  /*  If  ..  Do  */                                                     
+Address "CMS" tn3270 host port                                                  
+'VMFCLEAR'                                                                      
+                                                                                
+Return                                                                          
+                                                                                
+                                                                                
+                                                                                
+/* -------------------------------------------------------- FIND_IN_MENU        
+ * Find a particular string within the current menu.                            
+ * This is only called from SHOW_MENU and retains that context.                 
+ * (ie: no "procedure" statement)                                               
+ */                                                                             
+FIND_IN_MENU:                                                                   
+                                                                                
+    prompt = prompt(fs.scrrows-2,22,"Enter" ,                                   
+        "search string: ",needle|| ,                                            
+        Copies('00'x,fs.scrcols-23-Length(needle))) || ,                        
+        sba(fs.scrrows-2,22) || '13'x                                           
+                                                                                
+    /* this should be WRITE instead of ERASE/WRITE */                           
+    Parse Value write_read(wscreen||prompt) With 1 aid 2 . '11'x rscreen        
+    /*                                                                          
+    Parse Value write_read(prompt,,'00'x) With 1 aid 2 . '11'x rscreen          
+     */                                                                         
+                                                                                
+    Select /* aid */                                                            
+        When  aid = '7D'x   /* enter */ Then Do                                 
+            Parse Var rscreen . 3 rscreen                                       
+            If rscreen ^= "" Then needle = Translate(Strip(rscreen))            
+            If needle = "" Then Return                                          
+            errmsg = "String not found in menu."                                
+            If ko >= ki Then Return                                             
+            Do i = ko + 1 to ki                                                 
+                If Index(Translate(name.i),needle) > 0 Then Do                  
+                    ko = i                                                      
+                    errmsg = ""                                                 
+                    Return                                                      
+                    End  /*  If  ..  Do  */                                     
+                End  /*  Do  For  */                                            
+                Return                                                          
+            End  /*  When  ..  Do  */                                           
+        When  aid = '7C'x   /*  PF12 */ | ,                                     
+              aid = '4C'x   /*  PF24 */ | ,                                     
+              aid = 'F0'x   /* sysrq */ | ,                                     
+              aid = '6C'x   /*  PA1  */ Then quit = 1                           
+        When  aid = 'F1'x   /*  PF1  */ | ,                                     
+              aid = 'C1'x   /*  PF13 */ Then Call HELP "FIND"                   
+        Otherwise nop                                                           
+        End  /*  Select  aid  */                                                
+                                                                                
+Return                                                                          
+                                                                                
+                                                                                
+                                                                                
+/* -------------------------------------------------------------- SEARCH        
+ * Issue a keyword search request to the specified server.                      
+ * This is only called from SHOW_MENU and retains that context.                 
+ * (ie: no "procedure" statement)                                               
+ */                                                                             
+SEARCH:                                                                         
+                                                                                
+Do Forever                                                                      
+                                                                                
+    prompt = prompt(fs.scrrows-2,20,"Enter" ,                                   
+            "KEY word(s): ",Copies('00'x,fs.scrcols-21)) || ,                   
+        sba(fs.scrrows-2,20) || '13'x                                           
+                                                                                
+    /* this should be WRITE instead of ERASE/WRITE */                           
+    Parse Value write_read(wscreen||prompt) With 1 aid 2 . '11'x rscreen        
+    /*                                                                          
+    Parse Value write_read(prompt,,'00'x) With 1 aid 2 . '11'x rscreen          
+     */                                                                         
+                                                                                
+    Select /* aid */                                                            
+        When  aid = '7D'x   /* enter */ Then Do                                 
+            Parse Var rscreen . 3 rscreen                                       
+/*          keywords = Translate(Strip(rscreen))                      */        
+            keywords = Strip(rscreen)                                           
+            If keywords = "" Then Leave                                         
+            /*  prepend a  path<TAB>  for WAIS servers  */                      
+            keywords = path.i || '05'x || keywords                              
+            Call SHOW_MENU host.i,port.i,keywords,name.i,'',keywords            
+            Leave                                                               
+            End  /*  When  ..  Do  */                                           
+        When  aid = 'F3'x   /*  PF3  */ | ,                                     
+              aid = 'C3'x   /*  PF15 */ Then Leave                              
+        When  aid = '7C'x   /*  PF12 */ | ,                                     
+              aid = '4C'x   /*  PF24 */ | ,                                     
+              aid = 'F0'x   /* sysrq */ | ,                                     
+              aid = '6C'x   /*  PA1  */ Then quit = 1                           
+        When  aid = 'F1'x   /*  PF1  */ | ,                                     
+              aid = 'C1'x   /*  PF13 */ Then Call HELP "SEARCH"                 
+        When  aid = '00'x               Then Do                                 
+              errmsg = "Error reading from the terminal"                        
+              Leave                                                             
+              End  /*  When  ..  Do  */                                         
+        Otherwise nop                                                           
+        End  /*  Select  aid  */                                                
+                                                                                
+    If quit Then Leave                                                          
+                                                                                
+    End  /*  Do  Forever  */                         /* david@ufl.edu */        
+                                                                                
+Return                                                                          
+                                                                                
+                                                                                
+                                                                                
+/* -------------------------------------------------------------- LOOKUP        
+ * Issue a phonebook search request to the specified server.                    
+ */                                                                             
+LOOKUP:             Procedure Expose fs. quit progid errmsg                     
+                                                                                
+If fs.tube ^= "" Then Do                                                        
+    errmsg = "Can't do phonebook lookups from this terminal."                   
+    Return                                                                      
+    End  /*  If ..  Do  */                                                      
+                                                                                
+Parse Arg host,port,,name,.                                                     
+                                                                                
+Do Forever                                                                      
+                                                                                
+    wscreen = sba(0,-1) || field("BLUE","PROT") || sba(0,0) || progid ,         
+                        || sba(0,fs.scrcols-Length(host)) || host ,             
+                        || sba(1,11) || field("WHITE","PROT","HIGH") ,          
+                        || sba(2,(fs.scrcols-Length(name))/2) ,                 
+                        || field("RED","HIGH","PROT") || name                   
+                                                                                
+    If errmsg = "" Then                                                         
+        wscreen = wscreen || sba(fs.scrrows-2,-1) ,                             
+                  || field("BLUE","PROT") || ,                                  
+         "Fill-in search field(s), use TAB to skip to the next field." ,        
+                       sba(fs.scrrows-1,-1) || field("BLUE","PROT") || ,        
+       "Press ENTER to lookup this person,    F3=Go back,    F12=Quit"          
+                   Else wscreen = wscreen || sba(fs.scrrows-1,-1) || ,          
+                        field("WHITE","HIGH","PROT") || errmsg                  
+                                                                                
+    wscreen = wscreen ||,                                                       
+        prompt(4,24,"Name:",Copies('00'x,fs.scrcols-25)) || ,                   
+        prompt(5,24,"Phone Number:",Copies('00'x,fs.scrcols-25)) || ,           
+        prompt(6,24,"E-Mail Address:",Copies('00'x,fs.scrcols-25)) || ,         
+        prompt(7,24,"Earth Address:",Copies('00'x,fs.scrcols-25))               
+                                                                                
+    rscreen = write_read(wscreen || sba(4,24) || '13'x)                         
+    Parse Var rscreen 1 aid 2 offset . '11'x rscreen                            
+    offset = fix(offset)                                                        
+    row = offset % fs.scrcols; col = offset // fs.scrcols                       
+                                                                                
+    errmsg = ""                                                                 
+    Select /* aid */                                                            
+        When  aid = '7D'x   /* enter */ Then Do                                 
+                                                                                
+            query = ""                                                          
+            Do While rscreen ^= ""                                              
+                Parse Var rscreen 1 offset 3 data '11'x rscreen                 
+                offset = fix(offset)                                            
+                row = offset % fs.scrcols; col = offset // fs.scrcols           
+                Select  /*  row  */                                             
+                    When row = 4 Then                                           
+                        query = query "name=" || data                           
+                    When row = 5 Then                                           
+                        query = query "phone=" || data                          
+                    When row = 6 Then                                           
+                        query = query "email=" || data                          
+                    When row = 7 Then                                           
+                        query = query "address=" || data                        
+                    Otherwise nop                                               
+                    End  /*  Select  row  */                                    
+                End  /*  Do  While  */                                          
+            If query ^= "" Then Do                                              
+/*              query = "query"||query||'0D25'x||"quit"               */        
+/* jrg 5/13/92 modified to return all info from query command */                
+                query = "query"||query||" return all"||'0D25'x||"quit"          
+                Call EDIT_CSO_RESPONSE host,port,query,name                     
+                /* need to deal with errors from this "child" */                
+                End  /*  If  ..  Do  */                                         
+                                                                                
+            End  /*  When  ..  Do  */                                           
+        When  aid = '6D'x   /* clear */ | ,                                     
+              aid = '6E'x   /*  PA2  */ Then nop                                
+        When  aid = 'F3'x   /*  PF3  */ | ,                                     
+              aid = 'C3'x   /*  PF15 */ Then Leave                              
+        When  aid = '7C'x   /*  PF12 */ | ,                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

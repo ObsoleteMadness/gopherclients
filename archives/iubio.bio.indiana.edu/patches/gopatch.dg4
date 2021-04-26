@@ -1,0 +1,76 @@
+Patch #:	gopatch.dg4
+Type:		operational change 
+Priority:	none
+Summary:	"User" interface change to gopherd.conf:
+Summary:	 allow/ignore whitespace in gopherd.conf 
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg4
+Application:	'cd gopher2.012; patch -p < gopatch.dg4'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherdconf.c
+
+*** gopher2.012/gopherd/gopherdconf.c	Tue Mar  8 10:56:01 1994
+--- go212dg/gopherd/gopherdconf.c	Wed Mar 30 10:42:07 1994
+***************
+*** 274,280 ****
+  {
+       FILE *gdcfile;
+       char inputline[256];
+!      char *cp, *token, *restofline;
+       boolean success;
+  
+  
+--- 274,280 ----
+  {
+       FILE *gdcfile;
+       char inputline[256];
+!      char *cp, *linestart, *token, *restofline;
+       boolean success;
+  
+  
+***************
+*** 283,301 ****
+  	  exit(-1);
+       }
+  
+!      while (fgets(inputline, sizeof inputline, gdcfile)!= NULL) {
+  	  ZapCRLF(inputline);
+  	  
+! 	  if (*inputline == '#' || *inputline == '\0') /** Ignore comments **/
+  	       continue;
+  
+! 	  cp = strchr(inputline, ':');
+  	  if (cp == NULL) {
+  	       fprintf(stderr, "Bad line '%s'\n", inputline);
+  	       exit(-1);
+  	  }
+  	  *cp = '\0';
+! 	  token      = inputline;
+  	  restofline = cp+1;
+  	  while (*restofline == ' ' || *restofline == '\t')
+  	       restofline++;
+--- 283,305 ----
+  	  exit(-1);
+       }
+  
+!      while (fgets(inputline, sizeof(inputline), gdcfile)!= NULL) {
+  	  ZapCRLF(inputline);
+  	  
+! 	  /* dgg eat whitespace! */
+! 	  linestart= inputline;
+!           for ( ; *linestart != '\0' && *linestart <= ' '; linestart++) ;
+! 
+! 	  if (*linestart == '#' || *linestart == '\0') /** Ignore comments **/
+  	       continue;
+  
+! 	  cp = strchr(linestart, ':');
+  	  if (cp == NULL) {
+  	       fprintf(stderr, "Bad line '%s'\n", inputline);
+  	       exit(-1);
+  	  }
+  	  *cp = '\0';
+! 	  token      = linestart;
+  	  restofline = cp+1;
+  	  while (*restofline == ' ' || *restofline == '\t')
+  	       restofline++;
+

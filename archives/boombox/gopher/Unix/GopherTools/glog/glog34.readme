@@ -1,0 +1,111 @@
+                          Gopher Log Analyzer 3.4
+			         Andy Wick
+			  awick@csugrad.cs.vt.edu
+
+What is it:
+   glog will allow you to analyze your gopher log files.  Hopefully
+supplying you will useful reports/plots/histograms.  It is very easy
+to use, and compile.  It should compile with any standard ansi compiler,  
+and now it should even work under VMS. (thanks Dennis R. Sherman)
+
+To compile: (assuming gcc)
+   gcc glog34.c -o glog
+
+How to use:
+ glog -h will display the options :).  But as a short example.  
+
+ To create a [H]ost report, a [D]ata report with detail of [H]osts and
+ width of 132, a plot of [T]ypes with basename of "test", and finally
+ a histogram of t[I]mes.  The log file is called gopher.log.  Don't forget, 
+ reports always go to stdout, unless the -o options is used.
+
+ % glog -rH -w 132 -rDH -f test -pT -gI < gopher.log | more
+
+Tested on:
+ Amiga DOS, SunOS 4.1.3 (purify 2.0.3), Ultrix 4.2A
+ gcc 2.3.3 and higher was used on all platforms.
+
+Features:
+ * The command line is parsed as the reports/plots/histograms are generated, 
+   so that it is possible to change options for each separately.  But options
+   are NOT reset for each new one.
+
+ * Produces reports/plots/histograms on the [D]ata, [H]osts, day of the [W]eek,
+   data [T]ypes, T[I]me, and [M]onth/date sorted (ie. sorted by date).
+
+ * Produces detailed reports on any thing you can produce a normal
+   report for.  Yes, you can even produce a host detail report of a 
+   hosts report. (But it doesn't do you much good :)
+
+ * Change the width of the reports.
+
+ * You can specify the filename for plots, it defaults to gopher. (The 
+   program appends a .dat, and and .run to the name)
+
+ * You can request as many plots as you want. (But remember to change the
+   filename or you will overwrite the last plot)
+   
+ * The program is now a lot easier to add new types of reports to, you
+   only need to add 3 short routines, a variable, and edit 2 functions.
+   (Well, maybe it is simple for me. :)
+
+ * Can select starting and ending month. (Sorry no wrap around)
+
+ * Average/Estimating can be done with the -aX option.  Possible values
+   for "X" are [E]verything (default), [Y]ear, [M]onth, [W]eek, [D]ay, and [H]our
+
+Where to get:
+- boombox
+- On the csugrad.cs.vt.edu gopher server (port 70) in
+	"Software/Gopher Log Analyzer"
+
+Changes:
+3.4  4/4/94
+   bug fixes and enhancements: 
+      Andy Wick - awick@csugrad.cs.vt.edu
+      John-David Childs - jdc@selway.umt.edu
+      Dennis R. Sherman - dennis_sherman@unc.edu
+
+   * improved coding efficiency in ProcessLine()
+   * fixed bug when identifying FTP type to include ftp-vms: and
+        ftp-nopasv: strings used by the NOPASV patch
+   * allows DEFINING whether you want to output the text users searchs for
+   * works under VMS
+   * added histogram support
+   * added averaging/estimating support
+   * added input/output files options
+   * fixed up this file and comments
+
+3.3  7/20/93
+   bug fixes:  John-David Childs - jdc@selway.umt.edu
+
+   * Fixed up main() routine so that: errors on the command line (or -h
+   as the first parameter) cause glog to print the help information and
+   abort.
+   * Fixed PrintHelp() routine so help message is more understandable.
+   * changed FILETYPE character from ' ' to 'I' (What about Image?)
+   
+3.2 7/19/93
+   Andy Wick - awick@csugrad.cs.vt.edu
+   Slight bug in ProcessLine dealing with searches fixed.
+
+3.1 7/17/93
+   Andy Wick - awick@csugrad.cs.vt.edu
+   adds some features of the old glog that were removed by mistake.
+   * Supports all known log entries now. (I was missing search, binary,
+      and someothers)
+   * Can now have a tIme report
+   * The report presentation is a little better
+   * Can specify a starting and ending month for the whole command
+   with -s <num> and -e <num>.  These are the only options that
+   are used for the WHOLE command.  The rest are from left
+   to right.
+
+TODO:
+ * Fix up plots some more
+ * Make some documentation
+ * Improve error checking
+ * Allow wrap around starting/stoping months.
+
+If anyone has any ideas or suggestions please send them to me.
+

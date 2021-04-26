@@ -1,0 +1,441 @@
++MENU:
+ +INFO: 1GopherPup home	1/IUBio-Software+Data/util/gopher/gopherpup	ftp.bio.indiana.edu	70	+
+ +menustring: ftp.bio.indiana.edu:/util/gopher/gopherpup
+ +INFO: 1DCLAP home	1/IUBio-Software+Data/util/dclap	ftp.bio.indiana.edu	70	+
+ +menustring: ftp.bio.indiana.edu:/util/dclap
+ +INFO: 1IUBio Archive		ftp.bio.indiana.edu	70	+
+ +menustring: "IUBio Biology Archive"
+ +INFO: 7GenBank sequence search	7/.indices/genbank	ftp.bio.indiana.edu	70	+
+ +MENUSTRING: "fetch a sequence entry from Genbank"
+ +INFO: 1RTF Info	1/IUBio-Software+Data/util/rtf	ftp.bio.indiana.edu	70	+
+ +MENUSTRING:  "Rich Text Format"
+ +INFO: 1RTF (Rich Text Format) utilities	1/RTF	ftp.primate.wisc.edu	70	+
+ +MENUSTRING:  ftp.primate.wisc.edu:/pub/RTF
+ +INFO: 0Go+hypertext-method	0/IUBio-Software+Data/util/gopher/go+menu-article.txt	ftp.bio.indiana.edu	70	+
+ +MENUSTRING:  "network hypertext links"
+ +comment: need a gopherpup "mail" kind (m?)
+ +INFO: mGopherPup bug report	GopherPup@Bio.Indiana.Edu	localhost	0
+ +menustring: GopherPup@Bio.Indiana.Edu
+ +INFO: 1NCBI Gopher		ncbi.nlm.nih.gov	70
+ +menustring: "National Center for Biotechnology Information"
+ +INFO: 1ncbi_tools	1/toolbox/ncbi_tools	ncbi.nlm.nih.gov	70
+ +menustring: ncbi.nlm.nih.gov:/toolbox
+ +INFO: 1Gopher help from U.Minnesota (USA)		gopher.micro.umn.edu	70	+
+ +menustring: gopher.micro.umn.edu
+ +comment: add links for "Fetch (ftp)", "TurboGopher"
+ +comment: add links for JPEG & GIF viewers, other helper apps !! need for each platform
+ +comment:
+ +comment: To read this with a standard wordprocessor, strip out the lines down thru
+ +comment: the "+DATA:" line, so that the first line starts with "{ \ rtf1"
++DATA:
+{\rtf1\mac\deff2 {\fonttbl{\f0\fswiss Chicago;}{\f1\fnil Geneva;}{\f2\froman New York;}{\f3\fswiss Geneva;}{\f4\fmodern Monaco;}{\f13\fnil Zapf Dingbats;}{\f14\fnil Bookman;}{\f15\fnil N Helvetica Narrow;}{\f16\fnil Palatino;}{\f18\fnil Zapf Chancery;}
+{\f20\froman Times;}{\f21\fswiss Helvetica;}{\f22\fmodern Courier;}{\f23\ftech Symbol;}{\f33\fnil Avant Garde;}{\f34\fnil New Century Schlbk;}{\f1792\fnil Arial Narrow;}{\f1793\fnil Book Antiqua;}{\f2000\fnil Lucida Bright;}{\f2001\fnil Arial;}
+{\f2002\fnil Helvetica Compressed;}{\f2003\fnil Bookman Old Style;}{\f2004\fnil Century Gothic;}{\f2005\fnil Courier New;}{\f2006\fnil Monotype Corsiva;}{\f2007\fnil Monotype Sorts;}{\f2008\fnil Century Schoolbook;}{\f2010\fnil Times New Roman;}
+{\f2011\fnil Wingdings;}{\f2017\fnil Garamond Narrow;}{\f2024\fnil Machine;}{\f2036\fnil Helvetica Black;}{\f2515\fnil MT Extra;}}{\colortbl\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;
+\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;}{\stylesheet{\tx576\tx1440\tx6480 \f20\fs20 \sbasedon222\snext0 Normal;}{\s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 \sbasedon0\snext1 head1;}{
+\s2\sb100\tx576\tx1440\tx6480 \f20 \sbasedon0\snext2 realnormal;}{\s3\sb100\tx576\tx1440\tx6480 \b\f20\fs48\up100 \sbasedon2\snext3 head2;}{\s4\sb100\tx576\tx1440\tx6480 \b\f21 \sbasedon2\snext4 command;}{\s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \f20 
+\sbasedon2\snext5 outdent;}}\ftnbj \sectd \linemod0\cols1 \pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {{\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Abstract\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 GopherPup is an Internet information client program, usable on the common computer systems including Macintosh, Motif/X\-
+Windows and MS-Windows.  It provides an easy-to-use, sophisticated doorway to a wide range of Internet information services.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+This program supports all Gopher+ protocol features, including dialogs for client-server interactions, simple and sophisticated multiple view handling, and display of document dates, sizes, and abstracts.  It further supports HTML/HTTP (under development) 
+and SMTP Mail protocols.\par 
+\pard \s2\sb240\tx576\tx1440\tx6480 Document formats supportted include Microsoft's Rich Text Format ({\b RTF}) for display of fully formatted documents.  These can include a {\f22 variety} of {\f21 fonts} including {\f23 symbols}, font {\fs36 sizes} and 
+{\b\i\ul styles}, {\up6 super-}scripting and {\dn4 sub-}scripting, tabbing, paragraph formatting, and pictures in both vector and bitmap forms.  Also supported are Apple Macintosh\rquote s {\b PICT} vector and bitmap graphic format, for Compuserve\rquote 
+s {\b GIF} bitmap graphic format, and for CERN\rquote s {\b HTML} network document format, as well as plain {\b text}.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+This software supports network hypertext links in documents.  This lets documents have hot-spots that connect to other documents or information services on the network.  Documents created in a wordprocessor can be directly displayed and network link
+s can be placed by simple drag-and-drop methods.  Such links may be applied to all displayable documents.  \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 The current version adds the ability to browse and search local information in the same way that network servers are used.  Searching local data with a version of WAIS software is possible.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 GopherPup is based on the earlier GopherApp program for Macintosh computers.   It is freely available at <ftp://iubio.bio.indiana.edu:/util/gopher/gopherpup/>.  It is built on a cross-platform toolkit from the Nat'
+l Center for Biotechnology Information (NCBI), and further extended by the author\rquote 
+s object-oriented application framework called DCLAP.   The source for these toolkits and the applicaiton are freely available.  The home archive location for DCLAP is at <ftp://iubio.bio.indiana.edu:/util/dclap/>.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 This release still includes several bugs and not yet suitable for extensive use.  There are application executables for Macintosh, MS-Windows, and Sun Sparcstation, and Silicon Graphics.  Other systems are supported
+ by the underlying toolkit.  Source code is available, at the DCLAP home.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Comments, bug reports and suggestions for new features may be sent to    GopherPup@Bio.Indiana.Edu\par 
+\pard \s2\qr\ri1360\sb100\tx576\tx1440\tx6480 \emdash  Don Gilbert \par 
+\pard \s2\qr\ri1360\tx576\tx1440\tx6480 Bloomington, Indiana\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+{\b\ul History\par 
+}\pard \s2\fi-720\li720\tx1440\tx6480 \par 
+\pard \s2\fi-720\li720\tx1440\tx6480 01 Feb 95, v 0.3.  Adds HTML/HTTP document support, full PICT and GIF graphics support, local gopher services, many underlying corrections and improvements.\par 
+May 94, v  0.2.  Adds RichTextFormat, including PICT pictures, and network hypertext features.\par 
+25 Jan 94, version -1 of GopherPup works on Mac and Sun\-Sparc-Motif, but still incomplete compared to GopherApp.\par 
+\pard \s2\fi-720\li720\tx1440\tx6480  9 Nov 93, v 2.1bx of GopherApp (alias GopherApp++).\par 
+25 Mar 92, v 1.0 of GopherApp released to public.\par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} GopherPup Help\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 GopherPup is an Internet information client program, usable on the common computer systems including Macintosh, Motif/X\-
+Windows and MS-Windows. It provides an easy-to-use, sophisticated doorway to a wide range of Internet information services. This software is archived for public access at <ftp://iubio.bio.indiana.edu:/util/gopher/gopherpup/>.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+Internet Gopher gives you access to a wide range of information services that are now developing on the Internet.  Gopher is something like Telnet or FTP (file transfer), but also different.  It includes some of the keyword searching features of WAIS (Wide
+ Area Information Services). There are currently several biology gopher services found around the globe. These include fast and up\-to-date keyword searches of GenBank, EMBL, PIR and other important biology databanks.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Gopher works 
+something like the Macintosh Finder, only over the Internet.  There are several file types, include Text documents, Folders with more items, Search items to search databases for keyword matches, Binhex encoded Mac programs that you can fetch, and others.
+\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 When you find folders in a Gopher window, you can double-\-click them to open a new window with more items.  [{\fs18 not in current release:}
+ There is a drop-down menu at the top of each gopher window to select parent windows.]\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 The Internet features of GopherPup let
+ you interchange ideas and data with people and computing services around the world.  If your computer is connected already to the Internet, you probably are familiar with electronic mail and some of its uses.  GopherPup includes a selection of network acc
+ess features including a feature to send e-\-mail.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 GopherPup will work properly over a telephone/modem connection to a Point to Point Protocol (PPP) or Serial Line Internet Protocol (SLIP) server.  This is how it was developed in large part.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 This program su
+pports Gopher+ methods, including ASK forms that make it possible to provide client-server dialogs for various information analysis needs, and supports multiple view formats, so that you can fetch versions of documents that most suit your computer system.
+\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Release 0.2 adds support for Microsoft's {\cf5 Rich Text Format} (RTF) for display of fully formatted documents.  These can include a {\f22 variety} of {\f21 fonts} including {\f23 symbols}, font {\fs36 sizes} and {
+\b\i\ul styles}, with {\up6 super-}scripting and {\dn4 sub-}scripting, tabbing, paragraph formatting,
+ and pictures (in both vector and bitmap forms).  Details of RTF and the source for Paul Dubois' RTF reader on which GopherPup bases its support is available at ftp.primate.wisc.edu:/pub/RTF.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Release 0.2 also adds {\cf5 network hypertext links}
+ as an extension of Gopher+ protocol.  This permits documents to have hot-spots that link to other documents or information serives on the network.  Double-clicking on items highlighted like this will connect to a network service.  This release currently s
+upports only the +M
+ENUSTRING: method of marking links in a document.  Support for +MENULINE and +MENURECT will be added later. An addition to the article linked above is the use of +QUERYSTRING, which allows a Gopher Query (type 7) item to be searched for a specified string 
+without prompting the user.  This lets document words and phrases be marked as text to search in a server database.  See the document at <ftp://iubio.bio.indiana.edu/util/dclap/docs/how-to-build-gopherpup.rtf> for discussion of the hypertext extensions to 
+Gopher+ protocol used here.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 GopherPup is based directly on the author's earlier GopherApp program for Macintosh computers.  It includes, or will include, the same feature set and general user interface.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+It is built on top of a cross-platform toolkit from the National Center for Biotechnology Information (NCBI), especially Jonathan Kans' Vibrant user-interface toolkit, which works on Macintosh, MS-Windows and X/Motif (Unix and VMS) systems.  This NCBI tool
+box is in the public domain and is archived at\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \tab ncbi.nlm.nih.gov:/toolbox\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+While it includes a lot of code for mananging bio-sequences, the basic core library and vibrant graphic user interface sections are useful to any kind of application that would want to run on the common computer platforms of today.  This toolkit is written
+ in ANSI C, and instructions are included for compiling it on Macintosh, MS Windows, various Unix and VMS systems.\par 
+On top of the NCBI toolkit, the author built a C++ application framework that is patterned after the MacApp application
+ library which the previous GopherApp was based on.  This application framework, called Don's Class Application Library (DCLAP), will be available freely to the public, for those wishing to use it for development of platform independent applications.  The 
+home archive location for DCLAP is \{ftp,gopher\} to\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \tab ftp.bio.indiana.edu:/util/dclap\par 
+Comments, bug reports and suggestions for new features may be addressed via e-mail to\par 
+\tab GopherPup@Bio.Indiana.Edu\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 With any bug reports, the author would appreciate as much d
+etail as is reasonable without putting you off from making the report.  Include description of Mac hardware, system software version.  Include copies of data if relevant.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 If you need to use land mail, send to\par 
+\pard\plain \li720\tx576\tx720\tx1440\tx2160\tx6480 \f20\fs20 Don Gilbert\par 
+Biocomputing Office, Biology Department \par 
+Indiana University, Bloomington, IN 47405\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 This GopherPup program is copyrighted 1994 by D.G. Gilbert. You may use GopherPup in any fashion, and you may re\-
+distribute it, if you make no charge for the redistribution and if you include the full distribution set (you may add features).\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Be aware that this is a personal research project of the author.  It may be longer than you want for updates.  Bug reports will get attention but generally not replies. \par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Installing\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 
+The application is distributed from the IUBio Biology Archive, at <ftp://ftp.bio.indiana.edu:/util/ gopher/gopherpup/>.   There are versions for each of various computer systems.  These generally include the application executable file and needed support f
+iles.  There will likely also be a separate folder at IUBio that includes the current selection of support files.  These may be updated independently of the application files.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Currently GopherPup requires a group of support files located in the same directory as the program.  For the program to work well, these files should be located in the folder with the application, with the names given{
+\fs20\up6 \'a0}.  This file group is\par 
+\pard\plain \fi-2060\li2420\sb100 \f20\fs20 {\f22 GopherPup\tab }{\f21 Application}{\f22 \par 
+}\pard \fi-2060\li2420 {\f22 GopherPup.start\tab }{\f21 Default startup document}{\f22 \par 
+GopherPup.go4\tab }{\f21 Default network links document ("bookmarks" or "hotlist" )\par 
+}{\f22 GopherPup.help\tab }{\f21 Help file\par 
+}{\f22 GopherPup.prefs\tab }{\f21 Preference data (installed to system specific preference areas)\par 
+}\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 {\fs20\up6 \'a0}{\fs20  MS-DOS is name-space challenged, all names are shortened to "GOPHPUP.xxx".\par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 {\fs20 \par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 System specific notes:\par 
+\pard \s2\fi-360\li360\sb100\tx576\tx1440\tx6480 \emdash \tab 
+Macintosh:  There is a version for PowerPC processor Macintoshes (-ppc) and for older 68000 processor Macs (-68K).  These require MacTCP network software from Apple Computer.  The programs are distributed as Binhex encoded, self-extracting archive. \par 
+\pard \s2\fi-360\li360\sb100\tx576\tx1440\tx6480 \emdash \tab MS-Windows:  There is a version for 16-bit Windows 
+(-16) and for 32-bit Windows (-32).  The 32-bit version is currently more stable.  These programs require WinSock TCP/IP compliant network DLL.  Programs are distributed as a Zip archive.\par 
+\emdash \tab X/Motif requirements:  Binaries are distributed in compressed tar format (.tar.Z).  The author will only be able to supply binaries for a limited number of Unix OS flavors. These currently include\par 
+\pard \s2\li720\sb100\tx576\tx1440\tx6480 {\b Sun-Sparc-Motif}, for Sun Sparcstations, is now available. There is a version that includes statically linked Motif libraries ({\ul -stat} version), and one that uses dynamic, shared runtime libraries ({\ul 
+-dyn} version) from your system.  Use the -static version if your system does not have Motif libraries, otherwise the -dynamic version is prefered.\par 
+\pard \s2\li720\sb100\tx576\tx1440\tx6480 {\b SGI-Iris}, for Silicon Graphics computers.\par 
+\pard \s2\li720\sb100\tx576\tx1440\tx6480 Other systems which are currently supported by NCBI tools and may compile this include DEC-OSF/1, DEC-VMS, IBM-AIX, HP-HPUX, and NeXT.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 The program and dclap library source are distributed in Unix .tar.Z format (best available cross-platform format).  See the {\ul utils}
+ section at ftp.bio.indiana.edu:/util/dclap for Macintosh and MS Windows tar-compress utilities..\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Documents, windows and views\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 GopherPup will display three primary kinds of windows:   Link list views, rich text views and dialog windows.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+{\b Network link list views of documents   \par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 
+The link list documents contain a list of items that will connect you to documents or folders on the Internet.  You can edit these links, or create new ones.  You can manipulate the links in these lists, by copy, paste,
+ cut, and by dragging and dropping selected items between windows.  You can save the links in these windows to a disk file, and open them for later use.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+{\b Rich text views of documents\par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 
+The rich text windows display documents of various formats, including plain text, rich text format (RTF), picture formats PICT and GIF, and hypertext markup language format (HTML).    You can select and copy portions text in the view.   These documents can
+ be printed, and saved to disk files.  These views may contain network links from the document, or ones that you add by dragging items from a link list and dropping it onto selected text or image areas in the rich view. \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Rich documents are stored in their original formats.  GopherPup cannot yet interconvert among these formats.  \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+A rich text window has control buttons at the top for tacking it, and for moving back and foreward among the documents stored in that window. The tack button when upright will prevent any new documents from displaying in that window.  The back button mo
+ves to any prior documents in that window.  The fore button moves to any documents ahead of the current on in the window\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 {\b \par 
+Dialog windows\par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 This windows present a set of controls for you to select options and control the program.  They appear in response to various menu commands, or actions on link items or rich text items. \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Data files\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 When you use GopherPup, it looks for associated data files:  GopherPup.help, which is a network rich text document ( a modified RTF),  GopherPup.go4, which is a network link 
+document containing any of your favorite network links, and GopherPup.prefs, which is checked at startup for new preference settings.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+The GopherPup.go4 file is in gopher+ protocol format, and has links to any servers you wish to see at startup.  Alternately you can save any link list window as a file and open again. Versions of GopherApp let you copy and paste items between gopher docume
+nts.  GopherPup will eventually support this feature to let you easily create documents of links to your favorite network 
+services.  You can alternatively edit a gopher document with a text editor, as long as you maintain the following format used in the Gopher transaction protocol:\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 [Type Char] [Title....] <tab> [Path] <tab>[Host.address] <tab>[Port#] <cr>\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 An optional <tab>+ after the Port will specify a Gopher+ server. This line format is repeated for any number of lines.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 The New and Open commands on the File menu will let you create new or open old Gopher files.  You should use Copy/Paste and dragging gopher items, as well a
+s the "New gopher link" and "Edit gopher link" commands to create gopher document files that suit your tastes.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+You may also edit a gopher document file as if it were a TEXT file.  When you save such a file, it is saved as a TEXT type.  GopherPup will currently let you try to open any file (on Macs, this is a bit of a user-interface boo-boo), and if it looks like a 
+gopher document format, it will display the gopher links, otherwise it will try to display it as a plain text document.  \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Menu commands{\fs18   }\par 
+\pard\plain \s3\tx576\tx1440\tx6480 \b\f20\fs48\up100 {\plain \f20\fs20 \par 
+}\pard \s3\sb100\tx576\tx1440\tx6480 {\plain \b\f20\fs48 File menu }{\plain \f20\fs48  \par 
+}\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 \par 
+New\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab This will produce a new network link list, with default links.  You can add or delete items from such a list, with copy/paste, drag and drop from other lists, or with the \ldblquote new item\rdblquote 
+ command (see below).\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Open local...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab 
+This will open a document on your computer. GopherPup will display files in the various formats that it knows, including the network link list type like GopherPup.go4, RTF, PICT, HTML, and GIF formats as well as plain TEXT files. \par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Open local gopher...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab This will open a folder o
+r directory of items on your computer, and display then as a list of link items.  You can browse thru local files and folders this way.  Gopher ASK form files are interpreted as ASK items, and WAIS index files are interpreted as query items.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Open remote...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab This will let you create a new network link to a remote server computer.  The new link will appear in an open link list document.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Close\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Close the currently active, front window.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Save, Save As\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab These will save the current active document to a disk file.
+  If the document is a gopher document, it will be saved in the format described below.  If the document is in RTF format, it will be saved in RTF format. If the document is text, it will be saved in that format.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Print\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab This will print the current document.  [currently active only for RTF and Text documents.]\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Help\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Display the help file (GopherPup.help).\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Quit\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Quit the program.\par 
+\pard\plain \s3\sb100\tx576\tx1440\tx6480 \b\f20\fs48\up100 {\plain \b\f20\fs48 \par 
+Edit menu }{\plain \f20\fs48  }{\plain \b\f20\fs20 \par 
+}\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 \par 
+Undo\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Reverse the last action, such as a cut or paste of text.  This item is not implemented yet.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Cut\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Copy the curre
+ntly selected item to a clipboard for pasting, and remove it from its current location.  This item is active for link list documents, and for dialog text items.  It is not yet active for rich text documents.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Copy\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Copy the currently selected item to a clipboard for pasting.  This item is active for link list documents, for dialog text items, and for selected text in rich text documents.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Paste\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Put the clipboard item into the currently selected position of the front document.  This item is active for link li
+st documents, for dialog text items.  It isn't quite, or will be soon, active for putting link items into rich text documents.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Clear\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Remove the currently selected item from its current location.  This item is active for link list documents, and for dialog text items.  It is not yet active for rich text documents.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 \par 
+Select all \par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Select all items or all text in the front document.  Active for dialog text items.  Soon to be active for rich text documents, and later for link list documents.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\par 
+\pard\plain \s3\sb100\tx576\tx1440\tx6480 \b\f20\fs48\up100 {\plain \b\f20\fs48 Internet menu  }{\plain \b\f20\fs20 \par 
+}\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \par 
+\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Fetch by view...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab lets you fetch a particular view form of the selected gopher item.  This is useful only with gopher+ servers.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Tack window\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab 
+Toggle whether the front window will have its document view replaced by new documents, or if a new window will be created for new documents.  When a window is tacked, a tack or push-pin icon shows in its upper-left corner.  In the tacked state, no new doc
+ument will displace the displaed document.  This window can be untacked, or tacked, by clicking this tack icon.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Extract links in netdoc\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab This creates a link list document from the network links found in a rich text document.  In the link list form, you can more easily manipulate the links, to copy, edit, rearrange or save them.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 View Links >\par 
+\pard\plain \s2\tx576\tx1440\tx6480 \f20 \par 
+\tab Sort display of gopher items by date, size, name, kind, host. \par 
+{\b \tab as Text } \emdash  a text document view of the current gopher view\par 
+\tab {\b as Link text }\emdash  current gopher view in text format that gopher servers use.\par 
+\pard\plain \s4\sb100\brdrb\brdrs \tx576\tx1440\tx6480 \b\f21 \par 
+\pard \s4\sb100\tx576\tx1440\tx6480 \par 
+Find server of link\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab This will look at the selected link in the selected link docu
+ment, and create a new link to the entry point to that link's server.  This is useful, for instance, with Veronica searches or saved links, in finding items related to a given link, and where they live in the Internet.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 New link...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Create a new link, including type of item and full path.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Edit link...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Edit the information in a selected network link.\par 
+\pard\plain \s4\sb100\brdrb\brdrs \tx576\tx1440\tx6480 \b\f21  \par 
+\pard \s4\sb100\tx576\tx1440\tx6480 \par 
+Mail to link maintainer...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Mail comments to the maintainer of a given gopher item. This is useful only with gopher+ servers.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Send mail...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Send an electronic mail message.  You must enter an address to send to, and have entered your return address in the mail preferences dialog.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Comment on this app...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab 
+Send a comment or bug report to the developer of GopherPup.  Please include details of your computer system (hardware, software, network connection), and as many specifics of the bug as feasible when reporting problems.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\par 
+\pard\plain \s3\sb100\tx576\tx1440\tx6480 \b\f20\fs48\up100 {\dn4 Options menu \par 
+}\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 \par 
+View Prefs...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 This dialog allows you to set some personal preferences for Gopher views.  Your choices for display font, size, a
+nd item information (host, port, path, ...) are selected in the Prefs window. Also default font and size for text views.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Fetch with options\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Toggle whether each item you fetch presents the view dialog to let you choose your prefered document view. \par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Autoload images\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Toggle whether images in HTML documents are automatically loaded, or wait for your double-click on the image icon to fetch and display it.  Turn this off for slow network links. \par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Edit view handlers...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Set mapping from gopher types to local file types, and to set application handlers. \par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Other prefs...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab {\b Fetch brief gopher folders}
+: Do not fetch all gopher+ information when a folder is requested from gopher+ server.  When you select individual items from a folder, then gopher+ information is fetched.  This option may be recommended for slow network links (e.g., modem phone lines).
+\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \tab {\b Auto-Fetch from folder with just one item}:  If a gopher folder has just one item, that item will be fetched without you needing to click on it, if this option is checked.\par 
+\tab {\b Edit gopher type handlers}:  See also "Edit view handlers".  Set mapping from gopher types to local file types, and to set application handlers. {\b \par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 \tab {\b Select local services folder:}  This sets the default  folder which is opened with the Open local gopher command, and some other local processing options may rely on this root folder to find other items. {\b 
+\par 
+}\pard \s2\sb100\tx576\tx1440\tx6480 \tab {\b Select local search app:}  This sets the application that will handle WAIS index data for searching.  This function is still under development.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \tab {\b Mouse clicks to fetch links}
+:  Choose double-click or single-click to activate network links.  This is a user-interface preference.  Certain methods of selecting items are not currently possible with single-click active.  E.g., to edit a link item, one must currently single-click to 
+select, then choose the Edit link menu item.  WIth single-click option to fetch links, one cannot select link items for Editing.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480  {\b \par 
+}\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Mail setup...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab The mail prefs dialog asks for your return e-mail address, and your preferred SMTP mail host.  These addresses may be similar.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Return e-mail address:  This is where another person should send mail so it will reach you.\par 
+\tab \tab Example:  bjones@department.university.edu\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 SMTP Mail host:  This is the internet address of the computer through which this program will send out mail to the rest of the world.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \tab \tab Example:  unixhost.department.university.edu\par 
+\pard\plain \s3\sb100\tx576\tx1440\tx6480 \b\f20\fs48\up100 {\fs20\dn4 \par 
+}\pard \s3\sb100\tx576\tx1440\tx6480 {\dn4 Window menu }{\plain \b\f20\fs20 \par 
+}\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Prev\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Select the previously active window.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Next\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Select the next window behind current active window.\par 
+\pard\plain \s4\sb100\tx576\tx1440\tx6480 \b\f21 Select...\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \tab Select a window from the list of application windows.\par 
+\par 
+\par 
+\par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Unique strengths of GopherPup\par 
+\pard\plain \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \f20 \bullet  Display documents in Microsoft's Rich Text Format ({\b RTF}
+) produced by popular wordprocessors.  RTF not only is a widely-available standard, it has full support for fonts, styles, embedded images, and the formatting needed to display publication-quality documents.\par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Display graphics in a standard, widely-used vector & bitmap format, Apple Macintosh's {\b PICT}
+.  This format provides high-resolution output, smaller/faster image transfer, and editable graphics, compared to GIF.\par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Display documents in the network HyperText Markup Language ({\b HTML}), and in the popular graphic bitmap format, CompuServe's {\b GIF}, as well as plain {\b text}.\par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Easily link network resources into any of these documents.  Documents created in a wordprocessor can be directly displayed and network links can be placed by simple drag-and-drop methods.  \par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  The hypertext method used is easily extensible to any new format which can be displayed.\par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Browse and search{\fs20\up6 \'a0} through information on your local computer system using the same easy methods used for remote systems.\par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Supports all Gopher+ protocol features, including \par 
+\pard \s5\fi-360\li360\tx576\tx1440\tx6480    -- User dialogs for client-server interactions.\par 
+\pard \s5\fi-360\li360\tx576\tx1440\tx6480 
+   -- Simple and sophisticated multiple view handling.  Easily choose the format you prefer, whether RTF or Postscript, GIF or JPEG, and specialty formats, depending on the service and your needs.   Add new formats readily as needed.\par 
+\pard \s5\fi-360\li360\tx576\tx1440\tx6480    -- Display of document dates, sizes, and abstracts -- no more guessing if that document is 5 years old or up-to-date, or if it is 1,000 or 1,000,000 characters long.\par 
+\pard \s5\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Supports many HTTP/HTML protocol features (more later), and supports SMTP Mail protocol.\par 
+\bullet  \ldblquote One source fits all\rdblquote   -- this program is freely available in one source version that compiles on Macintosh, Microsoft Windows and X-Windows computer systems.\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 \par 
+\pard \s2\sb100\brdrt\brdrdb \tx576\tx1440\tx6480 {\fs20 \'a0
+ Local searching is available with a helper application built from FreeWAIS-sf, which provides searching of a wide array of document and data formats, and includes simple and complex search  methods with B
+oolean operations, field values, and nested syntax.  Local search support is under development at the 0.3d release.\par 
+}\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Gopher+ Features\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 Some features of GopherPup include \par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab 
+In the main gopher item windows, you see "+" or "?" after the icon for each item.  "-" stands for gopher-, the old format.  "+" indicates the item is gopher+ format, and "?" indicates a gopher+ ASK dialog.  A "#" indicates the item is a map that can be q
+ueried by mouse positions.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab The date, size and network link information can be displayed, or hidden, for each gopher+ item.   Abstracts of items can be displayed, though servers may not includ them. \par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab ASK dialogs, which can include these simple user interface elements of edit-text lines (Ask), note-text lines (Note), edit-text blocks (AskL), checkboxes (Select), multi\-
+choice pop-up menus (Choose),  password edit lines (AskP), send file to server (ChooseF).  You will see a "?" after the icon for ASK dialogs.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab Multiple views for an item, so a server can provide the best document or image f
+ormat for many different clients and users.  See the menu item "Open link by view" to select among views in gopher+ items.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab 
+Use the Gopher Prefs dialog to edit the view mapping from Gopher+ server to Macintosh type.  For each Gopher+ server type and handler, you must specify a Macintosh type and application signature which will handle that kind of document.  This area needs a
+ better user interface and some bug squashing.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab The menu item "Mail to link maintainer" takes advantage of Gopher+'s publishing of gopher item maintainer email addresses.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab The get info item will use Gopher+'s info query to return details of an item.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab View links by size, date, name, host, etc. lets you sort a gopher directory according to those criteria.  The view as text creates a text file representation of the directory.\par 
+\emdash   "Find home of link" for Veronica users & other cases to locate root server for any given gopher link.\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab Mapping of Gopher+ types to local types, in the Preferences, has been revised to use a button to choose a Ma
+c application and menu to select from its known file types.  Ditto for Gopher- and server mapping (these latter two features are of less importance with advent of gopher+).\par 
+\pard \s2\fi-360\li360\sb100\tx1440\tx6480 \emdash \tab Support is added support for the new basic gopher- types of moo-V (;) and Note (i).\par 
+\emdash \tab Mapping file types\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 \par 
+\par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} Bugs\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 
+GopherPup version 0.3 still has many known bugs.  Rendering of any document formats is still incomplete and prone to mistakes.  It tends to crash, in different places on different OSes. The Mac versions are currently most s
+table, with XWindows and MSWin-32bit about equally stable, and 16 bit MSWin relatively unstable (the app runs into 16bit limits too frequently).\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+RTF rendering lacks advanced formatting features of headers/footers and footnotes, table, table-of-contents and indexing.  There are also mistakes in the positioning of lines, in the placement of some styling, and others.   PICT image displace makes mistak
+es in some cases where it shouldn't, and its use with polygon data is probably bad, its handling of clipping, s
+ome positioning, etc. is off.  Pixel maps and some bitmaps on XWindows are not well handled yet.  MSWindows has a bug in GIF display.  HTML rendering is likewise incomplete in various respects -- forms have not been implemented, though that may be availabl
+e soon.  \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+Gopher items that it will not yet properly handle include Telnet, CSO, and some other special purpose gopher types.  It will handle Image, Movie, Sound and similar types if they have an associated external handler program properly configured for use.
+\par 
+\pard\plain \tx576\tx1440\tx6480 \f20\fs20 \par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 {\ul General:\par 
+}\pard \fi-280\li260\tx576\tx1440\tx6480 \tab \endash  RTF and HTML, and in general the rich-text display, need much bug chasing.\par 
+\tab \endash  HTML Forms are not supported yet (a first hack at it is in progress).\par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 \tab \endash  Memory management is improved but still needs much work -- documents are not flushed & loaded as sensibly as they should be.  \par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 \par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 {\ul Mac: \par 
+}\pard \fi-280\li260\tx576\tx1440\tx6480 \tab \endash  seems generally stable, but not completely\par 
+\par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 {\ul XMotif: \par 
+}\pard \fi-280\li260\tx576\tx1440\tx6480 \tab \endash  somewhat usable, though it still tends to crash.\par 
+\tab \endash  no printing.  This lack is fundamental to the XWindow support of Vibrant/DCLAP.\par 
+\par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 {\ul MS-Windows: \par 
+}\pard \fi-280\li260\tx576\tx1440\tx6480 \tab \endash  f
+reezes fairly frequently still.  When not frozen, all the features are there.   The 32 bit version seems much more stable -- several of the 16bit version crashes are known due to the small word size of that system for memory allocations, etc.  \par 
+\pard \fi-280\li260\tx576\tx1440\tx6480 \par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} What Is Internet Gopher?\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 
+One of the impressive things I remember when I first when to a large university after growing up in a small town, was finding the library. My home town library was a place of discovery and enjoyment for me. When I went off to college, the 
+library was one of the first things I looked into.  I spent much time looking around this mountain of knowledge, and I learned much, perhaps more than from classes, in these big libraries.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 That is the way Internet Gopher strikes me \emdash 
+ like going from a small town library to a big university one.  It is a very simple but powerful way to bring information from anywhere, locally or world-wide, to your personal computer.  It is easy to set up gop
+her servers.  It is very easy to use the gopher clients.   Gopher and WAIS provide somewhat different protocols for serving information out to clients over the Internet.  Gopher is strong on browsing -{\fs20\dn4  }\-
+you can find new things just by pointing at lists.  WAIS is strong on linking together many dispersed servers to answer a given question.  \par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+Internet Gopher is an information distribution system. It combines features of electronic bulletin board services and databases, allowing you to either browse a hierarchy of information, or to search for the information you need using f
+ull-text indexes.  Gopher can also store references to wide area information services (WAIS), anonymous ftp sites, public telnet sessions, phone book servers, sounds and various graphic documents.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 
+Internet Gopher gives you access to a wide range of information services  that are now developing on the Internet.  Gopher is something like Telnet or FTP (file transfer), but also different.  It includes some of the keyword searching features of WAIS (Wid
+e Area Information Services).\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 Details about Internet Gopher, including software for clients and servers, are available at the home archive of gopher.micro.umn.edu at University of Minnesota, USA.{\fs28 \par 
+}\pard\plain \tx288\tx432\tx576\tx1440\tx6480 \f20\fs20 \par 
+\pard\plain \s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 {\fs28 {\pict\macpict\picw35\pich19 
+00c400000000001600231101a10064000c574f5244000000000016002301000a000000000016002390000600000000001500280000000000150022000000000015002200010000000000000000000000000000000000000000000000000e0ffe0000000fb001f000000ec00c0800000e81030800000e80e1f000000e809f00
+00000e80c10000000e813e0000000e81840000000e82780000000ec1080000000fb8f00000000e0700000000000000000000000000000000000000000000000000000000ff}} History\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 GopherPup \emdash  cross-platform Son of GopherApp, first released to public Jan 94.  Version -1 of GopherPup works on Mac and Sun-Sparc-Motif, but still is incomplete compared to GopherApp.\par 
+\pard \s2\fi-720\li720\tx1440\tx6480 \par 
+\pard \s2\fi-720\li720\tx1440\tx6480 Feb 95, v 0.3.  Adds HTML/HTTP document support, full PICT and GIF graphics support, local gopher services, many underlying corrections and improvements.\par 
+May 94, v  0.2.  Adds RichTextFormat, including PICT pictures, and network hypertext features.\par 
+\pard \s2\fi-720\li720\tx1440\tx6480 April 94, v 0.1 of GopherPup.  somewhat better.\par 
+March 94, v  0 of GopherPup.  A bit better.\par 
+\par 
+\pard \s2\fi-720\li720\tx1440\tx6480 25 Jan 94, version -1 of GopherPup works on Mac and Sun\-Sparc-Motif, but still incomplete compared to GopherApp.\par 
+\pard \s2\fi-720\li720\tx1440\tx6480  9 Nov 93, v 2.1bx of GopherApp (alias GopherApp++).\par 
+25 Mar 92, v 1.0 of GopherApp released to public.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 GopherApp \emdash  First public release on 25 Mar 92. Derived from biosequence analysis application SeqApp.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 SeqApp was started Sept. 1990 as
+ MacApp sequence editor/analysis platform on which analysis programs from other authors, typically command line w/ weak user interfaces, could be easily incorporated into a usable Mac interface.\par 
+9 Nov 93, v 2.1b117  Stable beta release, still has known bugs but usable.  Built on the pointer-based MacApp v 3.1a. A lot of bugs from the v 2.0b release have been chased out. User-interface changes include:\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 19 Aug 93, v 2.0b3    Major revision.  Translated from Object Pascal to C++, and from Macapp version 2 to v
+ersion 3 (the later was harder than the former).  Added many Gopher+ features, including ASK dialogs and alternate views.  Added multitreaded execution of TCP transactions (thanks Peter Speck for Nuntius's example).  There are still several known and suspe
+cted bugs in this release.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 7 Jul 92, v 1.3b52 Various bug fixes to GopherApp, including long paths (>255 char) so now all wais searches should work, mapping to mac types extended to Gopher types\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 24 Jun 92, v. 1.2b?.  Updated Gopher functions, including bac
+kground data fetching now works properly added binary file type (sound type now = binary) added item date and size display (when server permits) Gopher Diggings folder for auto-save of files revamped internal structures and operations (be on lookout for ne
+w bugs) should be noticeably faster file fetch (esp. for larger files) experimental gopher type to mac file type mapping, including user prefs, editing and launching (sys7) ReadMail (POP mail) now works and is enabled (it's not fancy though)\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 26 May 92, v1.1b31 \emdash   TCP work\par 
+12 May 92, v1.1b8 \emdash  various bug fixes\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 21 Apr 92 minor update: corrected GopherApp file creator signature, added domain name server lookup cache.\par 
+\pard \s2\sb100\tx576\tx1440\tx6480 25 Mar 92, v1.0a41+.  First release to general public. Also released SeqApp for biologists.\par 
+\par 
+}

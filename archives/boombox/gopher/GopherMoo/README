@@ -1,0 +1,14 @@
+Gopher MOO is a MUD that talks to gopherspace (acts as a gopher client).
+It's the gopher client described in
+     ftp://parcftp.xerox.com/pub/MOO/contrib/moogopher.ps
+
+and was developed by Larry Masinter <masinter@parc.xerox.com> and 
+Erik Ostrom. 
+
+This is a general MOO interface to Gopher. To use it, you need a MOO
+server. The MOO software is available from
+<ftp://parcftp.xerox.com/pub/MOO/>. 
+
+Gopher MOO was the gopher application that won the "coolest use of gopher"
+contest at the Gopher Conference in Minneapolis in the spring of 1993.
+

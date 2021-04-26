@@ -1,0 +1,332 @@
+		TurboGopher 2.0 Change History.
+
+
+TurboGopher 2.0.3
+November 1995
+
+Bugs fixed:
+1. Get via URL bug (2nd resolution failure)
+
+---------------------------------------------------------------------------
+TurboGopher 2.0.2:
+October 1995
+
+Bugs fixed:
+1. Problems with OpenTransport.
+2. Clipboard sometimes not claimed when using Get Via URL.
+
+---------------------------------------------------------------------------
+TurboGopher 2.0.1:
+July 1995
+
+Bugs fixed:
+1. Scroll position got confused when fetching very large documents.
+2. Reopening closed documents from the Finder did not work right.
+
+New features:
+1. TurboGopher will now use Open Transport if it is available.
+2. Can paste any URLs into any list window; you can use TG's
+   lists to organize non-gopher URLs as well as gopher items.
+
+---------------------------------------------------------------------------
+TurboGopher 2.0:
+March 21. 1995
+
+Bugs fixed:
+1. Opening wrong self-extracting-archive.
+2. Cancel after failed connect for downloads caused crash.
+3. You could attempt to connect to a server without specifying a hostname.
+
+---------------------------------------------------------------------------
+TurboGopher 2.0b9 bugfix release:
+February 6. 1995
+
+Bugs fixed:
+1. Bugs in failure handling.
+2. Null read on open connection failure.
+3. If download folder disappears (unmounted, trashed), downloads didn't work.
+4. By special request: Command-P added for Print menu item :-)
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b8 bugfix release:
+January 25. 1995
+
+Bugs fixed:
+1. Download folder selection bug.
+2. Memory leak in forms.
+3. Improved failure handling.
+4. Better notification from background.
+5. Menu enabling bug on close all windows
+6. Sometimes garbled text in pop-up (control-click) window
+
+New features:
+1. New option: Hide Bookmark Worksheet on startup.
+2. Popup menu for gopher type in Another Gopher and Edit Gopher Descriptor.
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b7 bugfix release:
+January 10. 1995
+
+Bugs fixed (since 2.0b6):
+1. Gopher type "I" works correctly
+2. Telnet 2.6 communication bug fixed
+3. Alternate views now have name and type displayed
+4. Binhex errorline bug...
+5. Cases of Prefs file corruption.
+
+New features:
+1. Closed windows in recent menu don't leave files open.
+2. Control-Enter/Return will bring down text files without opening a window.
+3. Uses GetURL event to communicate with Ph 1.2
+   NOTE:  You need to get the new version of Ph from the helper-apps
+   directory or by anon ftp from ftp.acns.nwu.edu. (Thanks John!)
+
+Some new CodeWarrior CW5 optimizations are turned on.... and we don't
+think they'll cause any new problems... but...
+
+Known problems:
+1. Some display/update bugs
+2. Not all strings are localizable.
+3. Thread Manager is not compatible with Mode32
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b6:
+January 1, 1995
+
+
+Bugs fixed:
+1. Remove colons from standard file dialogs.
+2. Open Preference window saved on quitting app
+3. Gopher+ server errors displayed.
+4. Telnet session prompt is now displayed.
+5. Fixed sporadic inability to find helper apps on disk.
+6. Download window does not close if helper app could not be launched.
+7. Another darn Binhex bug...
+
+New features:
+1. Can choose text file helper application.
+   So BBEdit fans can save files for BBEdit....
+2. Can choose BinHex file helper application.
+   We like StuffIt Expander....
+3. Can choose GetURL suite helper applications.
+4. Preferences dialog layout changed (made clearer).
+
+TurboGopher (and InternetLink and POPmail) now uses the standard
+GetURL event to communicate with MacWeb.  You need the latest version
+of MacWeb (1.00A3) for this.  Get it from the helper applications
+directory.
+
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b5:
+December 11, 1994
+
+Bugs fixed:
+1. Menu enabling bug.
+2. Word select bug. (Thanks JP)
+3. Download window staggered.
+4. Preferences dialog changed.
+
+New features:
+1. Option-Close closes all windows.
+2. Option-Copy copies URL.
+3. Large windows option available.
+4. New Finder icons for TurboGopher documents and directories (bookmarks).
+   (You'll probably have to rebuild your desktop to see these)
+5. Select multiple items in list windows.
+6. Cut-Copy-Paste multiple items between windows.
+7. Fetch multiple items.
+8. Memory needs slimmed down (although we left the default
+   partition the same, memory use is more economical).
+
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b4:
+December 2, 1994
+
+Bugs fixed:
+1. BinHex failed on some 68000 boxes.
+2. Prefs dialog Enter and Return key didn't do what they should do.
+3. Open document button did not work if you used Enter/Return.
+
+Stuff added:
+1. Autoscrolling in documents.
+2. Type "i" (ickk!) support.
+3. Form scrolling speeded up.
+4. Document scrolling slowed down (too fast for most folks)
+5. Recent menu speeded up.
+
+Still Most Frequently Asked Question:
+Q: How do I convert my old (1.0.x) bookmark files.
+A: If you have not already saved the TurboGopher 1.0.x bookmarks in
+   your bookmark window to a file, select the bookmark window and
+   choose 'Save As a Bookmark File' from the File menu.  Now quit from
+   the old TurboGopher and launch TurboGopher 2.0. Select Open from
+   the File menu while holding down the Option key. You will be able
+   to select your old Bookmark file and it will be converted to the
+   new format. You'll have a chance to save in the new format.
+   Remember, with TurboGopher 2.0 you can cut-copy and paste any gopher items.
+
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b3:
+November 23, 1994
+
+Bugs fixed:
+1. Menu flashing bug.  (menu update on Quit)
+2. Occasional read of NULL (heh heh)
+3. Pending connections not aborted before refreshing w/ Esc key.
+
+Stuff added:
+1. Autoconnect to Home on startup (configurable).
+2. Option-Double-click closes parent window after opening selected item.
+3. Bookmark Worksheet can be closed via Close box.
+
+Still Most Frequently Asked Question:
+Q: How do I convert my old (1.0.x) bookmark files.
+A: If you have not already saved the TurboGopher 1.0.x bookmarks in
+   your bookmark window to a file, select the bookmark window and
+   choose 'Save As a Bookmark File' from the File menu.  Now quit from
+   the old TurboGopher and launch TurboGopher 2.0. Select Open from
+   the File menu while holding down the Option key. You will be able
+   to select your old Bookmark file and it will be converted to the
+   new format. You'll have a chance to save in the new format.
+   Remember, with TurboGopher 2.0 you can cut-copy and paste any gopher items.
+
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b2:
+November 18, 1994
+
+Bugs fixed:
+1. Update bug.  (extra flashing of directories)
+2. URL resolution bug
+3. Memory use bug.
+
+Stuff added:
+1. First time find in Help window works correctly.
+2. Bookmarks can be copied for enclosing window.
+
+Most Frequently Asked Question:
+Q: How do I convert my old (1.0.x) bookmark files.
+A: If you have not already saved the TurboGopher 1.0.x bookmarks in
+   your bookmark window to a file, select the bookmark window and
+   choose 'Save As a Bookmark File' from the File menu.  Now quit from
+   the old TurboGopher and launch TurboGopher 2.0. Select Open from
+   the File menu while holding down the Option key. You will be able
+   to select your old Bookmark file and it will be converted to the
+   new format. You'll have a chance to save in the new format.
+   Remember, with TurboGopher 2.0 you can cut-copy and paste any gopher items.
+
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0b1:
+November 15, 1994
+
+This version of TurboGopher marks the start of our move toward a
+component architecture for Internet access tools  as well as adding
+PowerPC native mode support and several significant  new features.
+
+Why use this version?
+
+1.  Runs native on both 68K Macs and PowerMacs.
+2.  Displays and resolves Gopher URLs and calls helper 
+    applications to resolve URLs for other access methods.
+    Turbogopher currently can call Anarchie (for FTP), NewsWatcher 
+    (for NNTP), MacWeb (for http). TurboGopher also calls helper 
+    applications to render documents (for instance, Adobe Acrobat 
+    Exchange or Acrobat Reader for PDF documents, MacWeb for HTML
+    documents), and calls Ph to handle ph/qi directory queries.
+3.  TurboGopher can be called by other applications using get URL 
+    and Fetch URL appleevents; this is used by the InternetLink 
+    plugin in Acrobat Exchange to resolve URLs embedded in Acrobat
+    PDF documents and by NewsWatcher for resolving Gopher URLs.
+4.  Cut-Copy-Paste any gopher items which makes it easy to arrange
+    (and rearrange) your gopher bookmarks.
+5.  Document/Directory size only limited by available memory. You can
+    view documents larger then 32K without saving the document to disk.
+6.  Many other bugfixes and enhancements...
+
+Why would you not use this version?
+    You are running System 6 on your Mac.
+
+Prerequisites:
+    System 7 required.
+    Thread Manager required.
+    MacTCP required.
+    (All three come standard with System 7.5)
+    
+
+Comments and Bugs to: <gopher@boombox.micro.umn.edu>
+
+Why a component architecture for network applications?
+------------------------------------------------------
+
+Internet protocols are not static, but continue to change and
+evolve. This makes it difficult to adequately support several
+protocols in a single monolithic application. At the same time, 
+non-Internet applications (such as word processors, page 
+description languages, spreadsheets, etc.) are starting to 
+incorporate references to network resources via URLs. Expecting 
+every application to contain Internet client software 
+to resolve URLs and also track ongoing changes in network 
+protocols is unrealistic. Instead, a suite of optimized network 
+access components that can be called by other programs to resolve 
+URLs makes it easier to add internet awareness to non-Internet 
+applications (for instance Adobe PDF documents) and make it 
+easier to write and maintain Internet access components.
+
+A group of Macintosh developers including
+     Peter Lewis            (Anarchie)
+     John Norstad           (Ph, NewsWatcher)
+     Steve Dorner           (Eudora) 
+     Internet Gopher team   (Turbogopher, POPmail, InternetLink)
+     John Hardin            (MacWeb)
+have defined and implemented an AppleEvent suite that Macintosh 
+network applications can use to call each other to fetch resources 
+pointed to by IETF-standard URLs. This approach makes it easy to 
+add URL support to most any application since you can call 
+appropriate helper application to handle the URL. So... this 
+version of TurboGopher functions as a standalone gopher client and 
+it can be called by other applications that want to resolve a Gopher 
+URL. Turbogopher also calls other applications to resolve ftp, 
+nntp, and http URLs, so you don't have to settle for a monolithic
+application with mediocre support for several protocols anymore.
+
+---------------------------------------------------------------------------
+
+TurboGopher 2.0a2:
+November 2, 1994
+
+Changes
+-------
+1.  Added Editing Gopher Items.
+2.  Added Alternate views support.
+3.  Holding down the option key and selecting 'Open' will open old
+    TurboGopher Bookmark files.
+4.  'Show Gopher Descriptor & URL' and 'Get Attribute Information' has
+    been condensed into one item named: 'Get Attribute Information & URL'.
+5.  Escape key refreshing of a network directory or document has been added.
+6.  Maximum line widths can be set and are remembered.
+7.  Windows now stagger correctly.  So that the status pane in the lower
+    left portion of the window is always on the screen.
+8.  Several bugs related to pressing the shift key and clicking an item
+    to see information have been fixed.
+    a.  Window has been enlarged to always show the full info.
+    b.  Fixed case where the mouse was clicked past any of the items
+        and showed garbage.
+9.  Helper application bindings are now saved in the preferences file.
+10. Enlarged the text area in dialog for selecting helper apps.  J.P.
+11. Default bookmarks will be restored if the user deletes all bookmarks.
+12. Closed network directories or documents are purgeable.  Re-fetched when
+    opened if necessary.  Improved memory cache handling.
+
+

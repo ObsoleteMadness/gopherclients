@@ -1,0 +1,648 @@
+
+
+
+
+PC Gopher User Manual
+Version 1.23
+
+2 October 1991
+
+
+
+
+
+
+
+Microcomputer & Workstation Networks Center
+University of Minnesota
+Room 125 Shepherd Labs
+100 Union St. SE
+Minneapolis, MN 55455
+
+(C) 1991 University of Minnesota
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I. INTRODUCTION
+
+This manual describes PC Gopher, a program for IBM and compatible
+microcomputers that run the MS-DOS operating system.  PC Gopher is a
+program that lets you search for and retrieve information stored on
+other computers, known as Gopher Servers. 
+
+PC Gopher uses the standard IBM character set to emulate a graphical
+user interface (GUI).  For this reason, PC Gopher runs on a wide range
+of IBM PCs and compatibles, including the earliest PCs which contained a
+monochrome display adapter (with no graphics support).  In other words,
+PC Gopher does not require that you install a special graphics display
+adapter in your computer. 
+
+With a GUI, you interact with the program by responding to graphical
+symbols which appear on the computer screen, rather than by issuing
+single line commands (as with the MS-DOS operating system).  Because of
+its graphical user interface, PC Gopher is largely self-explanatory.  If
+you are familiar with the GUI in Microsoft Windows or the Apple
+Macintosh operating system, you will be able to run PC Gopher without
+much help from this manual.
+
+We allow free distribution of PC Gopher to all interested parties as
+long as our copyright notices are not altered or removed and you do not
+charge others for distribution of our software.
+
+Help!
+ 
+If you run into difficulties installing or using PC Gopher, or have bug
+reports, suggestions, or general comments, you can send E-mail to us at:
+
+gopher@boombox.micro.umn.edu
+
+or if you prefer paper mail:
+
+PC Gopher Project
+Microcomputer & Workstation Networks Center
+University of Minnesota
+Room 125 Shepherd Labs
+100 Union St. SE
+Minneapolis, MN 55455
+U.S.A.
+
+In all of your correspondence pertaining to PC Gopher, please indicate:
+
+ - your PC Gopher version number; and
+ - your operating system and version number (e.g., DOS 3.2).
+
+Background and Philosophy
+
+Individuals and departments at the University of Minnesota need fast
+access to large amounts of information.   Additionally, the departments
+responsible for this information need a fast and simple way to make
+information available. The Gopher Project was started in reponse to
+these needs;  PC Gopher will allow you to navigate through a universe of
+information provided by other computers, known as Gopher Servers.
+Information is distributed amongst the Gopher Servers, but you don't
+need to know anything about where the information is.  Once the PC
+Gopher program has connected to one Gopher Server, you will be able to
+browse through information on any additional Gopher Servers that the
+first server knows about.
+
+Information is presented in the form of lists of items; items can be
+files, directories (somewhat like DOS directories) containing other
+directories or files, or Index Servers, computers that will perform
+searches for files containing text that you specify.
+
+Once you've found a file containing the information you need, PC Gopher
+can display the file in a window; it can also save it as a text file for
+you to view or edit with the word processor of your choice.
+
+
+
+II.  THE PC GOPHER USER INTERFACE
+
+The Gopher Window
+
+The PC Gopher screen consists of a window which displays a moveable list
+of items for you to choose from.  The list can be scrolled up and down
+by clicking on the up or down arrows on the right side of the list, or
+by using the arrow keys.  The currently selected item is indicated by
+highlighting; the text and background colors of the currently selected
+item are colored differently than the rest of the list, or are shown in
+inverse video on a monochrome monitor.
+
+Buttons
+
+The window also contains  buttons; these are rectangular areas of the
+screen which will respond to a mouse click by performing some action.
+Buttons can also be operated by repeatedly hitting the <TAB> key until
+the button is highlighted, and then hitting the <ENTER> key.
+
+Dialog Boxes
+
+Dialog boxes allow the PC Gopher program to ask you for information.
+When you chose an Index Server (explained below) from the list of items,
+a dialog box will pop up to allow you to enter the text to search
+for.  If you type in more text than will fit within the dialog box, the
+text will scroll automatically.
+
+The Menu Bar
+
+The very top line of the computer screen contains PC Gopher's menu bar
+with three menu labels.  The menu bar looks like this:
+
+	#      File     Window       Options
+
+The menu bar is the primary mechanism you use to communicate with the PC
+Gopher program.  The menus have pull-down labels; that is, when you
+select a title in the menu bar, a list of specific commands are dropped
+down from the menu label and displayed in a list. If one of the commands
+in a pull-down menu is followed by three periods (...), choosing that
+command will display a modal dialog box (explained later in this
+section).  If a command in a pull-down menu is not followed by three
+periods, this means th at once you choose it, the indicated action will
+occur immediately.
+
+You can use either a mouse or keyboard to select commands.  To use a
+mouse, click on the desired menu title to display the pull-down menu.
+(Use only the left mouse button if your mouse has more than one button).
+Then click the desired command.  Alternatively,  you can push the mouse
+button down over a menu title and then continue to hold the mouse button
+down while you drag straight down from the menu title to the desired
+menu command, and then release the mouse button.  If you decide not to
+choose a comman d, just drag out of the boundaries of the pull-down menu
+and no action will be performed.
+
+To choose menu commands using the keyboard, first pull down the menu.
+You do this by pressing the F10 key to make the menu bar active.  (When
+the menu bar is active, one menu title is highlighted.)  If the menu
+title you want is not the one currently highlighted, use the arrow keys
+to move to the right or left along the menu bar, until the menu title
+you want to select appears highlighted. (Alternatively, you can just
+type the first letter of the menu title.)  Then press the <ENTER> key.
+This will cause t he menu to pull down.  There is a hot-key alternative
+method to pull-down a menu.  Hold the Alt key down while typing the
+letter corresponding to the first letter of the menu title you want
+(e.g., type Alt-F to pull down the File menu). The hot key to pull-down
+the # menu (called the system menu) is Alt-Spacebar.
+
+Once the menu you want is pulled down, use the up and down arrow keys to
+highlight the command you want.  Then press <ENTER> to choose (perform)
+the highlighted command.  (As a shortcut:  press the key corresponding
+to the highlighted letter of the desired command in order to choose that
+command.)
+
+Once you select a menu command, PC Gopher will do one of two things:
+carry out the command directly or display a modal dialog box.
+
+The Status Bar
+
+PC Gopher's status bar is located across the bottom line of the screen.
+The status bar looks like this:
+
+	F10 Menus     Alt-X  Exit     Alt-G  New Gopher     Alt-F3  Close
+	
+The status bar contains hot spots.  Hot spots are located wherever words
+occur in the status bar.  For example, "Alt-G  New Gopher" constitutes
+one hot spot.  Hot spots are separated from each other by more than one
+space.   When you click on a hot spot with a mouse, the indicated
+function will occur.  For example, when you click on the words "Alt-G
+New Gopher", PC Gopher will open a new Gopher window, and when you click
+on the words "Alt-X  Exit", PC Gopher will shut down and return you to
+the DOS prompt.
+
+To activate a hot spot without using a mouse, you type a hot-key.  For
+example, if you hold down the Alt key and press the F3 function key, PC
+Gopher will close the frontmost window.
+
+Menu Structure
+
+The individual items under the pull-down menus are organized as follows.
+Highlighted letters (shown here as capital letters) are used to perform
+the various short-cuts described in the previous section and elsewhere
+in this manual.
+
+Note that the key (capital) letter associated with each command is not
+always the first letter of the command).  In addition, some menu
+commands are considered to be so important that they can be activated
+with a keyboard alternative.  These keys are also shown below.
+
+The Preferences menu has a submenu listing user-configurable preferences;
+this submenu works the same way that the other menus do.
+
+	Menu Title	Commands		Keyboard Alternative
+        ----------      --------                --------------------
+
+	#             	About...
+	                Calculator
+			Calendar
+                        Puzzle
+                        DOS Shell
+
+	File
+	                New gopher			Alt-G
+			Save...				Alt-S
+			Exit				Alt-X
+
+	Window
+	                Next				F6
+			Zoom				F5
+			Move			        Ctrl-F5
+			Close				Alt-F3
+
+	Options
+	                Configure...			Alt-C
+                        Preferences >
+                              Mouse...
+                              Video Mode
+
+
+
+
+Windows
+
+PC Gopher uses windows to display information.  There are two different
+types of windows in PC Gopher; the Gopher window, which displays lists
+of items for you to choose from, and the file display window, which
+displays the contents of a file that you've chosen.
+
+Both windows can be positioned anywhere on the screen, with the mouse or
+the keyboard.  To move a window with the mouse, position the cursor over
+the title bar of the window (the horizontal line marking the window's
+top edge), then press and hold the mouse button as you move the mouse.
+To move a window with the keyboard, type Ctrl-F5, and use the arrow keys
+to move the window around the screen.
+
+In the upper left-hand corner of each window is a small rectangle
+enclosed in square brackets.  This is the window's close box; clicking
+with the mouse in the close box will close the window.  To close a
+window using the keyboard, type "Alt-F3".
+
+In addition to these capabilities, the file display window can be
+resized.  To resize the window with the mouse, position the cursor in
+the lower right-hand corner, press the mouse button, and move the mouse.
+To resize the window from the keyboard, type "Ctrl-F5" (just like you
+did to move the window), hold the shift key down, and use the arrow
+keys.
+
+
+
+III.  PC GOPHER INSTALLATION
+
+System Requirements
+
+To run PC Gopher, your microcomputer must be connected to a local area
+network (LAN).  Usually, the LAN will be connected to the campus
+backbone network, allowing you to find information located on Gopher
+servers outside of your network.
+
+For your microcomputer to operate on the LAN, you must have a network
+adapter card installed.  In order to run PC Gopher, your network adapter
+card must be one supported by the Clarkson packet drivers, mentioned in
+the "Configuring PC Gopher" section below.  (For a list of network
+adapter cards currently supported by the Clarkson Packet Drivers, please
+consult our accompanying documentation entitled "Installing the Clarkson
+Packet Drivers".)
+
+PC Gopher runs under DOS version 3.0 or greater and requires 640K of
+RAM.  PC Gopher was designed to run on a wide range of IBM PCs and
+compatibles, including the earliest PCs which contained only a
+monochrome display adapter (no graphics support).
+
+A Microsoft-compatible mouse is helpful but optional.  You must load
+mouse driver software into your system before running PC Gopher.  Note
+also that if your mouse contains more than one mouse button, you will be
+using only the left mouse button when running PC Gopher.
+
+How to Obtain PC Gopher
+
+PC Gopher software consists of two components: a Clarkson Packet driver
+(matched to your microcomputer's network adapter card), and the PC
+Gopher program (GOPHER.EXE) itself.  All the software components may be
+obtained on the internet through anonymous FTP from
+
+	boombox.micro.umn.edu
+
+(IP address 128.101.95.95).  Look in the UNIX directory called
+
+	/pub//pub/gopher/PC_client
+
+and get the latest available version.
+
+Loading PC Gopher and the Clarkson Packet Driver
+
+Each Clarkson packet driver is a specialized piece of software designed
+to talk to a specific type of network adapter card.  In order to run PC
+Gopher, the appropriate Clarkson packet driver must be loaded into RAM
+(random-access memory) each time you start up your computer.  To do
+this, you first run the appropriate packet driver by typing the packet
+driver name, followed by the necessary parameters, as described in our
+accompanying documentation entitled "Installing the Clarkson Packet
+Drivers".  If you'd like the packet driver to load automatically
+whenever you start up your computer, you can add the packet driver
+command and parameters to your AUTOEXEC.BAT file.
+
+After you have installed the appropriate packet driver, copy the
+GOPHER.EXE file into a directory on your hard disk.
+
+For example, suppose you have a 3Com 3c523 ethernet card installed in
+your PC.  The following two command lines represent an example of the
+steps needed to load the packet driver and start PC Gopher (of course,
+the specific packet driver and parameters will depend on your
+configuration).  Type each line following the command prompt and end
+each line by pressing the <ENTER> key:
+
+        3C523 0x60 0x3 0x300
+
+        GOPHER
+
+At this point you are running PC Gopher.  As long as you do not turn the
+power off to your computer, you can quit PC Gopher and do other things
+and then start PC Gopher again without re-loading the packet driver.
+Also if you already have the packet driver loaded for other programs
+like FTP, Telnet, or tn3270, you do not need to re-load the packet
+driver before running PC Gopher.
+
+Configuring PC Gopher
+
+When you use PC Gopher for the first time, you need to enter some
+configuration information specific to your microcomputer.  PC Gopher
+needs these configuration parameters in order to identify your computer
+on the network.  When you run the program for the first time, PC Gopher
+will display a "Configure" dialog box, allowing you to enter the
+required parameters. You must enter all of the parameters, according to
+the instructions which follow. (Consult your network administrator for
+the correct parameter information .)  You will not need to enter
+parameter information during subsequent PC Gopher sessions, because PC
+Gopher will save the parameters you have entered.  You can modify your
+configuration settings at any time by selecting Configure from the
+Options pull-down menu.
+
+Initially, the Gopher Server line will contain the name of our main
+Gopher Server.  Since this line is already selected, you can simply type
+in the name of the Gopher Server you wish to use.  To enter or edit  any
+of the parameters in the Configure dialog box, use the <TAB> key (or Up
+and Down arrow keys) to advance to the appropriate parameter field.
+Then enter the appropriate parameter information.
+
+Some of the parameters can be left unchanged if your network has access
+to a BOOTP server; these parameters are indicated below.  To use BOOTP,
+check the "Use BOOTP" option box (to check an option box with the keyboard,
+select it with the <TAB> key, and then hit the spacebar).  If you use BOOTP,
+you may still specify your own parameters; PC Gopher will use whatever
+addressing information you specify, and will use BOOTP to get the addresses
+that you leave set to '0.0.0.0'.
+
+A brief description of each of the parameters follows:
+
+Gopher Server
+
+This is the name of any gopher server on campus.  Your department may be
+running its own gopher server; if not, you are welcome to use our
+server, which goes by the name of :
+	
+		gopher.micro.umn.edu 
+		
+PC Gopher will attempt to connect to this server when you issue a "New
+Gopher" command.  Your explorations are not restricted to information
+stroed on this particular server, but you will always start off here.
+
+Port Number
+
+This is the port number that PC Gopher will use to attempt to connect to
+the gopher server named above.  Currently, gopher servers use port 150
+for connections.
+
+Name Server IP Address
+
+A name server converts a gopher server name into an IP address.  You
+type in the IP address of your nameserver in this parameter field (see
+your network administrator for the value to enter).  If you are using
+BOOTP, you don't need to change this field; it can remain "0.0.0.0".
+
+Gateway IP Address
+
+A gateway is a device which gives your computer access to the outside
+world, by transferring information from one type of network to another.
+If you want to use PC Gopher to look at information on servers beyond
+your local area network (LAN), you must specify the IP address of your
+gateway.  Contact your network administrator for the IP address of the
+gateway accessible to your LAN.  If you are using BOOTP, you don't need
+to change this field; it can remain "0.0.0.0".
+
+Microcomputer IP address
+
+This is the IP address of your individual microcomputer or workstation.
+See your network administrator for a microcomputer IP address
+assignment.  If you are using BOOTP, you don't need to change this
+field; it can remain "0.0.0.0".
+
+Net Mask
+
+The net mask parameter has to do with how your local area network is
+configured and connected to the backbone network at your work site.  See
+your network administrator for the correct value to enter here.  Most
+sites are configured to use a net mask of 255.255.255.0 (the default
+value).  If you are using BOOTP, you don't need to change this field; it
+can remain "0.0.0.0".
+ 
+I/O Timeout (sec)
+
+This parameter sets the maximum time allowed for PC Gopher to send and
+receive data from your computer to the gopher server.   With the default
+value of 10 seconds, PC Gopher will wait 10 seconds for a response from
+the gopher server.  If a response does not come through within 10
+seconds, PC Gopher will present an error message at the bottom of the
+Gopher window and abort the operation in progress.  If a gopher server
+is slow and frequently times out, you may need to increase this
+parameter value. 
+
+Connect Timeout (sec)
+
+When PC Gopher attempts to connect to a gopher server, this parameter
+sets the maximum number of seconds it will wait for the gopher server to
+acknowledge your attempt to connect.  The default value of 5 seconds is
+sufficient for most gopher servers.  If an error message is displayed
+stating "can't connect" when trying to connect to a server, try
+increasing this value. 
+
+Name Lookup Timeout (sec)
+
+This parameter sets the maximum number of seconds allowed for the domain
+name server on the network to convert a gopher server name to an IP
+address.  The default value is set to 5 seconds.  If an error message is
+displayed stating "can't get IP address" when trying to connect to a
+gopher server, try increasing this value.  
+
+When you have finished entering the parameters, click on the Ok button
+to have PC Gopher save your changes to the configuration.  If you decide
+you don't want your parameter changes to be saved, click on the Cancel
+button.
+
+Alternate Configuration Files
+
+You may specify the use of an alternate configuration file for PC Gopher
+to use; this will allow you to save different configurations and use the
+appropriate one.  To specify the configuration file, start PC Gopher by
+typing the FULL PATH AND FILENAME after the name of the program.  For
+example, to run PC Gopher and use the configuration file "MYFILE.CFG" in
+the directory "\HOOPY" on the C: drive, you would start the program like
+this:
+
+     GOPHER C:\HOOPY\MYFILE.CFG
+
+If you don't specify a configuration file, PC Gopher will attempt to use
+CONFIG.IGP in the current directory; if the file doesn't exist, PC Gopher
+will create it and then open the Configuration window to allow you to
+change the default settings.
+
+
+
+IV.  USING PC GOPHER
+
+Once you have configured your PC Gopher program, you are ready to start
+exploring the Gopher universe.  The Gopher universe is made up of many
+different computers, all acting as Gopher Servers.  However, you don't
+need to know anything about how these computers work, where they are, or
+how to connect to them; PC Gopher handles all of these details for you.
+
+To start exploring, choose "New Gopher" from the File menu, or click on
+the words "Alt-G  New Gopher" on the status line (if you'd rather use
+the keyboard, type Alt-G).  PC Gopher will open a Gopher window, and
+attempt to connect to the server that you specified in the configuration
+dialog box.  If the attempt is successful, PC Gopher will retrieve a
+list of the items that the server knows about.  The list will look
+something like this:
+
+	<F>	About Internet Gopher
+	<D>	Administrative Information
+	<D>	Official Daily Bulletin
+        <S>     Search Administrative Policies
+	
+Files
+
+The first character of each line indicates whether the line refers to a
+file, a subdirectory, or an index server.  In the above example, line
+one refers to a file called "About Internet Gopher"; we know that it's a
+file because the line begins with <F>.  To see the contents of this
+file, double-click (click twice in rapid succession) the mouse button
+while the cursor is anywhere on line one (or select line one with the
+arrow keys, and hit the <ENTER> key).  PC Gopher will attempt to
+retrieve the information in the file, and display it in a separate
+window.  If the file is too l arge for PC Gopher to fit into available
+memory, it will put up a dialog box requesting that you specify a
+filename and directory to save the file in.  You can then open the file
+with your favorite word processor to see the contents.
+
+You may also choose to save the information that you get back as a file,
+even if it is small enough for PC Gopher to display immediately in a
+window.  Just choose "Save As..." from the File menu, and enter the
+filename and directory that you want to save the file in.
+
+Hypertext
+
+The window that PC Gopher uses to display a file can be used to initiate
+searches for other files.  To search for files containing a particular
+word, double-click on the word in the file display window; PC Gopher
+will return a list of all of the files it could find that contain that
+word.  For example, if the file display window contained
+
+	"The Microcomputer Center has information about Macintosh,
+        IBM, and Zeos personal computers and software."
+	
+and you wanted to find files containing references to Zeos, you would
+double-click on the word Zeos.
+
+In order to use the Hypertext feature of PC Gopher, you must have a
+mouse.  If you don't have a mouse, you can still search for files
+containing text that you specify by using an Index Server (explained
+below).
+
+Directories
+
+Directories are like folders or drawers full of files or other
+directories.  When PC Gopher first connects to the Gopher Server that
+you specify as your starting point, the list that you get back shows the
+contents of the main or "root" directory of that server.  
+
+The <D> at the beginning of the second line indicates that it refers to
+a subdirectory.  This subdirectory is called "Administrative
+Information", and may contain more files, subdirectories, and Index
+Servers.  To see the contents of the subdirectory, double-click on line
+two, or use the arrow keys to select line two, and hit <ENTER>.  PC
+Gopher will request a list of the contents of the subdirectory that you
+selected, and will present this list in the Gopher window. 
+
+PC Gopher keeps track of the directories that you have traversed, and
+will allow you to "back up" to previous directories by using the "Back"
+button.  To back up, you can either click once on the "Back" button, or
+select the button with the <TAB> key, and then hit <ENTER>.  In the
+above example, if you clicked on the "Back" button, PC Gopher would
+return you to the root directory, and display the original list of
+items.
+
+Index Servers
+
+Lines that begin with a <S> indicate that the line refers to an Index
+Server.  An Index Server is a computer that can search various Gopher
+Servers for files containing text that you specify.  If you select an
+index server, a dialog box will pop up for you to enter your search
+text in.   To start the search, click on the "Search" button (or just
+hit the <ENTER> key).
+
+The index server returns a list of files that it knows about that
+contain ALL of the text that you enter in the input box.  If you entered
+the word "salmon", the Index Server would return a list of all of the
+files containing that word.  If you entered "salmon spinach", the Index
+Server will return a list of files that contain both the word "salmon"
+and the word "spinach"; it would NOT return the names of files that had
+only one of the two words.
+
+Logical Operators
+
+Logical operators are special words that allow you to set up specific
+search conditions.  The logical operators "and", "or", and "not" are
+supported by index servers.  You can use one or more of these operators
+to narrow the field of your search.
+
+For example, suppose you want to find files that contain the word
+"salmon" or the word "spinach", but not both.  You can do this by
+entering "salmon or spinach" in the input box.  You can also use the
+word "and" to explicitly indicate that the files you're searching for
+must contain both words; this allows you to set up specific search
+conditions by using multiple logical operators.  Logical operators are
+evaluated in right-to-left order; the search pattern "spinach and salmon
+or broccoli" would result in a list of files that contained the word
+spinach and the word salmon, or just the word broccoli.
+
+To exclude words from the search pattern, use "not".  The search phrase
+"macintosh not hypercard" would produce a list of files containing at
+least one reference to macintosh, and no references to hypercard.
+
+You can substitute the | character for the operator "or", and the &
+character for the operator "and".  
+
+
+V.  SUMMARY
+
+Other Gopher Software
+
+In addition to PC Gopher, Macintosh and NeXT versions of the Gopher
+program exists; PC Gopher's user interface mirrors the Macintosh Gopher
+user interface.  This consistency helps simplify training for departments
+that have mixed computing environments.
+
+Gopher Server software is also available for the Macintosh.  If you or
+your department would like to set up a Gopher Server to distribute
+information, we would be happy to help you.
+
+If you want to discuss PC Gopher, call or visit the Microcomputer
+HelpLine.  If you visit the HelpLine, our consultants can demonstrate PC
+Gopher for you.
+
+Acknowledgments
+
+We wish to extend our thanks to Borland International of  Scotts Valley,
+California, for continued excellence in the enhancement of their Turbo
+Pascal product. We developed PC Gopher using Borland's TurboVision, an
+object-oriented library of special-purpose routines provided with
+Borland's newest release of Turbo Pascal, Version 6.0.
+
+For the use of the Clarkson Packet Drivers, the foundation on which our
+network products are based, we gratefully acknowledge Clarkson College
+of Potsdam, New York.

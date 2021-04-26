@@ -1,0 +1,77 @@
+POPmail II 2.3b6                                 July 3, 1996
+
+Bug Fixes/New Features
+----------------------
+
+1.  The 'Find' command once again indicates whether the search string
+    was found.
+
+2.  Problem with decoding some AppleDouble MIME attachments fixed.
+
+3.  Not always displaying the message text (with mail sent from
+    variant mailers) fixed.
+
+4.  Fixed the problem of incorrectly stating there were attachments.
+
+5.  Timing bug that may have been causing groups to be lost was patched.
+
+6.  No longer dependent on TurboGopher for helper application prefs.
+
+    This version has a resource specifying helper apps to use.  The id
+    of the 'Str' resource is 128.  It comes set with the following.
+    'TGOFMOSSFTChNNTPPHEDMOSS'  Each 4 characters is the signature of the
+    application for a specific protocol.  The protocol ordering is:
+    Gopher, http, ftp, nntp, ph, https (http secure).  The application
+    preferences for the above are initially set to TurboGopher, Netscape,
+    Fetch, NewsWatcher, Ph, and Netscape.
+
+    Of course to customize you will need to drop POPmail on ResEdit to
+    set your helper app preferences.
+
+==========================================================
+POPMAIL II 2.3b5                                 May 30, 1996
+
+New Features
+------------
+
+1.  Mailboxes can now be compacted manually at the users option.  This
+    is done by selecting 'Compact' from the 'Mail' menu.
+
+2.  Clips out digital signature if user does not have the PEM Plugin.
+    Retains 'Start of PEM' and 'End PEM' message lines so user can see
+    what the sender signed.  But warns it is an 'Un-Validated PEM' message.
+
+3.  Available in PPC native.
+
+Bug Fixes
+---------
+
+1.  Now correctly show all the characters of a message.  Before display was
+    clipped 3 characters too short.
+
+2.  If a mailbox has been configured with a separate username/email account,
+    that mailbox will no longer use the global signature.
+
+
+==========================================================
+POPmail II 2.3b4                                  May 9, 1996
+
+New Features
+------------
+
+1.  It is now possible to configure mailboxes with separate email accounts.
+    This is done by selecting and opening a mailbox on the left side of
+    the Message Browser window.  Then select Mailbox Configure from
+    the popup Mailbox menu.  Also can set a signature for the mailbox.
+
+    All mail fetched or sent when inside this mailbox uses the identity
+    set for that specific mailbox.
+
+Bug Fixes
+---------
+
+1.  Fixed crasher that could occur first time POPmail was used.
+
+2.  Fixed 'Mark & Wendy' bug.  This occured if Wendy tried to pick up
+    and use the phone when Mark was fetching mail.  The message was
+    truncated and attempting to view it caused a crash.

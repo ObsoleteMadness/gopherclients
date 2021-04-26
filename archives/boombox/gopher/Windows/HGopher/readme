@@ -1,0 +1,53 @@
+From: m.hampson@ic.ac.uk
+Date: Tue, 31 Aug 93 12:50:49 +0100
+To: gopher-news
+Subject: HGopher Information Centre, Official Opening
+
+
+
+		   HGopher Information Centre, Official Opening
+
+I have set up a area of gopherspace for information relating to the windows
+hgopher client.
+
+You can connect to this to pick up the gopher client and  related documents.
+Also I have a growing collection of viewers and an assault course on which
+you can test out hgopher and the viewers you have set up.
+
+Currently I have the following viewers available (note some, infact most
+are Shareware).
+
+	A PostScript viewer
+	JPEG and GIF viewers
+	A CSO viewer
+	A MPEG viewer
+	A Zip file processor
+
+
+Access details are below.
+
+# Access via a gopher+ server
+Type=1
+Host=gopher.ic.ac.uk
+Port=71
+Path=1/HGopher Information
+
+Or
+
+# Access via a gopher0 server
+Type=1
+Host=gopher.ic.ac.uk
+Port=70
+Path=1/Networking/Hgopher-info
+
+
+
+Martyn
+
+
+-------------------------------------------------------------------------------
+Martyn Hampson          |    Tel:    071-589 5111 x4978
+Imperial College        |    e-mail: m.hampson@cc.ic.ac.uk
+Computer Centre 	 |    Fax:    071-823-9497 
+London SW7 2BP, ENGLAND |    
+-------------------------------------------------------------------------------

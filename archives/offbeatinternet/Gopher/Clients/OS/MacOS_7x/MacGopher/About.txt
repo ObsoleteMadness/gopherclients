@@ -1,0 +1,10 @@
+MacGopher
+(ver 0.5b14)
+Freeware
+
+
+MacGopher is a somewhat dated Gopher client that uses a two-paned 
+interface. It is neither as fast nor as feature-filled as TurboGopher, 
+but it's worth a try if, for some strange reason, you don't like 
+TurboGopher.
+

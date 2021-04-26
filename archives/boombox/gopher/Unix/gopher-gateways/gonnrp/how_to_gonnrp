@@ -1,0 +1,146 @@
+Quick start guide for the gopher-nnrp gateway
+
+Requirements: perl, sys/socket.ph, an NNTP server that supports XHDR
+If the nntp server is not INN with overview files it will be slow for
+large newsgroups as the overview files speed up xhdr quite a bit.
+
+Notes: If running chroot(), be sure to have perl and sys/socket.ph
+in the gopher space.  All the paths in the code assume you are running
+chroot.
+
+gonnrp has several options: (some of these options were ported over from
+gonntp and have not yet been tested it gonnrp.  They are marked as
+such.)
+
+-g pattern	retrieve all matching groups (as shipped gonnrp only
+                matches with the beginning of the group name)
+		Does not split up groups on '.'s like -G does.
+
+-h group	retrieve subject headers from specified group
+
+-b group	same as -h, but sets up next level to only display
+		the body of the article (no headers) (untested in
+		gonnrp)
+
+-s group keyword	same a -h but display only subject lines
+			which contain keyword. Currently limited to
+			one word, should be easily fixed for more.
+			To use this from gopher, you will have to call
+			a shell script to run gonnrp rather than exec'ing
+			gonnrp directly. I am still working on the 
+			search stuff, may change it later...
+			(untested in gonnrp)
+
+-a group # [body]	Internal option to retrieve article # from
+			group. If body is specified then only the
+			body of the article is displayed (no headers).
+			The -a option should never be used in a .link
+			file unless you never get rid of news articles.	
+
+-l group		Show last article from a group. Added by 
+			Bob Peterson (peterson@choctaw.csc.ti.com)
+			(untested in gonnrp)
+
+-G pattern		Same as -g, except prepare to thread groups
+			and split groups on '.'s into sub-menus
+
+-G			same as -G pattern but all newsgroups
+
+-T group		Same as -h except thread articles.
+
+-X art# art# 		Show authors from thread.  This option has two
+-X 0 start end		forms.  The first gives a list of articles in
+			the thread.  If the list is too long the
+			second is used.  It gives the first and last
+			articles numbers in the thread.  Any articles in
+			the range that are not part of the thread are
+			skipped.
+
+-t group		Same as -h.  I kept it to make converting from gonntp
+			easyer.  I might take it out in the future so do
+			not use it.
+
+-f filepath		Used to add a file to the begining of the menu.
+			We use it for the clari copyright warning.
+
+Setting up the files:
+
+All paths are showen relative to the gopher's chrooted root.
+
+/bin/gonnrp
+/bin/build-newsgroups-db	(run by maintainer only)
+/usr/lib/dotall			(used by build-newsgroups-db)
+/usr/lib/newsgroups.dir		(built by build-newsgroups-db)
+/usr/lib/newsgroups.pag		(built by build-newsgroups-db)
+
+cd to gopher's /bin and type this:
+
+build-newsgroups-db /usr/local/news/newsgroups ../usr/lib/dotall
+
+It will setup your newsgroups dbm database that is used to display the
+descriptions in the newsgroups menus.  The dotall file contains
+descriptions of parts of the newsgroups for the menus.  For example:
+
+A dotall entry of:
+
+news.admin.all	newsgroups for news admins
+
+The description 'newsgroups for news admins' would appear next to
+'news.admin' in gopher.  Note that this info can not be gotten from the
+newsgroups file because news.admin is not a newsgroup.  [I know I picked
+an example that used to be a newsgroup and still is one, incorrectly, at
+some sites.]
+
+Sample link files
+
+Name=comp
+Type=1
+Path=exec:-g comp:/bin/gonnrp
+Host=+
+Port=+
+
+Name=Comp.Sys groups
+Type=1
+Path=exec:-g comp.sys:/bin/gonnrp
+Host=+
+Port=+
+
+Name=Gopher News
+Type=1
+Path=exec:-h alt.gopher:/bin/gonnrp
+Host=+
+Port=+
+
+Name=No headers alt.gopher
+Type=1
+Path=exec:-b alt.gopher:/bin/gonnrp
+Host=+
+Port=+
+
+Name=Search alt.gopher subjects for keyword
+Type=7
+Path=7/bin/gonnrp.sh
+Port=+
+Host=+
+#
+Name=clari - ClariNet UPI wireservice news
+Numb=5
+Type=1
+Path=exec:-f /usr/lib/clari-copyright -G clari:/bin/gonnrp
+Host=+
+Port=+
+
+(gonnrp.sh is a shell script which execs gonnrp -s alt.gopher $*, the
+exec type will try to exec "/bin/gonnrp keyword" rather than 
+exec "/bin/gonnrp" "keyword")
+
+i.e.:
+
+#!/bin/sh
+
+/bin/gonnrp -s alt.gopher $*
+
+Comments & Suggestions to:
+
+c-adams@bgu.edu (Chad Adams)
+

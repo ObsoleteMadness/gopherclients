@@ -1,0 +1,20 @@
+VMS gopher client and server sites,
+
+At present, there is no VMS version of the gopher client or server that
+will function with UCX.  I do not have direct access to any UCX
+documentation.  To make the client and/or server run the UCX, all the
+Unix-like calls need to be modified and conditionals placed in the code
+for it to work with UCX.  UCX does not provide, at least that I can
+tell, simple interfaces to things like bind(), listen(),
+socket_read(){Multinet}, netread(){WIN/TCP}, and the like.  When time
+permits me to do so, I will modify the code to use UCX on a conditional
+basis.  All UCX calls are done with $QIO and not the simple interface.
+My best access to UCX documentation is via bookreader over a 56K line to
+a machine 160 miles away where I can only hope that the documentation is
+online when I need it.  These modifications are on the TODO list.
+
+
+Mark Van Overbeke                   Systems Software Programmer
+Computing Services                  BITNET:    Mark@UMNMOR.BITNET   (VMS)
+University of Minnesota, Morris     INTERNET:  Mark@caa.mrs.umn.edu (VMS) 
+Morris, MN   56267           (612) 589-6378    mark@cda.mrs.umn.edu (Ultrix)

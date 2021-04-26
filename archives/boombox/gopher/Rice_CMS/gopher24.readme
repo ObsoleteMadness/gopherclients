@@ -1,0 +1,452 @@
+ 
+  This is the README file for CMS Gopher 2.4.2 (ver 2 rel 4 mod 2).
+  If you have any questions,  send e-mail to  troth@rice.edu.
+  You can acquire updates and refreshes via Gopher from the
+  Gopher server at  ricevm1.rice.edu.   This is VRM 2.4.2.
+ 
+        Copyright 1993 Richard M. Troth.   This software was developed
+        with resources provided by Rice University and is intended
+        to serve Rice's user community.   Rice has benefitted greatly
+        from the free distribution of software,  therefore distribution
+        of unmodified copies of this material is not restricted.
+        You may change your own copy as needed.   Neither Rice
+        University nor any of its employees or students shall be held
+        liable for damages resulting from the use of this software.
+ 
+  You will need CMS Pipelines.                  (5785-RAC)
+  You will need VM TCP/IP, V2 or later.         (5735-FAL)
+  You will need REXX/Sockets (supplied), a part of VM TCP/IP.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+  PLEASE NOTE:   when fetching MODULEs and VMARC files from some hosts,
+  the record structure must be restored.   If you pick-up a MODULE from
+  a UNIX FTP host,  you must  "deblock" it back into its CMS form with:
+ 
+        PIPE < program MODRAW | DEBLOCK CMS | > program MODULE A
+ 
+  For VMARC files,  reblock to  Fixed 80  with:
+ 
+        PIPE < package VMARCRAW | FBLOCK 80 00 | > package VMARC A
+ 
+  and then  "vmarc unpk"  the package.
+ 
+  CMS TAR files are true binary and need not be re-blocked.
+  MODULEs and other record oriented files archived into a CMS TAR
+  file or tape will be correctly re-blocked by CMS TAR.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+  See  GOPHER24 FILELIST  for a complete list of files.
+ 
+  Experimental Forms Oriented Feedback support is included.
+ 
+  To display GIFs with CMS Gopher, get the VMGIF package from
+  LISTSERV at BLEKUL11,  or via Anonymous FTP to cc1.kuleuven.ac.be.
+ 
+  To process MIME type objects with CMS Gopher, get the MIME package.
+  (should be found wherever you acquired this Gopher package)
+ 
+  The gem  EXPAND REXX  (expand TABs) has been replaced by
+  the gem  UNTAB REXX,  which should soon be replaced by a
+  CMS Pipelines built-in function  (probably CMS 10).
+ 
+  Dieter Gobbers and Alan Flavell graciously created and supplied a
+  German message repository.   Other languages would be most welcome.
+  Rice's CMS Gopher client is the only one I know of that is mult-lingual.
+ 
+  You can (and should) get the full PH PACKAGE from
+  LISTSERV at IRISHVMA or from Nick LaFlamme, NLAFLAMM at IRISHVMA.
+ 
+  After a year and half, Gopher's HELP files are still crummy.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+Client Features:
+ 
+        o   displays GIFs via the VMGIF package from BLEKUL11 (not supplied)
+        o   processes MIME objects via optional MIME package (not supplied)
+        o   handles WAIS searched menus
+        o   interacts with CSO/qi phonebook servers via PH EXEC
+        o   can use any file viewer you desire
+        o   "next item" key
+        o   bookmarks
+        o   multi-lingual (German and American English supplied)
+ 
+Server Features:
+ 
+        o   hierarchical menus with or without SFS
+        o   both static and dynamic files (latter created by pipes)
+        o   offers WAIS-like searched menus internally with WISHLP tool
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+WELCOME
+ 
+Welcome to GopherSpace!   I hope you enjoy your trek.
+ 
+If you have any questions about the Rice CMS Gopher client or server
+or if you have trouble setting them up,  send e-mail to Rick Troth,
+troth@rice.edu,  or call me at (713) 285-5148.   There's also a dis-
+cussion list to which you may subscribe:  vmgopher@pucc.princeton.edu.
+Subscribe with a note to listserv@pucc.princeton.edu with the following:
+ 
+        subscribe vmgopher first-name last-name
+ 
+The InterNet Gopher  (or just "gopher" for short)  is a simple
+information dispersal tool based on TCP/IP.   It is an example
+of the kind of seemless interoperability that is possible
+when we (programmers) actually try to do things right.
+The Gopher protocol doesn't care about host operating systems,
+their file storage formats,  character sets,  or command suite
+(or lack thereof).
+ 
+CMS Gopher is based on three very strong tools:  the REXX language,
+Arty Ecock's REXX/Sockets,  and CMS Pipelines.   As a programmer,
+I literally went to tears over how well these three work together.
+ 
+More warm fuzzies later.   You need to unpack this thing.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+SETTING UP THE CLIENT
+ 
+Don't access an old version of Gopher in front of a new version.
+ 
+You may have some special method of giving users access to your
+CMS applications.   At Rice,  we keep most applications on their own
+minidisk,  and leave a  "wrapper" EXEC on a  public, always accessed
+minidisk  (our X disk).   The client is GOPCLI.   Whatever wrapper you
+create should  STATE GOPCLI EXEC  and access the right disk or SFS
+directory if it's missing.
+ 
+You may want to tailor a couple of environment variables.   There's no
+CONFIG file for the client in CMS Gopher 2.4.   All configuration data
+are kept in user GLOBALVs.   See  HELP GOPHER  for a list of user-settable
+Global Variables.   HOST and NAME are two that many people like to predefine.
+HOST is the TCP/IP host computer where your  "top level"  gopher server runs.
+NAME is the name of that  "top level"  menu.   (there's no way in the
+Gopher protocol for a menu to name itself;  all menus and plain files
+are named by the menu that references them,  so you need to set NAME
+or you'll get  "(root menu)",  harmless but ugly)
+ 
+Note that the client reserves the fileid  VMGOPHER DOCUMENT  for times
+when it needs to write a file to CMS disk if it can't make sense of
+the name provided by the current server.  (servers may be running on
+UNIX, VAX/VMS, MVS, PC/MS-DOS, or even Macintosh)
+ 
+PICTURES
+ 
+CMS Gopher 2.4 supports the gopher "image" (type I) files.   Presently,
+the only format displayable is GIF files using the VMGIF package available
+from the fine folks at BLEKUL11:
+ 
+        tell listserv at blekul11 get vmgif package
+ 
+MIME objects
+ 
+CMS Gopher 2.4 supports MIME type items.   All you need is for the
+MIME package  (found wherever you picked-up this Gopher package)
+to be available on an accessed minidisk or directory.
+If  MIMEREAD REXX  is missing,  Gopher presents MIME objects as text.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+SETTING UP THE SERVER
+ 
+The server is GOPSRV.   Setting it up is trickier than setting up the
+client because you not only have to create a virtual machine for it to
+run in,  but you also have to take the time to structure your gopher data
+nicely.   See  GOPHERD DIRECT  for an example CP Directory entry.
+You can have multiple gopher servers.
+ 
+If you don't have SFS,  you can create a hierarchical set of menus using
+FILELISTs.   Some VMers insist on using FLIST.   They say it's faster
+than FILELIST.   Fine.   But FILELIST lets you save and load FILELISTs
+such that you can easily bundle files together almost as easily as with
+true directories.   If you do have SFS,  you can let it do the work of
+maintaining your menu hierarchy.
+ 
+Gopher FILELISTs are made up of lines of the form:
+ 
+        fn  ft  fm  path  "name"  type
+ 
+                where fn/ft/fm are the filename, filetype, and filemode
+of the file being referenced.   The path is really only the last part of
+the gopher "selector string" pointing to this file.   The paths of all
+parent menus are automatically prepended.   The name (must be in quotes)
+is what the user sees in the menu referencing this file.   The type is a
+one-digit type indicator,  any of:
+ 
+                0       this file is plain-text
+                1       this item is a menu
+                4       this is a Macintosh file
+                5       this is an MS-DOS file
+                6       this is a UUEncoded file
+                7       this item is a search on a menu
+                9       this is a binary file
+                I       image (graphic; typically GIF)
+                s       a sound file
+                M       a MIME object
+                F       a forms-oriented feedback item
+ 
+There are other types,  but these are the ones most useful in FILELISTs.
+ 
+Everything except the filename is optional.   Filetype, filemode, path,
+name and type may all be omitted,  in which case the server will choose.
+The first character of each line in a Gopher FILELIST must be either
+a blank or an asterisk,  the latter denoting a comment.   With care,
+you can in fact use a Gopher FILELIST as input to CMS' FILELIST EXEC.
+ 
+I mentioned the menu type, digit 1.   Please note that you do NOT specify
+a menu within a menu by marking some file as type 1,  but rather by using
+a special filetype "*".   The server will automatically mark it as type 1.
+ 
+The  "root"  menu is defined by <userid> FILELIST,  where <userid>
+is the name of your gopher server virtual machine,  typically GOPHERD.
+You can override this and other parameters in GOPHERD CONFIG.
+ 
+So,  making a long story longer,  to setup your gopher server,  define
+virtual machine GOPHERD,  give it access to your local gopher disk,
+create GOPHERD FILELIST listing one or more files you wish to serve-out,
+then  CP AUTOLOG GOPHERD.
+ 
+This "picture" might illustrate what I'm trying to say:
+ 
+        GOPHERD virtual machine
+               \
+                GOPHERD  FILELIST "root menu"
+                                 \
+                                  GOPHERD  README
+                                  MYFILE   DOCUMENT
+                                  SUBMENU  FILELIST
+                                                   \
+                                                    FILE1    DOCUMENT
+                                                    FILE2    DOCUMENT
+                                                    FILE3    DOCUMENT
+ 
+ 
+There is a CONFIG file,  which you can tailor as needed.   With the 2.4
+server,  the only variables meaningful in the config file are  LOGPIPE,
+PORT,  and  ROOT.   PORT defaults to 70.   ROOT defaults to the virtual
+machine name  (server's userid).   LOGPIPE defaults to CONSOLE.
+ 
+You will probably want to dedicate port 70 to GOPHERD in your local
+PROFILE TCPIP for you TCPIP service virtual machine.   It's also good
+to have GOPHERD listed as AUTOLOGged by TCPIP.   Neither of these steps
+are required to test GOPHERD;  just run it.   It's pretty harmless.
+ 
+PIPES AND AUTHORIZATIONS
+ 
+A nice way to degrade performance of your gopher server is to create a
+NAMES file for a menu.   In spite of the cost,  this is useful because
+you can control access to and/or define CMS Pipelines specifications for
+menus and items in the NAMES file.
+ 
+When the server accesses a directory,  it looks for <menu> NAMES.
+(this works best with FILELISTs;  if you do it for SFS directories,
+consider that the server may access other directories,  releasing the
+one that holds your NAMES file,  as it resolves the selector path string)
+If <menu> NAMES exists,  the server uses NAMEFIND to process it.
+This is best explained by an example:
+ 
+ 
+        :nick.myfile   :fn.my   :ft.file
+                       :auth..rice.edu deny .cuny.edu .gov allow *
+                       :pipe.CP Q NAMES | SPLIT /,/
+ 
+For the file  MY FILE,  any host who's InterNet hostname ends in
+".rice.edu"  (all of the Rice campus)  can read it.   Any host who's
+InterNet hostname ends with  ".cuny.edu"  or  ".gov"  is prohibited.
+Everyone else is then permitted.   If the client is permitted access,
+then instead of reading the file  MY FILE,  the server sends the output
+of the pipeline  CP Q NAMES | SPLIT /,/  to the client.
+ 
+This can get quite sophisticated.   No,  you do not have to have both
+an auth and a pipe in the NAMES file entry.   You can have either one
+or neither.   And know that CMS NAMEFIND does not provide a way to
+specify the filemode of the NAMES file,  so be careful about menu
+name collisions.
+ 
+You can also specify  host, port, path, name, and type  in a NAMES file.
+This means that you can use NAMES files in place of GOPLINK files,
+but remember that NAMEFIND is going to cost you.
+ 
+Link files?   They let you point to other gopher servers.
+See the Q&A section below,  otherwise this section will go on forever.
+ 
+SEARCH ITEM
+ 
+Creating a search item in a menu is easy.   Set it up just like you
+would any other sub-menu,  but mark it as Type 7.   Something like:
+ 
+        MYSEARCH FILELIST * whatever "My Own Search Item" 7
+ 
+                in the parent menu's FILELIST.
+ 
+There's no reason why you can't have the menu as a whole listed
+right next to the searched version,  like:
+ 
+        MYSEARCH FILELIST * whatever "My Own Search Item" 7
+        MYSEARCH FILELIST * whatever "My Own Search Item (not indexed)"
+ 
+You must also create an index file for this menu.   The easiest way is
+by using GOPGEN.   GOPGEN is primarily a tool for making your own mods
+to CMS Gopher,  but it also performs the right incantation on WISHLG
+(thank's Yossie) to create an index for you.   The server then will
+invoke WISHLP (thank's again, Yossie) to list the files that match
+the client's search expression.
+ 
+        GOPGEN INDEX MYSEARCH
+ 
+MYSEARCH FILELIST must exist.   All of the files it lists must exist.
+You must then put the index file,  MYSEARCH GOPINDEX,  where the server
+will access it.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+FUNCTIONS OF FILES
+ 
+Here's a list of most of the files in the package and their function:
+ 
+      GOPHER   EXEC     "wrapper" EXEC; ensures product disk accessed
+      GOPCLI   EXEC     the client
+      GOPCLINI EXEC     client initialization (called once from GOPCLI)
+      GOPCLISX REXX     handles all TCP/IP "sockets" work for the client
+      GOPCLITM REXX     decides what how a given item should be processed
+      GOPCLIST REXX     displays connection status,  "Reading ...",  etc
+      GOPCLIMB REXX     menu browser
+      GOPCLIUI REXX     user input (prompting)
+      GOPCLITX REXX     reformats plain-text
+      GOPCLIFV REXX     file viewer; may be used stand-alone
+      GOPCLIGV REXX     graphics viewer; presently GIFs only
+      GOPCLIFI EXEC     returns legal CMS fileid from a gopherspace path
+      GVM      EXEC     "DIALed Gopher" client; calls GOPHER to call GOPCLI
+      GVM      DIRECT   CP Directory entry for the DIALed Gopher
+ 
+      GOPHERD  EXEC     "wrapper" EXEC for the server; write your own
+      GOPSRV   EXEC     the server
+      GOPSRVLS REXX     lists files and menus (menus in LISTFILE format)
+      GOPSRVRP REXX     gopher path resolution; uses GOPSRVLS output
+      GOPSRVMB REXX     menu builder
+      GOPSRVGL REXX     gopher "link" processor
+      GOPSRVAU EXEC     performs authorization check
+      GOPSRVFM EXEC     dummy filemode function for server
+      GOPHERD  DIRECT   example CP Directory entry for the server
+ 
+      UNTAB    REXX     expands TAB characters
+      PRINT    REXX     similar to CMS PRINT, but a pipe
+      A2E      REXX     translate ASCII to EBCDIC
+      E2A      REXX     translate EBCDIC to ASCII
+      TCPA2E   REXX     A2E, but follows TCP/IP translate tables
+      TCPE2A   REXX     E2A, "   "       "      "         "
+      STANDARD TCPXLATE suggested ASCII <---> EBCDIC translate tables
+      STANDARD TCPXLBIN binary object built from above TCPXLATE
+ 
+      GOPUME   MESSAGES message repository source
+      GOPUME   TEXT     message repository object
+ 
+      GOPXEDPR XEDIT    XEDIT profile for XEDIT used as file viewer
+      GOPXEDII XEDIT    "item info" command for XEDIT as file viewer
+ 
+      GOPHMARK EXEC     migrates bookmars from 2.3
+ 
+      RXSOCKET MODULE   Arty's wonderful CMS Socket tool
+      DISKWRIT MODULE   minidisk need reACCESSing?
+      WISHLP   MODULE   Yossie's *fast* search engine
+      WISHLG   MODULE   index builder for above
+ 
+      PH       EXEC     Nick LaFlamme's CSO/qi/ph (phonebook) client
+ 
+      GL       EXEC     primitive tool for browsing CMS Gopher FILELISTs
+ 
+      GOPHERCAT EXEC    dumps gopherspace files right onto your console
+ 
+      GOPHERDH REXX     a pipeline stage that interprets CMS HELP
+      HELP     NAMES    defines HELP menu to the server using above
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+There is a discussion list,  VMGOPHER@PUCC.Princeton.EDU.
+Please join us.   We discuss development and featurs of CMS Gopher.
+ 
+There is another CMS Gopher (both server and client),  popularly called
+"the Vienna Gopher",  available from Gerhard Gonter <GONTER@AWIWUW11>.
+ 
+ ------  ------  ------  ------  ------  ------  ------  ------  ------
+ 
+Q:      The basics, documents and FILELIST menus, is fairly easy to grasp,
+        but the relationship of a NAMES file and its entries to a FILELIST
+        file and its entries is not at all evident to the poor soul that
+        just wants to provide an information service without much time
+        invested (I.e., without subscribing to VMGOPHER).
+ 
+A:      The easiest way to start is just name some plain-text files in
+        GOPHERD FILELIST  (which are available to your GOPHERD service
+        machine on an accessed disk or SFS directory).   Then after you're
+        comfortable with that,  try some "links"  (filetype GOPLINK) and
+        sub-menus  (filetype FILELIST).   Then get into NAMES files.
+ 
+Q:      How to I point to another server/menu?
+ 
+A:      The easiest way is with a "link" file  (filetype GOPLINK).
+        When a link file shows-up in any FILELIST,  the contents of
+        that file are read and the information specified is presented
+        to the client for that particular menu item.
+ 
+        The contents of a GOPLINK file are the same as
+        for a UNIX server link file,  of the form:
+ 
+                Name=Rice University CMS Gopher server
+                Host=ricevm1.rice.edu
+                Port=70
+                Path=1/
+                Type=1
+ 
+        As of 2.4,  GOPLINK file can have more than one link in it.
+        (but you will probably find things easier to manage
+        if you have just one link per GOPLINK file)
+ 
+        NOTE:   Gopher server link files  MUST  be  RECFM V  or you
+                will get trailing blanks which UNIX servers won't like.
+ 
+Q:      How does a GOPLINK file differ from a "link" in a NAMES file?
+ 
+A:      The NAMES file is far more extensive.   (and exPensive)
+        With the CMS Gopher server,  you don't use "link" files to
+        override the characteristics of other files in the menu  (as you
+        would with a UNIX server).   With the CMS server,  GOPLINK
+        files are exclusively used to reference other network (usually
+        non-local) resources,  while the NAMES file may apply to local
+        files,  which reside on your system OR to remote services.
+ 
+Q:      Some folks have made it seem that their gopher server files
+        are free for the taking ...  is there a gopher feature
+        to pull these in?
+ 
+A:      To "receive" (keep) an item,  press PF5.   The receive function
+        will not overwrite an existing file  (though you can still
+        view & SAVE from XEDIT).
+ 
+Q:      GOPHERD should document DISKWRIT in the prolog.
+ 
+A:      GOPHERD uses DISKWRIT to perform the same "reaccess" trick that
+        GONE EXEC does when you reconnect.   If disks appear to have
+        changed,  they are reACCESSed so that the server has the latest
+        revision of any files on those minidisks.
+ 
+Q:      Why are the "STANDARD" translate-table files provided?
+        Are these for use with the server?
+ 
+A:      Both server and client.
+        The default ASCII <---> EBCDIC translation in VM TCP/IP (FAL)
+        is not 100% correct for the majority of the VM/UNIX/VMS/DOS/Mac
+        world we live in.   STANDARD TCPXLATE and TCPXLBIN provide
+        a 1-for-1 translation between  de-facto "network EBCDIC"
+        (codepage 1047)  and  "extended ASCII"  (ISO 8859-1).
+ 
+Q:      If PhoneBk and Search are available, how do we use them?
+ 
+A:      Presently,  CMS GopherD does not support PhoneBk engines.
+        Search engine is provided by Yossie Silverman's WISHLG/WISHLP.
+        The client (GOPCLI) is happy to utilize such servers on any                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

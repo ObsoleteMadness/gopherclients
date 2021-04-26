@@ -1,0 +1,28 @@
+Gopher Browser for Windows
+(ver 1.2)
+Freeware
+
+
+Gopher Browser for Windows is a 32-bit Windows 
+application that does NOT require installation.  
+Simply place it in the folder that you wish to 
+run it from, and launch the EXE.
+
+Caution: If you wish to run the SetHandler.exe 
+program from within the Browser (shoudn't we be 
+calling a Gopher protocol Browser a "Burrower"?), 
+it needs to reside in the same directory as the 
+Browser.  Note that SetHandlers only function is 
+to (only once required, unless it is later changed) 
+tell the registry that Gopher Browser for Windows 
+is the default handler for Gopher protocol URLs.  
+
+The Browser requires that .NET Runtime be 
+installed on the computer.  I am including a 
+complimentary version of .NET Runtime (version 
+2.0 sp2), which will install on Windows 2000.  
+
+.NET Runtime = NetFx20SP2_x86.zip
+
+
+

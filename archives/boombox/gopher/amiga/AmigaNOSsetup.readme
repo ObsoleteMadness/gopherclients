@@ -1,0 +1,11 @@
+AmigaNOSsetup.lha is a sample file structure tree along with some example
+script/startup files, and some very brief comments about them and how I start
+up AmigaNOS. Feel free to chose your own methods.
+
+These samples can be used with either AmigaNOSGW (Graham Walter's version of
+AmigaNOS plus Gopher client) or AmigaNOS (John Heaton's version). It just so
+happens that I have and use both.
+
+This file structure is offered for new users of AmigaNOS/GW since it may be
+overwhelming to figure just what you need, why, and where. Note that there
+ARE extra files that are NOT required (eg; TCPIP:Public subdirectory).

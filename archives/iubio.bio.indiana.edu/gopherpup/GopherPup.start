@@ -1,0 +1,97 @@
++MENU:
++INFO: 1IUBio-Archive		ftp.bio.indiana.edu	71	+
++MENULINE: 5 7 5 19
++INFO: hIUBio-Archive via HTTP	/	iubio.bio.indiana.edu	80
++URL:  http://iubio.bio.indiana.edu/ 
++MENULINE: 5 34 5 42
++INFO: 0IUBio-door	9/This-Gopher/gopup/IUBio-door	ftp.bio.indiana.edu	71	+
++MENULINE: 5 53 5 73
++INFO: hVirtual Library @ CERN	/hypertext/DataSources/bySubject/Overview.html	info.cern.ch	80
++URL:  http://info.cern.ch/hypertext/DataSources/bySubject/Overview.html 
++MENULINE: 10 0 10 23
++INFO: 1gopherpup	1/IUBio-Software+Data/util/dclap/apps/gopherpup	ftp.bio.indiana.edu	70	+
++MENULINE: 28 56 28 89
++INFO: 1DClap docs	1/IUBio-Software+Data/util/dclap/docs	ftp.bio.indiana.edu	70	+
++MENULINE: 28 101 28 174
++INFO: 0waisfree-bio.readme	0/IUBio-Software+Data/util/wais/waisfree-bio.readme	ftp.bio.indiana.edu	70	+
++MENULINE: 31 38 31 78
++INFO: 1University of Minnesota Mother Gopher		gopher.micro.umn.edu	70	+
++MENULINE: 8 0 8 30
++INFO: 1Washington & Lee Univ.		liberty.uc.wlu.edu	70	+
++MENULINE: 9 0 9 26
++DATA:
+{\rtf1\mac\deff2 {\fonttbl{\f0\fswiss Chicago;}{\f2\froman New York;}{\f3\fswiss Geneva;}{\f4\fmodern Monaco;}{\f13\fnil Zapf Dingbats;}{\f14\fnil Bookman;}{\f16\fnil Palatino;}{\f18\fnil Zapf Chancery;}{\f19\fnil Souvenir;}{\f20\froman Times;}
+{\f21\fswiss Helvetica;}{\f22\fmodern Courier;}{\f23\ftech Symbol;}{\f26\fnil Lubalin Graph;}{\f33\fnil Avant Garde;}{\f34\fnil New Century Schlbk;}{\f156\fnil Garamond;}{\f2515\fnil MT Extra;}{\f32525\fnil VT100;}}{\colortbl\red0\green0\blue0;
+\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;}{\stylesheet{
+\sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 \f20\fs20 \sbasedon222\snext0 Normal;}{\s1\sb600\sa200\brdrb\brdrs \tx576\tx1440\tx6480 \f20\fs48 \sbasedon0\snext1 head1;}{\s2\sb100\tx576\tx1440\tx6480 \f20 
+\sbasedon0\snext2 realnormal;}{\s4\fi-360\li360\sb100\tx576\tx1440\tx6480 \f20 \sbasedon2\snext4 outdent;}}\margt0\margb0\deftab31680\ftnbj\fracwidth \sectd \sbknone\linemod0\headery0\footery0\cols1 \pard\plain \s1\qc\sb200\sa200\brdrb\brdrs 
+\tx576\tx1440\tx6480 \f20\fs48 {\b\cf1 Welcome to GopherPup\par 
+}\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 {\fs28 Double-click on underlined items to open a door into the Internet's global library.\par 
+}\pard\plain \sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 \f20\fs20 {\fs28 \par 
+}\pard \qc\sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\b\fs36 {\pict\macpict\picw32\pich32 
+0e1a00b3000600d30026001102ff0c00ffffffff0006000000b300000026000000d300000000000000a00082001e0001000a00b3000600d3002600070000000000093049883ab59cf0390022fc51fc0e00000009ffffffffffffffff0023000000a000c400a100c001f42525445349444943543a5f63760d63757272656e74
+64696374202f6275206b6e6f776e207b62757d69660d7573657264696374202f5f6376206b6e6f776e206e6f747b7573657264696374202f5f63762033302064696374207075747d69660d5f637620626567696e0d2f6264667b62696e64206465667d62696e64206465660d63757272656e7473637265656e2f6373206578
+6368206465662f63612065786368206465662f63662065786368206465660d2f736574636d796b636f6c6f722077686572657b2f736574636d796b636f6c6f7220676574202f6376636d796b2065786368206465667d7b2f6376636d796b7b31207375622034203120726f6c6c20337b3320696e64657820616464206e6567
+206475702030206c747b706f7020307d69662033203120726f6c6c7d72657065617420736574726762636f6c6f7220706f707d626466207d6966656c73650d2f73737b2f2f6366202f2f6361202f2f63732073657473637265656e7d6264660d2f7374677b737320736574677261797d6264660d2f73747267627b73732073
+6574726762636f6c6f727d6264660d2f7374636d796b7b7373206376636d796b7d6264660d2f6d696e317b64757020302065717b706f7020317d69667d6264660d656e640d63757272656e7464696374202f626e206b6e6f776e207b626e7d69660d00a000bf00a10064003064727732003700b2000500d200258000800080
+008000010000000000000000000000ffffffffffff000101000965000000a0008e0098802000000000002000200000000000000000004800000048000000000008000100080000000000874218000000000001839d000000ff0000ffffffffffff0001ffffffffcccc0002ffffffff99990003ffffffff66660004ffffffff
+33330005ffffffff00000006ffffccccffff0007ffffcccccccc0008ffffcccc99990009ffffcccc6666000affffcccc3333000bffffcccc0000000cffff9999ffff000dffff9999cccc000effff99999999000fffff999966660010ffff999933330011ffff999900000012ffff6666ffff0013ffff6666cccc0014ffff66
+6699990015ffff666666660016ffff666633330017ffff666600000018ffff3333ffff0019ffff3333cccc001affff33339999001bffff33336666001cffff33333333001dffff33330000001effff0000ffff001fffff0000cccc0020ffff000099990021ffff000066660022ffff000033330023ffff000000000024cccc
+ffffffff0025ccccffffcccc0026ccccffff99990027ccccffff66660028ccccffff33330029ccccffff0000002accccccccffff002bcccccccccccc002ccccccccc9999002dcccccccc6666002ecccccccc3333002fcccccccc00000030cccc9999ffff0031cccc9999cccc0032cccc999999990033cccc999966660034cc
+cc999933330035cccc999900000036cccc6666ffff0037cccc6666cccc0038cccc666699990039cccc66666666003acccc66663333003bcccc66660000003ccccc3333ffff003dcccc3333cccc003ecccc33339999003fcccc333366660040cccc333333330041cccc333300000042cccc0000ffff0043cccc0000cccc0044
+cccc000099990045cccc000066660046cccc000033330047cccc0000000000489999ffffffff00499999ffffcccc004a9999ffff9999004b9999ffff6666004c9999ffff3333004d9999ffff0000004e9999ccccffff004f9999cccccccc00509999cccc999900519999cccc666600529999cccc333300539999cccc000000
+5499999999ffff005599999999cccc0056999999999999005799999999666600589999999933330059999999990000005a99996666ffff005b99996666cccc005c999966669999005d999966666666005e999966663333005f999966660000006099993333ffff006199993333cccc00629999333399990063999933336666
+00649999333333330065999933330000006699990000ffff006799990000cccc00689999000099990069999900006666006a999900003333006b999900000000006c6666ffffffff006d6666ffffcccc006e6666ffff9999006f6666ffff666600706666ffff333300716666ffff000000726666ccccffff00736666cccccc
+cc00746666cccc999900756666cccc666600766666cccc333300776666cccc0000007866669999ffff007966669999cccc007a666699999999007b666699996666007c666699993333007d666699990000007e66666666ffff007f66666666cccc008066666666999900816666666666660082666666663333008366666666
+0000008466663333ffff008566663333cccc0086666633339999008766663333666600886666333333330089666633330000008a66660000ffff008b66660000cccc008c666600009999008d666600006666008e666600003333008f66660000000000903333ffffffff00913333ffffcccc00923333ffff999900933333ff
+ff666600943333ffff333300953333ffff000000963333ccccffff00973333cccccccc00983333cccc999900993333cccc6666009a3333cccc3333009b3333cccc0000009c33339999ffff009d33339999cccc009e333399999999009f33339999666600a033339999333300a133339999000000a233336666ffff00a33333
+6666cccc00a433336666999900a533336666666600a633336666333300a733336666000000a833333333ffff00a933333333cccc00aa33333333999900ab33333333666600ac33333333333300ad33333333000000ae33330000ffff00af33330000cccc00b033330000999900b133330000666600b233330000333300b333
+330000000000b40000ffffffff00b50000ffffcccc00b60000ffff999900b70000ffff666600b80000ffff333300b90000ffff000000ba0000ccccffff00bb0000cccccccc00bc0000cccc999900bd0000cccc666600be0000cccc333300bf0000cccc000000c000009999ffff00c100009999cccc00c200009999999900c3
+00009999666600c400009999333300c500009999000000c600006666ffff00c700006666cccc00c800006666999900c900006666666600ca00006666333300cb00006666000000cc00003333ffff00cd00003333cccc00ce00003333999900cf00003333666600d000003333333300d100003333000000d200000000ffff00
+d300000000cccc00d400000000999900d500000000666600d600000000333300d7eeee0000000000d8dddd0000000000d9bbbb0000000000daaaaa0000000000db88880000000000dc77770000000000dd55550000000000de44440000000000df22220000000000e011110000000000e10000eeee000000e20000dddd0000
+00e30000bbbb000000e40000aaaa000000e500008888000000e600007777000000e700005555000000e800004444000000e900002222000000ea00001111000000eb00000000eeee00ec00000000dddd00ed00000000bbbb00ee00000000aaaa00ef00000000888800f000000000777700f100000000555500f20000000044
+4400f300000000222200f400000000111100f5eeeeeeeeeeee00f6dddddddddddd00f7bbbbbbbbbbbb00f8aaaaaaaaaaaa00f988888888888800fa77777777777700fb55555555555500fc44444444444400fd22222222222200fe11111111111100ff000000000000000000000020002000b3000600d30026000106fc00fa
+ffed000afd0000fffa2a00ffee000afe0000fff82a00ffef000a020000fff62a00fff0000a0100fff42af2ff0100000800ffe52a0254ff001b02ff2a2bf92a062bffacffd6ac56fe2a00acfd2a052b2a2a54ff00211fff2b002a002a002a002aacff00a57aa500ff812a00acac2a002b002b0054ff001d01ff2afa2b03ff2b
+a5acfe810fac81ac81acff2bac2b2a2b2a2a54ff00211fff2b002a002a002a81ff00bf568156562b562b2b002a002aac2b002b0054ff002001ff00fe2b0c002b2bff81c59f8181ac81ac81fdac032bac2b00fe2b0254ff00211fff2b002b002b00ac00a59a9f74a57aa57a9f7aa57aacac2b002b002b0054ff001d03ff2a2b
+00fe2b06ac2ba5c57b9f9ffc2b027b2bacfc2b04002b54ff00211fff2b002b002b00ff009f9a9f7a2b002b002b74a57aff002b002b002b0054ff002101ff2afe2b08002bac2b002b9f9f00fe2b04009fa5a5acfe2b0000fe2b0254ff00211fff2b002b002bacac002b002b749f7a9f002b7aa57a81002b002b002b0054ff00
+1d01ff2afe2b07ac2bacac81ac81acfe8105ac2b2ba5ff56fa2b0254ff00211fff2b002bac2b002b00562b562b565681562b00ff812b002b002b002b0054ff002001ff2afe2b01ac2bfdac0a81ac81ac818100a5ac2b00fe2b0000fe2b0254ff00211fff2b002b002bacac002b81ff7aa57a2b7a81ac2b002b002b002b002b
+0054ff001c03ff2b2a00fe2b00acfd2bfeff04acac2b2b00fb2b052a002a54ff00211fff2b002b2a2b2a2b2a2b2a2b2a2b2a2b2a2b2a2b2a2b2a2b2a2b002b0054ff002103ff2a2b2afe2b182a2b2a2b2a2b002b2a2b2a2b2a2b2a2b2a2b2a2b2a2b54ff002104ff2b002b00fe2b17002b002b002b2a2b002b002b002b002b
+002b002b0054ff000af4ff02812b81f2ff00000af50004ac2b002bacf2000af50004ff2b002bfff2000af50000acfe2b00acf2000af50004ac2bac2bacf2001ffe00192b568181568181ac812b2bff2b2bacac81815681565681562b2bfe001efe0005f500f52b2bf5fe2b04f5ac2bacf5fe2b07f52b2bf500f500f5fd001f
+0200f556fe810056fd8106acac2b002bacacfd8107568156568156562bff000000a0008f00a10064000664727732004400a0008300ff}}{\fs36  }{\b\fs36\up16 IUBio Archive, Indiana University}{\fs36 \par 
+}\pard \qc\sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\fs28 Internet source for biology software and data\par 
+}\pard \qc\sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 See the gopher door to IUBio, the HTML door, and its pretty Rich Text door.\par 
+\pard \qc\sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\fs28 \par 
+}\pard \sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\plain \f20 Other Internet starting points:\par 
+}\pard \li360\sl20\tx3600\tx5760\tx7200\tx8640 {\b University of Minnesota Gopher} \tab -- Mother of all Internet Gophers\par 
+\pard \li360\sl20\tx720\tx3600\tx5760\tx7200\tx8640 {\b Washington & Lee University}      \tab -- Card catalogs for Gopher services\par 
+\pard \li360\sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\b Virtual Library at CERN}             \tab -- Topical organization of HTML and other Internet information\par 
+\par 
+\pard \sl20\brdrb\brdrs \tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\fs28  \par 
+}\pard \sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 {\fs28 See the }{\b\f21\fs28 Help}{\fs28  command under the }{\b\f21\fs28 File}{\fs28  menu for details of how this program works.  \par 
+}\pard \sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 \par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 {\ul GopherPup has several unique strengths\par 
+}\pard\plain \s4\fi-360\li360\sb100\tx576\tx1440\tx6480 \f20 \bullet  Display documents in Microsoft's Rich Text Format ({\b RTF}) produced by popular wordprocessors.  RTF not only i
+s a widely-available standard, it has full support for fonts, styles, embedded images, and the formatting needed to display publication-quality documents.\par 
+\bullet  Display graphics in a standard, widely-used vector & bitmap format, Apple Macintosh's {\b PICT}.  This format provides high-resolution output, smaller/faster image transfer, and editable graphics, compared to GIF.\par 
+\bullet  Display documents in the network HyperText Markup Language ({\b HTML}), and in the popular graphic bitmap format, CompuServe's {\b GIF}, as well as plain {\b text}.\par 
+\bullet  Easily link network resources into any of these documents.  Documents created in a wordprocessor can be directly displayed and network links can be placed by simple drag-and-drop methods.  \par 
+\bullet  The hypertext method used is easily extensible to any new format which can be displayed.\par 
+\bullet  Browse and search{\fs20\up6 \'a0} through information on your local computer system using the same easy methods used for remote systems.\par 
+\bullet  Supports all Gopher+ protocol features, including \par 
+\pard \s4\fi-360\li360\tx576\tx1440\tx6480    -- User dialogs for client-server interactions.\par 
+   -- Simple and sophisticated multiple view handling.  Easily choose the format you prefer, whether RTF or Postscript, GIF or JPEG, and specialty formats, depending on the service and your needs.   Add new formats readily as needed.\par 
+   -- Display of document dates, sizes, and abstracts -- no more guessing if that document is 5 years old or up-to-date, or if it is 1,000 or 1,000,000 characters long.\par 
+\pard \s4\fi-360\li360\sb100\tx576\tx1440\tx6480 \bullet  Supports many HTTP/HTML protocol features (more later), and supports SMTP Mail protocol.\par 
+\bullet  \ldblquote One source fits all\rdblquote   -- this program is freely available in one source version that compiles on Macintosh, Microsoft Windows and X-Windows computer systems.\par 
+\pard\plain \s2\sb100\tx576\tx1440\tx6480 \f20 
+Please note that GopherPup is still under development.  New versions can be found at IUBio Archive.  Documents describing GopherPup and related development may be found there.  There are plenty of bugs to be squashed, and features needing detail work.  Ple
+ase report problems and suggestions to <GopherPup@bio.indiana.edu>.  \par 
+{\fs20 This document was written with Microsoft Word, saved as RTF format, then network links were added by drag-and-drop from netlink documents onto highlighted selections of this on. \par 
+Author: Don Gilbert, Biology Department, Indiana University, Bloomington, IN 47405.\par 
+}\pard \s2\sb100\brdrt\brdrdb \tx576\tx1440\tx6480 {\fs20 \'a0
+ Local searching is available with a helper application built from FreeWAIS-sf, which provides searching of a wide array of document and data formats, and includes simple and complex search  methods with Boolean operations, field values, and nested syntax
+.  Local search support is under development at the 0.3d release.\par 
+}\pard\plain \sl20\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640 \f20\fs20 \par 
+To dispense with this document each start, change its name from {\ul GopherPup.start}, or replace it with one of your choice.  Your favorite net links can be kept in the {\ul GopherPup.go4} document, also opened with each start. \par 
+\par 
+}

@@ -1,0 +1,42 @@
+
+Archive-name: sgopher
+Submitted-by: fuller@aedc-vax.af.mil
+
+sgopher 0.3 simple gopher client for inetd/batch/online
+
+Platforms: VMS, IRIX, Ultrix, AIX, Solaris 1.x/2.x
+
+Complete code distribution, a lot of changes.  How do you do a diff
+and undiff anyway?
+
+Thanks to the people who suggested changes (see THANKS).
+version 0.3 - added support fox Ultrix/Solaris, fixed index handling bug,
+	fixed exit on bad connect, added timeout capability,
+	added = option, K&R C support.
+version 0.2 - added index support, changes for AIX compile, logging and
+	heading changes for mail, and support for VAX/VMS using Wollongong.
+
+	I am especially interested if anyone finds any security problems with
+sgopher or if it is ported to any other platforms.  Also, I would like
+information about the algorithm for uuencoding so that sgopher can mail binary
+files.  I would also be interested in changes for porting it to the PC.  It
+should be fairly straight forward.  Please email me (fuller@aedc-vax.af.mil)
+or post to alt.sources.d.
+	I wrote sgopher so that anybody with a telnet program could run
+a gopher client.  It can be run stand alone or it can be launched from inetd.
+It doesn't use termcap or curses or any of that other stuff so it should
+run okay from any terminal/3270/PC/workstation.  It does assume a 24x80 
+screen. It outputs the \r\n pair at the end of line and requires a <return>
+after each command to support more terminal types.
+	sgopher is not loaded with features like other gopher clients.  It was
+written with simplicity in mind, but it does display a nice menu
+that indicates the item type.  It also figures out where the connection
+to it is coming from and displays and logs it.  In addition it marks
+visited items with an asterisk.  If you pop up from a menu and then
+go back down to it these marks will be reset.  Received text can also be
+sent via email.  All of the source code fits into two files.  You don't
+have to link with any other gopher libraries.  sgopher supports three types
+text, directory, and index.
+	see INSTALL file for installation/build instructions.
+
+Sean Fuller                                        fuller@aedc-vax.af.mil

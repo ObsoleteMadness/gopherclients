@@ -1,0 +1,61 @@
+Changes:                                                                        
+                                                                                
+ November 93 - Version 3 Release 1                                              
+                                                                                
+             Server Enhancements                                                
+                                                                                
+             Support for binary files, including image files, in the            
+             remote FTP gateway.  Most file types are supported for             
+             the server, and the client will support some binary types,         
+             although they cannot be viewed or printed well.                    
+                                                                                
+             The REXX interface has been completely redesigned.  It is          
+             not compatible with the previous version, but migration            
+             should be easy.  Among other things, you can now run REXX          
+             execs from a non-TSO-environment server, which will allow          
+             multithreading of client requests that trigger REXX execs.         
+                                                                                
+             The access file now supports wildcarding in the file name          
+             specifications.  Because of this, you must stop and                
+             restart the gopher server when you change the access file.         
+             The rules are processed differently.                               
+                                                                                
+             Additional logging (via write-to-programmer) in a mode             
+             compatible with the format produced by the U of Minn               
+             gopher daemon.                                                     
+                                                                                
+             Rudimentary support for gopher+ has been added on an               
+             experimental basis.  Do not rely on this, because it is            
+             not complete by any means.                                         
+                                                                                
+             Client Enhancements                                                
+                                                                                
+             Printing allows destination in the form nodename.userid.           
+                                                                                
+             INITFILE keyword added for a differently named GOPHERRC.           
+                                                                                
+ 07 Aug 93 - Version 2 Release 2                                                
+                                                                                
+             Remote FTP Gateway                                                 
+             Enhanced CSO client option                                         
+             Configurable GOPHERRC: domain and telnet may be specified          
+             Object-code-only distribution for those without C compilers        
+             Improvements to TSO GOPHER exec for users without XPROC            
+              or without C runtime in linklist                                  
+             DD:ddname(member) works now for nested PDS member                  
+              references, making installing the ABOUT PDS simpler               
+             "E" and "P" work without "S" having to be done first               
+                                                                                
+ 20 Mar 93 - Version 2 Release 1                                                
+                                                                                
+             Improved browse function                                           
+             Printing support                                                   
+             Bookmark support                                                   
+             New commands: PRT, INFO, MENU, BOOKMARK                            
+             Configurable startup parameter file                                
+             Ability to run multiple servers on same MVS                        
+                                                                                
+ 07 Dec 92 - Customizations to support SNS/TCPAccess                            
+                                                                                
+ 19 Oct 92 - Improvements in initial startup and GOPHERRC customization         
+                                                                                

@@ -1,0 +1,6 @@
+Xgopher
+(ver 1.3.3)
+Freeware
+
+
+This X windows Gopher client is for (project athena) X11r6.  

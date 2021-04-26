@@ -1,0 +1,39 @@
+TurboGopher for the Macintosh
+
+--------
+Hardware
+--------
+
+Macintosh Plus or greater 
+Ethernet card , SCSI adapter or built-in Ethernet
+
+--------
+Software
+--------
+
+MacTCP
+
+----------------
+Special Features
+----------------
+
+Gopher+ complete support of Alternate Views,, electronic forms etc. 
+Excellent display of electronic forms of any length 
+MacTCP compliant for compatibility with other Macintosh Internet tools 
+Multiple bookmark files 
+Direct connect to remote sites 
+Launches viewers after file download with single click 
+Multiple simultaneous download/transaction capability 
+Quick response and query speed 
+Balloon Help 
+Japanese language character display with special system software 
+Multiple window or single window display of menus 
+Excellent phone book lookup procedure with point-and-click fields and logical separators ( contains, begins with and equals ) 
+Can print or save items
+
+----------------
+Problems or Bugs
+----------------
+
+Limited set of viewer definitions 
+Alternate views must be chosen via a menu item, not an icon

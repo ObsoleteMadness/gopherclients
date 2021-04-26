@@ -1,0 +1,97 @@
+Date: Thu, 11 Mar 93 15:08:26 CST
+Message-Id: <9303112108.AA10984@boombox.micro.umn.edu>
+Received: from rawBits.micro.umn.edu by boombox.micro.umn.edu; Thu, 11 Mar 93 15:08:26 CST
+From: "The Minnesota Gopher Team"  <gopher>
+To: pacs-l@uhupvm1.uh.edu, review@msen.com, com-priv@uu.psi.com, gopher-news
+Subject: University of Minnesota Gopher software licensing policy.
+
+In the best of USENET tradition there has been a lot of hysteria,
+misinformation, and rumor floating around that this note is being
+written to address.  Please treat this as an "official" University
+of Minnesota Gopher Team position.  We'll put this document up so
+that anyone can get a copy before they howl.
+
+In a time where we are having budgets slashed, it is impossible
+to justify continued (increasing) resources being allocated to
+Gopher development unless some good things result for
+the University of Minnesota.  This is a fact of life.
+
+We can make a case that if you put up a gopher server that 
+makes useful information available to the Internet, then there
+is more useful information available to the University of
+Minnesota academic community also.  Hence this is a Good Thing.
+
+If on the other hand you put up a gopher server that is
+commercial in nature and either inaccessible to the world or
+containing information whose primary purpose is to MAKE YOU
+MONEY, then we have a hard time making a case for our
+admistrators supporting this.  Indeed if you look at this
+honestly, a licence fee is the right and proper thing to do.
+
+Remember when UNIX was given away free?
+How many of you are using UNIX now?  It is licensed.
+
+First, in the case of gopher servers run by higher education
+or non-profit organizations offering information freely 
+accessible to the Internet, there is no change.  No fees.
+They just continue to use Gopher like they have always
+done.  If you fall under this category, please stop
+and think about it.  Nothing's changed.
+
+In the case where gopher servers are being used internally
+by commercial entities we think a license fee is right.
+We don't know what amount of a fee is reasonable: so YOU
+have to tell us and we need to negotiate on a case by case
+basis.  What is loose change for a large corporation may
+be prohibitive for a small business.  We'd like some
+kind of sliding scale.
+
+In the case of gopher servers offering information that is
+sold, again we think a fee is reasonable and further that
+it be some small fraction of your sales.  Once more, we
+need to negotiate a reasonable fraction on a case by case
+basis.  So comparing YOUR agreement with the one we make
+with the guy next door might not be a fruitful thing to do.
+
+Finally, there is the grey area where information on a 
+server run by a commercial entity is accessible to all.
+Now having price-lists of your products (for example)
+available, really is a direct benefit to you.  On the
+other hand, while having usefully compiled lists or indexed
+journals may well be an indirect benefit to you (folks
+will think well of your company and services) they have
+a direct benefit to everyone.  In these cases, we'd like
+YOU to make a case arguing that the material on your
+server falls into the second category, enabling us to
+give you a license without a fee.
+
+Yes, it may seem unfair that we get to decide whether
+your commercial server should be given a license to use
+our software without a charge.... but there it is.
+
+We are not out to make big money here.  We are simply
+facing the realities of our environment and having to
+justify how we spend OUR resources also.
+
+The Internet Gopher protocol is documented and we're
+also just about done with an informational RFC.
+Folks can and have written clients and servers for 
+Gopher.  You can also do it.
+
+Before you go off and flame once more, ask yourself if
+you want to get YOUR particular server going with as
+little fuss and expense as possible... or if you just
+want to stir up the soup.  Then do what you wish.
+We want to keep things working for all of you, and get
+ourselves the okays from above to keep doing that.
+
+If you want to be productive, talk to Shih Pau Yen;
+he's the one with the power to do the deals.  He
+can be reached at 
+     yen@boombox.micro.umn.edu
+or   (612) 624-8865
+
+Please don't abuse the Gopher Development team :-)
+
+  - Yen and the Minnesota Gopher Team
+

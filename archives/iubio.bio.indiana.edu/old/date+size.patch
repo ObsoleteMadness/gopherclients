@@ -1,0 +1,120 @@
+
+This is a patch to the unix gopher server, gopherd (version 1.01), that
+will append file dates and sizes to the title of gopher items.  
+
+This is a feature that many users have requested of me, thinking that the
+client writers have "forgotten" to put in file date and size information
+in the display.   I recommend that all gopher servers add this patch.  It
+provides users with a clear idea of how recent a document is, and how big
+it is (will it fit on their computer? will it take a long time to 
+transfer?). 
+
+This patch adds that information in a way that will
+not break any existing client program (it appears as just a longer
+title).  Smart new gopher clients can parse the title field to look
+for this date and size info, and reformat it or hide it at a user's
+preference.   This patch is designed to leave off the date+size info
+from items that really don't need it, like folders, query types, ftp
+types, etc., to give a less cluttered display.
+
+You can easily apply this patch with Larry Wall's patch program (available at 
+many unix ftp sites), in this way, at the directory containing gopher1.01/
+   % patch -p < date+size.patch
+
+-- Don Gilbert
+
+
+*** gopher1.01/Makefile.config	Thu Jun 11 18:57:54 1992
+--- biogoph/Makefile.config	Sun Jun 21 09:23:24 1992
+***************
+*** 47,54 ****
+  #
+  # Add -DLOADRESTRICT if you want to restrict access based on load avg.
+  #     (Note you'll need to add -lkvm in SERVERLIBS)
+  
+! SERVEROPTS	= # -DLOADRESTRICT
+  
+  
+  #--------------------------------------------------
+--- 48,56 ----
+  #
+  # Add -DLOADRESTRICT if you want to restrict access based on load avg.
+  #     (Note you'll need to add -lkvm in SERVERLIBS)
++ # -DFILESTATS to include file [date,size] in titles (dgg)
+  
+! SERVEROPTS	= -DFILESTATS # -DLOADRESTRICT
+  
+  
+  #--------------------------------------------------
+diff -bwcr gopher1.01/gopherd/gopherd.c biogoph/gopherd/gopherd.c
+*** gopher1.01/gopherd/gopherd.c	Wed Jun 24 18:31:51 1992
+--- biogoph/gopherd/gopherd.c	Wed Jul  8 07:43:08 1992
+***************
+*** 1183,1190 ****
+--- 1216,1269 ----
+  }
+  
+  
++ #ifdef FILESTATS
++ /* dgg addition, should be in gopherstruct.c ? */
++  
++ void
++ GDaddDateNsize(gd)
++   GopherDirObj *gd;
++ {
++      int 	   fd, i;
++      char  	   longname[256]; 
++      STATSTR	   buf;  /* gopherism == struct stat */
++      GopherStruct  *ge;
++      char	   *cdate, *ti, *fp;
++       
++      for (i=0; i<GDgetTop(gd); i++) {
++ 	ge= GDgetEntry(gd, i);
++ 	switch (GSgetType(ge)) {
++ 	     case '1': /*** It's a directory ***/
++ 	     case '7': /*** It's an index ***/
++ 	     case 'f': /*** ftp link ***/
++ 	     case 'e': /*** exec link ***/
++ 	     case 'h': /*** www link ***/
++ 	     case 'w': /*** wais or whois link ***/
++ 		break;
++ 		
++ 	     case 's':  /*** It's a sound ***/
++ 	     case '0':  /*** It's a generic file ***/
++ 	     case '9':  /*** It's a binary file ***/
++ 	     default :
++ 		fp= GSgetPath(ge);
++ 		if (fp == 0) break; 
++ 		/* !NOTE: listdir has done "rchdir(pathname)" at this call*/
++ 		/* if (*fp != '/') fp= fp+1; -- vers0, skip type char */
++ 		if ((fp = strrchr( fp, '/')) == 0) break;
++ 		while (*fp == '/') fp= fp+1; /*  basename only */
++ 		if (rstat(fp, &buf) == 0) {  
++ 			cdate= ctime( &buf.st_mtime);
++ 			cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
++ 			sprintf( longname, "%s  [%s%s%s, %ukb]", GSgetTitle(ge),
++ 			  cdate+8,cdate+4,cdate+22, (buf.st_size+1023) / 1024);
++ 			GSsetTitle(ge,longname);
++ 			}
++ 		break;
++ 		}
++ 	} 	  
++ }
++ #endif
+ 
+ 
+  /*
+  ** This function lists out what is in a particular directory.
+  ** it also outputs the contents of link files.
+***************
+*** 1326,1330 ****
+--- 1405,1413 ----
+  
+  	  }
+       }
+     
++ #ifdef FILESTATS
++       GDaddDateNsize( SortDir);   /* dgg */
++ #endif
++   
+       GDsort(SortDir);

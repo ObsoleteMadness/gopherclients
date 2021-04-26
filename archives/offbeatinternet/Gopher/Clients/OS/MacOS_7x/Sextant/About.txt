@@ -1,0 +1,7 @@
+Sextant
+(ver 1.0)
+Freeware
+
+
+Sextant is a very old Macintosh Gopher Client.  
+

@@ -1,0 +1,71 @@
+Patch #:	gopatch.dg2
+Type:		operational change
+Priority:	none
+Summary:	Allow indexing of wais documents outside of gopherd
+Summary:	directory tree and still use inside of gopher tree. 
+Summary:	Compatible with current gopherd operations.
+Summary:	Uses wais index "myindex.hostdata" file with 3rd line 
+Summary:	(path line) of following form:
+Summary:	  /real/path/to/wais-src;/gopher/path/to/wais-src  
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg2
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/Waisindex.c
+
+*** gopher2.012/gopherd/Waisindex.c	Tue Mar  8 10:55:22 1994
+--- go212dg/gopherd/Waisindex.c	Wed Mar 30 10:14:19 1994
+*** 309,314 ****
+--- 325,332 ----
+  
+  		    /*** Strip off the first part of the path in the filename*/
+  		    /*** Plus it gets rid of weird automount things... ***/
++ /* dgg++ */
++ /* lindner code ----
+  		    Selstrout =strstr(best_hit.filename, INDEXPath);
+  		    if (Selstrout == NULL)
+  			 Selstrout = "Error in Hostdata!";
+***************
+*** 315,321 ****
+  		    else
+  			 Selstrout += strlen(INDEXPath);
+  		    
+! 
+                      sprintf(score,"%3d ",best_hit.weight);
+  
+  		    /*  Causes freewais to core dump... 
+--- 333,363 ----
+  		    else
+  			 Selstrout += strlen(INDEXPath);
+  		    
+! ----- */
+!      /* "PLEEZ, OH PLEEZ, let me use wais's real pathnames" -- sez dgg ! */
+!      /* let INDEXPath = "/real/path/to/wais-src;/gopher/path/to/wais-src" */
+!      /* and after cutting out /real/path; prepend /gopher/path */
+!   		    {
+!  		      char newpath[512];
+!  		      char *prefix= strchr(INDEXPath, ';');
+!   		      if (prefix != NULL) {
+!    			 *prefix++= '\0'; /* terminate /real/path */
+!   			 cp= strstr(best_hit.filename, INDEXPath);
+!   			 if (cp==NULL) cp= "Error in Hostdata INDEXPath";
+!  			 else cp += strlen(INDEXPath);
+!   			 strcpy( newpath, prefix);
+!   			 strcat( newpath, cp);
+!   			 cp= newpath;
+!   			 *(--prefix)= ';'; /* put it back for next user */
+!   			 }
+!                        else {
+!   		          cp =strstr(best_hit.filename, INDEXPath);
+!   		          if (cp == NULL) cp = "Error in Hostdata!";
+!   		          else cp += strlen(INDEXPath);
+!   			  }
+!  		    Selstrout= cp;
+!   		    }
+! /* dgg-- */
+                      sprintf(score,"%3d ",best_hit.weight);
+  
+  		    /*  Causes freewais to core dump... 
+
+
+

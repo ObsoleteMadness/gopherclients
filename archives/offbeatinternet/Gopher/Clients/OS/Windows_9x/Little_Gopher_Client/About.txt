@@ -1,0 +1,25 @@
+Little Gopher Client
+(ver 1.0)
+Freeware
+
+
+The Little Gopher Client is a 32-bit Windows 
+application that does NOT require installation.  
+Simply place it in the folder that you wish to 
+run it from, and launch the EXE.
+
+Little Gopher Client was written in Free Pascal 
+and Lazarus.  It was mainly made to browse and 
+read articles in conventional gopherspace (no 
+Gopher+), and it currently only supports menus 
+and text content (no downloads, images, or queries).  
+
+The biggest feature it has compared to most other 
+Gopher clients is the browser sidebar which maps 
+the gopherspace as you go, taking advantage of 
+Gopher's hierarchical nature.  Or at least it tries 
+to, since many modern gopherholes today treat Gopher 
+menus as "HTTP-lite", using Gopher as a hierarchial 
+frontend for HTTP back links and such.  Still, it 
+helps to navigate faster than without it.
+

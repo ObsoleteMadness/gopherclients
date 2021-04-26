@@ -1,0 +1,449 @@
+spssig.spss.com!news.oc.com!eff!sol.ctr.columbia.edu!usc!cs.utexas.edu!newsfeed.rice.edu!rice!riddle Fri Mar 26 09:04:35 CST 1993
+Article: 1608 of comp.infosystems.gopher
+Xref: feenix.metronet.com comp.infosystems.gopher:1608
+Newsgroups: comp.infosystems.gopher
+Path: feenix.metronet.com!spssig.spss.com!news.oc.com!eff!sol.ctr.columbia.edu!usc!cs.utexas.edu!newsfeed.rice.edu!rice!riddle
+From: riddle@ruf.rice.edu (Prentiss Riddle)
+#Subject: linkmerge: a tool to merge remote Gopher directories
+Message-ID: <C4Guvw.4yx@rice.edu>
+Sender: news@rice.edu (News)
+Organization: Ministry of Information, William's Marsh
+Date: Thu, 25 Mar 1993 22:38:19 GMT
+Lines: 434
+
+Problem: I want to offer a "subject tree" of Internet resources
+categorized by subject area but I don't have time to develop my own.
+There are a number of useful efforts to categorize Gopher resources by
+subject area, but none of them has yet emerged as a comprehensive
+standard.
+
+Solution: The perl script below.  By merging carefully selected
+subdirectories of other sites' subject area trees, I was able to come
+up with a pretty fair union of several of them.  The result is far from
+perfect, but it will do until something better comes along.  This
+approach also allows me to put my own local resources into the same
+tree.  To see this in action, take a look at:
+
+Name=Information by Subject Area
+Type=1
+Port=70
+Path=1/Subject
+Host=riceinfo.rice.edu
+
+I'm interested in what other people think of this idea.
+
+-- Prentiss Riddle ("aprendiz de todo, maestro de nada") riddle@rice.edu
+-- Unix Systems Programmer, Office of Networking and Computing Systems
+-- Rice University, POB 1892, Houston, TX 77251 / Mudd 208 / 713-285-5327
+-- Opinions expressed are not necessarily those of my employer.
+------------------------------< cut here >------------------------------
+#!/usr/local/bin/perl
+#
+# linkmerge 0.1 -- merge a group of links to gopher resources
+#
+# usage: linkmerge < links-to-dirs-to-be-merged > .merged-links
+#
+# Linkmerge is intended as a way to make use of efforts elsewhere in
+# Gopherspace to gather collections of Internet resources organized
+# by subject.  Linkmerge examines a specified set of Gopher directories
+# and produces a merged list of links to their contents.  It makes an
+# attempt to eliminate duplicate links and to resolve WAIS and go4gw
+# resources to use local servers.  Linkmerge also allows for a "stop
+# list" of resources which it should suppress in its output.
+#
+#
+# INPUT FORMAT:
+# The input consists of gopher links to the directories to be merged,
+# as well as individual resources to be suppressed, in the following
+# format (note that the tabs are essential):
+#
+#	merge <tab> path <tab> host <tab> port
+#	stop  <tab> path <tab> host <tab> port
+#
+# OUTPUT FORMAT:
+# The output is in the format of a gopherd .links file with comments to
+# help in debugging, e.g.:
+#
+#	# Merging 1/.dir/ams.taes.ag.resource tamuts.tamu.edu 70
+#	# Merging 1/catalog/Agriculture flubber.ciesin.org 70
+#	# Merging 1/Selected/Agriculture hunter.unr.edu 70
+#	
+#	Name=CYFER-net USDA ES Gopher Server.
+#	#     from tamuts.tamu.edu
+#	Path=
+#	Host=cyfer.esusda.gov
+#	Port=70
+#	Type=1
+#	#Also CYFER-net USDA ES Gopher Server.
+#	#     from flubber.ciesin.org
+#	
+#	Name=Agricola
+#	#     from tamuts.tamu.edu
+#	Path=
+#	Host=isn.iastate.edu
+#	Port=0
+#	Type=8
+#	#Also Agricola
+#	#     from flubber.ciesin.org
+#	
+#	Name=QUERRI (Database for North Central States)
+#	#     from hunter.unr.edu
+#	Path=
+#	Host=isn.rdns.iastate.edu
+#	Port=0
+#	Type=8
+#
+#
+# RESOURCE RESOLUTION:
+# When two or more of the input directories list the same resource, the
+# name in the output will be taken from the first input directory which
+# contained it.  For this reason, more trustworthy or better-designed
+# input directories should be listed first.
+#
+# If the following configuration variables are defined below, this program
+# will try to resolve links to WAIS indexes to a local copy:
+#	$waisdir $waishost $waispath $waisport
+#
+# If the following configuration variables are defined below, this program
+# will resolve remote go4gw links to use a local go4gw server:
+#	$go4gwhost $go4gwport @go4gwserv
+#
+# Note that "stop" operations take place *after* the above resolutions.
+#
+#
+# EXAMPLE:
+# Here is a simple shell script using linkmerge which could be called from
+# crontab.
+#
+#	#!/bin/csh -f
+#	#
+#	# Script to use linkmerge to merge several collections of
+#	# agriculture resources.
+#	#
+#	set MERGE="/foo/cwis/bin/linkmerge"
+#	set SUBJDIR="/foo/cwis/gopher/world/BySubject"
+#	
+#	if ( -f $SUBJDIR/Agriculture/.mergelinks ) then
+#		/bin/mv -f $SUBJDIR/Agriculture/.mergelinks \
+#			$SUBJDIR/.oldlinks/Agriculture
+#	endif
+#	$MERGE > $SUBJDIR/Agriculture/.mergelinks <<'EOF'
+#	merge	1/.dir/ams.taes.ag.resource	tamuts.tamu.edu	70
+#	merge	1/catalog/Agriculture	flubber.ciesin.org	70
+#	stop	1/.data/owl-eradication	tamuts.tamu.edu	70
+#	'EOF'
+#
+#----------------------------------------------------------------------------
+# History:
+# 03/18/93 PASR  Original version by Prentiss Riddle (riddle@rice.edu), but
+#                based on gopherclone by Bob Alberti
+#                (alberti@boombox.micro.umn.edu) and friends:
+#                   original NNTP client suggested by eci386!clewis
+#                   socket code by cmf@obie.cis.pitt.edu (Carl M. Fongheiser)
+#                   adaptation for gopher by emv@msen.com (Edward Vielmetti)
+#                   mods to indexer by Bob Alberti
+i# 03/25/93 PASR  Declared this version 0.1 and posted it to the net.
+#----------------------------------------------------------------------------
+#
+# CONFIGURATION -- set these variables to suit your site
+
+$debug = 0;		# Turn off for fewer comments in output
+
+# Local Gopher/WAIS configuration information.  Define these variables
+# if a Gopher server on the local machine contains an extensive directory
+# of WAIS sources and you'd rather make WAIS queries via your local Gopher
+# server than a remote Gopher server.  If you do not wish to use this
+# feature, leave these variables undefined.
+#
+# Note that the program will *look* for a matching WAIS ".src" file on
+# the local machine and only transform the link to use it if a match is
+# found.  It will look in two places: (1) the directory $dir and (2) a
+# subdirectory  of $dir consisting of the first letter of the name of
+# the WAIS source (e.g., "$dir/Foobar.src" and "$dir/f/Foobar.src").
+#
+# Variables:
+#   $waishost   hostname of your Gopher server (should be this machine)
+#   $waisport   port number of your Gopher server
+#   $waisdir    full Unix directory in which to look for WAIS sources
+#   $waispath   Gopher path (i.e., relative to the top of your Gopher tree)
+#                  of your WAIS sources
+# Example:
+#   $waishost = "gopher.foobar.edu";
+#   $waisport = 70;
+#   $waisdir = "/usr/gopher/Other/WAIS";
+#   $waispath = "/Other/WAIS";
+
+# Host and port of your local go4gw gateway and the services which it
+# provides.  Define these if you run a go4gw gateway and you wish for
+# links to be translated to use it instead of remote go4gw gateways.
+# (Note: this could backfire if there are non-go4gw paths which look
+# like go4gw ones.)
+#
+# If you do not wish to use this feature (or if you don't know what go4gw
+# does :-) ), leave these variables undefined.
+#
+# Variables:
+#   $go4gwhost   hostname of host where your go4gw gateway runs
+#   $go4gwport   port number of your go4gw gateway
+#   @go4gwserv   list of go4gw services you wish to have translated
+#
+# Example:
+#   $go4gwhost = "gopher.foobar.edu";
+#   $go4gwport = 9999;
+#   @go4gwserv = ("areacode", "ftp", "geo", "nntp");
+
+# END OF CONFIGURATION SECTION 
+#----------------------------------------------------------------------------
+#
+#Data structures:
+#
+# @merge	A list of links to Gopher directories to be merged.
+#		Its values consist of tab-separated Gopher links in the
+#		form "path<tab>host<tab>port".
+#
+# %stop		A table of links to resources to be suppressed.  Its
+#               indexes consist of tab-separated Gopher links in the
+#               form "path<tab>host<tab>port".  It returns "1"
+#		for any resource which appeared in a "stop" line on
+#		input.  Gopher links used to index it should be forced
+#               to lowercase prior to insertion or lookup in order to
+#               eliminate mismatches caused by case distinction.
+#
+# %links	A table of all of the Gopher links we've seen so far.  Its
+#		indexes consist of tab-separated Gopher links in the
+#		form "path<tab>host<tab>port<tab>type".  The values it
+#		returns are the numeric indices of the other tables
+#		here.  Gopher links used to index it should be forced
+#		to lowercase prior to insertion or lookup in order to
+#		eliminate false duplicates caused by case distinction.
+#
+# @paths	The path of each link, indexed by a value returned by
+#		$links[].
+#
+# @hosts	The host of each link, indexed by a value returned by
+#		$links[].
+#
+# @ports	The port of each link, indexed by a value returned by
+#		$links[].
+#
+# @types	The type of each link, indexed by a value returned by
+#		$links[].
+#
+# @names	The names associated with each link, indexed by a value
+#		returned by $links[].  Each value returned by $names[]
+#		can have multiple tab-separated names, but only the
+#		first is used to generate a "live" link in the output;
+#		the others are available for debugging purposes.
+#
+# @viahosts	The hosts where each link was found, indexed by a value
+#		returned by $links[].  Each value returned by $viahosts[]
+#		can have multiple tab-separated hostnames.  This
+#		information is kept for debugging purposes.
+#
+# $nlinks	Number of entries (starting with 1) in the lists indexed
+#		by %links.
+#----------------------------------------------------------------------------
+
+# Here's how to make your own socket.ph:
+#	cp /usr/include/sys/socket.h socket.h
+require 'socket.ph';  # h2ph socket
+
+# Read the input and save it into @merge and %stop.
+while (<STDIN>) {
+	chop;
+	$op = "";
+	($op, $path, $host, $port) =
+		/^(\S*) *\t([^\t]*)\t(\S+)\t(\d+)$/;
+	if ($op eq "stop") {
+		# Add it to the stop list.
+		$link = "$path\t$host\t$port";
+		$link =~ tr/A-Z/a-z/;
+		$stop{$link} = 1;
+		print("# Stop  $link\n");
+		next;
+	}
+	unless ($op eq "merge") {
+		print("# UNRECOGNIZED INPUT: $_\n");
+		next;
+	}
+	push(@merge, "$path\t$host\t$port");
+	print("# Merge $path $host $port\n");
+}
+print("#\n");
+
+# Step through the links in @merge.
+$nlinks = 0;
+while ($mergelink = shift(@merge)) {
+	print("# Merging $mergelink\n");
+	($path, $viahost, $port) = split(/\t/, $mergelink);
+
+	# Make sure the path has an initial type selector (default "1/").
+	$path =~ s#^/#1/#;
+	unless ($path =~ m#^1/#) {
+		print("#         ^ BAD PATH -- IGNORED!\n");
+		next;
+	}
+	unless ($viahost && $port && $path) {
+		print("#         ^ INCOMPLETE PATH/HOST/PORT -- IGNORED!\n");
+		next;
+	}
+	
+	chop($hostname = `hostname`);	# get host name in variable
+	($N) = &tcpconnect($viahost, $hostname);
+	unless ($N) {
+		# bad connection
+		print("#         ^ COULDN'T OPEN TCP CONNECTION $N!\n");
+		next;
+	}
+	send(N,"$path\r\n", 0)
+		|| die "Send $d to $viahost barfed with: $!\n";
+	while (<N>) {
+		last if /^\.\r\n$/;	# loop til lone period
+		if (m#^(.)(.*)\t([^\t]*)\t([^\t]+)\t(\d+)\s*$#) {
+			# We have a link to process.
+			$type = $1;
+			$name = $2;
+			$path = $3;
+			$host = $4;
+			$port = $5;
+			$host =~ s/^\s*//;
+			$host =~ s/\s*$//;
+			$name =~ s/^\s*//;
+			$name =~ s/\s*$//;
+			&normalize();
+
+			# Is this on our stop list?
+			$link = "$path\t$host\t$port";
+			$link =~ tr/A-Z/a-z/;
+			#print ("# Checking \"$link\"\n") if $debug;
+			if ($stop{$link}) {
+				print("# STOPPED $name: $path\t$host\t$port\t$type\n") if $debug;
+				next;
+			}
+
+			# Re-make the link the way %links needs it. :-(
+			$link = "$path\t$host\t$port\t$type";
+			$link =~ tr/A-Z/a-z/;
+
+			# Have we seen this one before?
+			if ($links{$link}) {
+				# Save all names & viahosts, even for
+				# links we've seen.
+				$l = $links{$link};
+				$names[$l] .= "$name\t";
+				$viahosts[$l] .= "$viahost\t";
+			} else {
+				# Nope -- save it.
+				$links{$link} = ++$nlinks;
+				$paths[$nlinks] = $path;
+				$hosts[$nlinks] = $host;
+				$ports[$nlinks] = $port;
+				$types[$nlinks] = $type;
+				$names[$nlinks] = "$name\t";
+				$viahosts[$nlinks] = "$viahost\t";
+			}
+			print("#         $name: $path\t$host\t$port\t$type\n") if $debug;
+		} else {
+			print("#         ^ BAD MATCH: $_\n");
+		}
+	}
+	close(N);
+}
+undef(%links);		# don't need this any more...
+
+# Now unroll our data structures and generate a report in the form of
+# a Gopher ".links" file.
+for ($l = 1; $l <= $nlinks; $l++ ) {
+	@thesenames = split(/\t/, $names[$l]);
+	@theseviahosts = split(/\t/, $viahosts[$l]);
+	print("\nName=$thesenames[0]\n#     from $theseviahosts[0]\n");
+	print("Path=$paths[$l]\n");
+	print("Host=$hosts[$l]\n");
+	print("Port=$ports[$l]\n");
+	print("Type=$types[$l]\n");
+	for ($i = 1; $i <= $#thesenames; $i++) {
+		print("#Also $thesenames[$i]\n");
+		print("#     from $theseviahosts[$i]\n");
+	}
+}
+
+#----------------------------------------------------------------------------
+# Normalize a gopher link prior to saving it in %linktab.
+# Our goal here is largely to resolve duplicates, but we also translate
+# some links to remote servers to use local ones if possible.
+#
+# Global variables used:
+#	$host $name $path $port $type
+#	$go4gwhost $go4gwport @go4gwserv
+#	$waisdir $waishost $waispath $waisport
+
+sub normalize {
+	local($firstchar, $service, $waissrc);
+
+	# Try to resolve WAIS sources to something available locally.
+	# Look in both $waisdir and subdirectories based on its first char.
+	if ($type eq "7" && $path =~ m#waissrc:.*/([^/*]+.src)#) {
+		# WAIS source -- is this available locally?
+		$waissrc = $1;
+		$firstchar = substr($waissrc, 0, 1);
+		$firstchar =~ tr/A-Z/a-z/;
+		if (-d $waisdir && -f "$waisdir/$waissrc") {
+			$host = $waishost;
+			$port = $waisport;
+			$path = "waissrc:$waispath/$waissrc";
+		} elsif (-d "$waisdir/$firstchar" &&
+				-f "$waisdir/$firstchar/$waissrc") {
+			$host = $waishost;
+			$port = $waisport;
+			$path = "waissrc:$waispath/$firstchar/$waissrc";
+		}
+	}
+
+	# Try to resolve remote go4gw gateways to the local one.
+	# (Note: this could backfire if there are non-go4gw paths which
+	# look like go4gw ones.)
+	if ($go4gwhost) {
+		($service) = $path =~ /^(\w*)/;
+		if ($service && grep(/$service/, @go4gwserv)) {
+			$host = $go4gwhost;
+			$port = $go4gwport;
+		}
+	}
+	if ($path =~ /^nntp / && $nntphost && $nntpport) {
+		$host = $nntphost;
+		$port = $nntpport;
+	}
+
+	# TO DO: substitute a local g2ftp gateway.
+}
+
+#----------------------------------------------------------------------------
+sub tcpconnect {                    #Get TCP info in place
+   local($host, $hostname) = @_;
+   $sockaddr = 'S n a4 x8';
+
+
+   ($name,$aliases,$proto) = getprotobyname('tcp');
+   ($name,$aliases,$port) = getservbyname($port, 'tcp')
+        unless $port =~ /^\d+$/;
+   ($name,$aliases,$type,$len,$thisaddr) = gethostbyname($hostname);
+   ($name,$aliases,$type,$len,$thataddr) = gethostbyname($host);
+
+   $this = pack($sockaddr, &AF_INET, 0, $thisaddr);
+   $that = pack($sockaddr, &AF_INET, $port, $thataddr);
+
+   sleep(2);
+
+   #socket(N, &PF_INET, &SOCK_STREAM, $proto) || die "socket: $!";
+   #bind(N, $this)                            || die "bind: $!";
+   #connect(N, $that)                         || die "connect: $!";
+   socket(N, &PF_INET, &SOCK_STREAM, $proto) || return 0;
+   bind(N, $this)                            || return 0;
+   connect(N, $that)                         || return 0;
+
+   return(N);
+}
+#----------------------------------------------------------------------------
+# end of linkmerge
+
+

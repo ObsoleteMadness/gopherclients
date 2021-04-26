@@ -1,0 +1,96 @@
+GopherVR for SGI Irix
+(ver 0.5.0)
+Freeware
+
+
+GopherVR is a 3-D environment for Gopherspace, allowing you
+to "walk around a server" and get a graphic view of its 
+contents using a simple VR-type world.  The version 0.2 
+source code was lost for many years, but has recently been
+re-discovered, and GopherVR is again in active development.
+
+This is the latest version of GopherVR for Irix, which has 
+been pre-built for an Irix 6.5.10 or higher OS. You must have 
+a compatible SGI MIPS workstation for it to function.  The 
+software has been tested on a SGI Indy and a SGI Fuel machine.
+
+
+==============
+Historic Notes
+==============
+
+Why a 3D user interface to Gopher?
+----------------------------------
+Gopher has an explicit organization and structure which is
+external to the content of the documents, so it is straightforward
+to map a 3D virtual world interface onto the existing gopher
+servers. Since the Gopher+ protocol also has provisions for open 
+ended extensions and meta-information that resides external to the
+content of documents, it is also easy for servers to give 3D-savvy
+clients the 3D spatial coordinates and orientation of objects in a
+gopher directory. This means that we can both synthesize 3D scenes
+from existing non-3D-savvy Gopher servers, and take advanatge of
+new 3D-savvy servers without reworking the contents of the
+documents published in Gopher. 
+
+Virtual world interfaces give us a powerful data visualization
+tool. GopherVR makes it possible to display clustering of documents
+which is not feasible on either a menu or a flat page. Combining 
+GopherVR with servers that catagorize and cluster collections of 
+documents will make it possible to visualize complex retationships 
+within collections. To be effective, moving about the 3D scene must 
+be fast and fluid, and GopherVR has been optimized for quick 
+navigationn within the scene without hardware Z-buffer.
+
+
+You may want to view the two Quicktime movie files to get a better 
+idea of what the VR interface is all about. 
+
+
+
+============
+Announcement
+============
+
+GopherVR 0.2 for X is now available
+
+With this software you can browse Gopher directories by driving around
+Gopherspace, navigate between gopher servers by driving through a
+series of 3D scenes, open items by clicking on them, get overviews of
+the neighborhood you are in, and view meta-information about items.
+
+Because this is an alpha-test release, we are still working on
+the software and will be doing frequent bugfix releases. Use it 
+at your own risk, and please send us bug reports and comments. 
+
+Binary versions are available for the following platforms:
+
+SunOS 4.1.3_U1
+Solaris 2.4 (sparc and X86)
+Irix 5.3
+AIX 3.2.5
+Linux
+DEC OSF/1 2.1
+
+
+New Features in GopherVR v0.2 for X
+-----------------------------------
+
+* Implemented Gopher Searches. You'll need this version to check out
+the document clustering server.
+
+* Implemented "Open Location" (aka Open URL) dialog boxes.
+
+* Fixed some memory allocations bugs.
+
+* GopherVR now runs on Linux and DEC OSF 2.1.
+
+* Sound code now works on SGIs
+
+* History listing now indents items.
+
+* Changed initial orientation for splash screen.
+
+* Miscellaneous fixes and speedups.
+
+

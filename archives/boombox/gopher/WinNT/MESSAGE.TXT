@@ -1,0 +1,85 @@
+This message is to announce the availability of a new version (0.9) of
+the  beta-test Gopher server implementation (called "GOPHERS", pronounced
+"gopher-ess") for Windows NT.  This software allows a Windows NT machine
+to serve information using the Gopher document delivery system.
+
+GOPHERS version 0.9 is a "Classic" Gopher protocol server which runs as
+a Windows NT "Service".  Executables for Intel-based systems, MIPS systems
+and DEC Aplha systems are available.
+
+This version is mostly a bug-fix release.  Please report any remaining
+bugs ASAP, because we plan to make the 1.0 release in early September.
+
+The server may be FTP'd from  emwac.ed.ac.uk  in the directory  pub/gophers.
+There are three ZIP files - one for Intel-based systems, one for MIPS-based
+systems, and one for Alpha-based systems.  Be sure you download the right
+one for your processor.
+
+You may also want to download the WAISTOOL toolkit for building and searching
+WAIS databases from the pub/waistool directory.
+
+
+New features in 0.9
+===================
+
+* Server going down and starting up is now recorded in the Application Event
+  Log.
+
+* On-line help for control panel applet now provided.
+
+* Bug fixed: log file now closed correctly when the service terminates.
+
+
+Features
+========
+
+* "Classic Gopher" protocol server.
+
+* Runs as a Windows NT "Service", so that it keeps going even
+  when there's no-one logged in to the machine.
+  
+* Handles multiple simultaneous connections using multiple threads.
+
+* WAIS database searching capability added.  You need the WAISTOOL toolkit
+  for Windows NT (also available from EMWAC) for this.
+
+* File extension -> Gopher type mapping is configurable.
+
+* Caching implemented.
+
+* "UNIX compatability mode" for those familiar with UNIX gopher servers.
+
+* Mechanism for hiding files in Gopher directory tree.
+
+* Mechanism for specifying alternate host name for use in Gopher menus.
+
+* Available for DEC Alpha, MIPS and Intel architectures.
+
+* Gopher transaction log written to text file.  New file created every
+  day.  Log file location is configurable.
+
+* Logs errors using the Windows NT Event Logger.
+
+* Configuration through the Control Panel, with configuration
+  information stored in the Registry.
+
+* Uses memory-mapped file I/O for improved performance.
+
+* Special -ipaddress option to help identify mis-configured TCP/IP software.
+
+* If there is more than one network interface in the machine, GOPHERS will listen
+  for incoming connections on all interfaces.  (I would be obliged if someone
+  can test this feature for me - I don't have access to such a machine.)
+  
+This server has been produced as part of the European Microsoft
+Windows NT Academic Centre (EMWAC) project.  EMWAC has been set up to
+support and act as a focus for Windows NT within European academia. 
+It is sponsored by Datalink Computers, Digital, Microsoft, Research
+Machines, Sequent and the University of Edinburgh.
+
+Acknowlegements to Silicon Graphics for providing a machine for the MIPS
+port.
+
+An HTTP server and a WAIS server for Windows NT are also available
+for beta test, available from the same site as above.
+

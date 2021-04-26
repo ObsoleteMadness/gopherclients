@@ -1,0 +1,93 @@
+                      GN Release 1.1
+        A Free Multi-protocol Server for Gopher and HTTP
+
+
+FEATURES:       ( *  means new in version 1.1)
+
+     o  Support for WAIS index searches. (See below) (*)
+
+     o  HTTP support -- GN serves two protocols gopher0 and HTTP/1.0,
+        the protocol used by WWW clients.  GN recognizes the protocol
+        from the request and responds appropriately. This allows the
+        use of WWW browsers like Mosaic in their native mode.
+
+     o  Per Directory Access control.
+
+     o  Support for structured files.
+
+     o  Support for compressed files.
+
+     o  Builtin menu hierarchy searches.
+
+     o  Free for any use, commercial or otherwise! (GNU license)
+
+AVAILABLE BY ANONYMOUS FTP:
+
+    FTP to: ftp.acns.nwu.edu 
+    Get file pub/gn/gn-1.1.tar.Z
+
+OR VIA GOPHER:
+
+    Server: hopf.math.nwu.edu     port 70
+    Get file:  gn-1.1.tar.Z
+
+    You can also browse the source and documentation here.
+
+
+
+Gn is a gopher/HTTP server which is written in C and runs under UNIX.
+It is freely available for any use, commercial or otherwise.  The
+software is freely redistributable under the terms of the GNU public
+license.  There is good documentation -- three man pages and an
+extensive installation and maintenance guide.
+
+Gn has "per directory" access control.  You can have different access
+(by IP address or subnet) to every directory if you want to. You don't
+need to run different servers on different ports to have different
+levels of access!  
+
+Gn supports the standard text and binary types, including sound and
+image.  Index types include programs (or shell scripts) which return
+"virtual directories" and also "grep" type searches.  GN runs only
+under inetd.  See the man page for details.
+
+Starting with version 1.1 the GN gopher/http protocol server has
+support for WAIS index searches. This means you can index a collection
+of files with the index software designed for use with WAIS (Wide Area
+Information Server) and the gn server will respond to user queries by
+providing a menu of those documents from your collection which contain
+a match for the user supplied search term. Simple boolean combinations
+like `horses and cows' or `fox not goose' are supported.
+
+WAIS index support is provided by means of an auxiliary program
+provided with the gn distribution, called waisgn. In order to use this
+program the server maintainer must first obtain and compile the WAIS
+software distribution. This provides the program waisindex which
+creates the indices and the libraries which must be linked with the
+waisgn program. When the gn server receives a WAIS index query it
+execs (in the UNIX sense) the waisgn program passing the search term
+to it. That is, it turns itself into the waisgn program by replacing
+the server in memory with the waisgn binary. There is no need to run a
+WAIS server.
+
+One reason for this design is size. The gn server is relatively small
+and hence fairly efficient. The server I run is about 64K in size. The
+waisgn program source is small but the libraries with which it must be
+linked are not. The final binary for waisgn is 400K to 500K in
+size. The design with two separate programs has several advantages.
+First the efficiency of servers which are not using WAIS is not
+degraded by its presence. Also WAIS is a complicated system to set up
+and run. Having it done with a separate program makes it much easier
+to check that things are functioning correctly and fix them if they
+are not.
+
+THANKS
+
+I would like to thank the many people who have aided in the creation
+of the GN package, either through writing code or finding and fixing
+bugs.  They include Earle Ake, Henry Cejtin, Mike Crowley, Paul
+DuBois, Don Gilbert, Jishnu Mukerji, Marko Nordberg, Jim Rees, Craig
+Milo Rogers, Stephen Trier, Ed Vielmetti, and Rico Tudor.
+
+
+

@@ -1,0 +1,201 @@
+
+VRweb 1.0 Beta 3
+================
+
+
+VRweb is a browser for 3D worlds and scenes modeled in the Virtual
+Reality Modeling Language (VRML). VRweb is a joint project between
+IICM, home of Hyper-G, NCSA, home of Mosaic, and the University of
+Minnesota, home of Gopher.
+
+
+New in this release:
+
+*** VRweb for Windows NT, 3.x, and 95; and DEC Ultrix ***
+
+*** source code available for UNIX/X11 and Windows ***
+
+* VRML samples (in VRMLsamples.tar.gz and Windows binary zips)
+
+* faster Mesa driver under X11:
+  flat shading dithered on 8bit display with no speed penalty
+  smooth shading typically 5 to 10 times faster
+  (use -mesabackbuf pixmap for old behaviour)
+
+* LOD (level of detail) supported
+
+
+
+URLs of announcements:
+
+- VRweb project (Apr 26 1995):
+  http://info.iicm.tu-graz.ac.at/T0x811b9908_0x0013fbf9
+  or in VRML mailing archive: http://vrml.wired.com/arch/1739.html
+
+- VRweb beta available:
+  http://info.iicm.tu-graz.ac.at/T0x811b9908_0x0015c9b3
+
+- VRweb technical home page -- under construction:
+  http://hgiicm.tu-graz.ac.at/Cvrweb/
+
+
+
+Supported Platforms
+-------------------
+
+UNIX:
+
+o SGI: OpenGL; Mesa
+o DEC ALPHA: OpenGL; Mesa
+o DEC Ultrix: Mesa          <-- new
+o SUN Solaris: Mesa
+o SUN OS: Mesa
+o HPUX: Mesa
+o LINUX: Mesa
+
+Windows:                    <-- new
+
+o Windows NT: OpenGL
+o Windows 3.1 and 95: Mesa
+
+The Mesa library (by brianp@ssec.wisc.edu) is an OpenGL workalike that
+supports 3D graphics through the X server protocol (it neither needs
+nor benefits from HW accelerators).
+OpenGL needs a working GLX extension for your X-server and is part of
+the Windows NT operating system.
+
+
+
+Source Code                 <-- new
+-----------
+
+VRweb source code is now availabe for UNIX/X11 and for Windows.
+
+UNIX/vrweb.src-1.0beta3.tar.gz contains the source code for UNIX/X11.
+Look at COPYRIGHT for usage conditions, and INSTALLATION for an
+installation guide.
+
+The source for the Windows is available in Windows/vrw_src.zip,
+including Makefiles for Microsoft Visual C++ 2.x. Read file readme.src
+as installation guide.
+
+
+
+How to use VRweb for UNIX/X11
+-----------------------------
+
+With your Web viewer you will need an entry similar to:
+
+  x-world/x-vrml; vrweb-ogl %s
+
+in your ~/.mailcap (use vrweb-mesa on non-SGI platforms).
+
+Decompression should be dealt with by your web browser. If not, you
+can hardwire gzipped decompression, for example, as follows:
+
+  x-world/x-vrml; gzip -cd %s | vrweb-ogl -
+
+With Harmony (the Hyper-G UNIX/X11 client) use the appropriate version
+of harscened (more information on http://hyperg.iicm.tu-graz.ac.at).
+
+Call any program with argument -h to get a short explanation of
+possible arguments.
+
+
+
+Features
+--------
+
+Support of VRML 1.0 using QvLib 1.0 as parser. Invalid VRML nodes
+(read Inventor) are reported and ignored.
+Grouping, Separators, Coordinates, Normals, Materials,
+Cameras, Light sources, Transformations, primitive shapes,
+IndexedFaceSet, IndexedLineSet, PointSet, MaterialBinding.
+Since July 17: ShapeHints. Since Aug 3: LOD (level of detail).
+
+Several navigation modes: "flip", "walk", "fly", "heads up".
+Flip is a kind of examiner, heads-up is an easy to use walk
+viewer. Note the short hints in the status line.
+
+Optional switching to a lower quality during movements.
+
+
+
+Not Yet Supported
+-----------------
+
+Among the not supported VRML features in the current beta are
+the nodes dealing with text (AsciiText, FontStyle), and texturing.
+
+A port of navigation mode "fly to" is under work.
+
+WWWAnchor is not yet supported, WWWInline only in the harmony
+version. A version with Mosaic CCI support will come out soon.
+
+
+
+How to Get It
+-------------
+
+VRweb is available by anonymous ftp from:
+
+  IICM         ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G/VRweb
+
+and from the following mirror sites:
+
+  Austria      ftp://ftp.tu-graz.ac.at/pub/Hyper-G/VRweb
+  Germany      ftp://elib.zib-berlin.de/pub/InfoSystems/Hyper-G/VRweb
+               ftp://ftp.ask.uni-karlsruhe.de/pub/infosystems/Hyper-G/VRweb
+  Italy        ftp://ftp.esrin.esa.it/pub/Hyper-G/VRweb
+  Sweden       ftp://ftp.sunet.se/pub/Networked.Information.Retrieval/Hyper-G/VRweb
+  New Zealand  ftp://ftp.cs.auckland.ac.nz/pub/HMU/Hyper-G/VRweb
+  UK           ftp://unix.hensa.ac.uk/mirrors/Hyper-G/VRweb
+  USA          ftp://ftp.ncsa.uiuc.edu/Hyper-G/VRweb
+               ftp://ftp.utdallas.edu/pub/Hyper-G/VRweb
+
+
+
+Mailing list                <-- new
+------------
+
+A mailing list for VRweb is available, where you can send questions
+and get feedback from the developers and other VRweb users.
+
+To subscribe, send mail to
+
+	listproc@iicm.tu-graz.ac.at
+
+with message body
+
+	subscribe vrweb YourNameHere
+
+(no subject needed).
+
+
+To unsubscribe, mail "unsubscribe vrweb" to the same address.
+
+To send mail to all members of the list, simply compose your
+message or question and send it to vrweb@iicm.tu-graz.ac.at
+
+
+
+Feedback
+--------
+
+Please note that VRweb is unsupported software, but feedback is very
+welcome. Please send bug reports, questions, etc. to
+
+	vrweb-bugs@iicm.tu-graz.ac.at
+
+We read all of your mail, but cannot guarantee to respond to every
+single mail.
+
+
+
+
+
+July 5  1995.
+July 17 1995.
+Aug  4  1995.
+
+                                        Michael Pichler

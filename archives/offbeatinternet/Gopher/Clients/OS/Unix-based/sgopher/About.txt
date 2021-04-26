@@ -1,0 +1,17 @@
+sgopher
+(ver 0.3)
+Freeware
+
+
+Sgopher is a simple gopher client intended for VMS, IRIX, Ultrix, AIX,
+and Solaris.  It was designed so that anyone with a telnet program 
+could run a gopher client.  Item Types that the software can handle are
+limited to Index, Text, and Directories (which means that this software
+is essentially just a Gopher based text viewer).  
+
+
+=====
+
+Note that I am unable to separate out the "Wollongong VMS" client from 
+the other Unix-based software mixed in with this file.  
+

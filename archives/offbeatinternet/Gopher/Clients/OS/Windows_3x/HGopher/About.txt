@@ -1,0 +1,15 @@
+HGopher
+(ver 2.4)
+Freeware
+
+
+HGopher is a SDI (Single Document Inferface) window with back/forward buttons. 
+There is no installer.  All files are self-contained within the programs
+own directory (which can be anywhere and named anything).  
+
+
+Note:
+The included bookmark page has many dead links.  The file where these 
+bookmarks are stored is a simple (modifiable) text file called "DEFAULT.GBM".  
+
+

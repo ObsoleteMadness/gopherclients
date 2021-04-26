@@ -1,0 +1,9 @@
+NeXT Gopher Client
+(ver 1.3.2)
+Freeware
+
+
+This client for NeXT computers was a collaborative
+effort that included input from Gopher luminaries 
+Jim LeBay, David Lacey and Paul Lindner.  
+

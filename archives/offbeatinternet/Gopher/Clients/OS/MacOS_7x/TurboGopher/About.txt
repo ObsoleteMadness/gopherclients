@@ -1,0 +1,18 @@
+TurboGopher
+(ver 2.0.3)
+Freeware
+
+
+TurboGopher is a MDI (Multiple Document Inferface).  
+TurboGopher is one of the fastest, most powerful Gopher clients 
+available on any platform, from the very people who created Gophering. 
+It's multithreaded, and comes with a copy of Thread Manager 2.1 just in 
+case you need it. There are other gopher programs out there, but they 
+all stopped being developed a long time ago. TurboGopher is really the 
+only viable choice--and that's not a bad thing!
+
+
+Warning: TurboGopher will NOT work on MacOS version 10.4.4 or higher for 
+Intel processors, or any version of MacOS 10.5 or higher.  
+
+

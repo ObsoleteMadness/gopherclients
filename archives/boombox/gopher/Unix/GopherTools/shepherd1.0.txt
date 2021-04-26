@@ -1,0 +1,24 @@
+/****************************************************************/
+/*      Shepherd Version 1.0 (05/26/94)                         */
+/****************************************************************/
+/*      Written by:                                             */
+/*              Gil Funk                                        */
+/*              Gilbert_Funk@umail.umd.edu                      */
+/*              Academic Software Integration & Development     */
+/*              Computer Science Center                         */
+/*              University of Maryland, College Park            */
+/****************************************************************/
+
+This directory contains the source code and executable for the 
+Shepherd program.  
+
+WHAT IS IT?
+Shepherd is a utility which monitors stand-alone information
+servers like Gopher, WAIS, WWW, Jughead, and Submit to make sure
+they are responding.  If they don't respond then they are 
+restarted automatically.  It is intended for Unix Systems since
+it uses /etc/rc.local to get a list of servers to check and 
+should be run by the crontab every 5 or 10 minutes.  Works great!
+
+For more information contact Gil Funk via Gilbert_Funk@umail.umd.edu
+

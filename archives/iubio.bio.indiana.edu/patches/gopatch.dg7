@@ -1,0 +1,61 @@
+Patch #:	gopatch.dg7
+Type:		bug fix 
+Priority:	low
+Summary:	Eliminate extra Date'n'Sizes from titles of items 
+Summary:	w/ multiple views
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg7
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.c
+
+
+*** gopher2.012/gopherd/gopherd.c	Tue Mar  8 12:11:16 1994
+--- go212dg/gopherd/gopherd.c	Wed Mar 30 12:41:05 1994
+***************
+*** 1542,1548 ****
+  {
+       int           fd, i;
+       char         longname[256];
+!      char         *cdate, *ti, *fp;
+       
+       switch (GSgetType(gs)) {
+       case '1': /*** It's a directory ***/
+--- 1556,1562 ----
+  {
+       int           fd, i;
+       char         longname[256];
+!      char         *cdate, *ti, *fp, *stitle;
+       
+       switch (GSgetType(gs)) {
+       case '1': /*** It's a directory ***/
+***************
+*** 1555,1566 ****
+  	  break;
+       default:
+       {
+  	  cdate= ctime( &statbuf.st_mtime); /* last mod time */
+  	  cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
+! 	  sprintf( longname, "%s  [%s%s%s, %ukb]", GSgetTitle(gs),
+  		  cdate+8,cdate+4,cdate+22, (statbuf.st_size+1023) / 1024);
+  	  GSsetTitle(gs,longname);
+       }
+  	  break;
+       }
+  }     
+--- 1569,1583 ----
+  	  break;
+       default:
+       {
++ 	  stitle= GSgetTitle(gs);
++ 	  if (strstr( stitle,"kb]")==0) { /* dgg 30mar94 -- correct for multple view items */
+  	    cdate= ctime( &statbuf.st_mtime); /* last mod time */
+  	    cdate[ 7]= 0; cdate[10]= 0; cdate[24]= 0;
+! 	    sprintf( longname, "%s  [%s%s%s, %ukb]", stitle,
+  		  cdate+8,cdate+4,cdate+22, (statbuf.st_size+1023) / 1024);
+  	    GSsetTitle(gs,longname);
+  	    }
++      }
+  	  break;
+       }
+  }     

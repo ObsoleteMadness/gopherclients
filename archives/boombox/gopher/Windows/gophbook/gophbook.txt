@@ -1,0 +1,73 @@
+The Gopher Book 1.0
+4/23/93
+
+(see manual.txt for copyright and usage information)
+
+RELEASE NOTES
+-------------
+Location
+	- sunsite.unc.edu pub/micro/pc-stuff/ms-windows/winsock/gophbook.zip
+	- ftp.cnidr.org pub/NIDR.tools/Gopher/pc/windows/gophbook.zip (soon)
+
+New in this release
+	- All of it!
+	
+Not in this release
+	- CSO support.
+	
+Known Bugs
+	- The Toolbook list box can't seem to handle more
+	than 130 lines(?).  Therefore, if you turn to a 
+	Gopher page that has more than 125 items, you are
+	warned that only 125 will be received.  Doesn't
+	seem like you would want Gopher pages with that
+	many items anyway, ie we lose our simplicity!
+
+	- Actually drawing the items on the screen is 
+	SLOW!  If you notice, the mouse cursor turns from
+	a black hole to an hour glass.  The hole represents
+	network activity, the hourglass local activity.
+	Its interesting to note that most of the time, the
+	network activity is much faster than the local.  Hmmm.
+
+Future Stuff
+
+	- More useful bookmarking scheme.  Suggestions?
+
+Files
+
+	bookmark.ini	- Init file containing bookmarks
+	gophbook.ini	- Configuration info
+	gopher03.tbk	- Toolbook Gopher application
+	manual.txt	- User's Manual
+	nirsdk.dll	- Gopher protocol and TCP/IP API
+	ps.exe		- Paint Shop shareware application
+	ps.hlp		
+	ps.wri		
+	release.txt	- Release Notes
+	tbkbase.dll	- Toolbook runtime distribution files.
+	tbkcomp.dll
+	tbkdb3.dll
+	tbkdlg.dll
+	tbkfile.dll
+	tbknet.exe
+	tbkutil.dll
+	tbkwin.dll
+	tbook.exe
+
+Installing The Gopher Book
+
+	1)  Copy GOPHBOOK.ZIP to an appropriate directory
+	2)  Execute PKUNZIP.EXE -d GOPHBOOK.ZIP.  A subdirectory named
+		GOPHBOOK will be created containing the files indicated
+		in RELEASE.TXT
+	3)  From the Windows Program Manager, select 'File', 'New'.
+	4)  Select 'Group Item' and create a group named "Gopher Book 1.0"
+	5)  Again select 'File', 'New'.
+	6)  Select 'Program Item' and enter the following information:
+		Description:  The Gopher Book 1.0
+		Command Line: <path>\GOPHBOOK\TBOOK.EXE GOPHBOOK.TBK
+		Working Dir: <path>\GOPHBOOK
+		Shortcut: None
+	7)  Double click on the icon and start Gophering!
+

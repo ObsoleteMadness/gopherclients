@@ -1,0 +1,109 @@
+PC Gopher v1.20
+
+PC Gopher is an internet Gopher Protocol client designed  to  run
+on  IBM  and  compatible  microcomputers.
+
+In order for PC Gopher to talk to your ethernet card,  you must
+run  a  copy  of  the  appropriate  packet.  A small sample of the available
+packet  drivers  (from  Clarkson  College) is included  in   this
+directory;  if  you  can't find one that works with your ethernet
+card the complete collection is available via anonymous ftp  from
+sun.soe.clarkson.edu, in the directory /pub/ka9q.
+
+Version Notes
+
+As of version 1.1, you no longer need the separate TCP/IP driver
+called IBMTCP.DVR.  If you had an older version of PC Gopher, you
+may have a copy of this file; just delete it, since it's no longer
+necessary.
+
+As of this version, the format of the configuration file CONFIG.IGP has
+changed.  Delete any old copies of this file BEFORE running PC Gopher
+for the first time.
+
+Configuration
+
+To run the Gopher program, you must  provide  some  site-specific
+configuration  information.   To enter this information, choose
+"Configure" from the Options menu; after you have filled in all of the
+fields (described below),  the  Gopher  will  write  all  of  the
+information to disk in a textfile called CONFIG.IGP.
+
+The required config info is:
+
+        1. Name of a gopher server.  You are welcome to  use  our
+           server, which goes by the name of 
+		   gopher.micro.umn.edu
+
+        2. Port number that the gopher server  listens  on.   For
+           our gopher server, this is currently port 150.
+
+If you don't have a BOOTP server, you must also enter:
+
+        3. The IP address of your  nameserver.   You  must  enter
+           this information in order for the Gopher to resolve names
+           into IP addresses.
+
+			4. The IP address  of  your  default  gateway.   This  is
+			sometimes referred to as the "default route" or 
+			"default router".
+
+   		5. The IP address of your microcomputer.
+
+   		6. The netmask in use on your campus.
+
+If you are on a slow or busy network, you may need to adjust the following
+timeouts upwards; if not, you can just use the defaults:
+
+   		7. The number of seconds to wait for input before timing out.
+
+   		8. The number of seconds  to  wait  for  a  connection  to  be
+      	completely set up.
+
+   		9. The number of seconds  to  wait  for  name  lookups  to  be
+      	completed.
+
+Once you have entered all of the information, click on  the  "OK"
+button  (or  use  the  tab  key  to  tab until the "OK" button is
+higlighted, and hit the return key).  The program will write  its
+config file to the current directory, and you're ready to go!
+
+
+Running The Program
+
+To start the program, choose "New Gopher" from the File menu.  As
+soon  as  the  Gopher  window  opens, the program will attempt to
+connect to the server you've specified in the config dialog  box;
+it  will  request a listing of the root level of the server.  The
+listing that you get back will look like this:
+
+<F> About Gopher  
+<D> Administrative Information
+<D> Academic Research Tools 
+<I> Search everything
+
+The first character of  each  line  indicates  whether  the  line
+refers  to  a  file, a subdirectory, or an index server.  You can
+double-click with the mouse on any file or  subdirectory  to  see
+its  contents  (or  use the arrow keys to choose an entry and hit
+the return key); if you choose an index  server, a dialog box
+will pop up, allowing you to enter a search string.  To start the
+search, click on the "OK" button (or hit the return key).
+
+At  any  time,  you  can  navigate  back  up   a   heirarchy   of
+subdirectories by clicking on the "Go Back" button (or tabbing until
+the button is highlighted, and then hitting the return key).
+
+
+Bug Reports, Suggestions, Etc.
+
+Your suggestions for the PC Gopher client are  welcomed,  as  are
+bug reports.  Send mail to:
+
+                gopher@boombox.micro.umn.edu
+
+If you wish, we will add you to the gopher-news mailing list, and you
+will get news about new releases via email.  To request to be added to the
+list, send mail to gopher-news-request@boombox.micro.umn.edu.
+
+

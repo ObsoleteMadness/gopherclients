@@ -1,0 +1,279 @@
+; GopherPup.defaults 
+; version of this default file -- used to keep prefs updated
+
+[version=10]
+[general]
+gOptionIsOn=1
+gShortFolder=0
+gFetchSingles=0
+gAutoloadInlines=0
+
+[goview]
+gIconSize=1
+gShowDate=1
+gShowSize=1
+gShowKind=0
+gShowPath=0
+gShowHost=1
+gShowPort=0
+
+;
+; GopherPup Type Mapping resource
+;
+[gpmap-types]
+;id=    gopher+-mime name/  transfer-translation(optional)/
+; translation: text=cr-lf to local-newline, none=no translation (default)
+text=text/plain text/-
+rtf=text/RTF application/RTF  
+html=text/html internet/html
+ntxt=netdoc/plain
+nrtf=netdoc/rtf
+npic=netdoc/pict
+ngif=netdoc/gif 
+
+post=application/Postscript text/Postscript
+word=application/MSWord text/MSWord4 text/MSWord5
+macw=application/MacWriteII text/MacWrite
+wprf=application/WordPerfect5.1 text/WordPerfect51
+tsv=text/Tab-Separated-Values
+csv=text/Comma-Separated-Values
+mswt=application/Microsoft-write
+dca=application/dca-rft
+tex=text/x-tex
+dvi=text/x-dvi
+roff=text/x-troff
+
+goph=application/gopher-menu internet/gopher-menu
+gopl=application/gopher+-menu internet/gopher+-menu
+ques=internet/gopher-query
+note=internet/gopher-note
+err=internet/error
+cso=internet/cso
+who=internet/whois
+fing=internet/finger
+mail=internet/mailto 
+http=internet/http
+ftp=internet/ftp
+
+file=file/-
+hqx=file/hqx
+sit=file/sit
+tarz=file/tar.Z
+tar=file/tar
+lzw=file/Z
+zip=file/pkzip file/zip application/zip
+zoo=file/zoo
+arc=file/arc
+larc=file/Lharc
+pcex=file/pcexe
+macb=file/macbinary
+uue=file/uuencode
+vbck=file/vmsbackup
+vsav=file/vmssave
+imag=image/-
+gif=image/gif
+pict=image/pict
+jpeg=image/jpeg
+tiff=image/tiff
+pcx=image/pcx
+;vide=video/-
+moov=video/quicktime
+mpeg=video/mpeg
+;audi=audio/-
+sond=audio/basic
+mulw=audio/mulaw
+mwav=audio/microsoft-wave
+teln=terminal/telnet
+tibm=terminal/tn3270
+moo=terminal/moo
+
+
+[gpmap-gopher0]
+;server type= local gopher0 type/  local id
+text=0  0
+goph=1  1
+cso=2   2
+err=3   3
+hqx=4   4
+file=5  9
+file=6  9
+ques=7  7
+teln=8  8
+file=9  9
+sond=s  s
+who=w   w
+imag=I  I
+gif=g   I
+note=i  i
+tibm=T  T
+html=h  h
+moov=;  ;
+
+
+[gpmap-server-suffix]
+;id= server-suffix(es) -- this is error-prone
+text=.txt   .text   .doc
+post=.ps
+rtf=.rtf
+word=.word
+wprf=.wperf .wp
+csv=.csv
+tsv=.tsv
+tex=.tex
+dvi=.dvi
+roff=.troff
+jpeg=.jpg   .jpeg   .jfif
+gif=.gif
+tarz=.tar.Z
+tar=.tar
+lzw=.Z
+zip=.zip
+arc=.arc
+zoo=.zoo
+hqx=.hqx
+pcex=.exe
+uue=.uue    .uu
+vbck=.bck
+vsav=.sav
+
+
+[gpmap-local-mac]
+;type=precedence  transferkind  handling    MacType/Sire    HandlerApp
+gopl=100  binary   internal	IGo4/IGop	GopherPup
+goph=10  binary   internal	IGo4/IGop	GopherPup
+err=1   binary   internal
+ques=100  binary   internal
+note=100  binary   internal
+text=100  text     internal    TEXT/R*ch   BBEdit
+rtf=200   binary   internal    TEXT/MSWD  'MicroSoft Word'
+html=150  text     internal	  TEXT/R*ch   BBEdit
+mail=100  text     internal	  TEXT/R*ch   BBEdit
+http=100  text     internal	  TEXT/R*ch   BBEdit
+pict=250  binary   internal	  PICT/JVWR   JPEGView
+gif=150   binary   internal    GIFf/JVWR	  JPEGView
+ntxt=4    text     internal    TEXT/R*ch   BBEdit
+nrtf=300  binary   internal    TEXT/MSWD  
+npic=350  binary   internal    PICT/JVWR   JPEGView
+ngif=250  binary   internal    GIFf/JVWR	  JPEGView
+;net methods w/o handler
+ftp=0   binary   none
+cso=0   binary   none
+who=0   binary   none
+fing=0  binary   none
+
+post=2  binary   none        TEXT/????
+word=10 binary    launch      WDBN/MSWD   'MicroSoft Word'
+wprf=9  binary   launch      WDBN/MSWD   'MicroSoft Word'
+csv=2   text   launch      TEXT/XCEL   'MicroSoft Excel'
+tsv=2   text   launch      TEXT/XCEL   'MicroSoft Excel'
+tex=1   binary   none        TEXT/????
+roff=1  binary   none        TEXT/????
+jpeg=10  binary   launch      JPEG/JVWR   JPEGView
+imag=9  binary   launch      GIFf/JVWR   JPEGView
+tarz=2  binary   launch      ZIVU/LZIV   MacCompress
+tar=1   binary   launch      TARF/TAR    Tar
+lzw=1   binary   launch      ZIVU/LZIV   MacCompress
+zip=2   binary   launch      pBIN/pZIP   UnZip
+hqx=5   binary   launch      TEXT/SITx   'Stuffit Expander'
+uue=2   text     none        TEXT/????
+teln=10  binary   launch      CONF/NCSA   'NCSA Telnet'
+moov=10  binary   launch      MooV/TVOD   'Simple Player'
+mpeg=10   binary   launch     MPEG/mMPG   'Sparkle'
+mulw=10  binary   launch      ULAW/ULPY   'UlawPlay'
+
+[gpmap-local-unix]
+;type=  precedence  handling    suffix  handler-exec-call
+gopl=100  binary   internal	.go4
+goph=10  binary   internal	.go4
+err=1   binary   internal
+ques=100  binary   internal
+note=100  binary   internal
+text=100  text     internal    .text
+rtf=200   binary   internal    .rtf
+html=150  text     internal	  .html
+mail=100  text     internal	  .text
+http=100  text     internal	  .html
+pict=250  binary   internal	  .pict
+gif=150   binary   internal    .gif
+ntxt=4    text     internal    .text
+nrtf=300  binary   internal    .rtf
+npic=350  binary   internal    .pict
+ngif=250  binary   internal    .gif
+; no handlers yet
+ftp=0   binary   none
+cso=0   binary   none
+who=0   binary   none
+fing=0  binary   none
+
+word=1  binary   none    .word
+wprf=1  binary   none    .wperf
+csv=2   text     internal    .csv
+tsv=3   text     internal    .tsv
+tex=5   binary   none    .tex
+dvi=5   binary   none    .dvi
+roff=10  binary   launch  .troff  'nroff $file'
+imag=10  binary   launch .gif 'xv  $file'
+jpeg=15  binary   launch .jpeg 'xv  $file'
+post=20  binary   launch .ps 'pageview  $file'
+tarz=10  binary   launch  .tar.Z  '/bin/sh -c "zcat $file | tar tf -"'
+tar=9   binary   launch  .tar    'tar tf $file'
+lzw=8   binary   launch  .Z      'uncompress $file
+zip=10   binary   launch  .zip    'unzip -l $file'
+arc=2   binary   none    .arc
+zoo=2   binary   none    .zoo
+hqx=1   binary   none    .hqx
+pcex=1  binary   none    .exe
+uue=10   text   launch  .uue    'uudecode $file'
+vbck=1  binary   none    .bck
+vsav=1  binary   none    .sav
+
+
+[gpmap-local-msdos]
+;type=  precedence  transfertype handling    suffix  handler-exec-call
+gopl=100  binary   internal	.go4
+goph=10  binary   internal	.go4
+err=1   binary   internal
+ques=100  binary   internal
+note=100  binary   internal
+text=100  text     internal    .text	'notepad  $file'
+rtf=200   binary   internal    .rtf	'winword  $file'
+html=150  text     internal	  .html
+mail=100  text     internal	  .text	'notepad  $file'
+http=100  text     internal	  .html
+pict=250  binary   internal	  .pict
+gif=150   binary   internal    .gif
+ntxt=4    text     internal    .text	'notepad  $file'
+nrtf=300  binary   internal    .rtf	'winword  $file'
+npic=350  binary   internal    .pict
+ngif=250  binary   internal    .gif
+; no handlers yet
+ftp=0   binary   none
+cso=0   binary   none
+who=0   binary   none
+fing=0  binary   none
+
+post=2  binary   external .ps   'gsview   $file'
+word=10  binary   external .wrd   'winword  $file'
+wprf=9  binary   external .wp    'wp  $file'
+csv=2   text     external .csv   'excel  $file'
+tsv=3   text     external .tsv   'excel  $file'
+tex=0   binary   none    .tex
+dvi=0   binary   none    .dvi
+roff=0  binary   none    .trf
+imag=9  binary   external .gif 'wingif  $file'
+jpeg=10  binary   external .jpg 'jview386  $file'
+pcx=2   binary   external .pcx 'wingif  $file'
+tarz=2  binary   external .taz 'tar -,tvf  $file'
+tar=2   binary   external .tar  'tar -tvf  $file'
+lzw=0   binary   none     .z   
+zip=10   binary   external .zip   'pkunzip  $file'
+arc=0   binary   none    .arc
+zoo=0   binary   none    .zoo
+hqx=0   text     none    .hqx
+pcex=0  binary   none    .exe
+uue=0   text     none    .uue
+vbck=0  binary   none    .bck
+vsav=0  binary   none    .sav
+mwav=10  binary   external .wav  'mplayer  $file'
+
+

@@ -1,0 +1,43 @@
+This is my first releace of gonnrp.  I am sure I forgot to explane
+something here.  If you have trouble write me.
+
+gonnrp is my rewritten version of gonntp that uses INN's fast xhdr
+(because of overview) instead of tin's xindex.
+
+gonnrp breaks newsgroups down into menus at each '.'.
+Example:
+
+                  Internet Gopher Information Client v1.12-ecn
+ 
+                 clari - ClariNet UPI wireservice news (gonnrp)
+ 
+ -->  1.  *** REQUIRED READING *** ClariNet Copyright Information ***.
+      2.  biz - Business/
+      3.  canada - Canadian Standard Broadcast Wire Service/
+      4.  feature - /
+      5.  local - Regional news/
+      6.  nb - NewsBytes computer industry news service/
+      7.  net - News and discussion about ClariNet/
+      8.  news - /
+      9.  sfbay - /
+      10. sports - /
+      11. streetprice - A group for prices of computer products.  (Moderated)/
+      12. tw - TechWire, technology and topics related to technology/
+
+This makes smaller more readable menus.
+
+Other gonnrp features:
+
+  o gonnrp understands newsgroups names with '_'s in them.
+
+  o gonnrp reads a dbm version of the newsgroups file to put the
+    purposes of the newsgroups in the menus.
+
+You need the following files: (from uxa.ecn.bgu.edu:/pub/gopher/gonnrp)
+README				(this file)
+how_to_gonnrp			(what you need to know to use gonnrp)
+gonnrp				(the program [in perl])
+build-newsgroups-db		(builds the newsgroups dbm file)
+dotall				(used by build-newsgroups-db)
+
+Chad Adams  5-May-1993

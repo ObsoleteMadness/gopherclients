@@ -1,0 +1,41 @@
+About Acrobat Reader ...
+
+What's New in Acrobat Reader 2.0.1 for Macintosh?
+=================================================
+
+Acrobat Reader 2.0.1 now runs when QuickDraw GX is enabled.
+Acrobat Reader 2.0.1 now includes full ATM(TM) 3.8.2. 
+
+Should I Use Acrobat Reader 2.0r3 or 2.0.1?
+===========================================
+
+In general, Adobe recommends you use Acrobat Reader 2.0.1. 
+
+There are no feature differences between Acrobat Reader 2.0r3 and
+Acrobat Reader 2.0.1. You may choose to use the version
+appropriate to your system configuration. If you are
+redistributing the Reader, you should consider the system
+configurations of your intended audience. 
+
+ o If your system is a 68XXX-based Macintosh without QuickDraw GX,
+   you may use Acrobat Reader 2.0r3. Acrobat Reader 2.0r3 has
+   smaller disk and memory requirements, but supports fewer
+   platform configurations. 
+
+ o If your system is a Power Macintosh or you have QuickDraw GX
+   enabled, use Acrobat Reader 2.0.1. Acrobat Reader 2.0.1
+   supports more systems, but has greater disk and memory
+   requirements. 
+
+Acrobat Reader 2.0r3 includes ATM LE. To enable Acrobat Reader
+2.0r3 and ATM LE to fit on a single floppy, ATM LE does not
+include support for QuickDraw GX, Kanji, or 68000-based
+Macintoshes, and does not have native Power Macintosh code for
+improved performance on Power Macintoshes like the full version of
+ATM which is included with Acrobat Reader 2.0.1. The Acrobat
+Reader 2.0r3 application is not compatible with QuickDraw GX. 
+
+Acrobat Reader 2.0.1 supports QuickDraw GX and includes full
+ATM(TM) 3.8.2. 
+
+

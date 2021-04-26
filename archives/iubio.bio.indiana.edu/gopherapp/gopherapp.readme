@@ -1,0 +1,44 @@
+GopherApp is an Internet information service program for 
+Macintosh computers.  It provides a Finder-like link to the range 
+of Internet Gopher services.
+
+GopherApp is being written by Don Gilbert, using the MacApp 
+extensible Macintosh programming framework from Apple Computer.
+It is actually a subset of a biosequence analysis program
+called SeqApp.  
+
+To use GopherApp, your Mac must have a network connection to the 
+Internet, and it must have MacTCP installed and operating (as 
+with NCSA Telnet, Eudora, network news and similar MacTCP-based 
+Internet programs).
+
+You may obtain GopherApp thru anonymous ftp to ftp.bio.indiana.edu, in 
+folder /util/gopher, as gopherapp.hqx. You may also obtain updates 
+using Gopher to this same IUBio archive (host=ftp.bio.indiana.edu,
+port=70). Look for a folder called "IUBio Software+Data/GopherApp".
+
+Comments, bug reports and suggestions for new features
+may be addressed via e-mail to
+
+	     Software@Bio.Indiana.Edu
+
+                                             -- Don Gilbert
+	
+History
+ 
+29 Sep 92, v 1.3b57  Only change over previous release is addition of
+	display of text files with greater than 32,000 characters.  What a simple
+	addition, and the Marvels of MacApp/OOP let me fold in this change from
+	SeqApp into GopherApp with just one compile.
+	
+7 Jul 92, v 1.3b52 Various bug fixes to GopherApp, including
+  long paths (>255 char) so now all wais searches should work,
+	mapping to mac types extended to Gopher types, so e.g.,
+	  new gopher types can be incorporated thru user-editable map ('T'->'8' or 'g'->'9'),
+		or change default behavior (have '0' text always displayed by favorite text editor),
+	binhex transfer is revised, now is a lot FASTER,
+	fixed "Save" bug when file openned from finder,
+	pref: small icon views enabled,
+	pref: disabled edit/new link unless smart user flips switch,
+	pref: dropped "same window",
+	pref: require user locate diggings folder before attempting to use it,

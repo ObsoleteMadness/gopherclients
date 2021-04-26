@@ -1,0 +1,27 @@
+This is a prerelease version of xvgopher 1.0
+I make these executables available to get feedback on the interface.
+The sources are not ready for release, yet; I am still working on it.
+
+Known problems with this prerelease are:
+
+	- No bookmarks!  This is next on the list of things to fix.
+	- The cut and paste in the action preferences do not work.
+	- The directory filter doesn't filter on dates or types, yet.
+
+There are two statically linked executables for the SunOS 4.X environment.
+
+	- xvgopher.static.NIS
+	  This one is linked with the standard Sun NIS library.  Use this if
+	  you do not have a /etc/resolv.conf
+	- xvgopher.static.resolver
+	  This one is linked with libresolv.a.  Use this if you DO have
+	  /etc/resolv.conf
+
+Both programs will try to contact a local host named 'gopher' at port 70.
+You can change this on the command line.
+
+If you have any problems with either of these executables, let me know and
+I'll try to fix it.
+
+Please send problems, suggestions, etc. to Andrew@SDSU.Edu
+

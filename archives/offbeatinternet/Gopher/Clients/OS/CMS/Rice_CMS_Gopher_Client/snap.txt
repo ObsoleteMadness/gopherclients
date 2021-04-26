@@ -1,0 +1,24 @@
+Rice CMS Gopher 2.4.0                            GOPHER.SQUIRREL.COM
+1/8
+
+                             (root menu)
+ Information about the Squirrel Gopher Server
+ What's new in the Squirrel Gopher
+
+         Network Resources, Services and Information
+        Squirrel staff directory
+
+              Squirrel Human Resources Information
+
+                   Potpourri, Miscellaneous Topics
+
+                        Local Squirrel Archives
+
+                    _      Other Gopher Servers
+
+
+1= Help      2=          3= Return    4= Print     5= Receive  6= Find
+7= Backward  8= Forward  9= Bookmark 10= Booklist 11=         12= Quit
+
+
+

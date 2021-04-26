@@ -1,0 +1,206 @@
+Newsgroups: bionet.software
+Path: bio.indiana.edu!bronze!sunflower.bio.indiana.edu!gilbertd
+From: gilbertd@sunflower.bio.indiana.edu (Don Gilbert)
+Subject: Genbank key search & fetch thru IUBio Gopher hole (long)
+Message-ID: <1992Feb17.023313.4530@bronze.ucs.indiana.edu>
+Sender: news@bronze.ucs.indiana.edu (USENET News System)
+Nntp-Posting-Host: sunflower.bio.indiana.edu
+Organization: Biology, Indiana University - Bloomington
+Date: Mon, 17 Feb 92 02:33:13 GMT
+Lines: 195
+
+
+This rather long note is in response to questions about what to make
+of Internet Gopher, WAIS and other Internet information searching
+methods, and specifically how does this relate to Genbank keyword
+searching and entry fetching, as compared with the IRX service at
+genbank.bio.net, and perhaps to e-mail services.
+
+I see Gopher as potentially the best of the lot, though it doesn't 
+exclude the usefulness of any of the others.  But I don't want to 
+debate merits now, rather to let you know there is now a Gopher server 
+for Genbank that you can try and compare with the others.
+
+Internet gopher is pretty easy to learn to use.  Gopher and WAIS provide 
+somewhat different protocols for serving information out to clients over the
+Internet.  Gopher is strong on browsing -- you can find new things just by
+pointing at lists.  WAIS is strong on linking together many dispersed
+servers to answer a given question.  I think they both are good, but I
+think Gopher is an order of magnitude easier to learn, and install, and 
+consequently will be more useful to more people.  
+
+They both provide simple client and server programs, including
+a way to index text files and to query that index for key word searches. 
+Gopher in fact relies on the WAIS indexing and searching routines.  However,
+both of these protocols encourage customization of the searching service
+as needed.  
+
+I've done some of that with the Gopher server at IUBio archive.  Over the
+weekend, I installed the complete NCBI/GenBank FlatFile release, indexed
+it with a modified waisindex, and put up questions in the gopher hole
+to use this.
+
+You can, for instance, fetch a single sequence entry by providing
+its accession number or locus name as the question:
+   Genbank fetch by accession number <?>
+   X51902
+   -- will fetch the sequence "Alcaligenes eutrophus gene for 10Sa RNA"
+
+Or you can provide key words:
+  Genbank search by def/key/source/author <?>
+  Acanthamoeba castellanii
+  -- will list all sequences of that species of amoeba.
+
+The boolean operator NOT can be used to restrict your selection keys:
+  Genbank search by def/key/source/author <?>
+  Acanthamoeba castellanii and not RNA
+  -- will list/fetch all of that species excluding RNA sequences
+
+The boolean operators AND and OR are not recognized as operators.
+However, this search software will weight an entry by the number
+of word matches, so that in a search with two or more words, those
+entries which match the most words will appear at the top of the list
+(the equivalent of an AND search), and those entries which match
+only one word will be at the bottom (the remains of an OR search).
+
+The currently installed Genbank is release 0.01 (January 1992) from
+NCBI, which has some 62,807 sequence entries (nearly 200 megabytes
+of sequence and descriptive data).  This is based on release 70 of
+Genbank plus many entries from Medline added at NCBI.  It was
+obtained by anonymous ftp to ncbi.nlm.nih.gov, cd ncbi-genbank.
+
+The fields that are indexed from the Genbank Flatfile format are:
+  Locus, Accession, Description, Keywords, Source, Organism, Authors,
+  and Title.
+
+The index files take up about 40 megabytes, compared to 190 megabytes
+for the sequence files.  It takes about 15-20 minutes on a Sparcstation2
+to index the sequences.  A search for a unique keyword like locus name
+or accession number takes no perceptible time.  A typical keyword query 
+with a handful of matches will take a few seconds, a bit longer if you request
+hundreds or more matches.  This compares to about 4 hours for the GCG 
+program stringsearch running on the same machine with the same query.
+
+This software may be of interest to anyone with a Genbank flatfile 
+on disk, and a few spare megabytes for indexing, to give thought to 
+installing Gopher with this indexing software.   
+
+The indexing/search software for the Gopher server has been modified from
+the wais index/search release 8 b3 by Brewster Kahle, which was obtained
+via ftp to think.com.   The modifications involve indexing for the
+Genbank flatfile format, restricting indexing weights to one hit per
+entry for any word, adding NOT boolean searching, and adding output
+of long hit lists to a file for user's retrieval.  The max number of
+hits to list and display can be selected be ending the question
+with ">100.10" for instance to list to file the 100 best, and display 
+on the gopher screen the 10 best matches.
+
+As a reminder, Internet Gopher client and server software is available
+via ftp to boombox.micro.umn.edu, in directory pub/gopher/
+
+I've installed Gopher on the IUBio archive because it was easy to
+install.  I probably won't be installing a WAIS server here, because to
+be useful to WAIS, you must index files, and many of the files at this
+archive don't lend easily themselves to that.
+
+These genbank searching modifications will be available to others.
+
+                         -- Don Gilbert
+												 
+
+Example using the gopher text terminal client:
+
+% gopher ftp.bio.indiana.edu
+
+	- - - - - - - - - - - - - - - - - - -
+	Internet Gopher Information Client v0.7
+
+                 Root Directory
+
+          1.   About IUBio Gopher.
+          2.  About IUBio Biology Archive.
+          3.  Drosophila Archive/
+          4.  Genbank  Readme.
+          5.  Genbank fetch by accession number <?>
+   -->    6.  Genbank search by def/key/source/author <?>
+          7.  IUBio Software+Data/
+          8.  Network News archive/
+          9.  Other Gophers/
+
+Index word(s) to search for: protozoa and not cdna 
+
+	- - - - - - - - - - - - - - - - - - -
+	
+      Genbank search by def/key/source/author: protozoa and not cdna
+
+          1.  V00002 Acanthamoeba castelani gene encoding actin I..
+          2.  Y00624 A.castellanii non-muscle myosin heavy chain gene, partia.
+          3.  J02974 Myosin IB heavy chain gene, complete cds..
+          4.  M30780 A.castellanii myosin I heavy chain (MIL) gene, complete .
+          5.  M60954 Acanthamoeba castellanii myosin heavy chain (HMWMI) gene.
+          6.  K03053 Amoeba (A.castellanii) ribosomal RNA gene..
+          7.  M34003 A.castellanii 5S RNA..
+          8.  M13435 A.castellanii mature small subunit rRNA gene, complete..
+          9.  M60878 B.bigemina merozoite surface protein (p58) gene, complet.
+          10. K02834 Babesia bovis rearranging (BabR) locus, second repeated .
+          11. X59604 B.bigemina gene A small subunit rRNA.
+          12. X59605 B.bigemina gene B small subunit rRNA.
+          13. X59607 B.bigemina gene C small subunit rRNA.
+          14. M35557 C.campylum 5.8S ribosomal RNA..
+          15. M35558 C.colpoda 5.8S ribosomal RNA..
+   -->    16. Long list of matching items, count=100.  {max defaults to 100}
+
+	- - - - - - - - - - - - - - - - - - -
+Long list of matching items:
+
+#  List of entries, and [match score], for search string:
+#    'protozoa and not cdna'
+#  The max number of entries in this list, and on display, can be
+#  indicated at the end of your search string as, for example
+#    'red and not blue >200'    to list up to 200, or
+#    'red and not blue >500.50' to list up to 500, and show up to 50.
+#
+V00002 Acanthamoeba castelani gene encoding actin I.     [  5]
+Y00624 A.castellanii non-muscle myosin heavy chain gene, partial cds.    [  5]
+J02974 Myosin IB heavy chain gene, complete cds.         [  5]
+M30780 A.castellanii myosin I heavy chain (MIL) gene, complete cds.      [  5]
+M60954 Acanthamoeba castellanii myosin heavy chain (HMWMI) gene, complete
+...
+	- - - - - - - - - - - - - - - - - - -
+
+
+Comparison of search strategies with the waisindex/search program and 
+with the IRX program.
+
+example data file:
+------------------
+blue flower sequence
+blue, green flower sequence
+blue, green, red flower sequence
+black flower sequence
+blue dog sequence
+								
+                 irx matches       	modified-wais matches
+query            (unweigthed)  	       	(weighted, best at top)
+-----      	-----------		----------------
+blue    	blue flower		blue flower [10]
+		blue, green fl.		blue, green fl.[10]
+		blue, green, red fl. 	blue, green, red fl[10]
+		blue dog		blue dog [10]
+
+blue and green	blue, green fl		blue, green fl. [20]
+		blue, green, red fl	blue, green, red fl [20]
+					blue flower [10]
+					blue dog [10]
+
+blue or red	blue flower		blue, green, red fl [20]
+		blue, green fl		blue flower [10]
+		blue, green, red fl	blue, green flower [10]
+		blue dog		blue dog [10]
+						
+blue and not green  blue flower		blue flower [10]
+		blue dog		blue dog [10]
+
+-- 
+Don Gilbert                                     gilbert@bio.indiana.edu
+biocomputing office, biology dept., indiana univ., bloomington, in 47405

@@ -1,0 +1,13 @@
+Can't fiure out how to define gopher+ ASK blocks with
+the gopherd server software? Would some examples help?
+
+Then you have come to the right place. The ask.tar.Z file
+has both the ASK form defintions and the scripts for
+the example ask blocks that you can play with by
+gophering to mudhoney.micro.umn.edu port 70 and
+following the path
+
+	 gplustest
+	      Ask Blcok Examples
+
+

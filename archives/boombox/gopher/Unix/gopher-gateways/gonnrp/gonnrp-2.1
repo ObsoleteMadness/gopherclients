@@ -1,0 +1,329 @@
+#!/bin/perl 
+# Gopher-nnrp Gateway version 2.0  mojor rewrite by: Chad Adams
+# 28-May-1993 version 2.1 Chad Adams (c-adams@bgu.edu)
+# build in access control for clari groups.  Make errors returned the same
+#   format as server errors so our version of gopher will put them in pop
+#   up box.
+#
+# 28-May-1993 version 2.0 Chad Adams (c-adams@bgu.edu)
+# add newgroups database.
+# add multi level newsgroup menus.  [each .part. of newsgroup automaticly
+#   gets it's own menu instead of putting all (like all of comp) in one
+#   menu.  {now menus like comp.sys, comp.lang, comp.sources, ect..}]
+# convert to use xhdr instead of tin's xindex.  If not used with INN using
+#   overview files to speed up xhdr it may be slow.
+#
+# Gopher-NNTP Gateway version 1.0
+# Author: Daniel Schales (dan@engr.latech.edu)
+# Major rewrite, socket support: Doug Schales (d1s8027@sc.tamu.edu)
+#
+# Set the 4 following variables for your setup. the 2 port variables
+# are set to the standard, be sure to set gopherhost and nntphost to
+# your respective hosts.
+$gopherhost="your.host.here";
+$gopherport=2008;
+$nntphost="your.host.here";
+$nntpprt='nntp';
+
+# localaddr for clari access.  Example:
+# @localaddr(143, 43, 139, 67);
+# allows access to 143.43.*.* and 139.67.*.*
+@localaddr = (143, 43, 139, 67);
+
+@INC=("/usr/local/lib/perl");
+require 'sys/socket.ph';
+dump QUICKSTART if @ARGV[0] eq '-dump';
+QUICKSTART:
+
+$SIG{'ALRM'} = 'stuck';
+$option=shift;
+$option = '-h' if $option eq '-t';
+while ($option eq '-f') {
+      $copyright = shift;
+      $option = shift;
+      open(CR, $copyright);
+      $title = <CR>;
+      close(CR);
+      chop($title);
+      print "0$title\t$copyright\t$gopherhost\t$gopherport\r\n";
+}
+$item=shift;
+if ($option eq '-X') {
+	@arts = @ARGV;
+} else {
+	$lookup=shift;
+}
+if (-S STDIN && ($item =~ m/^clari/)) {
+	$sockaddr = 'S n a4 x8';
+	($fam, $proto, $addr) = unpack($sockaddr,getpeername(STDIN));
+	@inetaddr = unpack('C4',$addr);
+	for ($i = 0; $i < $#localaddr; $i += 2) {
+		$validaccess = 1 if @localaddr[$i] == @inetaddr[0] &&
+			@localaddr[$i+1] == @inetaddr[1];
+	}
+	$_ = 'Off site access not allowed to clari newsgroups  ';
+	&checkcode($validaccess,1);
+}
+
+# set an alarm 5 minutes from now, if it goes off we must be stuck
+alarm(300);
+open(LOG,">>/tmp/nntplog");
+$date=`date`;chop($date);
+print LOG $date," ",$option," ",$item," ",$lookup,"\n";
+close(LOG);
+$sockaddr = 'S n a4 x8';
+($name, $aliases, $proto) = getprotobyname('tcp');
+($name, $aliases, $nntpport) = getservbyname($nntpprt, 'tcp');
+($name, $aliases, $type, $len, $nntpaddr) = gethostbyname($nntphost);
+
+$rsockaddr = pack($sockaddr, &AF_INET, $nntpport, $nntpaddr);
+
+socket(NNTPSOCK, &PF_INET, &SOCK_STREAM, $proto) || die "socket: $!";
+connect(NNTPSOCK, $rsockaddr) || die "connect: $!";
+
+select(NNTPSOCK); $|= 1; select(stdout);
+
+$_ = <NNTPSOCK>;
+
+if ($option eq '-g') {
+    dbmopen(newsgroups, '/usr/lib/newsgroups', 0444);
+    print NNTPSOCK "LIST\n";
+    $_ = <NNTPSOCK>;
+    chop; chop;
+    while($_ ne "."){
+	if($_ =~ "^$item"){
+	    ($group) = split;
+	    push(@out,"1$group - $newsgroups{$group}\texec:-h $group:".
+			"/bin/gonnrp\t$gopherhost\t$gopherport\r\n");
+	}
+	$_ = <NNTPSOCK>;
+	chop; chop;
+    }
+    print sort(@out);
+    print ".\r\n";
+} elsif ($option eq '-G') {
+    dbmopen(newsgroups, '/usr/lib/newsgroups', 0444);
+    print NNTPSOCK "LIST\n";
+    $_ = <NNTPSOCK>;
+    chop; chop;
+    $itemlen = length($item) + 1;
+    @grouplist = ();
+    while($_ ne "."){
+	if($_ =~ "^$item"){
+	    	($group) = split;
+		push(@grouplist, $group);
+	}
+    	$_ = <NNTPSOCK>;
+    	chop; chop;
+    }
+    @grouplist = sort(@grouplist);
+    for ($i = 0; $i <= $#grouplist; $i++) {
+	    $group = @grouplist[$i];
+	    if ($group eq $item) {
+		$grp = $group;
+	        print "1$newsgroups{$group}\texec:-T $group:".
+			"/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+	    } else {
+		$grp = substr($group,$itemlen,40);
+		if (index($grp,'.') != -1) {
+		    @grppart = split(/\./,$grp);
+		    if (@grppart[0] eq $oldgrp) {
+			next;
+		    }
+		    $oldgrp = @grppart[0];
+		    $grp = @grppart[0];
+	    	    print "1$grp - ".$newsgroups{"$item.$grp.all"}.
+			"\texec:-G $item.$grp".
+			":/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+		} else {
+		    if ($group eq substr(@grouplist[$i+1],0,length($group))) {
+	    	    	print "1$grp - ".$newsgroups{"$item.$grp.all"}.
+			    "\texec:-G $group:".
+			    "/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+			$oldgrp = $grp;
+		    } else {
+	    	    	print "1$grp - $newsgroups{$group}\texec:-T $group:".
+			    "/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+		    }
+		}
+	    }
+    }
+    print ".\r\n";
+} elsif($option eq '-X') {
+#	$item = newsgroup
+#	@arts = articles in this thread
+#	  or
+#	@arts = 0 low high  if list would be too long
+	($code) = &group($item);
+	# build arts array if we were passed range
+	@arts = split(' ', &buildidx(@arts[1], @arts[2])) if @arts[0] == 0;
+	foreach $art (@arts) { $goodart{$art} = 1; }
+	&xhdr('from', @arts[0], @arts[$#arts]);
+	while (<NNTPSOCK>) {
+		last if substr($_,0,1) eq '.';
+		chop; chop;
+		($art, $from) = split(/ /,$_,2);
+		print "0$from\texec:-a ${item} $art:/bin/gonnrp\t".
+			"$gopherhost\t$gopherport\r\n" if $goodart{$art};
+	}
+	print ".\r\n";
+} elsif($option eq '-T') {
+	($code, $cnt, $low, $high) = &group($item);
+	&buildidx($low, $high);
+	@keys = sort(keys %idx);
+	foreach $key (@keys) {
+		@arts = split(' ',$idx{$key});
+		if ($#arts == 0) { # single article
+			print "0$key\texec:-a ${item} @arts[0]:".
+			  "/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+		} else { # thread
+			if (length($idx{$key}) < 80) { # send article list
+				print "1$key\texec:-X $item$idx{$key}:".
+				  "/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+			} else { # give range
+				print "1$key\texec:".
+				  "-X $item 0 @arts[0] @arts[$#arts]:".
+				  "/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+			}
+		}
+	}
+	print ".\r\n";
+} elsif($option eq '-l'){
+	($code, $count, $start, $end) = &group($item);
+	if($count ne "0"){
+		print NNTPSOCK "ARTICLE $end\n";
+		$body=0;
+		$_ = <NNTPSOCK>;
+		chop; chop;
+		while($_ ne "."){
+			if ($body) {
+				print "$_\r\n";
+			} elsif ($_ =~ "^220 " || $_ =~ "^222 ") {
+				$body = 1;
+			}
+		}
+ 	        $_ = <NNTPSOCK>;
+ 	        chop; chop;
+ 	}
+}
+# rwp 20Aug92 Add ability to fetch last article.
+
+elsif($option eq '-h' || $option eq '-b' || $option eq '-s'){
+	($code, $count, $start, $end) = &group($item);
+	if($count ne "0"){
+		&xhdr('subject', $start, $end);
+		$_ = <NNTPSOCK>;
+		chop; chop;
+		while($_ ne '.'){
+			($num,$desc) = split (/ /,$_,2);
+			if ($option eq '-h' ) {
+				print "0$desc\texec:-a ${item} ${num}:".
+				  "/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+			} elsif ($option eq '-b') {
+				print "0$desc\texec:-a ${item} ${num} body".
+				  ":/bin/gonnrp\t$gopherhost\t$gopherport\r\n";
+			} elsif ($option eq '-s') {
+				$desc1="\L$desc\E";
+				$lookup1 ="\L$lookup\E";
+				if ($desc1 =~ $lookup1 ) {
+				 print "0$desc\texec:-a ${item} ${num}:".
+				  "/bin/gonnrp\t$gopherhost\t$gopherport\t\r\n";
+				}
+			}
+			$_ = <NNTPSOCK>;
+			chop; chop;
+		}
+	}
+	print ".\r\n";
+} elsif($option eq '-a'){
+	$num = $lookup;
+	$part = shift;
+	($code) = &group($item);
+	if($part eq "body") {
+		print NNTPSOCK "BODY $num\n";
+		($code) = split(/ /,($_ = <NNTPSOCK>));
+		&checkcode($code,222);
+	} else {
+		print NNTPSOCK "ARTICLE $num\n";
+		($code) = split(/ /,($_ = <NNTPSOCK>));
+		&checkcode($code,220);
+	}
+	$_ = <NNTPSOCK>;
+	chop; chop;
+	while($_ ne "."){
+		print "$_\r\n";
+		$_ = <NNTPSOCK>;
+		chop; chop;
+	}
+}
+
+print NNTPSOCK "QUIT\n";
+shutdown(NNTPSOCK, 2);
+exit(0);
+
+sub stuck {
+open(LOG,">>/tmp/nntplog");
+$date=`date`;chop($date);
+print LOG $date," hung on ",$option," ",$item," ",$lookup,"\n";
+close(LOG);
+
+exit;
+}
+
+# Chad Adams  28-May-1993  tin's xindex to xhdr conversion
+sub checkcode { # return error when nntp command failes
+	local($code, $goodcode) = @_;
+	if ($code != $goodcode) {
+		chop; chop;
+		print "0nnrp error: $_\t\terror.host\t1\r\n";
+		print ".\r\n";
+		exit;
+	}
+}
+sub buildidx {	# build subject threads
+	local ($low, $high) = @_;
+	local ($first, $fsubj, $re, $subj);
+	$first = 1;
+	&xhdr('subject', $low, $high);
+	$cnt = 0;
+	while (<NNTPSOCK>) {
+		last if substr($_,0,1) eq '.';
+		chop; chop;
+		($art, $subj) = split(/ /,$_,2);
+		while (1) { # remove Re:
+			$re = substr($subj,0,2);
+			$re =~ tr/A-Z/a-z/;
+			if ($re eq 're') {
+				$subj = substr($subj,2);
+				next;
+			} elsif (substr($subj,0,1) eq ':') {
+				$subj = substr($subj,1);
+				next;
+			} elsif (substr($subj,0,1) eq ' ') {
+				$subj = substr($subj,1);
+				next;
+			}
+			last;
+		}
+		if ($first) {
+			$fsubj = $subj;
+			$first = 0;
+		}
+		$idx{$subj} .= " $art";
+		$cnt++;
+	}
+	return $idx{$fsubj};
+}
+sub group { # (code, count, low, high) = &group(newsgroup)
+	local(@rtn);
+	print NNTPSOCK "group @_[0]\n";
+	@rtn = split(/ /,($_ = <NNTPSOCK>), 5);
+	&checkcode(@rtn[0],211);
+	return @rtn;
+}
+sub xhdr { # &xhdr(header,low,high)
+	local($code);
+	print NNTPSOCK "xhdr @_[0] ".@_[1].'-'.@_[2]."\n";
+	($code) = split(/ /,($_ = <NNTPSOCK>));
+	&checkcode($code,221);
+}

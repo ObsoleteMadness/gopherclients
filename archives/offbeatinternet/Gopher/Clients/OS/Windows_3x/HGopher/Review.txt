@@ -1,0 +1,44 @@
+HGopher for Windows
+
+--------
+Hardware
+--------
+
+80386SX or greater (requirements of the Trumpet TCP/IP stack) 
+Ethernet card 
+Windows requirements for RAM and monitor (color)
+
+--------
+Software
+--------
+
+Trumpet TCP/IP stack 
+Packet drivers or ODI with ODIPKT
+
+----------------
+Special Features
+----------------
+
+Gopher+ complete support of Alternate Views,, electronic forms etc. 
+Excellent display of electronic forms of any length 
+Support for hundreds of definitions of viewers for files 
+Winsock compliant for compatibility with other Windows Internet tools 
+On-screen icons for all actions 
+Multiple bookmark files 
+Direct connect to remote sites using the Bookmarks capability 
+Autolaunches viewers after file download 
+Multiple simultaneous download/transaction capability 
+Quick response and query speed 
+Ability to set preferences as to which view to retrieve when multiple views of an item are available 
+Automatic filename creation and download to a directory capability 
+Deletes temporary files at program close 
+Extensive on-line help with examples and icons 
+Change display font of menus
+
+----------------
+Problems or Bugs
+----------------
+
+Creation of bookmarks to open other Gopher connections is a bit confusing 
+All transactions and new menus displayed in one window only 
+Phone book lookup requires user to type query 

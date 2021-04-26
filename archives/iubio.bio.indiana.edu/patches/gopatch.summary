@@ -1,0 +1,115 @@
+
+Patch #:	gopatch.dg1
+Type:		operational change
+Priority:	none
+Summary:	enable user selection of max docs returned in wais searches;
+Summary:	user interface in query is "my search words >999" 
+Summary:	where the ">999" selects up to 999 wais documents.
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg1
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/Waisindex.c
+
+Patch #:	gopatch.dg2
+Type:		operational change
+Priority:	none
+Summary:	Allow indexing of wais documents outside of gopherd
+Summary:	directory tree and still use inside of gopher tree. 
+Summary:	Compatible with current gopherd operations.
+Summary:	Uses wais index "myindex.hostdata" file with 3rd line 
+Summary:	(path line) of following form:
+Summary:	  /real/path/to/wais-src;/gopher/path/to/wais-src  
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg2
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/Waisindex.c
+
+Patch #:	gopatch.dg3
+Type:		bug fix 
+Priority:	medium
+Summary:	Gopher+ ASK form jumbo patch:
+Summary:	d) Fully implement ASK directories ("Type=1?" in .names file)
+Summary:	
+Summary:	e) Stop gopher- or bad gopher+ clients trying to use ASK
+Summary:	e) forms improperly, which leaves hung processes on server
+Summary:
+Summary:	a) Implement ASK form client->server file transfer protocols
+Summary:	a) handle "+bytecount" and "+-2" data counts from 
+Summary:	a) client to server file transfer from ASK ChooseF response.
+Summary:	a) This form is needed for binary file transfer.
+Summary:	a) Clients also must be written to support this.
+Summary:	
+Summary:	b) Include correct view type for ASK directories.
+Summary:	b) Note: the incorrect "text/plain" view has been included by Summary:	b) default before this.  User/client may still have to know  
+Summary:	b) more than we expect to get this right.
+Summary:	
+Summary:	c) Prevent ASK directory info being sent to gopher- clients
+Summary:	c) which prevents them from accessing parent folder.
+Summary:	
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg3
+Application:	'cd gopher2.012; patch -p < gopatch.dg3'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.c
+File:		gopher2.012/gopherd/command.c
+File:		gopher2.012/object/GSgopherobj.c
+
+Patch #:	gopatch.dg4
+Type:		operational change 
+Priority:	none
+Summary:	"User" interface change to gopherd.conf:
+Summary:	 allow/ignore whitespace in gopherd.conf 
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg4
+Application:	'cd gopher2.012; patch -p < gopatch.dg4'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherdconf.c
+
+
+Patch #:	gopatch.dg5
+Type:		bug fix 
+Priority:	medium
+Summary:	Preserve filename parameter to mindex calls
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg5
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/mindexd.c
+
+Patch #:	gopatch.dg6
+Type:		bug fix 
+Priority:	medium
+Summary:	Support old error message format for gopher- clients
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg6
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.h
+File:		gopher2.012/gopherd/gopherd.c
+File:		gopher2.012/gopherd/serverutil.c
+
+Patch #:	gopatch.dg7
+Type:		bug fix 
+Priority:	low
+Summary:	Eliminate extra Date'n'Sizes from titles of items 
+Summary:	w/ multiple views
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg7
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.c
+
+
+Patch #:	gopatch.dg8
+Type:		operational change
+Priority:	none
+Summary:	show all view forms of a file to gopher- clients 
+Summary:	as separate files
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg8
+Application:	'cd gopher2.012; patch -p < gopatch.*'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.c
+

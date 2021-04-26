@@ -1,0 +1,9 @@
+BBGopher for Amiga
+(ver 1.0)
+Freeware
+
+
+Requires AmiTCP be installed in order to work. This client is a port of 
+BBGopher 1.6 for Unix.  
+
+

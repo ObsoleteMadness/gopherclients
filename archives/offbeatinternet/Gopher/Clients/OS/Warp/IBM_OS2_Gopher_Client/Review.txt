@@ -1,0 +1,33 @@
+OS/2 Gopher Client
+ 
+Once, long ago, your author had a free weekend and wrote the first OS/2 
+Gopher client. It was a one page REXX program and a one page C support 
+routine (needed because direct REXX access to TCP/IP was not available 
+at the time). This still resides in the "obsolete" directories of some 
+servers and should be avoided at all costs. 
+
+The current OS/2 Gophers are written by IBM and NetSuite. The IBM 
+Gopher was produced by David Singer at the IBM Almaden Research 
+facility. It is available from index.almaden.ibm.com which is also an 
+important IBM Gopher server. 
+
+The OS/2 Gopher also produces cascading menus, at least when you jump 
+from one server to another. However, they are not contained within an 
+application window but rather exist as peers on the OS/2 desktop screen.
+Each menu and each selection is managed as a separate task. It is 
+possible to click on a menu item that represents a binary file, fill in 
+the directory and name to which it is to be downloaded, and while it is 
+being transferred select a second and third file and start them going 
+as well. However, the IBM OS/2 Gopher client does not understand 
+Gopher+ protocol. 
+
+As you can see from the example menu, the OS/2 Gopher Client (1.61) can 
+be obtained from the Almaden server using Gopher protocol. It is also 
+distributed by IBM on the DEVCON CD, and is available by ftp from 
+software.watson.ibm.com in /pub/os2/ews. It is packaged in with the 
+Warp releases of OS/2.All the Windows Gopher clients work under OS/2. 
+There is only one other native OS/2 Gopher package from NetSuite. It 
+offers about the same function as the IBM Gopher, isn't any better 
+packaged, and comes with a shareware registration fee. There is no 
+particular reason to prefer it to the IBM freeware. 
+

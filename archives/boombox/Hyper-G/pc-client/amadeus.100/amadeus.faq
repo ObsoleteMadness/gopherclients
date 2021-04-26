@@ -1,0 +1,167 @@
+Bugs and errors:
+
+Q: Starting setup.exe from DOS results in a crash !
+   What should I do ?
+A: Please start setup.exe from Windows, e.g. using the file manager.
+
+Q: After I start Amadeus the first time a module called WinG does some speed
+   testing. 
+   During this test Windows crashes completely. The only thing I can do is
+   to reset !
+A: Yes, WinG is the new highspeed graphics interface from Microsoft.
+   Unfortunately it does not work with an older flat-memory SVGA driver for S3
+   cards. Most likley your windows configuration is using such a driver.
+   Upgrade to the new driver version available from ftp.cica.indiana.edu or 
+   one of its mirrors (pub/win3/drivers/video/s3-24b8.zip).
+
+Q: When I start Amadeus I always get the error:
+   * GROWSTUB caused a General Protection Fault.
+A: You are using the buggy microsoft mouse driver 9.00. To remove this message
+   you can either upgrade to a bug fix of this driver (at ftp.microsoft.com)
+   or you can remove 'pointer.dll' in win.ini in section '[windows]', line 
+   'load='.
+
+Q: I've just tried to start Amadeus on my workstation, and have encountered a
+   serious problem. Immediately after the program is loaded, right after 
+   displaying W.A.M.'s picture, it produces an error message saying 
+   "Could not connect to Hyper-G database", and then another
+   error message saying that the program will be aborted ("Error:1") and ...
+   that's it! I'm back to Windows!
+A: Amadeus has problem to connect to the Hyper-G server due to one of the
+   following reasons:
+   1.) the internet connection to the server does not work - try to ping
+       the server specified in the amadeus.ini file or at the command line
+       e.g. ping hyperg.tu-graz.ac.at
+   2.) If 1.) does work then the server might be down currently - try a 
+       bit later.
+   3.) If 1.) and 2.) does not help then you might 'sit behind an internet
+       firewall'.
+       For you sys-admin: You have to have free access to port number 418
+       (the Hyper-G port number) and ALL ports > 1024 (are dynamically
+       assigned by the document cache server - but this may change in future
+       version of the Hyper-G server)
+
+Q: I can navigate around the directories, but when I try to view a file, I get
+   the message:'could not load style file', and get dumped out with a fatal 
+   error message - every time.
+
+A: This is very typical for not specifying the correct working directory in the
+   properties dialog box, it has to be the same, as the directory, where the 
+   Amadeus.ini file resides.
+
+   E.g Dialog Box 
+   +----------'Program Item Properties'----------+
+   | Command Line:      D:\AMADEUS\amadeus.exe   |
+   | Working Directory: D:\AMADEUS               |
+    .....
+
+   Hint: If you use the setup program to install Amadeus, this problem should 
+   not occur.
+
+Q: I always get the error
+   '*** Error:: Document Cache error: Cannot open file ***', when I want to
+   access a multimedia document (images, sounds, movies, ...)
+   What's wrong ?
+A: You didn't specify your pc's hostname in your local tcp/ip hosts file,
+   or your pc is not known to any domain name server, or you 'sit behind
+   a firewall'. (Ask your sys-admin)
+   In the last case (firewall) you have to make sure that you can use port
+   number 418 (Hyper-G port) and ALL port number >1024 (are dynamically
+   assigned by the document cache server - but this may change in future
+   version of Hyper-G).
+
+Q: Amadeus crashes when I want to access a multi-media document.
+   Is there a work-around for this ?
+A: Most likely you are using PC/TCP version less than 2.30 (e.g. 2.20)
+   This version does not fully support the winsock library Amadeus is
+   based on. Upgrade to a newer version (e.g. 2.31 or 3.00)
+   But be careful ! Be sure to delete ALL files of the previous version
+   (especially if some are located in the 'windows' or 'windows\system' 
+   directory).
+   The best thing you can do is to erase the complete old pctcp directory but
+   backup your ini (e.g. pctcp.ini) and hosts (if any) file before !
+   Then restore your ini files back to an emtpy pctcp directory and install 
+   the new PC/TCP version over this configuration files. If you do that you 
+   don't need to remember all your settings because the PC/TCP install program
+   will read it from your ini files !
+
+
+Q: After installing your Amadeus client I could not use NCSA Mosaic 2 alpha 7.
+   Mosaic was giving me Win32s Error.  The only remedy was to delete the 
+   following dll's: bwcc, ctl3dv2 and ctl3d32.
+A: NCSA Mosaic 2 alpha 7 does not work correctly with Win32s 1.15a (although
+   NCSA claims that it does). - especially in conjunction with ctl3d32.dll.
+   Amadeus versions >0.82.000 include the new Win32s 1.2. With that version
+   this problem should no longer occur !
+
+
+
+Questions concerning usage:
+
+Q: I have installed a copy of Amadeus but seem only to be able to contact the 
+   server in Austria.  How do I configure it to contact the Auckland 
+   university server?
+A: There are two ways:
+   You can either specify your default server on the command line 
+   (via File/Properties in the Program Manager):
+
+   e.g.: ..<path>..\amadeus.exe -r www.hmu.auckland.ac.nz
+
+   or you can specify it in the amadeus.ini file (located in your amadeus 
+   directory): e.g.:
+
+   [Amadeus]
+   Server=www.hmu.auckland.ac.nz
+
+   that's all.
+
+   Hint: copy the Amadeus icon on the Program Manager desktop for several 
+   times each with different properties settings specifying different home 
+   servers.
+   Ah, yes and there's another way to change your home server during a session:
+   With the Navigation/Goto command in Amadeus like that:
+   Goto-dialog box: hyperg://www.hmu.auckland.ac.nz
+
+   But attention, if you change to a server like this, the Amadeus history will
+   be erased, so you can't navigate back to previous collection etc.. This 
+   limitation will fall in future versions of Amadeus.
+   Note: this is not the same as following a link to a new server or over the 
+   hyperroot, because in the case mentioned above you change your HOME-server 
+   (=where you have to identify etc.)
+
+
+General questions:
+
+Q: Are there some mirror sites for Amadeus ?
+A: Yes:    
+    Austria      ftp://ftp.tu-graz.ac.at/pub/Hyper-G
+    Germany      ftp://elib.zib-berlin.de/pub/InfoSystems/Hyper-G
+                 ftp://ftp.ask.uni-karlsruhe.de/pub/infosystems/Hyper-G
+    Italy        ftp://ftp.esrin.esa.it/pub/Hyper-G
+    Sweden       ftp://ftp.sunet.se/pub/Networked.Information.Retrieval/Hyper-G
+    New Zealand  ftp://ftp.cs.auckland.ac.nz/pub/HMU/Hyper-G
+    USA          ftp://ftp.utdallas.edu/pub/Hyper-G
+
+Q: Can Amadeus be used to work offline ?
+A: Not in this version, but we are working on a local database, that allows
+   you not only to store some text documents, but full Hyper-G features 
+   including hierarchy (collections, cluster) and even search capabilities
+   (full text, attributes, ...)
+   This should enable an information provider to ship an offline database on
+   cd-rom with Amadeus and Harmony (UNIX) as Hyper-Media-Database viewers.
+   But of course this can also be used to store a local homepage/
+   homecollection with entrypoints/links to different databases or 
+   collections. (E.g. If somebody has no real homecollection on a Hyper-G
+   server, or has no Hyper-G server connection at all.)
+
+Q: Does Amadeus support the CERN httpd proxy server?
+A: Hyper-G itself supported such a proxy like feature right from the beginning:
+   Typically you connect to the nearest Hyper-G server (=becomes your home 
+   server).
+   If you want to fetch a document from a different server, not the client, 
+   but the (home-)server does this for you, cashes it and forwards it to the 
+   client.
+   If you mean the  WWW protocol that Amadeus is also capable of, the answer is
+   no, at this time. But it will be supported in one of the next releases.
+
+

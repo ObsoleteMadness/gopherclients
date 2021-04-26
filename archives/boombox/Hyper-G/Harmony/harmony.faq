@@ -1,0 +1,303 @@
+Archive-name: harmony.faq
+Last-modified: 13 Jun 95
+
+
+Harmony Frequently Answered Questions [FAQ]
+===========================================
+
+The latest version of the FAQ is available from:
+
+  ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G/Harmony/harmony.faq
+
+
+New and/or modified parts are marked in the table of contents with
+a plus sign '+'.
+
+
+Contents
+--------
+
+Part 1 -- Introduction and Further Information
+
+   -1-  What is the purpose of this FAQ?
+   -2-  How can I search the FAQ to find answers?
+   -3-  What is Harmony?
+   -4-  Where can I find more information on Harmony?
++  -5-  Where can I find Harmony software?
+   -6-  Is there a mailing list or newsgroup for Harmony?
+   -7-  How can I contact the Harmony developers?
+
+
+Part 2 -- Platforms and Availability
+
++  -8-  Which platforms does Harmony run on?
++  -9-  Which platforms do Harmony's 3D features run on?
+  -10-  Is Harmony available in source code?
+
+
+Part 3 -- Known Bugs
+
++ -11-  What does "Could not read magic number file" mean?
+
+
+Part 4 -- Miscellaneous Questions
+
+  -12-  Does Harmony work behind a firewall?
+
+
+
+Please send corrections, additions, and suggestions for this FAQ to:
+
+  harmony@iicm.tu-graz.ac.at
+
+
+  You can contact  Keith Andrews, 
+	Harmony Project Leader <kandrews@iicm.tu-graz.ac.at>
+
+
+----------------------------------------------------------------------
+
+Subject: -1-  What is the purpose of this FAQ?
+Date: 5 Jun 95
+
+The Harmony FAQ answers often-asked questions about the Harmony client
+for Hyper-G. Newcomers to Hyper-G and Harmony can hopefully find
+answers to some of their questions here, before sending mail to the
+developers or to the Hyper-G mailing list.
+
+------------------------------
+
+Subject: -2-  How can I search this FAQ to find answers?
+Date: 5 Jun 95
+
+This FAQ follows the RFC1153 recommendations for message digests and
+thus should easily be viewed by newsreaders that understand message
+digests.
+
+The FAQ uses the Subject: lines with the answer to each question and
+thus it should be easy to step through the answers with the "^G"
+command of rn.
+
+The FAQ also marks each question with "dash number dash" so that using
+a regular expression search pattern you can easily get directly to any
+question in the document.
+
+------------------------------
+
+Subject: -3-  What is Harmony?
+Date: 5 Jun 95
+
+Harmony is the Unix/X11 client for Hyper-G, i.e. the Hyper-G browser
+for Unix platforms.
+
+Hyper-G is the first "second generation", publicly available,
+networked hypermedia information system running over the
+Internet. Hyper-G integrates hyperlinking, hierarchical structuring,
+sophisticated search, and access control facilities into one single
+system, and is interoperable with other network information tools like
+Gopher and WWW.
+
+------------------------------
+
+Subject: -4-  Where can I find more information on Harmony?
+Date: 5 Jun 95
+
+Research papers about Harmony and Hyper-G are available by anonymous
+ftp from ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G/papers (or from one
+of the Hyper-G mirror sites listed below).
+
+Installation instructions and the latest Harmony release are available
+in directory /pub/Hyper-G/Harmony. An illustrated slide show can be
+found in /pub/Hyper-G/talk.
+
+Information is also available online from the IICM Information Server
+(which is of course a Hyper-G server), using any WWW, Gopher, or
+Hyper-G client:
+
+  http://info.iicm.tu-graz.ac.at/Charmony
+  gopher://info.iicm.tu-graz.ac.at/11harmony
+  hyperg://info.iicm.tu-graz.ac.at/harmony
+
+  and
+
+  http://info.iicm.tu-graz.ac.at/Chyperg
+  gopher://info.iicm.tu-graz.ac.at/11hyperg
+  hyperg://info.iicm.tu-graz.ac.at/hyperg
+
+
+------------------------------
+
+Subject: -5-  Where can I find Harmony software?
+Date: 5 Jun 95
+
+By anonymous FTP from:
+
+  IICM         ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G/Harmony
+
+or from one of the following mirror sites:
+
+  Austria      ftp://ftp.tu-graz.ac.at/pub/Hyper-G/
+  Germany      ftp://elib.zib-berlin.de/pub/InfoSystems/Hyper-G/
+               ftp://ftp.ask.uni-karlsruhe.de/pub/infosystems/Hyper-G
+  Italy        ftp://ftp.esrin.esa.it/pub/Hyper-G
+  Sweden       ftp://ftp.sunet.se/pub/Networked.Information.Retrieval/Hyper-G
+  New Zealand  ftp://ftp.cs.auckland.ac.nz/pub/HMU/Hyper-G
+  UK           ftp://unix.hensa.ac.uk/mirrors/Hyper-G
+  USA          ftp://ftp.ncsa.uiuc.edu/Hyper-G
+               ftp://ftp.utdallas.edu/pub/Hyper-G
+
+
+------------------------------
+
+Subject: -6-  Is there a mailing list or newsgroup for Harmony?
+Date: 5 Jun 95
+
+There is a mailing list for information and discussion about Hyper-G,
+which is read by users and developers alike. To subscribe, send mail
+to "listproc@iicm.tu-graz.ac.at" with the following message body:
+"subscribe hyper-g <Your Name>".
+
+An archive of the mailing list is maintained by Achim Bohnet
+<ach@rosat.mpe-garching.mpg.de> and is available at:
+
+  http://www.rosat.mpe-garching.mpg.de/mail-lists/Hyper-G/
+
+
+------------------------------
+
+Subject: -7-  How can I contact the Harmony developers?
+Date: 5 Jun 95
+
+Please direct any feedback (comments, suggestions, bug reports, etc.)
+concerning Harmony by electronic mail to:
+
+  harmony@iicm.tu-graz.ac.at
+
+We are very interested in your feedback, even though we may not be
+able to respond personally to every piece of mail...
+
+
+If you are sending a bug report, please supply the following
+information to help us locate the problem:
+
+  Harmony version:                        [e.g. harmony -h]
+
+    Component     |      Version          Date
+    --------------------------------------------
+    harmony       |
+    hartextd      |
+    harimaged     |
+    harfilmd      |
+    haraudiod     |
+    harscened     |
+    harpsd        |
+    haradmin      |
+
+
+  Operating system version:               [e.g. uname -a]
+
+  Description of bug:
+
+  Location of document causing problem:   [if applicable]
+
+  Output to terminal:
+
+  Stack trace of core dump:               [limit coredumpsize unlimited]
+
+
+------------------------------
+
+Subject: -8-  Which platforms does Harmony run on?
+Date: 13 Jun 95
+
+The current release of Harmony is 1.0s from 13 Jun 95.
+It is available in binary form for the following platforms:
+
+  o IRIX 5.3 (SGI)
+
+  o SunOS 4.1.3 (Sun)
+
+  o Solaris 2.3 (Sun)
+
+  o HP-UX A.09.01 (HP 700 Series)
+
+  o ULTRIX 4.2 (DEC)
+
+  o OSF1 V3.2 (DEC Alpha)
+
+  o Linux 1.2.5 (PCs)
+
+
+An AIX (IBM) port of Harmony is planned as soon as we can get our
+hands on an IBM workstation (machine donations are gratefully
+accepted!).
+
+
+------------------------------
+
+Subject: -9-  Which platforms do Harmony's 3D features run on?
+Date: 13 Jun 95
+
+The Harmony 3D Scene Viewer is available in an OpenGL version (which
+utilises underlying hardware acceleration) for IRIX (SGI) and OSF1
+(DEC Alpha) machines. As of Release 1.0s, it is also available in a
+MESA/X11 version (no hardware acceleration) for Linux and Solaris
+(Sun).
+
+The Harmony Information Landscape currently only runs under OpenGL,
+i.e. on IRIX (SGI) and OSF1 (DEC Alpha) machines.
+
+Note that under OSF1, OpenGL is part of the Open3D package and must be
+explicitly installed; on SGI machines OpenGL is installed by default.
+
+
+------------------------------
+
+Subject: -10-  Is Harmony available in source code?
+Date: 5 Jun 95
+
+No, at least not yet. We intend to make Harmony source code (C++)
+available when developments are not quite so rapid and the code is
+more stable.
+
+
+------------------------------
+
+Subject: -11-  What does "Could not read magic number file" mean?
+Date: 13 Jun 95
+
+The Harmony 1.0b Text Viewer had a bug which comes to light if Harmony
+is not installed in the default directory and hence the magic number
+file is not named /usr/local/Harmony/misc/magic
+
+If you get a message like
+
+  DocServer::DocServer: Could not read magic number file!
+
+please set the following X Resource to the correct path
+
+  Harmony.Text.MagicNumberFile:  <full path to magic number file>
+
+
+This has been fixed in Release 1.0s.
+
+
+------------------------------
+
+Subject: -12-  Does Harmony work behind a firewall?
+Date: 5 Jun 95
+
+No.
+
+Hyper-G clients connect to Hyper-G servers on port 418 by default.
+Control information is sent via port 418, but documents are currently
+transferred back to the client via a *dynamically* assigned port,
+which is why Harmony cannot be used with firewall software such as
+SOCKS.
+
+We are looking at ways around this problem at the moment.
+
+------------------------------
+
+End of Harmony FAQ
+******************

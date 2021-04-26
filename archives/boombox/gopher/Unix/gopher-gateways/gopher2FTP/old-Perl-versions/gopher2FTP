@@ -1,0 +1,359 @@
+#!/usr/local/bin/perl
+#
+# usage:
+#           g2ftpd [-p port] [-D] [-h hostname] [-l logfile]
+#
+# $Log: g2ftpd,v $
+# Revision 1.0.1.?  1992/03/10 fxa
+# - hacked in double nslook to get full local domainname
+# Revision 1.0.1.6  1992/03/09  23:55:03  jladwig
+# - Changed domainname (myDomain) parsing to strip only up to first dot,
+# without regard to total number of dots.
+#
+# - Now do double fork() for each accepted process, to try to eliminate
+# zombies reported on A/UX by Farhad.
+#
+# Revision 1.0.1.5  1992/03/07  13:28:41  jladwig
+# - Program now puts itself into background successfully.
+# - Rewrote getRemoteHost to use socket information instead of passed
+# hostname, and return IP address if gethostybyaddr fails.
+#
+# Revision 1.0.1.4  1992/03/07  02:55:30  jladwig
+# - Runs as a proper daemon now, although it must be initialized as a
+# background process.
+# - Has command-line option handling for debugging, port to listen on, log
+# file, and local hostname.
+# - Prints date and time to log file for all transactions.
+#
+# Revision 1.0.1.3  1992/03/06  23:30:11  jladwig
+# Reworked program logic to something more like original version.
+# Added "err_msgs" array for ftp error handling
+#  - WARNING - ftp error handling not tested beyond first error.
+# Fixed bug in binary file type retrieval.
+# Known to work on:
+#   unix 0.7  client w/ type 9 extensions for types 0,1,9
+#   mac  1.21 client for types 0,1,4
+#
+# Revision 1.0.1.2  1992/03/05  10:03:15  jladwig
+# Folded in error reporting changes from official v0.3
+#
+#
+# Version 0.3 with a minor patches....
+#
+#  - jladwig - 	Slightly more perl-like syntax.
+#		Added simple configuration arrays 
+#
+# Version 0.2 with a good many bugfixes and logging....
+#----Stuff here may need to be customized for your machine----
+$def_port = "7997";
+$def_log = "/usr/adm/g2ftp.log"; #Leave this empty "" for no logging
+$ftp = "/usr/ucb/ftp";		#whereever on your box this lives
+#
+# FTP error messages list
+@err_msgs = (': No such file or directory.');
+#
+# File type extensions lists
+#
+@type_4 = ('HQX');
+@type_5 = ( 'ZIP','ZOO','ARJ','ARC','LZH','HYP','PAK',
+	   'EXE','COM','PS','GIF','PICT','PCT','TIFF','TIF'
+	   );
+@type_9 = ('TAR','Z');
+@binfspec = ( @type_5, @type_9 );
+#----end local customizations-------
+
+require 'ctime.pl';
+require 'getopts.pl';
+
+do Getopts('Dh:p:l:');
+
+if ($opt_D) {			# Debugging switch
+    $debugging = 1;
+}
+
+if ($opt_h) {			# Use passed hostname
+    $myName=$opt_h;
+} else {			# calculate hostname 
+    chop($myHost=`hostname`);	# get hostname
+    $myName = &nslook($myHost);   #ie: gets dotted num
+    $myName = &nslook($myName);   #ie: foo.moo.umn.edu
+}
+
+if ($opt_p) {			# port at which to listen
+    $myPort = $opt_p;
+} else {
+    $myPort = $def_port;
+}
+
+if ($opt_l) {
+    $logFile = $opt_;
+} else {
+    $logFile = $def_log;	# log file
+}
+
+# Catch signals...
+#
+$SIG{'INT'} = 'CLEANUP';
+$SIG{'HUP'} = 'CLEANUP';
+$SIG{'QUIT'} = 'CLEANUP';
+$SIG{'PIPE'} = 'CLEANUP';
+$SIG{'ALRM'} = 'CLEANUP';
+$tmp = "/tmp/gf$$";			#I'll clean up; Promise!
+$tmpData = "/tmp/gfd$$";		#This one's for spooling
+$separator = "@";			#For encoding selector with hostname
+$host = "";
+$getBinary = "";
+
+# shuffle off to the background...
+#
+(fork && exit) unless $debugging;
+setpgrp(0,$$);
+
+# Begin main program
+#
+#  tcp server code ripped liberally from _Programming_Perl_
+#
+$sockaddr = 'S n a4 x8';
+#  $myName = &getLocalHost;
+($name, $aliases, $proto) = getprotobyname('tcp');
+if ($myPort !~ /^\d+$/) {
+    ($name, $aliases, $myPort) = getservbyport($myPort, 'tcp');
+}
+
+print "Port = $myPort\n" if $debugging;
+
+$this = pack($sockaddr, &AF_INET, $myPort, "\0\0\0\0");
+
+select(NS); $| = 1; select(stdout);
+
+socket(S, &AF_INET, &SOCK_STREAM, $proto) || die "socket: $!";
+bind(S,$this) || die "bind: $!";
+listen(S,5) || die "connect: $!";
+
+select(S); $| = 1; select(stdout);
+
+$con = 0;
+print "Listening for connection 1....\n" if $debugging;
+for(;;) {
+    ($addr = accept(NS,S)) || die $!;
+
+    $con++;
+    if (($child[$con] = fork()) == 0) {
+	print "accept ok\n" if $debugging;
+	unless (fork) {
+	    sleep 1 until getppid == 1;
+
+	    ($af,$port,$inetaddr) = unpack($sockaddr,$addr);
+	    @inetaddr = unpack('C4',$inetaddr);
+	    print "$con: $af $port @inetaddr\n" if $debugging;
+	    
+	    &send_query;
+	    &handle_results;
+	    
+	    printf("Closing connection %d\n",$con) if $debugging;
+	    close(NS);
+	    exit 0;
+	}
+	exit 0;
+    }
+    wait;
+    close(NS);
+
+    printf("Listening for connection %d\n",$con+1) if $debugging;
+}
+
+exit;
+
+
+# Support routines
+#
+# Handle the query and send it to the ftp server
+#
+sub send_query {
+    $query = <NS>;
+    chop($query);
+    chop($query);
+    if ( $logFile ) {
+	$remoteHost = &getRemoteHost;
+	open(LOG, ">>$logFile");
+	chop($date = &ctime(time));
+	print LOG $date, "\t$$\t$remoteHost \t- $query\n";
+	close(LOG);
+    }
+    if ($query eq "") {
+	print NS "3 Incorrectly specified request for FTP (No hostname)\r\n.\r\n";
+	exit; 
+    }
+    ($host, $thing) = split(/@/, $query, 2);
+    $thing = "/" if ($thing eq "");
+    open(FTP, "| $ftp -n $host >$tmp") 
+	|| do {print NS "3 Error. Couldn't connect to server\r\n.\r\n"; exit;};
+    print FTP "user anonymous -gopher@$myName\n";
+    $thing2 = $thing;
+    $dir = chop($thing2);
+    if ($dir eq "/") {		#asking for a dir
+	print FTP "cd $thing2\n" if ($thing2 ne "");
+	print FTP "ls -F\n";
+	$tmpData = "";
+    } else  {			#asking for a file 
+	$thing = $thing2 if (($dir eq "*") || ($dir eq "@"));
+	if ($thing =~ /\.(\w+)$/) {	# Grab file extension if there is one
+	    $ext = $1;
+	    $getBinary = grep (/^$ext$/, @binfspec); # Is it a binary-type extension?
+	} 
+	print FTP "binary\n" 
+	    if $getBinary ;
+	print FTP "get $thing $tmpData\n"; 
+    }
+    print FTP "quit\n";
+    close(FTP);		#re-use the fileHandle
+}
+
+# Handle the results of the ftp transfer
+#
+sub handle_results {
+    if ($tmpData eq "") {	#maybe use an exists instead?
+	open(FTP, "$tmp") 
+	    || do {print NS "3 Error. Could not return list.\r\n.\r\n"; die;};
+	while (<FTP>) {
+	    chop;
+	    /^.+(:.+)$/;		# Extract error message, if any
+	    if (grep (/^$1$/, @err_msgs)) { # ftp error
+		print NS "3 Error. ftp reports \"$1\".\r\n.\r\n";
+		exit;
+	    } 
+	    s/\*$//;		# Hack out stars
+	    s#\@$#/#;		# Hack out ats
+	    if (s#/$##) {		# It's a directory
+		print NS "1$_\t$host$separator$thing$_/";
+	    } elsif ( /\.(\w+)$/ ) { # It's a file, Grab file extension
+		$ext = $1;
+		if (grep (/^$ext$/i, @type_4)) { # binhex file
+		    print NS "4$_\t$host$separator$thing$_";
+		} elsif (grep (/^$ext$/i, @type_5)) { # DOS scrap
+		    print NS "5$_\t$host$separator$thing$_";
+		} elsif (grep (/^$ext$/i, @type_9)) { # .tar .Z
+		    print NS "9$_\t$host$separator$thing$_";
+		} else { # Default text file (w/ extension)
+		    print NS "0$_\t$host$separator$thing$_";
+		}
+	    } else { # Default text file (w/o extension)
+		print NS "0$_\t$host$separator$thing$_";
+	    }
+	    print NS "\t$myName\t$myPort\r\n";
+	}
+	
+	print NS ".\r\n";
+    } elsif ($getBinary) {
+	open(FTP, "$tmpData") 
+	    || do {print NS "3 Error.  Could not transfer file.\r\n.\r\n"; exit;};
+	while (read(FTP, $buf, 16384)) {
+	    print NS $buf;
+	}
+    } elsif (-T $tmpData) { 
+	open(FTP, "$tmpData") 
+	    || do {print NS "3 Error. Could not transfer file.\r\n.\r\n"; exit;};
+	while (<FTP>) {
+	    chop;
+	    print NS "$_\r\n";
+	}
+	print NS ".\r\n";
+    } else {
+	print NS "3 Sorry.  Requested file did not appear to contain text.\r\n.\r\n";
+    }
+    close(FTP);
+    unlink("$tmp");
+    unlink("$tmpData") if ($tmpData ne "");
+}
+
+
+sub CLEANUP {
+    print NS "3 Error in FTP transaction.\r\n.\r\n";
+    unlink("$tmp");
+    unlink("$tmpData") if ($tmpData ne "");
+}
+
+sub AF_INET {2;}
+
+sub SOCK_STREAM {1;}
+
+sub getRemoteHost {
+    local(@ans);
+    local($ans);
+    @ans = gethostbyaddr($inetaddr, &AF_INET);
+    if (!defined @ans) {
+	$ans = join('.', @inetaddr);
+    } else {
+	$ans = $ans[0];
+    }
+}
+
+
+#-----------
+# nslook
+# Idea from a program of the same name posted in alt.sources
+# by Juergen Nickelsen <nickel@cs.tu-berlin.de>, 10 Sep 91.
+# From: DaviD W. Sanderson
+# Modified for g2ftpd by Farhad Anklesaria 3/92
+#-------
+# These convert between the decimal quartet and the internal form of
+# the internet addresses.
+#-------
+sub inet2str
+{
+	sprintf('%u.%u.%u.%u', unpack('C4', $_[0]));
+}
+sub str2inet
+{
+	$_[0] =~ /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/;
+	pack('C4', $1, $2, $3, $4);
+}
+
+#-------
+# Return a description of the results of a gethost* function.
+#-------
+sub HostDesc
+{
+	local	($name, $aliases, $addrtype, $length, @addrs) = @_;
+	local	($desc);
+
+	$desc .= 'Name:    '. $name.    "\n"	if $name ne '';
+	$desc .= 'Alias:   '. $aliases. "\n"	if $aliases ne '';
+
+	foreach (@addrs)
+	{
+		$desc .= 'Address: '. &inet2str($_). "\n";
+	}
+
+	$desc;
+}
+
+#-------
+# Look up the address or hostname.
+#-------
+sub nslook
+{
+	local(@ans);
+	local($ans);
+	$_ = $_[0];
+	if(/^\d+\.\d+\.\d+\.\d+$/)
+	{
+		@ans = gethostbyaddr(&str2inet($_), &AF_INET);
+		if (!defined @ans) {
+		$ans = "$0: $_: unknown address";
+		} else {
+		$ans = $ans[0];
+		}
+	}
+	else
+	{
+		@ans = gethostbyname($_);
+		if (!defined @ans) {
+		$ans = "$0: $_: unknown name";
+		} else {
+		$ans = &inet2str($ans[4]);
+		}
+	}
+}
+
+

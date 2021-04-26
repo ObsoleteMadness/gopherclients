@@ -1,0 +1,503 @@
+Customizing Unix Servers For 3D
+
+Neophytos Iacovou	DCS, UofMn
+
+
+    This paper describes how to add Gopher+ attributes for controlling 
+    a Gopher item's appearance in GopherSpace VR. For the purposes 
+    of this paper we created a Gopher Server containing information on 
+    the author William S. Burroughs. We then proceeded to customize 
+    the appearance of the server. All of the examples presented here are 
+    specific to the UofMn Unix Gopher+ Server, but the concepts should 
+    apply to any Gopher+ server.
+
+
+
+
+Introduction
+
+During GopherCon `94 we introduced to the Internet community our thoughts on how
+to go about putting a 3-D spatial interface between the user and GopherSpace. 
+Since then we have released GopherVR clients for the Apple Macintosh platform
+as well as for various flavors of UNIX. While new clients are needed to take
+advantage of GopherVR, the servers do not have to be upgraded. When using a
+GopherVR client to cruise GopherSpace the scenes being generated can come from
+one of three sources. 
+
+If the client is not told by the server how to render a scene the client will
+render the scene using pre-defined rules. When rendering the contents of a
+directory the client will place the Gopher items in a ring orientation. It will
+make multiple rings in order to accommodate larger directories. When rendering
+the results of a database search the client will place the returned items in a
+spiral orientation. In both cases the Gopher item's icon defaults to a
+pre-defined shape, and color. A GopherVR client will be able to render any
+Gopher item as a GopherVR scene regardless of the Gopher server - this includes
+both Gopher and Gopher+ servers.
+
+Using a Gopher+ 3D block GopherAdmins can override the default rendering of 
+GopherSpace. By using a Gopher+ attribute any Gopher+ server can be used to
+create custom GopherVR scenes. This paper will describe how to go about making
+additions to your existing Gopher+ server in order to create custom scenes.
+
+Another way to create GopherVR scenes is to allow a program to create the
+necessary Gopher+ 3D block for a given Gopher item. 3D spatial clustering
+algorithms are one subset of such programs. Although this paper does not
+concentrate on writing these types of programs the information presented here
+will be needed in order to do so. 
+
+
+
+
+
+The Gopher+ 3D Block
+
+The Gopher+ 3D block contains information and hints about how to render 
+GopherSpace VR scenes. This information is fairly simple, and extensible to
+other forms of hints. Clients should use the hints they can and ignore the
+ones they don't know about.
+
+Each hint is defined by a token followed by a colon, with hint specific
+information following. Here is a sample 3D block.
+
++3D: 
+
+ Location: 0, 200, 0 
+ Orientation: 0, 45, 0 
+ Color: 0.0, 1.0, 0.0 
+ Object: gopher://arcwelder.micro.umn.edu:70/00/3dobjects/dart.geom 
+
+
+
+This block tells a GopherSpace VR browser to place the object at (x,y,z)
+coordinates (0,200,0) and that the object is the rgb color (0.0, 1.0, 0.0) -
+Green. The Object: hint specifies that we should fetch the file
+/3dobjects/dart.geom from arcwelder.micro.umn.edu which provides the 3D
+representation of a dart. The dart is then rotated 45 degrees along the Y-axis.
+
+
+
+
+
+GopherVR Hint Reference Guide
+
+Below is a list of the hints currently being supported by the GopherVR clients.
+They provide basic functionality you would expect to find in any 3D package.
+Currently the hints allow you to: move an object to a specific location; rotate
+the object about an arbitrary axis; scale the object about an arbitrary axis;
+specify an object description; and to specify an ambient sound. 
+
+ Location: X, Y, Z
+
+	This specifies the X, Y, Z coordinates of this specific Gopher object.
+	These values (all units can be floating point values or integers) are
+	relative to the Kiosk. In each GopherVR scene the Kiosk is placed at
+	coordinates (0, 0, 0). 
+
+	To translate the object to 2000 units north of the kiosk we'd specify:
+
+	   Location: 2000, 0, 0
+
+
+
+ Orientation: Rx, Ry, Rz
+
+	This hint specifies in which direction the object should be facing. Rx, Ry,
+	and Rz are rotations about the X, Y, and Z-axis respectively. These values
+	are expressed in degrees, and can be positive or negative.
+
+	To rotate an object 180 degrees about the Y-axis specify:    
+
+	   Orientation: 0, 180, 0
+
+
+
+ Scale: Sx, Sy, Sz
+
+	This hint specifies how to scale the object. Sx, Sy, and Sz are scale
+	factors on the X, Y, and Z-axis respectively.
+
+	To make an object twice the normal height specify:    
+
+	   Size: 1, 2, 1
+
+	Note that a zero scale is pretty meaningless.
+
+
+
+ Object: URL 
+
+	This hint specifies how the object should be drawn. The URL specifies a
+	Uniform	Resource Locator for an object description. The object description
+	can be in any number of formats, the client should find the MIME type of
+	the object to get the specific type of object data file.
+
+	Here's an example of representing an item as a cow:    
+
+	   Object: gopher://arcwelder.micro.umn.edu:70/00/3dfarmobjects/cow 
+
+	Note: Some clients may ignore this entry, especially if your object
+		  is in a weird or unknown file format.
+
+
+
+
+
+Using Hints And The 3D Block
+
+To use the 3D block on the Unix server you would add the following to your 
+gopherd.conf file:
+
+ blockext: .3d 3D
+
+Then you would create a file with a .3d extension for each object you wish to
+customize. For example, if I had a directory with 2 items ( "MooCow" and
+"MyDocument" ) I would create the appropriate .3d files as follows:
+
+       MooCow       MyDocument
+       MooCow.3d    MyDocument.3d
+
+% cat MooCow.3d 
+Location: 1000, -2000, -2000 
+Scale: 5, 5, 5
+
+% cat MyDocument.3d 
+Location: 1000, -1000, 1000 
+Scale: 2, 4, 4 
+Object: gopher://arcwelder.micro.umn.edu:70/00/3dobjects/moo.geom
+
+
+
+
+
+The GopherVR Coordinate System
+
+The GopherVR coordinate system is defined as follow:
+
+   � The X and Z-axis form the ground plane. The X-axis runs left to right,
+	 the Z-axis runs in and out of the screen.
+
+   � The Y-axis runs up and down. The -Y-axis is UP and the +Y-axis is DOWN.
+
+   � The Initial viewpoint orientates your eye so it looks towards the +X-axis,
+     the +Z- axis to its left, the -Z-axis to its right, and the -X-axis 
+	 behind it. 
+
+   � The groundplane is 40000 units along the X-axis and 40000 units along 
+	 the Z-axis.
+
+   � The Kiosk is placed at coordinates (0, 0, 0).
+
+
+The following chart illustrates all of these points:
+
+
+<image>
+
+
+
+
+
+Example Of A Custom GopherVR Server
+
+During the development of GopherVR we created many custom scenes, but we've 
+never developed an entire custom server. We've started to put together a server 
+dedicated to William S. Burroughs and customized it to make it GopherVR aware.
+We wanted to show how GopherAdmins would manually create clusters of Gopher
+items, and GopherVR scenes. The server can be found at
+<URL:gopher://huskerdu:6767/1>.
+
+After selecting "William S. Burroughs" from the main menu the user enters a
+directory with 10 items, split into 4 groups. The items are grouped as follows:
+
+	Books About WSB 
+	Books By William S. Burroughs 
+	Books With WSB Contributions
+	Friends Of William S. Burroughs 
+	William S. Burroughs Jr.
+	Interviews Of William S. Burroughs 
+	Magazines And Periodicals
+	Sound Recordings 
+	Video Recordings 
+	Art And Exhibitions
+
+
+
+We've placed the 4 groups around the kiosk. We've also placed each group in
+each of the 4 quadrants - the idea being that the pattern on the groundplane
+can be used to organize information, as well as to help users navigate the
+scene. 
+
+
+<image>
+
+
+
+Selecting the item "Books About WSB" brings us to a scene where the clustering
+is a bit more subtle. 
+
+
+<image>
+
+
+Here the two clusters divide the books about William S. Burroughs into the
+books mentioning him (often with other authors), and those where he is the
+focus of the book.
+
+Choosing the item "Sound Recordings" from the previous menu brings us to this
+scene:
+
+
+<image>
+
+
+Here the scene has 3 groups: William S. Burroughs' contributions to the Giorno
+poetry project; William S. Burroughs performing along with other artists;
+William S. Burroughs' solo projects. The cluster of documents pertaining to
+the Giorno poetry project are subdivided into two smaller clusters: recordings
+as part of The-Dial-A- Poem-Poets; and general recordings for John Giorno.
+
+
+<image>
+
+
+
+
+
+Generating Clusters
+
+While creating the scenes it quickly became apparent that we needed to easily
+create rings of objects. Our first task was finding reasonable X,Y,Z
+coordinates for a ring centered around the point (0,0,0). Using those points we
+transformed the ring to the desired location in order to get rings at
+arbitrary locations. 
+
+The following is a list of locations on a ring centered at (0,0,0):
+
+	Location: 1990, 0, 199 
+	Location: 1623, 0, 1167 
+	Location: 822, 0, 1823 
+	Location: -199, 0, 1990 
+	Location: -1167, 0, 1623 
+	Location: -1823, 0, 822 
+	Location: -1990, 0, -199 
+	Location: -1623, 0, -1167 
+	Location: -822, 0, -1823 
+	Location: 199, 0, -1990 
+	Location: 1167, 0, -1623 
+	Location: 1823, 0, -822 
+
+
+
+Now, if we wanted to place a ring of objects in the +X+Z quadrant we would
+translate the coordinates by adding a positive X and positive Z value to each
+X, Z coordinate respectively. We move the ring by +5000 units along each axis
+using the following loca- tions:
+
+	Location: 6990, 0, 5199 
+	Location: 6623, 0, 6167 
+	Location: 5822, 0, 6823 
+	Location: 4801, 0, 6990 
+	Location: 3833, 0, 6623 
+	Location: 3177, 0, 5822 
+	Location: 3010, 0, 4801 
+	Location: 3377, 0, 3833 
+	Location: 4178, 0, 3177 
+	Location: 5199, 0, 3010 
+	Location: 6167, 0, 3377 
+	Location: 6823, 0, 4178 
+
+
+
+
+
+Improving The Scene With Signs
+
+Sometimes, the reasons behind the grouping of a collection of documents becomes 
+apparent by looking at the titles of the documents in the same cluster; but
+sometimes the reasons behind the grouping is not at all evident. In the cases
+where the grouping is not evident it is a good idea to put signs in the scene.
+When we organized the books written by W. S. Burroughs we grouped them into 5
+clusters:
+
+	The Major Works 
+	The 1960's 
+	The 1970's
+	The 1980's 
+	The 1990's
+
+
+<image>
+
+
+
+We centered the major works about the origin, and the other clusters in each
+of the 4 quadrants. We then created large billboards which we suspended above
+the clusters. Here is the .3d file for the "1990's" billboard:
+
+% cat "The 1990's.3d" 
+Location: -5000, -3000, -5000
+Orientation: 0, 45, 0 
+Scale: 4, 4, 4
+
+
+
+
+
+Stacking Items
+
+When we first constructed the scene we placed all of the documents on the
+groundplane, but the scene became too crowded too fast. Having realized that
+some of the documents pointed to translations of books we wondered if we could
+group the translation of a book along with the entry for the book. 
+
+One solution is to make the book's item a directory, and to place all entries
+of the book in the directory. While this is a solution we weren't too happy
+with it since you had to check each directory for translations. This could
+become too tedious.
+
+What we decided to do was to stack each translation of a book over the entry of
+the book. It becomes extremely obvious which books can be read in a language
+other than English.
+
+
+<image>
+
+
+When creating stacks we found that spacing the items by 1000 units seems to
+work fairly well. Here are what the .3d files for the "Yage Letters" and some
+of its translations consist of:
+
+% cat "The Yage Letters.3d" 
+Location: 6990, 0, 5199 
+Orientation: 0, 30, 0
+
+
+% cat "Auf Der Suche Nach Yage.3d" 
+Location: 6990, -1000, 5199 
+Orientation: 0, 30, 0
+
+
+% cat "Les Lettres Du Yage.3d" 
+Location: 6990, -3000, 5199 
+Orientation: 0, 30, 0
+
+
+
+
+
+Redefining Objects
+
+Something we didn't find the need for in the WSB server but is supported is
+the ability to redefine the object's shape. Up to now we have been telling the
+client how to override attributes such as scale, location, and orientation.
+What we haven't overridden is the shape of an object. This URL
+<URL:gopher://huskerdu.micro.umn.edu:7070/11/CustomGopher/Sticks> points to a 
+directory where the object's shape was been altered.
+
+
+
+<image>
+
+
+% cat MyDocument.3d 
+Location: 1000, -1000, 1000 
+Object: gopher://arcwelder.micro.umn.edu:70/00/3dobjects/moo.geom
+
+
+Sometimes is it fun to put ambient sound in a directory. It can really change
+the mood of the scene, and provide the user with clues about the documents in
+the scene:
+
+% cat SimpleDocument.3d 
+AmbientSound: gopher://arcwelder.micro.umn.edu:70/99/mods/MistHunter 
+Object: gopher://arcwelder.micro.umn.edu:70/00/3dobjects/uofm.geom
+
+
+
+	Note: Currently the Macintosh GopherVR clients do not support ambient 
+	      sounds, nor does the AIX version of the UNIX client.
+
+
+
+
+
+Hints Under Current Consideration
+
+The following is a list of 3D hints we are currently considering adding. If
+you would like a specific hint added feel free to send e-mail to us, or to
+post the idea to the newsgroup "comp.infosystems.gopher"
+
+
+ ObjectSelected: URL
+
+	This hint specifies how the object should be drawn after it has been
+	selected. The URL specifies a Uniform Resource Locator for an object
+	description. The object description can be in any number of formats, the
+	client should find the MIME type of the object to get the specific type of
+	object data file.
+
+	Here's an example of an `opendoor' for a directory object..
+
+    	ObjectSelected: gopher://arcwelder.micro.umn.edu/v0/objs/opendoor
+
+	Note: Some clients may ignore this entry, especially if your object is in
+	      a weird or unknown file format.
+
+
+
+ Scenery: URL
+
+	The Scenery: hint defines objects that should be displayed, but are not
+	selectable. This will usually be used to put background information into
+	the scene. For instance, you could use this to put a street sign into your
+	scene: 
+
+   	Scenery: gopher://arcwelder.micro.umn.edu/v0/objs/streetsign
+
+
+
+ Color: Rgb, rGb, rgB 
+
+ 	This hint species what color the client should render the object. The
+	fields Rgb, rGb, rgB call for a RGB triple of floating point numbers, in
+	the range between 0.0 and 1.0. Clients would then be able to scale the
+	value based on their palette size.
+
+ 	Here is an example of a Blue object:
+
+ 	   Color: 0.0, 0.0, 1.0
+
+
+
+
+
+Conclusion
+
+When we started to construct the William S. Burroughs Gopher Server we knew
+that our task would be much easier if we had an authoring tool to help us
+create the scenes. To date we've spent about 4 days putting the server
+together. The first 2 days were spent researching and constructing the material
+currently available on the server. We then spent an additional 2 days modifying
+the server to make it GopherVR aware. If we had a GopherVR authoring tool we
+could easily have saved ourselves a day and a half of work.
+
+Because we've never put together an extensive custom GopherVR aware server we 
+weren't sure what tools we would want to have. We intentionally put the server
+together with a lack of authoring tools in order to learn: how the tools should
+work; what features would users expect to see from an authoring tool; how hard
+is it to construct scenes without tools.
+
+We are pleased with the current status of our William S. Burroughs server. We
+were happy to find that even without an authoring tool we were able to
+construct a useful server with meaningful use of a VR interface. We found the
+currently supported Gopher+ 3D hints to be enough to construct the scenes we
+needed. Two hints we didn't have available but could have made use of are the
+Scenery: and Color: hints. Had these been available we would have created more
+informative signs in each scene. 
+
+Over the next few months we will be developing an authoring tool based on what
+we have learned from our experiment. We encourage people to create some custom
+scenes and send us feedback. What problems are you having? What would you like
+the authoring tool to automate for you? How do you go about creating scenes?
+Send feedback to gopher@boombox.micro.umn.edu 
+

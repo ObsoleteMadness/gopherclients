@@ -1,0 +1,21 @@
+POPMAIL II 2.3B4                                 MAY 9, 1996
+
+New Features
+------------
+
+1.  It is now possible to configure mailboxes with separate email accounts.
+    This is done by selecting and opening a mailbox on the left side of
+    the Message Browser window.  Then select Mailbox Configure from
+    the popup Mailbox menu.  Also can set a signature for the mailbox.
+
+    All mail fetched or sent when inside this mailbox uses the identity
+    set for that specific mailbox.
+
+Bug Fixes
+---------
+
+1.  Fixed crasher that could occur first time POPmail was used.
+
+2.  Fixed 'Mark & Wendy' bug.  This occured if Wendy tried to pick up
+    and use the phone when Mark was fetching mail.  The message was
+    truncated and attempting to view it caused a crash.

@@ -1,0 +1,10 @@
+HoleDweller
+(ver 1.0)
+Freeware
+
+
+HoleDweller is a 32-bit Windows Gopher Client, 
+written by Trefor Burdick.  HoleDweller requires 
+the Windows .NET Framework to be installed.  
+
+

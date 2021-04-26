@@ -1,0 +1,16 @@
+***** PC Gopher III has been obsoleted by MINUET. ******
+
+
+This is the latest release of PC Gopher III.  Be sure to grab the
+release notes file along with everything else; it contains the list of
+known bugs, and any last-minute changes.
+
+PCG3BIN.ZIP contains the executables, the documentation is in
+PCG3DOC.ZIP.  There are also self extracting versions of these archives:
+PCG3BINX.EXE and PCG3DOCX.EXE.
+
+We're now using PKZIP version 2.04g to make .ZIP files, so if you don't
+have access to a copy of this version of PKZIP, get the self-extracting
+archives.
+
+Bug reports to gopher@boombox.micro.umn.edu.

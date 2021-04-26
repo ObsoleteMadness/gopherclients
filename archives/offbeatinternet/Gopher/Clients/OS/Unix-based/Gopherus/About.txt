@@ -1,0 +1,14 @@
+Gopherus
+(ver 1.0a)
+Freeware
+
+
+This is a Linux port of the Gopherus console-mode gopher 
+client for DOS. It provides a classic text interface to 
+the gopherspace. 
+
+For a 32-bit x86 processor = gopherus10alin86.zip
+For a 64-bit x86 processor = gopherus10alin86_64.zip
+
+
+

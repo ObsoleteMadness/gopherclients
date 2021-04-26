@@ -1,0 +1,298 @@
+GopherCON '94 State of Gopher Address
+   1994 State of the Gopher 
+      Mark P. McCahill, 
+      Farhad Anklesaria,
+      and the Internet Gopher Team
+      University of Minnesota
+      gopher@boombox.micro.umn.edu
+
+
+   Overview
+      -How we got here 
+      -How we spent the last year
+      -Current trends and the future
+
+
+   How we got here
+      1991: Pre-history and birth of gopher
+      1992: Growth and Gopher+ design
+      1993: Gopher+ deployment and refinement
+
+
+   1991: The first Gopher
+      -Open-ended/extensible system
+      -Minimal user training
+      -Great user interface for novices
+      -Access to most popular Internet services via gopher
+      -Minimal bandwidth requirements
+      -Internet Duct Tape/Convenience store
+
+
+   1992: Growth and Gopher+
+      -Gopher gateways to WAIS, ftp, Netnews, X.500, etc.
+      -Gopher becomes a normal way to publish information      
+       on the Internet
+      -Limits of the initial protocol become apparent
+         Needed a place to store meta-information
+         Administrator
+         Electronic forms
+         Alternate data formats (views)
+         Modification date
+         Abstract
+
+
+   1993: Gopher+ deployment
+      -Vigorously suggested that MIME-style content types be used 
+       for alternate views. Gopher+ protocol changed to use MIME 
+       content types this is implemented in our clients
+      -July 1993 - released production versions of Mac, Unix, and 
+       PC gopher+ clients with alternate view and electronic 
+       forms support; Unix gopher+ server
+      -By December 1993 about 1/3 of gopherspace uses gopher+ 
+       servers
+      -Bulk of the new server registrations are gopher+
+
+
+   Meet the Gopher team...
+      Paul Lindner
+         -SQL gateway
+         -Unix client and server enhancements
+         -Unix Gopher security bugfixes
+         -Gopher Gateway made Gopher+ aware
+         -Gopher to Netfind gateway
+
+
+   ...meet the Gopher team
+      Bob Alberti
+         -Gopherizing government census data into Gopher via 
+          Oracle SQL server
+         -Cleaned up and automated gopherizing of the 
+          Current Contents database
+         -Gopher to ftp gateway
+         -Gopher MUD registry
+
+
+   ...meet the Gopher team
+      David Johnson
+         -Macintosh Gopher Surfer
+         -Full-text search for Mac gopher servers via 
+          AppleSearch gateway
+         -Rewrite of Macintosh TurboGopher client for PowerPC 
+          and OpenDoc 
+
+
+   ...meet the Gopher team
+      Danny Iacovou
+         -New recruit to the gopher team
+         -Gateway from Gopher to 1992 revision of Z39.50 
+
+
+   ...meet the Gopher team
+      Earl Schleske / George Gonzalez / Kim Pearson
+         -PC-DOS Minuet client (an integrated Gopher+, e-mail,  
+          telnet client)
+         -Minuet is the replacement for PC Gopher III
+
+
+   ...meet the Gopher team
+      Michele Hu  & Liz Wendland
+         The newest recruits to the development team
+
+
+   Today's problems
+      Bytes moved across NSFnet backbone on Gopher's assigned 
+      port (port 70)
+
+
+   Growing usage
+      -Because half the gopher servers are run on ports other 
+       than port 70, the NSFnet traffic statistics underestimate 
+       gopher usage by a factor of 2
+      -20% per month growth rate eventually strains resources
+      -We need to spread the load so popular servers and gateways 
+       are not a single point of failure. Replicating information 
+       across the network will be vital this year
+      -Servers may start giving higher priority to requests from 
+       sites that are mirrors or dynamic caches
+
+
+   URLs, URNs and Gopher
+      -Uniform Resource Locators provide a way around the Gopher 
+       gateway bottleneck problem
+      -Our gateways are going to start returning URLs so that 
+       savvy clients can fetch the resource directly
+      -Our Gopher clients will emit and accept URLs as defined 
+       by the IETF
+      -We are tracking URN developments and will deploy a pilot 
+       URN to URL mapping service for gopher clients
+
+
+   ...today's problems
+      -Searches and indexes of gopherspace are an important 
+       navigational aid
+      -VERONICA and the new Archie become more important as   
+       gopherspace gets larger
+      -Public access VERONICA/Archie servers are very busy
+      -Harvesting from about 6700  servers is a challenge... 
+       and we register around 25 new servers a week
+
+
+   Gopher's place in the world
+      -Think of how books are structured
+         Table of contents: Gopher
+         Content: documents and multimedia 
+         (in a variety of data formats and page description    
+         languages)
+         Index: WAIS, Archie, VERONICA
+      -Gopher is a system that does not disenfranchise users 
+       with slow machines or network connections
+
+
+   Performance and Bandwidth
+      Typical home Gopher Server directory:    2k - 6k
+      Default Mac Mosaic home page:                35k
+      NCSA home page:                              70k
+      University  of Illinois home page:          100k
+      Global Network Navigator home page:          57k
+
+
+   User experience & slow links
+      -Gopher is not a network pig...
+      -Hypertext is useful as one type of document
+       ...but relying on nothing but a mass of unstructured 
+       hypertext is not our best hope for the future
+      -Gopher is an excellent solution for structuring an 
+       information space
+
+
+   Trends and the future
+      -Most applications are in the process of becoming 
+       Internet-aware
+      -The URL concept makes all applications look like 
+       hypertext: your mailer, your word processor, your 
+       newsreader...
+      -Expect a proliferation of network-aware page 
+       description languages and data formats
+
+
+   ...Trends and the future
+      -Apple's OpenDoc and Microsoft OLE document architectures 
+       will easily accommodate references to networked resources
+      -A distinct possibility that Adobe Acrobat will soon support 
+       references to networked resources
+      -Gopher supports many different kinds of multimedia content 
+       types; we are not married to any particular data format or 
+       page description language
+
+
+   Client software architectures
+      -It will always be a multi-protocol world
+      -Monolithic network applications have limited future
+      -A monolithic application is a large, cumbersome swiss-army 
+       knife (would you repair your car or build a house with a 
+       swiss army knife?)
+      -Small, specialized, communicating applications will have 
+       an advantage
+      -Technologies like OLE and OpenDoc will let the users decide 
+       which applications to plug into their personalized frames
+
+
+   Monolithic app: Mac Mosaic
+      Consider the gopher capabilities of Mosaic
+         -Only the most basic gopher support
+         -Lacks Gopher+ features such as item attributes, 
+          alternate views, and electronic forms
+         -Virtually nonexistent backgrounding capability
+
+
+   ...Mac Mosaic
+      Retrieving 1MB gopher directory on a Centris 650 across 
+      ethernet
+         TurboGopher     13 seconds
+         Mac Mosaic    1800 seconds   (30 minutes!)
+      -Mosaic used over 3 MB of RAM to hold a 1MB directory
+      -Mosaic could launch a real Gopher client (but doesn't)
+      -TurboGopher would be happy to launch Mosaic to render 
+       HTML but Mosaic can't acept Finder open events on such 
+       documents
+
+
+   More comparisons
+      Retrieving 800K binhex file
+         Fetch (using ftp):                  40 seconds
+         Mac Mosaic (using its ftp mode):    60 seconds
+         TurboGopher (via gopher):           18 seconds
+
+
+   Future Architecture
+      -Many application protocols, and continued protocol 
+       development
+      -Modular protocol-specific client software which plugs 
+       into a user-interface framework 
+      -Many network-aware page description languages that work 
+       with plug-in protocol modules
+      -We should be trying to do a few things really well 
+       instead of everything poorly
+
+
+   Plenty of change in three years
+      -Much faster desktop CPUs (PowerPC and Pentium)
+      -Much more content available on the net
+      -But we are still living with the same tired old 
+       user interface metaphors
+      -Can't we do any better?
+
+
+   Why 3-D gopherspace?
+      -People navigate through 3-D space all the time
+      -Providing a stronger sense of place and better 
+       landmarks will help users navigate
+      -Virtual worlds (3-D gopherspace) gives us more 
+       possibilities for visual and aural cues that documents are 
+       closely (or distantly) related
+
+
+   ...why 3-D Gopherspace?
+      -Social intelligence cues can easily be coded into 3-D 
+       space... popular items might appear worn and the beaten 
+       path can be made explicit
+      -We need to facilitate both finding information and finding 
+       people
+      -A new user interface metaphor will let us build richer 
+       systems that incorporate interpersonal interaction (imagine 
+       hybrid Gopher / IRC / MUD systems)
+
+
+   But is this really feasible?
+      -3-D gopherspace does not have to be a network pig
+      -We can trade intelligence in the client for bandwidth; 
+       the client generates the scenes itself
+      -Affordable desktop systems (PowerPC/Pentium) are now 
+       becoming fast enough to render virtual worlds on the fly
+      -...And it is worth doing because virtual worlds will give 
+       us better metaphors for describing the massive quantity of 
+       resources on the net
+
+
+   How might it look?
+      video goes here...
+
+
+   Summary
+      -Our strategy is snap-together modular components
+      -A component approach doesn't preclude a seamless user 
+       interface - look at the GINA software
+      -Components will let us explore new user interface metaphors 
+       and emerging technologies such as OLE and OpenDoc
+      -Gopher continues to be the best way to organize and 
+       navigate the Internet
+
+
+   Hot tips for the conference
+      -Check out the blue skies gopher... it is coooool!
+      -The quality/reliability discussions are very important 
+       is we are to continue to stay ahead of user demands
+      -Check out the SQL and X.500 use of gopher electronic 
+       forms... you can do lightweight authentication today, 
+       and you don't have to use a filesystem for Gopher backend 
+       storage

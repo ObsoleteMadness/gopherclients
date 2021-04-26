@@ -1,0 +1,7 @@
+The file ee.com contains EasyEdit, a very simple editor
+that does not strip out tabs from saved text files.
+
+You need to retain tabs in gopher config files, and since
+many word processors strip them out, ee is provided here
+as a convenience.
+

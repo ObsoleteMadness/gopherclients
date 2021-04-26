@@ -1,0 +1,555 @@
+<title>Running WWW on top of Gopher</title>
+<h1>Running WWW on top of Gopher</h1>
+<p>
+paper for WWW'94, CERN, May 1994 and GopherCON '94, Minneapolis, Minn,
+April 1994
+<p>
+<address><dl>
+<dt><a href="http://www.lanl.gov:52271/?-l+103424">Mike Potter</a>
+<dt>Network Engineering
+<dt>C-5, MS B255
+<dt>Los Alamos National Laboratory
+<dt>Los Alamos, New Mexico, USA  87545
+<dt>mep@lanl.gov</dl></address><p>
+At Los Alamos National Laboratory (LANL), we wanted to set up a 
+World-Wide-Web (WWW) server.
+A few months earlier we had already set up a Gopher server.  Rather
+than maintaining two separate systems, with a plain ASCII copy of the
+information in one system along with an HTML version in the other, we decided
+to write a WWW server that would make use of the existing Gopher
+information structure.
+<p>
+Of course, you don't need to do anything special in order to view
+Gopher information
+via the Web, you can simply use the URL of the form
+<pre>
+gopher://nodename/type/path
+</pre>
+to point to your existing Gopher server.  However, we wanted the
+ability to
+enhance the existing information using HTML, without having to
+duplicate all of it.  The following goals lead to the development of
+the <i>gopherhttpd</i> server:
+<ul>
+<li>Seamless integration of Gopher and WWW from the perspective of
+both the users and the information provider.  If a new document is
+added to the Gopher system, it should automatically appear in the WWW
+system.
+<li>Provide a WWW server that installs and operates much like a Gopher
+server to allow existing system and network managers to install a WWW
+server with little additional training.
+<li>Provide the ability to completely override ASCII documents in
+Gopher with HTML documents in WWW when desired.
+<li>Allow easy annotation of the existing Gopherspace.
+<li>Provide nicely formatted HTML pages by default.
+</ul>
+<p>
+This document describes the <i>gopherhttpd</i> server that achieves all of
+the above goals.  The installation and operation of this server will
+be described, and examples from the LANL server will be shown.
+
+<h1>Overview of <i>gopherhttpd</i></h1>
+The easiest way to understand the power of <i>gopherhttpd</i> is to take a
+look at an example.
+<p>
+<a href="gopher://gopher.lanl.gov/">Here is what the LANL Gopher server looks like.</a>
+<p>
+<a href="http://www.lanl.gov/">Here is what the LANL WWW Home Page looks like.</a>
+<p>
+The LANL WWW Home Page was generated "on the fly" based upon
+information from the LANL Gopher server.  Note that all of the Gopher
+menu items appear in the WWW Home Page.  Each menu item is "annotated"
+with a short description.  In addition, the entire menu is preceded
+by a short description (like an "About" or "README" file would
+normally be used for in Gopher).
+<p>
+Note that the WWW Home Page takes full advantage of HTML, including
+the ability to present a logo.  
+
+<h2>A Closer Look</h2>
+Let's take a closer look at each element in the LANL WWW Home Page and
+see how it is generated from the data on the Gopher server.
+<p>
+<hr>
+&lt;Optional logo>
+<p>
+This text is used to describe the current page.  It is optional.  The
+contents of this section are taken from the file
+<code>README.html</code> in the current Gopher directory.  This file
+can contain any HTML code that is desired.
+<dl>
+<dt>&lt;optional icon><a href="">First Menu Item</a>
+<dd>Description of the First Menu Item.  This section is optional.
+<dt>&lt;optional icon><a href="">Second Menu Item</a>
+<dd>Description of Second Menu Item
+</dl>
+________________________________________
+<address>Author Name or email address</address>
+<hr>
+<p>
+Each of the Menu Items in the template shown above are taken from the
+Gopher menu.  The <i>gopherhttpd</i> server reads both the
+<code>.cap</code> files and the <code>.Links</code> 
+files and produces a menu just like the Gopher menu.  Each menu
+item corresponds to a specific file or directory in Gopherspace.  The
+description of this file or directory is read from the file
+<code>filename.about.html</code> where <code>filename</code> is the
+name of the Gopher file or directory.  The optional icon is taken
+from the file <code>.cap/filename.gif</code> if it exists.
+<p>
+The only thing that was done to the Gopher server to make all of this
+work was to add the line
+<pre>
+ignore:		.html
+</pre>
+to the <code>gopherd</code> configuration file.  Thus, any file ending in
+<code>.html</code> will be ignore by the Gopher server, and handled instead by
+<i>gopherhttpd</i>.
+<p>
+The Author name or email address shown at the bottom of the screen is
+taken from a file in the current Gopher directory called
+<code>AUTHOR.html</code>.
+If this file is not present, and is not found in any parent directories,
+default information contained in the
+<i>gopherhttpd</i> configuration file is placed here instead.  Since this
+information can contain any HTML commands, you can provides links to
+your phone book entries.
+<p>
+That's it!  This is the basic template for every HTML page created by
+<i>gopherhttpd</i> from your existing Gopher menus.
+
+<h1>Further Customization</h1>
+There are some tricks that you can use to further customize the look
+of your WWW server.
+<p>
+Normally, <i>gopherhttpd</i> will automatically create the URL for each item
+in the menu to point to either another menu, or to the information
+file itself.  If the file <code>filename.html</code> exists, then a
+link to this file will be generated instead.  This allows you to completely
+override a file in Gopher with an HTML file by putting both into the
+same Gopher directory.  Since Gopher ignores HTML files, Gopher users
+will only see the original data, and WWW users will only see the HTML
+data.
+<p>
+You can prevent Gopher items from appearing in the WWW page by adding
+a file to the Gopher directory called <code>filename.ignore</code>  Of
+course, you then also need to tell your Gopher server to ignore files
+that end in <code>.ignore</code>.  To avoid this, <i>gopherhttpd</i>
+also recognizes the file <code>.cap/filename.ignore</code>.
+Now Gopher users will see the
+original <code>filename</code>, but <i>gopherhttpd</i> will omit it from the
+WWW menu.
+
+<h1>Extensions to the Gopher .cap files</h1>
+Instead of creating description files using the
+<code>filename.about.html</code> method described above, you can
+achieve this same effect through some extensions to the Gopher
+<code>.cap/filename</code> 
+and <code>.Links</code> files.  
+Gopher clients ignore lines in these files that do
+not start with recognized keywords.  Thus, we have added some new
+keywords that <i>gopherhttpd</i> will recognize, but Gopher will ignore.
+Here is a list of the new keywords:
+<dl>
+<dt><code>Desc</code>
+<dd>Allows you to specify the description to be placed under the menu
+item name.  Only a single line description is allowed, but that line
+can be as long as you want, and Mosaic will wrap the long line as
+needed into a full paragraph.
+<dt><code>WWW</code>
+<dd>What if a system is running both a Gopher and a WWW server?
+Normally, <i>gopherhttpd</i>
+points to the Gopher system.  You can override this using the
+<code>WWW=url</code> option in the <code>.cap</code> file.  The <code>url</code>
+specified on 
+this line will be used as the menu item.  Also, a line in the
+description field will automatically be generated that says
+<p><dl><dl>
+<dt>You can also access their <a href="">Gopher</a> server.
+</dl></dl>
+<p>
+which points to the Gopher system.
+If you put an asterisk (*) at the end of the URL, this Gopher message
+will be supressed.  A dollar-sign ($) in the URL is expanded from the
+<code>Host</code> field.  If the protocol string is missing from the
+front of the URL, <code>http://</code> is added by default.  Thus, the
+string
+<p>
+<code>WWW=$/welcome.html</code>
+<p>
+will generate a menu item with a link of
+<code>http://hostname/welcome.html</code> where <code>hostname</code> is taken
+from the <code>Host=hostname</code> line in the <code>.cap</code> file.
+<dt><code>Pre</code>
+<dd>HTML text assigned to Pre will be output immediately before the
+highlighted Name of the menu item.
+<dt><code>Post</code>
+<dd>HTML text assigned to Post will be output immediately after the
+highlighted Name of the menu item.
+<dt><code>Before</code>
+<dd>HTML text assigned to Before will be also output before the menu item,
+but also before the <code>&lt;dt></code> that flags the start of the
+menu item.  
+You can think of this text as appearing after the Description text of the
+previous item.  A common use of this item is with
+<code>Before=&lt;hr></code> to put a horizontal rule before the menu item.
+</dl>
+NOTE:  When using extended syntax in the <code>.cap/filename</code> file, be sure and put
+the new items after any existing Gopher items.  Many gopher clients
+abort their parsing of the <code>.cap</code> file when they reach an unknown
+keyword.  Thus, all standard Gopher keywords should come first,
+followed by the extended <i>gopherhttpd</i> keywords.
+
+<h1>Putting .cap information into the About file</h1>
+As mentioned in a previous section, you can use a file called
+<code>filename.about.html</code>, where <code>filename</code> is the
+name of the Gopher file or directory, to specify the description that
+appears under the menu item.  This is just the default use for the
+About file -- you can do much more.  If a line in the About file doesn't start with
+<code>keyword=</code>, then it is assumed to be a line in the menu
+description.  A single line in this file is equivalent to putting a
+<code>Desc=description</code> line in the .cap file.
+<p>
+However, in the About file (the <code>filename.about.html</code>
+file), you can specify multiple description lines.  In the HTML
+output, a <code>&lt;dd></code> is inserted at the beginning of each line to force a
+line break in the description.
+<p>
+You can also put any valid <code>.cap</code> information into the About file.  Any
+information specified in the About file will override information in
+the <code>.cap</code> file.  This allows you to further modify and customize your
+WWW page since you can change the Gopher information in the
+<i>gopherhttpd</i> About file for a given menu entry.
+
+<h1>Some real examples</h1>
+Let's look at a real-life examples where we make use of some of these
+advanced features.
+
+<h2>Separating menu items into sections</h2>
+In order to organize a Gopher menu into sections, sometimes you will see
+gopher sites do this:
+<hr>
+<pre>
+                  Internet Gopher Information Client 2.0 pl10
+ 
+                      Root gopher server: gopher.lanl.gov
+ 
+ -->  1.  News Flash 7-Mar-1994: What's New in the LANL Gopher....
+      2.  ---------------------LANL Information---------------------.
+      3.  News and Events/
+      4.  Phone Book/
+      5.  Job Openings/
+      6.  Library Catalogs and Information/
+      7.  Computing at LANL/
+      8.  Information Architecture Project/
+      9.  Software Archive/
+      10. Information by Division/
+      11. Information by Subject/
+      12. -----------------------The Internet-----------------------.
+      13. About the Internet/
+      14. How to get Gopher/Mosaic Software/
+      15. The Internet via Gopher/Mosaic/
+      16. Finding People, Places, and Information/
+      17. Selected Software Archives (FTP)/
+      18. Network News (USENET)/
+ 
+Press ? for Help, q to Quit                                   Page: 1/2
+</pre>
+<hr>
+<p>
+What we want the WWW home page to look like is something like this:
+<hr>
+<dl>
+<dt>News Flash 7-Mar-1994: What's New in the LANL Gopher....
+<p>
+<dt>LANL Information
+<dl>
+<dt>News and Events
+<dt>Phone Book
+<dt>Job Openings
+<dt>Library Catalogs and Information
+<dt>Computing at LANL
+<dt>Information Architecture Project
+<dt>Software Archive
+<dt>Information by Division
+<dt>Information by Subject
+</dl>
+<dt>The Internet
+<dl>
+<dt>About the Internet
+<dt>How to get Gopher/Mosaic Software
+<dt>The Internet via Gopher/Mosaic
+<dt>Finding People, Places, and Information
+<dt>Selected Software Archives (FTP)
+<dt>Network News (USENET)
+</dl>
+</dl>
+<hr>
+The way to achieve this is to override the <code>Name</code> of the
+section headings using the About file.  Let's concentrate on the menu
+item titled "LANL Information".  This Gopher menu item points to a
+file of information about LANL, with a filename of <code>lanl</code>.
+Here is the contents of the <code>.cap/lanl</code> Gopher file:
+<pre>
+Name=---------------------LANL Information---------------------
+Numb=2
+</pre>
+Pretty simple.  Now, here is the contents of the
+<code>lanl.about.html</code> file used by <i>gopherhttpd</i>:
+<pre>
+Name=LANL Information
+Desc=&lt;dl>
+Before=&lt;p>
+</pre>
+The <code>Name=</code> line overrides the Gopher name that contains
+all of the hyphens.  The <code>Desc=&lt;dl></code> line
+tells HTML to start a new description list for the following menu
+items.  
+The <code>Before=</code> line adds some space between the previous menu
+item and the current one.
+<i>gopherhttpd</i> will automatically create a link to the existing
+<code>lanl</code> Gopher file.  If you want, you could create an HTML
+version of this file called <code>lanl.html</code>, and the link would
+automatically point to the HTML file rather than the ASCII file.  
+
+<h2>Creating a WWW-only menu item</h2>
+We have seen how you create a Gopher-only menu item;  simply create a
+file called <code>.cap/filename.ignore</code> and <i>gopherhttpd</i> will omit the
+item from the menu listing.  However, what if you only want a
+particular item to appear in the WWW page, and not the Gopher page?
+<p>
+To create a new WWW-only menu item, simply create a
+<code>filename.about.html</code> file.  For example, Let's say we want
+to add a menu item that points to the master list of WWW servers.
+Obviously we don't want our Gopher users to see this, since it
+contains a list of WWW servers, not Gopher servers.  We create a file
+called <code>www-list.about.html</code> with the following contents:
+<pre>
+Name=Master list of WWW servers around the world
+Numb=10
+WWW=http://info.cern.ch/hypertext/DataSources/bySubject/Overview.html
+Desc=A listing of registered World-Wide-Web servers maintained at CERN
+</pre>
+The <code>Name=</code> line specifies the highlighted text of the menu
+item.  The <code>Numb=</code> line specifies that this item appears in
+tenth place in the menu.  Without the <code>WWW=</code> line,
+<i>gopherhttpd</i> would create a link to a file called <code>www-list</code>
+or <code>www-list.html</code>.  By overridding this link, we can point
+to the server list at CERN instead.  Finally, the <code>Desc=</code>
+line adds a short annotation for this menu item.
+
+<h1>Some LANL-specific features</h1>
+<i>gopherhttpd</i> also supports some more exotic features that are used at
+LANL.  By modifying the perl code for <i>gopherhttpd</i>, you can probably
+make use of these features at your own site.  However, feel free to
+<a href="#Installing">skip</a> this section if you'd like.
+
+<h2>Linking author entries with the phone book</h2>
+The file <code>AUTHOR.html</code> is used to sign the bottom of each
+WWW page.  If the file does not exist in the current Gopher directory,
+or in any parent directories, default information from the <i>gopherhttpd</i>
+configuration file is used.  This file can contain any HTML code.
+However, if the file contains a single line with the syntax:
+<pre>
+text,nnnnnn
+</pre>
+or
+<pre>
+nnnnnn:{text}
+</pre>
+where <code>nnnnnn</code> is a six-digit number, then <i>gopherhttpd</i>
+automatically creates a link to the LANL phone book.  The
+<code>text</code> will be highlighted, and linked to the following
+URL:
+<pre>
+http://www.lanl.gov:52271/?-l+nnnnnn
+</pre>
+The LANL phone book runs on port 52271 and takes a query.  The
+<code>-l</code> tells the LANL phone book to output the long form of
+the record, and the 6-digit number represents the LANL employee
+number.
+
+<h2>Creating a local list of servers</h2>
+When we started to create a master list of all Gopher and WWW servers
+at LANL, we realized that much of the effort spent writing HTML code
+could be automated.  After all, what we wanted was a menu of servers,
+much like one of our Gopher menus.  The difference is that we wanted
+to add some extra information to each item, like the status of the
+server, the name of the contact, etc.  We could have just used the
+Description capability already build into <i>gopherhttpd</i>, but we decided
+to add some more extensions to make it even easier.  The following
+additional keywords were added to the <code>.cap/filename</code> and 
+<code>filename.about.html</code> file syntax.
+<dl>
+<dt><code>Status</code>
+<dd>Specifies the status of the server (under construction, production,
+etc.).  This field can contain any HTML code.  The presence of the
+Status keyword in the .cap or About file triggers the code in
+<i>gopherhttpd</i> that produces the special format of this menu item.
+<dt><code>Admin</code>
+<dd>Specifies the contact person in charge of the server.  It can
+contain plain HTML text, or it can contain links to the LANL phone
+book using the syntax:
+<pre>
+nnnnnn:{text of first contact},nnnnnn:{text of second contact}...
+</pre>
+Each contact will be placed on a separate line.
+<dt><code>GopherLink</code>
+<dd>Normally, the link to the Gopher server will be taken from
+the <code>Host</code>, <code>Port</code>, <code>Path</code> keywords.  You can override this using the
+<code>GopherLink</code> keyword.  In particular, you can use a value of
+<code>none</code> if the system is not running a Gopher server.
+<dt><code>WebLink</code>
+<dd>Normally, the link to the WWW server will be taken from the <code>Host</code>,
+<code>Port</code>, and <code>Path</code> keywords, possibly overriden with the <code>WWW</code> keyword.  You
+can override this with the <code>WebLink</code> keyword.  In particular, you can
+use a value of <code>none</code> if the system is not running a WWW
+server.
+</dl>
+Let's take a look at an example of a <code>.cap</code> file for a system running
+both a Gopher and WWW server, and how <i>gopherhttpd</i> formats this entry:
+<hr>
+<pre>
+Name=DOE High Performance Computing Research Center (ACL)
+Type=1
+Host=gopher.acl.lanl.gov
+Port=70
+Status=production
+Path=
+WWW=http://www.acl.lanl.gov/Home.html
+Admin=102733:{Jerry DeLapp (jgd@acl.lanl.gov), Gopher}\n114212:{Ron Daniel (rdaniel@acl.lanl.gov), WWW}
+Desc=Information about the Advanced Computing Laboratory and all of the projects that they are involved in.  ACL staff and facilities information.  Link to central LANL server.
+</pre>
+<hr>
+<p>
+<i>gopherhttpd</i> displays this menu item like this:
+<hr>
+<dl>
+<dt><a href="http://www.acl.lanl.gov/Home.html">
+DOE High Performance Computing Research Center (ACL)</a>
+<dd><code>Status...</code>production
+<dd><code>WWW......</code><a href="http://www.acl.lanl.gov/Home.html">http://www.acl.lanl.gov/Home.html</a>
+<dd><code>Gopher...</code><a href="gopher://gopher.acl.lanl.gov/">gopher://gopher.acl.lanl.gov/</a>
+<dd><code>Admin....</code><a href="http://www.lanl.gov:52271/?-l+102733">Jerry DeLapp (jgd@acl.lanl.gov), Gopher</a>
+<dd><code>.........</code><a href="http://www.lanl.gov:52271/?-l+114212">Ron Daniel (rdaniel@acl.lanl.gov), WWW</a>
+<dl><dd><dd>Information about the Advanced Computing Laboratory and all of the projects that they are involved in.  ACL staff and facilities information.  Link to central LANL server.</dl>
+</dl>
+<hr>
+Note that all of the links are created for you so that in addition to
+providing information about the server, you can actually jump to their
+WWW server, Gopher server, or phone book entries.
+<p>
+If you put this information into the Gopher <code>.Links</code> file, rather than
+using a <code>.cap</code> file, you will end up with menu items in your Gopher server.
+At LANL, we put entries in the <code>.Links</code> file for all servers running
+Gopher, then create individual <code>filename.about.html</code> files
+for servers that do not run Gopher.  This way, Gopher users see a list
+of all LANL Gopher servers, and WWW users see a nice annotated list of
+all Gopher and WWW servers at the Lab.
+
+<A NAME="Installing"><h1>Installing <i>gopherhttpd</i></h1></A>
+Installation of <i>gopherhttpd</i> is very similar to the installation of a
+Gopher server.  <i>gopherhttpd</i> is meant to be run from the Unix <code>inetd</code>
+daemon.  Here are the steps involved in installation:
+<ol>
+<li>Add an entry to your <code>/etc/services</code> file for your new
+WWW server.  This entry should look something like:
+<pre>
+httpd   80/tcp      # WWW server
+</pre>
+<li>Add an entry to your <code>/etc/inetd.conf</code> file.  This
+entry should look something like:
+<pre>
+http  stream  tcp  nowait  nobody  /etc/gopherhttpd gopherhttpd /gopher /etc/gopherhttpd.conf
+</pre>
+The meaning of the parameters will be listed in the next section.
+Note that this daemon is run as user <code>nobody</code>.  This is recommended as a
+security precaution to prevent someone from gaining root access
+through unknown holes in <i>gopherhttpd</i>.  This example is taken from a Sun
+Sparcstation.  Some Unix systems do not allow you to specify the user
+id that your server runs as.
+<li>Restart your inetd daemon.  Use
+<pre>
+ps -ax | grep inetd
+</pre>
+to determine the process id of <code>inetd</code>.  Then issue a <code>kill
+-1 pid</code> to restart it.
+</ol>
+The above example assumes you put the <i>gopherhttpd</i> code and
+configuration file into your <code>/etc</code> directory.  Feel free to use any
+directory you wish, and simply update the entry in <code>inetd.conf</code> to reflect
+the actual location of these files. 
+<a href="file://ftp.lanl.gov/pub/unix/www/gopherhttpd/gopherhttpd">Here
+is the source for <i>gopherhttpd</i></a>
+<p>
+<i>gopherhttpd</i> is written in perl.  perl is an interpreted language that
+requires a run-time interpreter.  The first line in <i>gopherhttpd</i> points
+to the location of the perl interpreter.  The default location is
+<code>/usr/bin/perl</code>.  If your perl interpreter is located in a
+different place, change the first line in <i>gopherhttpd</i>.  If you don't
+have PERL, 
+<a href="http://www.lanl.gov/software/unix/perl">go get it!</a>
+No Unix system should be without it.
+
+<h2>Command line parameters</h2>
+<i>gopherhttpd</i> takes two parameters on the command line.  The first
+parameter is the directory where your Gopher files are located.  This
+should be the same as the home directory specified when loading your
+Gopher server.
+<p>
+The second parameter is the location of the <i>gopherhttpd</i> configuration
+file.  The contents of this configuration file are very similar to the
+contents of your Gopher configuration file.  In particular, it
+contains information about MIME file types, access control lists, and
+miscellaneous information such as the node and port of your Gopher and
+WWW servers.  The 
+<a href="file://ftp.lanl.gov/pub/unix/www/gopherhttpd/gopherhttpd.conf">
+sample configuration file</a> is full of comments that
+explain each parameter.
+
+<h1>Security Considerations</h1>
+<i>gopherhttpd</i> acts much like the browse option available in other WWW
+servers.  This means that you don't have to provide a specific file
+name to <i>gopherhttpd</i>, but can simply give it a directory name and
+browse the files in that directory.  <i>gopherhttpd</i> will allow access to
+any world-readable file or directory within your Gopher hierarchy.  It
+will also follow any symbolic links contains in that hierarchy.  It
+will not otherwise allow access outside of the tree specified as the
+first parameter to the server.
+
+<h2>Access Control</h2>
+<i>gopherhttpd</i> implements the same type of node-based access control as
+does the UMN Gopher server.  In the <i>gopherhttpd</i> configuration file,
+you add lines of the form:
+<pre>
+access: ip-address  access
+</pre>
+where <code>ip-address</code> is the full or partial IP address of the
+system of network you want to control access on.  <code>access</code>
+is either a + or - to allow or deny access.  If the access field is
+any string beginning with an exclamation mark (!), access is denied,
+any other string not beginning with an ! allows access.  The second
+form of the syntax makes the configuration file compatible with
+existing gopher configuration files.
+<p>
+The ip-address field can actually be any Unix regular expression.
+Periods (.) not followed by a * or + are automatically escaped.
+Missing fields in the IP address are filled with .* automatically.
+Thus, the ip-address <code>128.165</code> expands to the regular
+expression <code>128\.165\..*\..*</code>, matching any node beginning
+with the specified numbers.
+
+<h1>Conclusion</h1>
+Running <i>gopherhttpd</i> in addition to a Gopher server makes your
+information available to the widest possible audience.  The defaults
+are designed to get your system up and running as quickly and easily
+as possible.  Many customization hooks are provided that allow you to
+fine tune to look of your WWW pages using HTML.  Using the Gopher
+directory hierarchy forces the system administrator to organize their
+information.  The system administrator doesn't need to write HTML code
+in order to generate nice looking menus.  Until everyone starts
+generating their information directly in HTML, using
+<i>gopherhttpd</i> is a good compromise between the Gopher ASCII information
+and the WWW HTML information, giving you the advantages of both systems.
+
+

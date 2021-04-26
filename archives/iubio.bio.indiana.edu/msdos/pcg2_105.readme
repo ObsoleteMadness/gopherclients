@@ -1,0 +1,42 @@
+This directory contains PC Gopher II version 1.05r2:
+
+  GOPHER.EXE      The main executable file.
+  GOPHER.OVR      The overlay file.
+  GENV.BAT        An EXAMPLE of a batchfile to set up your
+                  environment properly for PC Gopher II - it's
+                  ONLY an example, and won't work if you don't
+                  modify it to suit your environment!
+  PCG2.DOC        Manual for PC Gopher II v1.05
+  RELEASE.TXT     Release notes.
+  00README        This file.
+
+  PCG2_105.ZIP  All of the above files, in a .ZIP archive
+
+  PCG2_SRC.ZIP  Turbo Pascal 6.0 sources for PC Gopher II v1.05
+
+							 
+Also contained in this directory is a subdirectory called "drivers"; inside
+is a reasonable up-to-date set of the Clarkson packet drivers, one of which
+you MUST have to use PC Gopher II.
+
+REMEMBER TO SET THE FTP TRANSFER MODE TO BINARY BEFORE YOU GRAB
+THESE FILES.
+
+Also, be sure to read the accompanying file RELEASE.TXT!  Many things
+have changed between the old PC Gopher and PC Gopher II; if you just
+grab the executable and run it, you will certainly run into trouble!
+Also, all bug fixes since version 1.00b are listed in this file.
+
+Your suggestions and bug reports are essential to the continued develop-
+ment of PC Gopher II.  Send them to:
+ 
+ gopher@boombox.micro.umn.edu
+
+Please be sure to include the following information with bug reports:
+ 
+ - your operating system version
+ - the error message and address that PC Gopher II gave you
+ - which packet driver you're using
+ - any other drivers or TSRs that you have loaded
+ 
+Have fun!

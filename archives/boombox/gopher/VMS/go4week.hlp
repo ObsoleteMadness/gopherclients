@@ -1,0 +1,28 @@
+GO4WEEK.ZIP contains IBM/PC based programs to help analyze the log file 
+from the VMS gopher. Last revised 2/94. Included are:
+
+    1)  go4week.exe
+	go4week.mak
+	go4week3.bas
+	main.frm        
+
+	This is the source and EXE for a Visual Basic for DOS program
+	which provides lots of useful information. Go4week can identify
+	and read both PC and VAX file formats. An optional switch permits
+	selective processing of the log file. Another reverses the ip 
+	address listings.
+
+    2)  sortf.com
+	sortf.doc
+
+	An excellent shareware sort program called by go4week
+
+    3)  go4acum.bas
+	go4acum.exe
+
+	A simple QuickBasic program to accumulate the output
+	files from go4week.
+
+Send your questions, comments, bugs, suggestions to rudner@cua.edu
+
+

@@ -1,0 +1,213 @@
+Patch #:	gopatch.dg3
+Type:		bug fix 
+Priority:	medium
+Summary:	Gopher+ ASK form jumbo patch:
+Summary:	d) Fully implement ASK directories ("Type=1?" in .names file)
+Summary:	
+Summary:	e) Stop gopher- or bad gopher+ clients trying to use ASK
+Summary:	e) forms improperly, which leaves hung processes on server
+Summary:
+Summary:	a) Implement ASK form client->server file transfer protocols
+Summary:	a) handle "+bytecount" and "+-2" data counts from 
+Summary:	a) client to server file transfer from ASK ChooseF response.
+Summary:	a) This form is needed for binary file transfer.
+Summary:	a) Clients also must be written to support this.
+Summary:	
+Summary:	b) Include correct view type for ASK directories.
+Summary:	b) Note: the incorrect "text/plain" view has been included by Summary:	b) default before this.  User/client may still have to know  
+Summary:	b) more than we expect to get this right.
+Summary:	
+Summary:	c) Prevent ASK directory info being sent to gopher- clients
+Summary:	c) which prevents them from accessing parent folder.
+Summary:	
+Submitted:	Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:	ftp.bio.indiana.edu	util/gopher/patches/gopatch.dg3
+Application:	'cd gopher2.012; patch -p < gopatch.dg3'
+WARNING:	This patch may not apply correctly automatically
+File:		gopher2.012/gopherd/gopherd.c
+File:		gopher2.012/gopherd/command.c
+File:		gopher2.012/object/GSgopherobj.c
+
+
+*** gopher2.012/gopherd/gopherd.c	Tue Mar  8 12:11:16 1994
+--- go212dg/gopherd/gopherd.c	Wed Mar 30 12:41:05 1994
+***************
+*** 1152,1157 ****
+--- 1156,1162 ----
+       case 's':
+       case 'I':
+       case 'g':
++      doFile:   /* dgg */
+  	  /*** It's some kind of file ***/
+  
+  	  /*** Is it binary??  ***/
+***************
+*** 1173,1178 ****
+  
+  
+       case '1':
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, Selstr+1, CMDisGplus(cmd), view, filter);
+
+--- 1178,1191 ----
+  
+  
+       case '1':
++ 	  /** dgg FIX FOR ASK directories ! this is needed to get them working in this scheme */
++ 	  /* ?? am I the only one who has been using these til now? 30mar94 */
++ 	  if (CMDisAskitem(cmd)) {
++ 	        Debug("ASK directory with view type '%s'\n", view);
++ 		goto doFile;  /* dgg */
++ 		}
++ 
+  	  /*** It's a directory capability ***/
+  	  listdir(sockfd, Selstr+1, CMDisGplus(cmd), view, filter);
+
+
+***************
+*** 2346,2352 ****
+--- 2378,2400 ----
+  
+  
+  
++ /* ++dgg   test if file is ASK script */
++ boolean
++ IsAskfile( pathname)
++   char *pathname;
++ {
++    struct stat statbuf;
++    static char tmpfile[512];
+  
++   strcpy( tmpfile, pathname);
++   strcat( tmpfile, ".ask"); /* hack -- should do fancy lookup in Config */
++   if (!rstat( tmpfile, &statbuf)) return TRUE;
++   else return FALSE;
++ 
++ }
++ /* dgg-- */
++ 
++ 
+  /*
+  ** This function opens the specified file, starts a zcat if needed,
+  ** and barfs the file across the socket.
+***************
+*** 2378,2383 ****
+--- 2426,2445 ----
+  	  LOGGopher(sockfd,"Denied access for %s", pathname);
+  	  return;
+       }
++ 
++ /* ++dgg  patch to block ASK calls from bad clients */
++      if (IsAskfile(pathname)) {
++         if (!Gplus || !ASKfile) {
++           char errmsg[256];
++           if (!ASKfile)
++             sprintf(errmsg," Missing input data to ASK form\t\t\t\r\n");
++           else
++             sprintf(errmsg," This ASK form needs a gopher+ client\t\t\t\r\n");
++           Abortoutput(sockfd, errmsg);
++           return;
++           }
++         }
++ /* dgg-- */
+  
+  
+       if ( (ZeFile = rfopen(pathname, "r")) == NULL) {
+
+
+
+*** gopher2.012/gopherd/command.c	Tue Mar  8 10:55:25 1994
+--- go212dg/gopherd/command.c	Thu Mar 17 19:19:00 1994
+***************
+*** 215,220 ****
+--- 215,237 ----
+       STRdestroy(temp);
+  }
+  
++ 
++ /* dgg++ need for binary ask data */
++ void
++ CMDpushAskBinary(cmd, buf, buflen)
++   CMDobj *cmd;
++   char   *buf;
++   long   buflen;
++ {
++      String *temp = STRnew();
++      temp->data= buf;
++      temp->len= buflen;
++      STApush(cmd->asklines, temp);
++      temp->data= NULL; /* caller owns buf */
++      STRdestroy(temp);
++ }
++ /* --dgg */
++ 
+  /*
+   * Retrieve extra data from the client request..  This stuff is optional
+   *
+***************
+*** 251,256 ****
+--- 268,294 ----
+  		    CMDpushAskline(cmd, inputline);
+  	       }
+  	  }
++ 
++ /* dgg: patch for askfile +bytecount or +-2 input forms! */
++ /* dgg++ -- need this to read binary file from client */
++ 	  else { /*inputline == "+-2" or  "+bytes..." */
++ 	    long count, nbytes;
++ 	    int  readtilclose;
++ 	    nbytes= atol(inputline+1);
++ 	    if (nbytes == -2) do { /* read til close */
++ 	      count= readrecvbuf(fd,inputline,sizeof(inputline));
++ 	      if (count>0) CMDpushAskBinary(cmd, inputline, count); 
++ 	      } while (count>0);
++ 
++ 	    else while (nbytes>0) { /* read til nbytes found */
++ 	      count= sizeof(inputline);
++ 	      if (count>nbytes) count= nbytes;
++ 	      count= readrecvbuf(fd,inputline,count);
++ 	      if (count>0) CMDpushAskBinary(cmd, inputline, count);
++ 	      nbytes -= count; 
++ 	      } 
++ 	    }
++ /* --dgg */
+        }
+  }
+  
+
+*** gopher2.012/object/GSgopherobj.c	Tue Mar  8 10:56:17 1994
+--- go212dg/object/GSgopherobj.c	Wed Mar 30 20:22:41 1994
+***************
+*** 1012,1017 ****
+--- 1012,1024 ----
+  		     tempstr[0] = GSgetType(overlay);
+  		     GSsetPath(gs, tempstr);
+  		}
++ 	/* dgg ++ */
++ 	        if (GSisAsk(overlay) && GSgetType(overlay) == A_DIRECTORY)  
++ 		  GSaddView(gs, "application/gopher+-menu", "En_US", 0); 
++ 	           /* lang==GDCgetLang(Config), 0 == dummy size here */
++  /* need this patch for proper protocol & Hgopher, 
++    which ignores gopher0 type in favor of +VIEW */
++ 
+  	  }
+  	  if (GSgetTitle(overlay) != NULL)
+  	       GSsetTitle(gs, GSgetTitle(overlay));
+***************
+*** 1343,1352 ****
+--- 1350,1362 ----
+  
+  	  if (strncmp(buf, "Type=", 5)==0) {
+  	       GSsetType(gs, buf[5]);
++ 	       if (GSisGplus(gs)) { /* dgg -- ! must have to let gopher- clients use
++ 					any folder w/ Type=1? */
+  	         if (buf[6] == '+')
+  		    GSsetGplus(gs, TRUE);
+  	         if (buf[6] == '?') 
+  		    GSsetAsk(gs, TRUE);
++ 	       }
+  	       doneflags |= G_TYPE;
+  	  }
+  
+
+

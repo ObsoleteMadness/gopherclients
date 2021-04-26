@@ -1,0 +1,159 @@
+TurboGopher 1.0.8b4                         January 27, 1994
+
+Haikei,
+
+  David Johnson de gozaimasu.  Doozo yoroshiku.
+
+
+
+Version 1.0.8b4 changes:
+------------------------
+
+1.  Color icons work correctly on any screen depth.  Used to
+be black & white on screens of greater than 8 bit depth (256 colors).
+
+Also fixing this fixed some of the crashes caused by my earlier method
+of doing color icons.  :-)
+
+3.  Search items now use their display string for the prompt.  Makes the
+ftp prompt more appropriate, for example.
+
+3.  Now do ugly '.jpg' & '.jpeg' extension checking on the generic image
+type of 'I'.  Previously only did 'gif' & 'pict' extension checking.
+
+
+
+Previous Version 1.0.8b3 announcement
+-------------------------------------
+
+TurboGopher 1.0.8b3                         October 27, 1993
+
+1.  I have changed the way TurboGopher detects the Japanese code
+being used for menu (directory) items.  In version 1.0.8b2
+TurboGopher attempted to detect the code of each individual item
+by looking at only that items information.  Because of overlapping
+code space between EUC & SJIS this resulted in cases where I could
+not be sure if the information was in EUC or SJIS encoding.
+
+When I was unable to precisely determine the code I did not attempt
+to translate into SJIS.
+
+Now I attempt to detect the code by looking at all the information
+in a directory.  This results in a more accurate detection & 
+translation into SJIS.
+
+
+
+
+
+Previous Version 1.0.8b2 announcement
+-------------------------------------
+
+TurboGopher 1.0.8b2                         October 25, 1993
+
+1.  Menu (directory) items in JIS (Japanese Industrial Standard), &
+EUC (Extended UNIX Code) encoding systems can now be viewed
+correctly when the 'Japanese Filtering' option is selected
+(checked).  Previously the Japanese Filtering option was only
+applied to the contents of text files that were retrieved.  Sites
+with document or directory titles in Shift-JIS were correctly
+displayed in the past.  Now JIS & EUC items will also be displayed
+correctly.
+
+
+2.  Additional support was added for the correct display of Japanese
+text received from a CSO name server (directory) look up.
+
+Previously all information returned from a directory look up was
+displayed in the Monaco font.  While this made all the columns
+line up, it did not display the Japanese Language correctly.
+
+Here is how it now works.  If the font selected by a user is Osaka,
+and the 'Japanese Filtering' option is on; the information returned
+by a directory look up will be displayed in the Osaka Font
+and the Japanese should be displayed correctly.
+
+Warning:  This will only work if the Japanese portion is encoded
+in Shift-JIS.  I looked but found no sites returning JIS or EUC.
+
+If you know of a site that does return JIS or EUC please send an
+email to Dave Johnson at dmj@boombox.micro.umn.edu with the name
+and location of the site.
+
+
+
+
+
+Previous Version 1.0.8b1 announcement
+-------------------------------------
+
+TurboGopher 1.0.8b1                         October 19, 1993
+
+  This version of TurboGopher has a special feature that will
+interest people with a love of the Japanese Language.  Those
+who have visited the Gopher Servers in Japan will have noticed
+that files often have a JIS extension (Japanese Industrial Standard),
+SJIS extension (Shift-JIS, also called MS-Kanji), or an EUC extension
+(Extended UNIX Code).  These signify different methods of encoding
+Japanese on computer systems.
+
+The KanjiTalk System, or System 7.1 with the Japanese Language Kit
+provide the ability to handle the SJIS encoding.  Merely place
+TurboGopher on a Macintosh with the above, select a Japanese font
+such as Osaka and retrieve files with the SJIS extension.  Then
+all that is needed is the ability to read Japanese.  :-)
+
+The other two encoding schemes JIS, and EUC if retrieved display as
+a jumble of unreadable characters no matter which font is selected.
+
+Fortunately, I had heard of some nice algorithms for converting JIS,
+and EUC encodings into SJIS which the Macintosh can display.
+
+Recently an excellent book by Ken Lunde, Understanding Japanese
+Information Processing (Nihongo Joho Shori) was published by
+O'Reilly & Associates.  At a very reasonable cover
+price of approximately $29.95.  This book is a very valuable
+reference.  For those interested the ISBN is 1-56592-043-0.
+
+The combination of the book and some code samples, provided
+the necessary knowledge to add to TurboGopher a new option.
+
+
+1.  This new option is under the Setup menu and is called
+'Japanese Filtering'.  Select this option and it will become
+checked signifying it is enabled.  Being enabled means that
+TurboGopher checks incoming text to determine if it is Japanese.
+If Japanese is detected it determines the encoding scheme:
+SJIS, JIS, or EUC; and if necessary converts it to the
+SJIS codes.
+
+2.  Also some last remaining English language strings were moved from
+the program into string resources that are easily changed to
+localize TurboGopher for other languages.
+
+
+3.  The other unrelated change in this version of TurboGopher is that
+the icons displayed in directory listings now have some colorized
+versions.  Another column was added for an icon to indicate whether
+an item is an Gopher+.  Expect more development around this.  :-)
+
+
+
+I would appreciate receiving comments from native speakers of
+Japanese on the Japanese Filtering option.  I visited all of the
+Japanese Gopher sites I was aware of testing the Filtering option.
+
+In the cases I tested it worked wonderfully.  It was a pleasure
+to have more files to practice my Japanese reading skills on.  :-)
+
+
+Comments regarding TurboGopher & Japanese, or other languages can be
+sent to Dave Johnson at dmj@boombox.micro.umn.edu.
+
+It would be very pleasing to have a localized version of TurboGopher
+for every language.
+
+
+
+Thanks,
+Dave Johnson

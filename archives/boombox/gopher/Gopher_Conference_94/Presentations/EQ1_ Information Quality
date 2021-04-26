@@ -1,0 +1,305 @@
+Quality of Information, GopherCon94 (April 22, 1994)
+Anders Gillner, KTHnoc/SUNET
+
+
+ "The mind is built on an enormous selection of information and it does not
+get more knowledgeable because of the information it contains, but because
+of the information it does NOT contain....."
+                                                Tor N=F6rretranders
+
+
+"Information should not be mixed up with meaning..."
+                                                Warren Weaver
+
+
+Background
+
+        Making things clear from the beginning, this talk is NOT going to be 
+tecnical stuff...  After having  dealt with information in the networked 
+world for a couple of years now, I have found that we pay a lot of attention 
+to technicalities, not only when we are dealing  with networking, but when we 
+are dealing with information and ordering information as well. I t seems like 
+some people are satisfied with the mere situation that the information is 
+there, and is ordered and available, and in my opinion, it is not. It just 
+might be a good idea to stop for a while and think about why we need all the 
+information out there on the net, and what kind of results we want from 
+people working with that information.  I spend a lot of time, travelling 
+inside and outside my country, giving talks to people about the Internet, and 
+what impact using the net can have on their business or their academic 
+professional lives, and I get all kinds of questions. A typical question is; 
+"But isn`t it real cheap to manufacture a CD-ROM today ?" The obvious answer 
+is "Yes, it is very cheap, but what do you want to do with it ?". At that 
+time the person asking  me the question, looks at me as if I am some kind of 
+geek from outer space, because for them everything is set and ready when you 
+got your data down on the CD. Again, obviously that is not so, to make a CD 
+and fill it with pictures of a certain kind, or text information covering a 
+certain subject, will cost about a hundred dollars, to turn the CD into some 
+kind of learning tool will probably cost you around =A4150.000, and I think 
+that the difference between the stuffed CD, and the learning tool is an 
+equivalent to the network information services we have today, and what we 
+could have if we really used the network in the ways it could be used.
+
+
+The situation today
+
+        In an article in a Swedish newspaper recently, a Swedish physicist 
+said " The global "village"is a big first time experiment". What she meant 
+was that the we don`t have a "global mind". Since beginning of history, man 
+has been a more or less geographically static animal. A hundred years ago, 
+most people did not travel more than a few kilometers a day, and their lives 
+would have seem utterly boring to us. Today "Netlanders" travel all over the 
+world in a virtual sense of the word. That article as a whole deals with the 
+human helplessness in a situation where she has no overview and where no 
+respect whatsoever is payed to the human way of subconsciously sorting out 
+information, a situation which I think describes the situation for a lot of 
+the new users we have , or are about to have, on the networks today. I 
+sometimes have the feeling that we put users on the top of a slalom pist, 
+telling them to learn the skill of turning, and the rules of the game on 
+their way down ! We, "the Netlanders", know the rules, we (occasionally), 
+have the subconscious ability to sort out the information we want, because 
+this is where we "live". They don't. We have, in a way passed the threshold 
+where we do not use only our concious methods to work on the net, we have 
+started to develop an instinct for solving problems on the net, and what is 
+an instinct if not just an unconcious feeling for what is right to do in a 
+certain situation ?  The concept of the "Global  Village" is not really 
+something that netpeople use, it is an expression that they use as a 
+description of the net, in trying to describe their world to the outsiders. 
+And I am quite sure that a lot of the people on the net really think that 
+that concept only covers the half of it. New  "Netlanders" have to be helped 
+out, and what we should discuss more is how to do that, or how we could 
+disseminate the knowledge we have to them. 
+
+
+The Network Hardware Store
+
+        So the today 's situation on the net is quite confusing for the 
+unexperienced user, and we have already seen a couple of solutions which 
+tries to solve that problem. Almost since the first gophers came upon the 
+net, we have had "Subject Tree:s" trying to order information in categories 
+taken from one or another Library Classification Scheme, after the model 
+"L2=3DLong Nails, L23=3DLong Nails, Blue, etc...". This is of course better 
+than chaos, but do we really use this new toy of ours in the best possible 
+way? The normal way for humans entering something new, is to make it look 
+like something that has been around for a long time , our first cars looked 
+like horse powered chariots for example. Ok, it is hard for us to take 
+advantage of computers and networks, but is the solution really to make 
+computerprograms and network resources look as familiar as possible ? I mean 
+the kind of thinking that makes a designer design a program logo and 
+interface for a register program so it looks like a card register ? I 
+personally sometimes have the feeling that some people thinks "Hey, this new 
+thing is scary, let`s make it look familiar so people don`t go off their 
+rocker when they see it !" But the real problem is not what it looks like, 
+but how it is percieved. If you make people use a digitized card register, 
+there is a risk that you lock their conceptualisation of the tool they are 
+using, setting up limitations, not only about possible ways of using that new 
+tool and the network as a whole, but in human perception of theses new 
+possibilities, so we are really dealing with psychology here, and we might 
+really need totally new interfaces to information than the ones we have 
+today, not just to be able to use the information in the best possible way, 
+but also so that we communicate to the users that this is something entirely 
+new 
+
+        I think that what we need is research in the area. How do humans scan 
+information ? How do we store information ? We know that the brain does a 
+primary selection of information more or less on receptor level, and that 
+information is sorted out very early in the perception process. Let me give 
+an example, A playground with fifty kids playing, mine gets hurt and start 
+crying. For me the background noise more or less disappears, because all I 
+hear is my kid crying. The stronger the feeling is that is associated with a 
+sound, the stronger is my reaction is when it comes to filter out the 
+information that is crucial to me, or maybe to my survival. These functions 
+are old ones, because man is an old animal, and we are in no way designed to 
+work in an environment like the one we have on the network today. The 
+information flow today is more likely to bring out another old mechanism in 
+us, habituation. How many of you have not had, what I should like to call the 
+"Bosnia experience" ? Day after day, they send out pictures of houses getting 
+shot and bombed to pieces, people crying, thousands and thousands of refugees 
+etc. and after a couple of weeks your feelings about the whole thing is more 
+like boredom than something else, you have had too much similar information, 
+and another crying child (which is not your own) does not bring up the same 
+feelings in you that the first one you saw did. You have gotten yourself 
+habituated... So, we tend to fall back on our old knowledge of the world when 
+we sort out information, and we also tend to sort out information that fits 
+into the the knowledge or information that we have before, we , sort of, need 
+a hanger to hang our coat on, and if that is not there, it takes a great deal 
+of learning  and restructuring of the mind to "manufacture" a new one. 
+
+
+Sorting out Information, How to improve on quality ?
+
+        Craig Summerhill from CNI, sometimes refers to the present level of 
+networked information as the Paleolitic level, and I think that it is 
+important to bear in mind that we have just started. It willtake us a long 
+time to get where we want, and the goal will shift during our travel there. 
+Probably even our way to percieve information as such will change, because it 
+is quite traditional in it's nature. A lot of the quality information flow 
+has traditionally been handled by librarians, and the information experts 
+will probably be with us in the years to come, even though their roles will 
+change a lot.  Instead of sorting electronic books into electronic shelves, 
+their role might be to determine which expert system that might benefit from 
+being exposed to a certain piece of information,  and even though the system 
+itself determines if the information really fits, the percental weights of 
+the information quality has to be determined by the librarian.
+
+        In the future we will probably have networking tools that do that 
+primary sorting for us. We are talking about years of experience here, maybe 
+it is so that "growing up" in a networking sense means that you use years 
+instead of hours to set up the filtering mechanisms that you need to be an 
+experienced network information user. We have to use computers and networking 
+as extensions to our primitive selves, not as tools as primitive as we  are .
+
+        When I worked as a psychologist during the  70's, someone at 
+psychology department at the University of Gothenburg came up with a 
+tachistoscopic test that was said to test man's psychological defense 
+mechanisms. That might be dubious to some of you, but the fact is that when 
+they tested combat pilots in the Swedish Air Force,  they found that the 
+result predicted with 90% accuracy which of these who was going to have a 
+crash during the next couple of years. What they tested was a persons ability 
+to percieve a picture without shunting out some of the information in it. It 
+seemed like some persons consistently threw away information that was 
+threatening to them, and obviously, these did not grow personalities that 
+made them good pilots... Humans tend to act both psychologically and 
+physiologically during stress ,which this is a good example of, and we are 
+not only shunting away information that we don't like, we also tend to, like 
+in the crying child example, to focus on information that we like, our pupils 
+dilate when we look at somebody we like, our pules rate goes up when we fall 
+in love or see something that we really like, and we also get GSR reactions 
+when we hear something that is good or bad, and these reactions does not 
+neccesarily, have causes consciously known to us.
+
+        What I want to say with this is that we really don't know  much about 
+our "own" idea of the world, the unconscious sometimes makes choices for us 
+that we are not aware of, and sometimes the choice is made on a very 
+primitive level, fooling us to think that we act optimal in a situation when 
+we don't do that at all, but using  more than one of our senses while sorting 
+information seems to be a good idea
+
+
+Making it better in a short perspective
+
+        This might be the future, but how to improve the quality in a short 
+perspective ? Let us make good use  of the librarians we have, and of the 
+systems we have. Putting librarians to work with roaming the network for 
+items to sort will of course not scale in the long run, this will have to be 
+done in a distributed way. The local librarian should only be responsible for 
+the classification of the material that her/his site put onto the network. 
+Use any classification scheme, it does not really matter, because the good 
+thing is not the scheme, but that the resource is stamped as a quality 
+resource. If we will be able to make out the difference between quality 
+checked resources and the rest, we have improved on the information quality 
+on the network in a terrific way, compared to the situation today, and if we 
+are able to do searching  with a parameter that tells the search program to 
+look for quality resources only, we have improved it even more. We will still 
+have the Network Hardware Store, but we will at least be sure that some of 
+the boxes will contain nails with a certain reliability.
+
+        There is, of course, also the possibility to make more than two 
+categories of information, separating out for example news, university 
+courses, K12 information and adminastrative information will make it even 
+better. So we need a lot of librarians out there, and who will pay them ? 
+
+
+Information is costly, and knowledge will cost a lot more still.....
+
+        Information reduction is always costly, and as in science, data 
+reduction will cost you some of the valuable content as well while reducing 
+the noise that you really wanted to get rid of    
+
+        The part you really want to get rid of is what sometimes is called 
+"exformation", and to get rid of that will always cost you, knowledge, time, 
+money, you name it. Somebody will always pay! There has been a tendency on 
+the net, to argue for a situation where all the information should be free, 
+and that is possible when you put your own free time onto deriving 
+information out of data for the benefit of the net population. "How to make a 
+japanese kite", or "The Complete List of Beatles Songs" might be free on the 
+net in the future, but I do not think that the Reuter statistics, or the Jane 
+Fonda Workout program will ever be free. Making this information (or whatever 
+you like to call it:-) )has cost some commercial company big bucks, and they 
+are not likely to give it away for free. We are about to get commercial 
+information on the Net on a big scale, and we better be prepared for ....
+
+
+Coca-Cola Information.....
+
+        Netland has it's advantages compared to other countries. The average 
+level of intelligence , for example,  must be very high, and that situation 
+will not change as long as the net is, more or less, academic. Net society 
+today share a lot of views about the world, we are all more or less , well 
+eduacated, which among other things, means that we share a certain view about 
+our environment, about the neccesity of research, about the neccesity of 
+education, about the neccesity of beeing aware of the bias of our own 
+perception, etc,  but what will happen when systems like Minitel brings other 
+groups onto the net ? The Net will have some inpact on these people, but they 
+will have some inpact on the net community as well. As soon as we open 
+Pandora's box, we will have all the problems that other media have and have 
+had during the past 400 years on our back, and if we don't think about policy 
+before that, everybody that thinks that their ideas are the right ideas and 
+that nobody else's ideas have the right to live, will try to control what 
+others do and have available.  So we are in for a change, and what can we do, 
+to make that change an easier one ? Not very much that I could think of right 
+now, but being aware of the storm at least give you the possibility to 
+prepare for it. The market could be both a problem, and an advantage. The 
+market will sell us information, but we should also be concerned about too 
+much concentration of power around any special player on the information 
+market, just as  such concerns has risen when  a similar situation has become 
+reality in on other market. He who controls information controls the world is 
+a saying that I don't think that anyone of us wants to see become a reality, 
+although we want it to come true in a broader perspective. The authors of an 
+article about  what they call "cyberwar " say that information will be the 
+next crucial point when winning the next war, as it had not always been like 
+that.... 
+
+The filtering of information has always been something that censors and 
+others have used as a tool in warfare, and I really think that they have a 
+harder time to filter today, than they had in old times. Using intelligence 
+information has become easier though. What we don't want to have on the Net 
+is a totally controlled information market where dictators, companies or 
+others that like to think that they are controlling what we shall know or not 
+know, is ruling. 
+
+
+Communicating Information, not as easy as it might seem
+
+        Now if I want to communicate something to someone else, how do I do 
+that ? I speak to him or write it down for him to read. Which means that the 
+information just has made it through the first filter 
+
+        Speech is information ordered already, because putting words on 
+something is a filter in itself, compare somebody's notion of a horse, and 
+the word horse, which contains only a fraction of what the person saying it, 
+means by "horse", which can be totally different from what the person 
+listening means by "horse". Human communication really has its drawbacks, and 
+the big question is if the network , and the new technology could make it any 
+better. Man has always tried to write laws that were meant to regulate how 
+man should live together with his peers in society, and just see were we have 
+ended up. The language that we use is really an extremely inexact 
+representation of what we really mean, in spite of body language and other 
+non-verbal ques. Using other types of communication on the network, like we 
+do in real life but in an extended way, and using all our senses, might give 
+us an opportunity to improve on information quality in centuries to come. 
+
+
+What do we want the information to do for us ?
+
+        What we really need is not information, but knowledge. We need people 
+to expand their knowledge of the world, and we want our kids to be able to be 
+better citizens in the future. So how do we get knowledge out of a system 
+that only offers information ? Well, to get knowledge you need knowledge, so 
+we are heading into psychology again, but learning psychology this time. 
+There is really no learning psychology designed for network use, although 
+there are quite a few attempts, mostly associated with new CD-ROM learning 
+tools, and some of these will of course work on the network as well, but to 
+be able to find your way through an encyclopedia, you need to know how to do 
+that , so we probably have to improve the basic skills of reading if we want 
+this to expand outside the educational and commercial sector. If you take a 
+look at a network map today, you will find that networking is an industrial 
+world phenomenon, and that there must be a marvelous market for distance 
+education in the developing world. I can see networking and distance 
+education as one of the main streams of foreign aid in the coming years if 
+the institutions giving that aid are smart enough to see the potential it. 
+Helping the developing countries out in this respect should be one of our 
+prime concerns for the future, if we don't want to carry on in a world of 
+have's and have not's. But we do need research in the learning psychology 
+field to make the most out of networked information, and turning that 
+information into valuable knowledge, might be the next great challenge for 
+us.   

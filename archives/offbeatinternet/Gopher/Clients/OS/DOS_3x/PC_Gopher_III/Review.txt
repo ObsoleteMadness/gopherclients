@@ -1,0 +1,43 @@
+PC Gopher III
+
+--------
+Hardware
+--------
+
+XT or greater
+mono or color video
+Ethernet card
+640K RAM
+
+--------
+Software
+--------
+
+Packet drivers or ODI with ODIPKT
+
+----------------
+Special Features
+----------------
+
+Runs on low-end machines with monochrome monitors 
+Same interface as Trumpet News reader for DOS - Windows-like 
+Supports mouse operations 
+Can call Telnet/TN3270 with automated connect scripts 
+Supports Gopher+ alternate views 
+Multiple simultaneous download/transaction capability 
+Phone book program with point-and-click field selection 
+
+----------------
+Problems or Bugs
+----------------
+
+Can not auto-launch viewers for images,, sounds,, etc. 
+Does not use EMS or XMS memory - runs out of conventional memory very soon causing crashing and errors 
+Has limited Gopher+ electronic form length 
+Default values for electronic form is different from all other clients 
+Doesn't run under Windows well at all 
+Unsupported from the University of Minnesota now 
+Slow network response and tricky setup 
+No real on-line help despite the label for suc 
+No direct connection to other Gopher server option - must navigate menus to get to anything. 
+Can not print file while within PC - Gopher must do so with other program 

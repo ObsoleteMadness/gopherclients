@@ -1,0 +1,9 @@
+Gnopher
+(ver 0.2)
+Freeware
+
+
+Gnopher is a Gopher Client for the GNOME (GNU) desktop.  It 
+integrates smoothly with the Nautilus graphical shell.  
+
+

@@ -1,0 +1,131 @@
+<URL:ftp://genie.lut.ac.uk/moog-0.2.README>
+
+16th December 1993
+
+Hi!  This is the README from moog version 0.2.  moog is an X Window
+gopher client for Unix boxes, written using Tk & Perl.  This is an
+alpha-type release which I'm putting out for feedback as I won't have
+time to do much more before Xmas.  If you use it, let me know of any
+problems you experience, and of any improvements you'd like to see.
+
+My Internet E-Mail address is <M.T.Hamilton@lut.ac.uk>
+
+NB:  Don't use this software if you want something stable and well
+supported, as it's a one man band job (me!)
+
+Martin.
+
+
+
+REQUIREMENTS:
+
+To run this version of moog, you must have a fairly recent version of
+Tcl/Tk and Perl installed on your machine - I've run it with Perl
+4.036 and the following O/S and Tk combinations:
+
+  SunOS 4.1.[123]    Tk 3.6
+  Solaris 2.3        Tk 3.6 (SunOS 4.1 binary compatability package)
+  HP-UX 9.00         Tk 3.2
+  IRIX 4.0.5         Tk 3.6
+  Ultrix 4.3         Tk 3.6
+
+
+INSTALLATION:
+
+First, obtain moog-0.2.tar.Z, now explode this wherever you want to
+install the package, e.g.
+
+  # cd /usr/local/lib
+  # zcat /tmp/moog-0.2.tar.Z | tar xvf -
+
+unpacks moog inside /usr/local/lib/moog-0.2.
+
+Firstly you will need to edit "moog" and "plunder" to reflect the
+locations of wish and perl on your machine.  Straight out of the box,
+the distribution expects to find these in /usr/local/bin.
+
+Now you may need to customise some files.
+
+First: "moog".  There is a bank of variables at the top of this file
+which tell moog its overall configuration.  This is what they mean:
+
+  auto_path        - should include the directory you unpacked moog in
+  markFile         - name of file to use to store moog bookmarks
+  fallbackMarkFile - full path name of gopher helper application defaults
+                       file, see below - "dot.gopherrc" is an example
+  moogRC           - full path name of system wide configuration file,
+                       see below - "dot.moog" is an example
+  rootServer       - name of root gopher server
+  rootPort         - port number root gopher server is listening on
+  where            - directory to put temporary files in
+
+moog uses the same file structure for its bookmarks as the curses gopher
+client, so you can share bookmarks between the two if you like.  The
+"fallbackMarkFile" is a template to use when creating a bookmarks file
+for the first time.  You may want to change this to match the helper
+applications used by the curses client on your machine.
+
+"moogRC" tells moog what applications to launch when you fetch an item
+of a particular type.  If there is a .moog file in your home directory
+this will be used in preference to the system wide one specified by
+the "moogRC" variable.  This file has an entry for each of the objects
+you want moog to be able to process, of the form...
+
+  8:Tel:d:e:Telnet session:xterm -title "%T - login as %P" -e telnet %h %p
+  
+What this says is "for objects of type _8_ (i.e. telnet), _d_on't bother
+to fetch them from the gopher server, and run the _e_xternal helper
+application xterm (with some other parameters - see below) when they
+are selected."  It also says to mark directory entries of this type with
+the letters "Tel" in gopher directory listings, and gives the object the
+human readable title "Telnet session" (not presently used).
+
+OK values for the third field (object download options) are
+
+  a: download as ASCII (strip out linefeed characters and trailing ".")
+  b: download in binary
+  d: don't download!
+
+OK values for the fourth field (linkage) are
+
+  i: evaluate the piece of Tcl/Tk code specified in the last field
+  e: execute the external program specified in the last field
+  u: don't know what to do!
+
+Finally, the following characters are interpolated when they appear in
+the "command" field:
+
+  %t - the object's type
+  %h - host name of the remote server
+  %p - it's port number
+  %T - the object's title
+  %P - the path to the object, once connected to the remote server
+  %f - the name of the temporary file the object has been downloaded to
+        (doesn't apply when the download option is "d")
+
+
+RUNNING:
+
+Place the directory where moog is installed in your path, e.g. (csh)
+
+  % set path = ($path /usr/local/lib/moog-0.2)
+  % rehash
+
+or (sh/bash/...)
+
+  $ PATH=$PATH:/usr/local/lib/moog-0.2
+  $ export PATH
+
+Now you can run it like this
+
+  % moog
+
+You can also give moog a host name, or host name and port number (the
+default is 70) on the command line, e.g.
+
+  % moog genie
+
+or
+
+  % moog genie 4320
+

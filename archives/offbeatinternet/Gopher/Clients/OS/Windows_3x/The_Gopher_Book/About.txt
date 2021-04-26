@@ -1,0 +1,9 @@
+The Gopher Book
+(ver 1.1)
+Freeware
+
+
+In order to run The Gopher Book, you must first create a special 
+'shortcut' to launch the program.
+
+

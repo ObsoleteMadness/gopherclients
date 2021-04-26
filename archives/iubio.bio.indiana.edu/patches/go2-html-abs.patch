@@ -1,0 +1,132 @@
+Patch #:        9, go2-html-abs.patch
+Type:           bug fix
+Priority:       low 
+Summary:        Gopherd, properly include ABSTRACT block in HTML
+Summary:         views of gopher directories
+Summary:
+Submitted:      Don Gilbert <gilbertd@bio.indiana.edu>
+Archived:       ftp.bio.indiana.edu     util/gopher/patches/go2-html-abs.patch
+Application:    'cd gopher2.xx; patch -p < go2-html-abs.patch'
+WARNING:        This patch may not apply correctly automatically
+File:		gopher2.016/object/BLblock.c
+File:		gopher2.016/object/GSgopherobj.c
+
+diff -bwrc gopher2.016/object//BLblock.c gopher-2.13sfdg/object//BLblock.c
+*** gopher2.016/object//BLblock.c	Sun Feb 20 16:49:09 1994
+--- gopher-2.13sfdg/object//BLblock.c	Thu Dec 22 19:58:01 1994
+***************
+*** 284,292 ****
+   */
+  
+  void
+! BLtoNet(bl, fd)
+    Blockobj *bl;
+    int fd;
+  {
+       FILE *infile;
+       int i;
+--- 284,293 ----
+   */
+  
+  void
+! BLtoNet(bl, fd, noName)
+    Blockobj *bl;
+    int fd;
++   char noName;
+  {
+       FILE *infile;
+       int i;
+***************
+*** 293,301 ****
+       char outputline[512];
+  
+       /** Switch on data type **/
+! 
+       sprintf(outputline, "+%s:", BLgetName(bl));
+       writestring(fd, outputline);
+  
+       switch (BLgetDatatype(bl)) {
+  
+--- 294,303 ----
+       char outputline[512];
+  
+       /** Switch on data type **/
+!      if (!noName) { /* dgg fix */
+       sprintf(outputline, "+%s:", BLgetName(bl));
+       writestring(fd, outputline);
++      }
+  
+       switch (BLgetDatatype(bl)) {
+  
+
+*** gopher2.016/object//GSgopherobj.c	Wed May 25 15:57:46 1994
+--- gopher-2.13sfdg/object//GSgopherobj.c	Thu Dec 22 19:58:33 1994
+***************
+*** 542,548 ****
+       
+  #ifdef DEBUGGING
+       if (DEBUG)
+! 	  BLtoNet(bl, fileno(stderr));
+  #endif
+       if (gs->gplus == NULL)
+  	  GSplusnew(gs);
+--- 548,554 ----
+       
+  #ifdef DEBUGGING
+       if (DEBUG)
+! 	  BLtoNet(bl, fileno(stderr),FALSE);
+  #endif
+       if (gs->gplus == NULL)
+  	  GSplusnew(gs);
+***************
+*** 713,725 ****
+  	       Blockobj *bl;
+  
+  	       for (i=0; i<GSgetNumBlocks(gs); i++) {
+- 		    if (strcmp(BLgetName(GSgetBlock(gs, i)),"ABSTRACT")==0){
+  			 bl = GSgetBlock(gs, i);
+  			 writestring(sockfd, "<DD>");
+  			 for (j=0; j < BLgetNumLines(bl); j++) {
+  			      sprintf(buf, "%s\r\n", BLgetLine(bl, j));
+  			      writestring(sockfd, buf);
+  			 }
+  			 writestring(sockfd, "\r\n");
+  		    }
+  	       }
+--- 729,746 ----
+  	       Blockobj *bl;
+  
+  	       for (i=0; i<GSgetNumBlocks(gs); i++) {
+  		    bl = GSgetBlock(gs, i);
++ 		    if (strcasecmp(BLgetName(bl),"ABSTRACT")==0){
+  			 writestring(sockfd, "<DD>");
++ #if 1
++ 	/* this is the right way -- dgg */
++ 			BLtoNet( bl, sockfd,TRUE);
++ #else
+  			 for (j=0; j < BLgetNumLines(bl); j++) {
+  			      sprintf(buf, "%s\r\n", BLgetLine(bl, j));
+  			      writestring(sockfd, buf);
+  			 }
++ #endif
+  			 writestring(sockfd, "\r\n");
+  		    }
+  	       }
+***************
+*** 808,814 ****
+  	  if (sendothers) {
+  
+  	       for (i=0; i< GSgetNumBlocks(gs); i++)
+! 		    BLtoNet(GSgetBlock(gs, i),sockfd);
+  	  }
+       }
+  }
+--- 829,835 ----
+  	  if (sendothers) {
+  
+  	       for (i=0; i< GSgetNumBlocks(gs); i++)
+! 		    BLtoNet(GSgetBlock(gs, i),sockfd,FALSE);
+  	  }
+       }
+  }
+

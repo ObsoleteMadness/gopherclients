@@ -1,0 +1,29 @@
+Beta Release, WS_PopMail 1.07-P
+April 4, 1996
+
+Contained in this directory are two self-extracting
+archives, poparc.exe and labarc.exe.  They are the latest
+test versions of Popmail and labpop for Windows.  We would
+like to encourage interested parties to download and
+try out these programs while keeping in mind their 
+delicate, Beta-test-ish nature.
+
+There are several improvements over the previous version,
+including ability to view larger messages, and better
+handling of retaining browser position when deleting
+multiple messages. 
+
+Perhaps the most interesting improvement is support for
+PEM-style digital signatures on e-mail. The PEM support
+depends on the presence of the POPPEM.DLL file. We will
+release the DLL once we have completed the documentation
+(this should during the week of April 8 - 14). A similar
+version of POPmail with PEM support for the Macintosh is 
+also available, and at the time of release of the
+PEM DLL and Mac plugin, we will also have a standalone
+Certificate Authority available. 
+
+As always, any comments/questions should be directed to
+popmail@boombox.micro.umn.edu.
+
+

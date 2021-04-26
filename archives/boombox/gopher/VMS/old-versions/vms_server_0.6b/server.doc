@@ -1,0 +1,211 @@
+		 Internet Gopher Server Documentation
+		       University of Minnesota
+
+
+I. Overview of the Internet Gopher Server.
+
+The Internet Gopher is a distributed document delivery service.  It
+allows a neophyte user to access various types of data residing on
+multiple hosts in a seamless fashion.  This is accomplished by
+presenting the user a hierarchical arrangement of documents and by
+using a client-server communications model.  The Internet Gopher
+Server accepts simple queries, and responds by sending the client a
+document. 
+
+The document types that are currently supported are:
+
+	1. Generic Text Files.
+	2. Directories/Links.
+	3. CSO Phone Book Services.
+	4. Full Text Indexes.
+
+The document types are experimental and subject to change.
+
+	1. Digitized sounds.
+
+Currently the Internet Gopher Server software supports Text Files,
+Directories and Sounds.  A CSO implementation is available from the
+University of Illinois.  A full text index server is available for
+NeXTs.  It is described in a seperate document.
+
+
+
+III. Setting Up Your Server.
+----------------------------
+
+Setting up a gopher server is similar to setting up an anonymous ftp
+site.   The first step is to compile the server.  When that's done
+make a directory to hold the data.  If you want, you can even use your
+present anonymous ftp directory.  (The server masks out the usr/,
+bin/, dev/, and etc/ directories.  It also doesn't show core files
+either :-O).  One note of warning, the gopher server will become
+confused if you run it on a directory that's a symbolic link.  Once
+your data directory is set up you can start the gopher server.
+
+You must do this as root, since gopher does a chroot to the gopher
+directory (like anonymous ftp).  Thus the only information that is
+transmitted to the outside world is what's in the gopher-data
+directory. We wouldn't want little gophers tunneling to a cracker with
+your password file now would we!
+
+For instance say that your gopher data resides in a directory called
+/home/gopher-data.  To start the gopher daemon you would type
+in the following:
+
+   mkdir /home/mudhoney/gopher-data
+   /usr/local/etc/gopherd /home/gopher-data 150
+
+The gopher daemon forks off and will then start accepting connections.
+You can easily test the server by using telnet to connect to the port
+specified on the command line.  Once connected, type return.  A list
+of things in the gopher-data directory should be returned.  For
+instance let's say that the server was started on the machine
+mudhoney.  To test it you'd do the following: 
+
+mudhoney[6:18pm]-=> telnet gopher 70
+Trying 128.101.95.29 ...
+Connected to gopher.micro.umn.edu.
+Escape character is '^]'.
+
+    0About Gopher   /.about gopher.micro.umn.edu    150
+    7Search Micro Consultant        asd     joeboy.micro.umn.edu    156
+    7Search everywhere      kdkdkd  ashpool.micro.umn.edu   158
+    1Search parts of the gopher world       /Search parts of the gopher world      gopher.micro.umn.edu     150
+    1Other information      /Other information      gopher.micro.umn.edu    150
+    1UPI newswire   /UPI newswire   gopher.micro.umn.edu    150
+    1Computer information   /Computer information   gopher.micro.umn.edu    150
+    1Minnesota Daily newswire       /Minnesota Daily newswire       gopher.micro.umn.edu    150
+    .
+    Connection closed by foreign host.
+    mudhoney[6:21pm]-=> 
+
+
+Unless you want greasy grimy gopher guts on your computer you'll also
+put something similar to the following in you rc.local or equivilant: 
+
+if [ -f /usr/local/etc/gopherd ]; then
+	/usr/local/etc/gopherd /home/mudhoney/gopher-data 150
+fi
+
+
+IV. Usage
+---------
+
+gopherd [-l <logfile>] [-s <securityfile>] <datadir> <port>
+
+The -l parameter is used to specify a logfile.  Right now, the
+server just logs the time and the host of each connection.  If there
+isn't a -l option passed to gopherd then no logging is done.
+
+The -s parameter is used to control access to the server.  When a host
+connects to the server, the server checks for matches in the security
+file.  The criteria for matching is:
+
+     if the entry is numeric (i.e. an internet #) then we get a match if
+     the "hostname" matches the numeric string or the numeric string +
+     anything else, i.e. an entry like "128.101" would match 128.101.95.1
+     but not 37.15.128.101.
+     
+     if the entry is alphebetic then we test in the other direction.
+     i.e. umn.edu would match moocow.umn.edu but now umn.edu.com
+     
+     if the entry is preceded by an exclamation mark then matches
+     are done as above, however access is when a match is made in
+     this case.
+     
+     Matches are checked in the order they are in the security file.
+     If you want it to work correctly go from the specific to the
+     general.
+
+
+V. Adding Data to the Gopher Server.
+-------------------------------------
+
+To make a gopher directory, just use "mkdir" to create a directory in
+the gopher data directory.  For instance, say you had a bunch of Heavy
+Metal Lyrics you wanted to put online, you would do the following: 
+
+cd /home/mudhoney/gopher-data
+mkdir "Heavy Metal Lyrics"
+cd "Heavy Metal Lyrics"
+mkdir Metallica
+
+Okay, now you want to add some text files to your gopher database.  To
+do this just create and/or copy your textfiles into the directories in
+the gopher Server data directory.  Here's a quick example:
+
+cd "/home/mudhoney/gopher-data/Heavy Metal Lyrics/Metallica"
+cp ~/mop.txt "Master of Puppets"
+
+You'll want to create your text files and directories with descriptive
+names.  Poor folks with 14 character System V filesystems should just
+try the best they can......
+
+Now here comes the tricky part, Links.  The ability to make links to
+other hosts is how gopher distributes itself among multiple hosts.
+There are two different ways to make a link.  The first and simplest
+is to create a link file that contains the data needed by the server.
+By default all files in the gopher data directory starting with a
+period are taken to be link files.  A link file can contain multiple
+links.  A define a link you need to put five lines in a link file that
+define the needed characteristics for the document.  Here is an
+example of a link.
+
+Name=Cheese Ball Recipes
+Type=1
+Port=150
+Path=1/Moo/Cheesy
+Host=zippy.micro.umn.edu
+
+The Name= line is what the user will see when cruising through the
+database.  In this case the name is "Cheese Ball Recipes".  The
+"Type=" defines what kind of document this object is.  The following
+is a list of all the defined types:
+
+0  -- Text File
+1  -- Directory
+2  -- CSO name server.
+7  -- Full Text Index
+8  -- Telnet Session
+s  -- Sound
+
+The "Path=" line contains the selector string that the client will use
+to retrieve the actual document.  The port and host lines should
+speak for themselves.
+
+An easy way to retrieve this information is to use telnet to get the
+information.  For instance let's say you want to link the University
+of Minnesota's Gopher Server to your gopher server.  Just telnet to
+the port (like in the example above) and retrieve the information.
+The server returns a list in the following format:
+
+<character Object Type><TAB><Name><TAB><Path><TAB><Host><TAB><Port>
+
+You need to keep the Object Type, Path, Host, and Port the same in the
+link.  You can change the name of the document if you want.
+
+
+The second method of creating a link is a bit harder, however it's
+ideal for such things as sounds where the only change needed is the
+object type.
+
+Here's how you'd change the file /home/mudhoney/sounds/Moo into a
+sound: 
+
+  cd /home/mudhoney/gopher-data/sounds/
+  mkdir .cap
+  cd .cap
+  cat >Moo
+  Type=s
+  ^D
+
+The idea is that you create a directory called .cap in the same
+directory as the document.  Then you create a file with the same name
+in the hidden .cap directory with the lines that you want changed.
+You only need to put in what needs to be changed.  The server will
+supply defaults if it doesn't find out what it needs.  In the above
+example for instance, the host would supply the Name, Host, Port and
+Path for the object.  The only thing that changed was the type.
+
+
+

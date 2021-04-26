@@ -1,0 +1,19 @@
+Gophie
+(ver 1.1)
+Freeware
+
+
+Gophie is a Gopher Browser for Linux written in 
+Java.  Gophie allows you to navigate Gopherspace, 
+read text, view images, and download files with the 
+integrated download manager.
+
+The Linux package is simply a tar.gz-archive with an 
+executable. The executable is a bash-file with the 
+JAR-file attached.  You can either double-click the 
+executable named "Gophie" or launch it from the 
+terminal of your choice.  If you wish to have Gophie 
+present wherever you need it in your system, just 
+copy the executable file into your "/usr/bin"-directory.
+
+

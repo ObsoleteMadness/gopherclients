@@ -1,0 +1,153 @@
+From bronze!sol.ctr.columbia.edu!src.honeywell.com!umn.edu!news2.cis.umn.edu!gopher-news-request@boombox.micro.umn.edu Wed Mar  4 11:10:56 EST 1992
+Article: 12 of alt.gopher
+Path: bronze!sol.ctr.columbia.edu!src.honeywell.com!umn.edu!news2.cis.umn.edu!gopher-news-request@boombox.micro.umn.edu
+Date: Wed, 4 Mar 92 08:20:46 CST
+Message-ID: <9203041420.AA12201@boombox.micro.umn.edu>
+From: mpm@boombox.micro.umn.edu ("Mark P. McCahill" )
+Original-To: gopher-news@boombox.micro.umn.edu
+Original-Cc: TROTH@RICEVM1.RICE.EDU, Gerhard.Gonter@WU-Wien.ac.at
+Subject: VM/CMS gopher clients and servers
+Newsgroups: alt.gopher
+Distribution: alt
+Sender: news@news2.cis.umn.edu
+Approved: alt.gopher@news.cis.umn.edu
+Status: RO
+
+In an interesting case of parallel development efforts, there are now two (!)
+gopher clients for VM/CMS (one from Rice by Rick Troth, one from Vienna by 
+Gerhard Gonter) and a gopher server (from Vienna) for VM/CMS. Both are 
+available for anonymous ftp from boombox.micro.umn.edu. Look in 
+
+      /pub/gopher/CMS_client
+      /pub/gopher/CMS_server_and_client
+
+Below are the README files for both the VM/CMS gopher implimentations. 
+Perhaps now that we know there are two groups working on this, these
+guys can pool their efforts.
+
+--------------------------------------------------------------------------
+*
+* This is CMS Gopher 2.1 (mod 1), client only.
+* If you have any questions,  send e-mail to TROTH@RICEVM1.RICE.EDU.
+* The HELP files are simplistic and are mostly intended just to make
+* PF1 operate correctly.   The filters A2E and E2A are essential.
+*
+* This file is in CMS TAR "include" format:
+*
+*     filename filetype fm filepath
+      GOPHER21 FILELIST A  ./README
+      GOPHER   EXEC     A  ./gopher.exec
+      A2E      REXX     A  ./a2e.rexx
+      E2A      REXX     A  ./e2a.rexx
+      MENU     HELPGOPH A  ./menu.helpgopher
+      VIEW     HELPGOPH A  ./view.helpgopher
+      FIND     HELPGOPH A  ./find.helpgopher
+      LOOKUP   HELPGOPH A  ./lookup.helpgopher
+      SEARCH   HELPGOPH A  ./search.helpgopher
+
+
+--------------------------------------------------------------------------
+
+INTERNET GOPHER, CLIENT & SERVER FOR IBM VM/CMS        (1992-03-01/16:45)
+
+This is an experimental implementation of the Internet GOPHER Server and
+Client protocol.  There are many things left out and enhancements will
+follow asap.  If you find errors or have other suggestion then you should
+contact me on one of the addresses given below.
+
+In order to run either the server or the client you need also a program
+called REXTCPIP MODULE (by Ken Hornstein, KXH105@psuvm.psu.edu).  You can
+find it on any BITNET Listserv that carries VM-UTIL (I got mine from
+DEARN).  The server and the client would have been virtually impossible,
+if not for REXTCPIP. However, there are still a few problems which
+seem to be affected by REXTCPIP. I hope that further versions will
+result in an even more powerful package.
+
+The system can be freely distributed and is dedicated to the
+community of cyberspace.
+
+
+KNOWN BUGS **************************************************************
+ 1. For some reason, the VM client can't talk to the VM server, if both
+    are on the same machine.  This seems to be a problem intrinsic to
+    REXTCPIP and should be fixed someday ...
+    What happens exactly:  (In case the right persons are reading this)
+    - When the client opens a tcp connection to the server, the server
+      changes its status from listening to the port to receiving,
+      the connection status is the 'Connected' (Just as wanted).
+    - However, the client's TCPOPEN call doesn't return so the program
+      hangs.  The server can't handle other requests during that time.
+    - If the client is finally killed and the TCB gets removed
+      by the system (this can be triggerd by calling NETSTAT on the
+      client's VM) the tcp connection on the server side breaks down
+      and the server returns to the listen status and behaves normally
+      again.
+
+ 2. The list of known bugs contains a non-terminating loop.
+    (See VMCLIENT STATUS, KNOWN BUGS, item 2)
+
+
+DISGUSTING STUFF ********************************************************
+
+ 1. FDNS.EXEC is a particularyly disgusting example of how things should
+    **NOT** be done.  The purpose of this program is to find the
+    IP address of an Internet host given his DNS name.  The program tries
+    an ftp to the host in question and analyzes the log file to find
+    out it's ip address . Consequently, this takes some more time and is
+    inelegant by all means... If you find a better solution, please
+    let me know.  (There are better solutions, just tell me about)
+
+ 2. The server can only handle one request at a time.  This is mainly
+    because the VM architecture doesn't support such
+    strange concepts as multi-tasking.
+
+
+WISHES ******************************************************************
+
+ 1. Please report any bugs you can find and feel free to make
+    suggestions for improvements etc...
+
+ 2. Send me email if you've installed either the server or the client
+    and tell me if you wish to receive updates whenever there's something
+    changed or only after major changes.
+
+
+ACKNOWLEDGEMENTS ********************************************************
+
+ 1. The Gopher Team of the University of Minnesota
+    The simple things prove always to be the best, great job!
+
+ 2. Ken Hornstein (KXH105@psuvm.psu.edu)
+    Without his REXTCPIP MODULE neither the client nor the server
+    would exist at all.
+
+ 3. Jeanette L. Jones (Univ. of Illinois, Chicago)
+    She translated my english version of this document into
+    comprehensive english.
+
+ 4. Michael Lanski (Univ. of Illinois, Chicago)
+    He transferred a lot of experience into these programs and
+    exterminated some of the bugs.
+
+
+best wishes, Gerhard Gonter
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+Gerhard Gonter                                   <GONTER@AWIWUW11.BITNET>
+Tel: +43/1/31336/4578                      <Gerhard.Gonter@WU-Wien.ac.at>
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+--------------------------------------------------------------------------
+
+
+
+
+Mark P. McCahill
+gopherspace engineer
+Computer and Information System
+University of Minnesota
+(612) 625 1300 (voice)
+(612) 625 6817 (fax)
+mpm@boombox.micro.umn.edu
+
+
+

@@ -1,0 +1,32 @@
+Welcome to the Internet Gopher!
+
+The following commands are available in the browsing mode.
+
+<Return>      View current item.
+->  <Right>   View current item.
+0-9           Move to a line #.
+k C-p <Up>    Move pointer up.
+j C-n <Down>  Move pointer down.
+u             Go up a level.
+<-  <Left>    Go up a level.
+m             Go to the first screen.
+q             Exit Internet Gopher.
+>             Next Page
+<             Previous Page
+=             Display Technical information about current item.
+?             This help screen.
+ 
+Each object can be identified by it's "extension"
+
+/           Item is a directory.
+.           Item is a text file.
+<?>         Item is a search index.
+<CSO>       Item is a CSO phone book.
+<TEL>       Item is a telnet session.
+<)          Item is a sound (looks like a speaker)
+
+
+The Gopher development team hopes that you find this software useful.
+If you find what you think is a bug, please report it to us by sending
+e-mail to "gopher@boombox.micro.umn.edu".  Please indicate if you are 
+using the Unix client or the VMS client.

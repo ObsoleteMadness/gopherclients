@@ -1,0 +1,371 @@
+City
+
+·	Stateid	
+
+·	Cityid	
+
+·	City
+
+
+
+
+State
+
+·	Stateid
+
+·	Statename
+Building
+
+·	Buildingid
+
+·	cityid
+
+·	building
+
+·	address
+
+·	postalcode
+Location
+
+·	Loccode
+
+·	Buildingid
+
+·	Room
+Events
+
+·	eventid
+
+·	Title
+
+·	Category
+
+·	Costlevel
+
+·	Costdesc
+
+·	Loccode
+
+·	Moreinfo
+Eventtimes
+
+·	Eventid
+
+·	Edate
+
+·	Time
+
+·	Length
+Eventinfo
+
+·	Eventid
+
+·	About
+Entity Relationship Diagram for the 
+Events and Locations Database
+A Gopher Events Database 
+using Sqlgopher.
+
+Paul Lindner
+
+In this paper we describe the implementation of a database of Events. The data is stored in an Oracle SQL database. 
+Access to this database (additions, deletions, browsing and searching) is done using Gopher clients. A special Gopher to 
+SQL gateway provides the necessary glue to bind it all together.
+
+April 13, 1994
+
+1.0	Introduction
+
+At one time the University of Minnesota had a centralized 
+list of upcoming events on campus, a secretary in the Uni-
+versity Relations office typed them all up and ran an ad in 
+the student newspaper. Due to budget cuts this labor inten-
+sive and expensive procedure was discontinued in 1991.
+
+The need for a centralized list of events was still there 
+however. Thus, in fall 1992 Distributed Computing Ser-
+vices started offering organizations on campus the oppor-
+tunity to post events on a centralized gopher server using 
+the FTP file transfer protocol.
+
+This scheme worked fairly well: it offered a central repos-
+itory for people to store events, the cost was low (all data 
+entry was done by the event sponsors) and the full text 
+indexing was sufficient for searching.
+
+There were some problems with this approach however. 
+You could only browse the list of events in one way, sorted 
+by event sponsor. Event entries were inconsistent despite 
+specific instructions given to the event sponsors. The full 
+text search was inconsistent, you couldn't separate out 
+events based on cost, location or category very easily. 
+Using FTP to add data was cumbersome at best.
+
+Starting in spring 1994 we're starting a new, more sophis-
+ticated central repository of events. The new system offers 
+the following features: 
+
+·	Events can be sorted by Date, Location, Category, or 
+Price.
+
+·	Online adding of events using Gopher+ forms.
+
+·	Sophisticated form based searches.
+
+The events are stored in an Oracle SQL based database. 
+This allows for high consistency and quick access. A 
+gopher to SQL gateway permits access to the database 
+using the Gopher protocol.
+
+2.0	Why an Events Database?
+
+A campus/metropolitan wide events database brings the 
+community many benefits:
+
+·	Event goers can browse and search for events of inter-
+est more easily than poring through the student news-
+paper and a pile of flyers.
+
+·	Event schedulers can find opportunities for collabora-
+tion with other organizations.
+
+·	Event schedulers can plan events so they don't coin-
+cide with other events.
+
+·	Information dissemination is the key to getting com-
+muter students involved in their campus community; 
+the University of Minnesota doesn't have the benefit of 
+being a small `college town.' Thus the database helps 
+foster a sense of student community on a large campus.
+
+3.0	The Database
+
+The database consists of two major portions, the Locations 
+database, and the Events database. Both portions are inte-
+gral to having a well managed events database.
+
+3.1	Locations
+
+The Locations database contains information about vari-
+ous venues where an event occurs, such as the Building 
+name, Room name/number, street address, postal code, 
+etc.
+
+By having a very accurate locations database people can 
+search the database for events that are located in a specific 
+areas. For instance, you could search for events "nearby" 
+that are in the local postal/zip code. Or, you could browse 
+by state, city, building, and then room.
+
+3.2	Events
+
+The Events database contains information about the actual 
+event, such as the title, category, cost, contacts for more 
+information, date, time, length, and description, etc.
+
+You can browse the Events portion of the database in 
+many ways. You can browse by the category of events, or 
+by date. A special feature allows you to get a listing of all 
+the events for the current day, and the week ahead.
+
+There are many ways to search the events database. The 
+database is keyword indexed, so you can find events that 
+have a certain word in their description. Or, you can fill 
+out a form that lets you find events with a high degree of 
+accuracy. This form allows you to specify the exact 
+matches you want for any of the fields in the database. For 
+example, you could search the database for all events that 
+cost less than $5, are in the category `CONCERT' and are 
+in the zip code `55455'. This search can be put on a menu 
+item if one wishes. (You might name this item `Cheap 
+Concerts on the Minneapolis Campus')
+
+4.0	A Tour of the Database
+
+Let's follow the travels of a hypothetical student named 
+George. George is bored. He has a bundle of cash burning 
+a hole in his pocket. He wants to do something.
+
+So George fires up his SLIP connection and gets con-
+nected to the U of M network and launches his favorite 
+gopher client, Turbogopher for his Macintosh.
+
+He gets a screen like this:
+
+FIGURE 1.	Getting Into Gopher
+
+George is one smart dude, so he uses his built in bookmark 
+to access the Database of events. He then gets a number of 
+choices. He can browse the database by type, location or 
+date or he can search for a specific event.
+
+FIGURE 2.	Starting Screen for the Events Database
+
+George can quickly browse the Events for Today items. 
+They make great bookmarks, since they change every day. 
+The first item returns the items listed in a directory, this is 
+best for browsing. The second item is a file containing all 
+the events for the day. This is handy for printing out.
+
+George is looking to the weekend however, so he selects 
+"Events for the next 7 days".
+
+FIGURE 3.	Events for the Next 7Days
+
+And, lo and behold, he sports "Saturday Night Fever."! 
+George notices that there are two showings coming up, so 
+he clicks on the item and gets the description of the event:
+
+FIGURE 4.	Saturday Night Fever Event
+
+Cool! George gets his leisure suit ready for the cleaners 
+and looks further for something later in the week to 
+do.This time he knows that there's a performance at 
+Northrup that he wants to see, so he selects the Multiple 
+field search and searches for the Building Northrup and 
+the category DANCE.	
+
+FIGURE 5.	Multiple Field Search
+
+Then he gets a list of items that match his specified crite-
+ria, all DANCE events in buildings named Northrup. 
+
+FIGURE 6.	Dance Events at Northrup
+
+George looks through the items there and finds out that the 
+Miami City Ballet is playing for the low low price of 
+$16.50.
+
+
+
+5.0	Event and Location Data 
+Management 
+
+A number of forms are defined for adding data to the 
+events database. The first form is for adding a Building/
+room to the list of locations. 
+
+The gateway software does some intelligent checks to 
+insure that the city is in the database and checks for 
+matches in the database.
+
+FIGURE 7.	Adding a New Location	
+
+The second form is used to enter information about the 
+event. Again, a number of consistency checks are done.
+
+FIGURE 8.	Adding a New Event
+
+For events that have more than one showing (movies, 
+plays, etc.) we have another form for adding a time to a 
+current event. This form can be used as many times as nec-
+essary to add Show Times to an existing event.
+
+FIGURE 9.	Adding an Additional Date and Time
+
+6.0	Future plans
+
+The Locations database will eventually interface with a 
+database of Maps and Coordinates, allowing one to 
+browse locations graphically. In the future this database 
+might contain three dimensional renderings of geography.
+
+Currently the Events database is geared towards singular 
+events (i.e. events that occur only once or twice.) This is 
+because we store the beginning time and length in a table. 
+This is inefficient for repeating events such as long run-
+ning movies, plays and art exhibits. A separate database or 
+redesign may be required for these events.
+
+Another database being considered is a `Personnel' data-
+base. People could use this to create their own personal 
+schedules. This would also allow you to `sign' up for an 
+event, and browse a list of attendees for an event.
+
+A rating system for events could be established, allowing 
+someone to `vote' for a specific event. You could then 
+search for highly rated events. 
+
+7.0	Technical Details
+
+7.1	Internet Gopher and the Gopher Protocol
+
+Internet Gopher is an information system used to publish 
+and organize information on servers distributed across the 
+Internet. Initially developed at the University of Minne-
+sota in early 1991, it has spread to over 4800 sites world-
+wide as of December 1993.
+
+The Gopher system is a client-server system that can be 
+used to build a Campus Wide Information System 
+(CWIS). Clients, which browse and search information are 
+available for most major platforms (Macintosh, DOS, 
+Windows, Unix, VMS, MVS, VM/CMS, OS/2). Servers, 
+which translate and publish information, are also available 
+for all of the platforms mentioned above.
+
+This client-server architecture uses the Internet Gopher 
+Protocol. The Gopher protocol has been described as "bru-
+tally simple." It is based on a web/tree metaphor of files 
+and directories. Its basic primitives are a list directory 
+transaction, a retrieve file transaction and a search for 
+directory entries transaction.
+
+7.2	SQL Database Details. Entities and 
+Relationships
+
+The following page contains a diagram of the tables con-
+tained in the database. Each table is represented by it's 
+name followed by a bulleted list of the columns. Arrows 
+connect columns that reference other tables.
+
+A number of views are defined to make searching the data-
+base easier. The view Eventview contains the most popular 
+fields for searching and joins the location, building, 
+events, eventtimes, and eventinfo tables together. An 
+Eventinserter view is used to insert items into the data-
+base. The Eventplace view joins together the location, 
+building, and city.
+
+A number of indexes are also created, to increase the per-
+formance of searches.
+
+7.3	The Gateway Software
+
+The software that brings allows access to the database is 
+Gophersql. Gophersql was developed by the University of 
+Minnesota to allow Internet Gopher Clients access to a 
+SQL database such as Oracle or Sybase.
+
+The SQL gateway allows the Gopher Client to:
+
+·	View the tables of a database as a Gopher directory
+
+·	View the columns of a given table as a Gopher direc-
+tory
+
+·	View the contents of a column as a Gopher directory
+
+·	View records as formatted text.
+
+·	View/import records as tab-separated-values
+
+·	Add records to a table.
+
+·	Search the table by filling out a Gopher+ form.
+
+The gateway is available via anonymous ftp from 
+
+boombox.micro.umn.edu
+
+via anonymous ftp from the directory
+
+/pub/gopher/Unix/gopher-gateways/gophersql
+
+The files used to construct this events database are 
+included in the distribution.
+
+7.4	Accessing the Gateway
+
+To access the Events database you can connect to the 
+machine arcwelder.micro.umn.edu on port 70.

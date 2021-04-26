@@ -1,0 +1,127 @@
+
+Gopher v1.3.2  Installation Instructions:
+
+The tar.Z file you just unpacked contains three programs: Gopher.app, NeXTGIF and Ph.  Ph is necessary for searching "phone book" entries, and should be installed in ~/Apps or /LocalApps.  NeXTGIF is used for displaying GIF graphics files, and should also be installed in ~/Apps or /LocalApps.  You can, however, use any other application which supports GIF files in place of NeXTGIF. (eg. ViewGIF2 or ImageViewer)  Gopher also can use Stuart, if you have it, for telnet connections.
+
+Source code is not included with this version, but will be provided on request.  I am continuing to work on further improvements and will include full source when these are finished.  There may still be a rough spot or 2 which will get cleaned up soon, but I was anxious to distribute what's been done so far.  I am interested in any suggestions, comments or problems you have (with Gopher).
+
+			Jim LeBay
+			Computer Information Center
+			Michigan State University
+			(517) 353-1800
+			lebay@mercury.cl.msu.edu
+
+
+Planned Improvements:
+
+- bookmarks for your favorite "Gopher holes"
+- improved item inspector
+- additional Preferences
+- better integration of sound and graphics
+- merge David Lacey's MIME support.
+
+=================================================================
+
+Change History:
+
+changes in Version 1.3.2 - by Jim LeBay
+
+- support image type 'I' in addition to type 'g'
+- support binary files of types: '4' (BinHex), '5' (DOS 
+  archive), '6' (uuencode) and '9' (raw binary).  Files are
+  saved to disk - no decoding is done.
+- fixed a bug with launching Terminal on NS3.0 systems
+
+
+changes in Version 1.3 - by Jim LeBay
+
+* mini-icons are used in the browser to identify Gopher-types
+* added support for GIF graphics files (type 'g')
+* the Find menu is fully implemented - including a Find Panel
+- fixed-width font (Ohlfs) used in the text window
+- larger default window size
+- Gopher will remember whenever you change its window size
+- 'play' (for sounds) is bundled into an .app wrapper
+- removed limitation on size of text files
+- Alternate-clicking on an item will update its "Item info"
+  without retrieving its contents
+- a default has been added to allow listing all items in the 
+  browser, including unsupported types.  In a Terminal window 
+  you must do "dwrite Gopher ShowAllTypes YES".
+- "Open..." remembers previous connection information
+- double-clicks in the browser are ignored
+- window closes when Gopher fails to open a new connection
+- better error detection & notification
+- fixed bug when closing a window from the menu (Command-w)
+- fixed bug when selecting text items following an Index
+- other minor improvements and bug fixes
+
+
+Version 1.12 - changes by Paul Lindner lindner@boombox.micro.umn.edu
+
+    Fixed the client so that it can work with the new index-server protocol change.
+
+    Upped the size of some data structures so that it can better deal with WAIS gateways.
+
+
+Version 1.11 - changes by Paul Lindner lindner@boombox.micro.umn.edu
+
+    Made some cosmetic changes.  Spiffed up some of the panels.  Made
+them look pretty.
+
+    Added an Item Type Field in the Item info panel.
+
+    Fixed the Help menu item to better reflect reality.
+
+    Fixed up the highlighting of search terms.  Also added a Find menu
+item so the user can find the relevant portions of the document, given
+the search string.  (I still need to implement a find previous
+though.)
+
+
+Version 1.1  - changes by David Lacey dlacey@umaxc.weeg.uiowa.edu
+
+   Added a Stuart Speaker interface so that Stuart could be messaged rather than just Terminal when a Telnet session was called.  Also added a preferences item for this.  Stuart is better than Terminal because, unlike terminal, Stuart doesn't start a new app each time you fire up a telnet session.
+
+   Added an alert box to show you the login to use when you do a telnet and a login was specified by the server.
+
+   Added a speaker to Rex Pruess's Ph program to handle CSO Nameservers.
+
+   Fixed the initial menu negotiation -- Gopher used to send two \n\r sequences to the server causing it to die under some conditions (noticeably on a SLIP link)
+
+   Changed the window from 3 small panes to 2 larger panes.
+
+   Enlarged the Courier font used to represent the Telnet sessions -- better legibility
+
+   Changed the Defaults database to look for "Gopher" rather than "UST_Gopher" to be more consistent with the NeXT defaults interface.
+
+   Added two new response code handlers:
+   	Type 'R' for rlogin.  Useful because the system can negotiate the login for the user transparently rather than having to give the user an alert box telling them what to type.
+	Type 'T' for tn3270 sessions.  Useful for all those ugly blue boxes that just won't go away...
+
+   Changed default port from 150 to 70.
+
+
+Gopher 1.0c release notes
+
+Fixed an annoying problem with the index popup.  Hitting the close button would cause the program to hang.
+
+Added a spiffy icon.
+
+
+Gopher 1.0b2 release notes
+
+Fixed a minor but annoying bug : I forgot to switch the default shell
+for Terminal to what it was.
+
+
+Gopher 1.0b release notes
+
+This is the 1.0 release of my Gopher client. It is by no means perfect,
+but I am leaving the country and I wanted to release something that
+worked. The main changes from 0.9b :
+
+- help text has been beefed up
+- main window uses a SplitView so you can resize the Browser and the Text
+- allows telnet connections (but in a rather ugly way).
+- allows sounds to be played. To do so, however, you must first install the "play" program.

@@ -1,0 +1,7 @@
+The BinHex contained in this directory is the BinHex 4.0 Mac utility.
+You need to transfer it in binary mode back to your home machine.
+When you transfer it back to your Mac, take the necessary steps
+to ensure that you have MacBinary turned on.
+
+If you are using NCSA Telnet, make sure MacBinary Enabled is checked
+under the File menu.  Type "binary" before you do a "get BinHex" in ftp.

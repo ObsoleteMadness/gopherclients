@@ -1,0 +1,17 @@
+Review of Gopher Client (initial release):
+------------------------------------------
+
+
+I've tested it out some.  It's functional, but could certainly use work.  
+
+It has no back button, you have to use a drop down history menu to go back.  
+It doesn't handle images.  Where firefox shows a directory folder, this 
+client shows "[dir]" and like the good-old consol gopher you have to 
+download any image links.  
+
+With a little work it looks like it could grow into a nice little 
+browser though.
+
+-Wesley
+
+

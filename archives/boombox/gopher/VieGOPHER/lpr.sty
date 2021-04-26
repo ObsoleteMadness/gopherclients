@@ -1,0 +1,84 @@
+%
+% lpr.sty       status: experimental ...
+%
+% 1992 10 19
+%
+\message{this is LPR.STY (experimental) as of 1992 10 19}
+%----- modify page layout, expermintal ---------------------------------------
+\topmargin10mm
+\headheight12mm
+\headsep5mm
+\topskip0mm
+\textheight227mm % 227mm for US letter size; 245mm for A4
+\textwidth126mm  % 126mm is fine for A4
+\oddsidemargin17mm
+\evensidemargin65mm
+\marginparwidth46mm
+\marginparsep5mm
+\marginparpush5mm
+
+% more experimental style options --------------------------------------------
+\parskip=2pt plus4pt   % seperate paragraphs a bit wider
+\clubpenalty=500
+\widowpenalty=500
+
+% variable texts -------------------------------------------------------------
+\def\LPtopA{~}
+\def\LPtopB{~}
+\def\LPtopC{~}
+\def\LPtopD{~}
+\def\LPtopE{~}
+\def\LPtopF{~}
+\def\LPbotA{\today}
+\def\LPbotB{\thepage}
+\def\LPbotC{~}
+\def\LPpages{}
+
+% specialized layout parameters
+\def\LPboxwidth{172.9mm}
+
+%
+\newcounter{suppress}   % number of headers/trailers to suppress ...
+
+% headings and footings ------------------------------------------------------
+% Anm: parbox um 3mm breiter wenn keine \fbox verwendet wird (numera di casa)
+%      174.7mm bzw. 177.7mm
+\def\ps@myheadings{\let\@mkboth\@gobbletwo
+  \def\@oddhead{
+%   \tolerance=10000
+    \ifnum\thesuppress>0 \addtocounter{suppress}{-1}\else
+    \fbox{
+    \parbox{\LPboxwidth}{\sf
+    \LPtopA \hfill \LPtopE \hfill \LPtopC\\
+    \LPtopB \hfill \LPtopF \hfill \LPtopD    }}
+    \fi
+  }
+  \def\@oddfoot{
+%   \tolerance=10000
+    \ifnum\thesuppress>0 \addtocounter{suppress}{-1}\else
+    \fbox{
+    \parbox{\LPboxwidth}{\sf
+      \LPbotA \hfill \LPbotC \hfill \LPbotB}}
+    \fi
+  }
+  \def\@evenhead{
+%   \tolerance=10000
+    \ifnum\thesuppress>0 \addtocounter{suppress}{-1}\else
+    \hskip -\marginparsep \hskip -\marginparwidth \hskip -0.7mm
+    \fbox{
+    \parbox{\LPboxwidth}{\sf
+    \LPtopA \hfill \LPtopE \hfill \LPtopC\\
+    \LPtopB \hfill \LPtopF \hfill \LPtopD    }}
+    \fi
+  }
+  \def\@evenfoot{
+%   \tolerance=10000
+    \ifnum\thesuppress>0 \addtocounter{suppress}{-1}\else
+    \hskip -\marginparsep \hskip -\marginparwidth \hskip -0.7mm
+    \fbox{
+    \parbox{\LPboxwidth}{\sf
+      \LPbotA \hfill \LPbotC \hfill \LPbotB}}
+    \fi
+  }
+  \def\sectionmark##1{}
+  \def\subsectionmark##1{}}

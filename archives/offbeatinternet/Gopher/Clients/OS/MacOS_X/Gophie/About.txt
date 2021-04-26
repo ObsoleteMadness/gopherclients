@@ -1,0 +1,15 @@
+Gophie
+(ver 1.1)
+Freeware
+
+
+Gophie is a Gopher Browser for Mac OS X written in 
+Java.  Gophie allows you to navigate Gopherspace, 
+read text, view images, and download files with the 
+integrated download manager.
+
+The Mac package for Gophie is a DMG-file.  UnZip the 
+DMG, and drag this Gophie file into the application 
+folder.  Afterwards Gophie will be available in your 
+applications to launch wherever you wish.
+

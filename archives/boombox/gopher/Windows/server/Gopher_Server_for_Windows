@@ -1,0 +1,29 @@
+Received: (from gopher@localhost) by boombox.micro.umn.edu (8.6.9/8.6.6) id OAA02277; Thu, 18 May 1995 14:15:26 -0500
+Received: from edina.xenologics.com (edina.xenologics.com [194.77.5.1]) by boombox.micro.umn.edu (8.6.9/8.6.6) with ESMTP id OAA02147 for <gopher@boombox.micro.umn.edu>; Thu, 18 May 1995 14:12:20 -0500
+Received: (from wzk@localhost) by edina.xenologics.com (8.6.8.1/8.6.6) id VAA12926 for gopher@boombox.micro.umn.edu; Thu, 18 May 1995 21:11:28 +0200
+From: Wolfgang Zekoll <wzk@edina.xenologics.com>
+Message-Id: <199505181911.VAA12926@edina.xenologics.com>
+Subject: Gopher Server for Windows 3.1
+To: gopher@boombox.micro.umn.edu
+Date: Thu, 18 May 1995 21:11:21 +0200 (MET DST)
+X-Mailer: ELM [version 2.4 PL23]
+Content-Type: text
+Content-Length: 168666    
+
+
+Hello gopheradmin(s) at Minnesota,
+
+   some months ago I started working on a gopher server for Windows 3.1 and
+I'm now far enough to make a public pre-release. This mail carries the
+current release, version 0.52.
+I would like to ask you now for two things:
+
+      - if you want to put it to your gopher server archives, and
+
+      - your comments and suggestions about it (if you find the
+	time to do).
+
+
+								Wolfgang Zekoll
+
+-------------------------------------------------------------------------------

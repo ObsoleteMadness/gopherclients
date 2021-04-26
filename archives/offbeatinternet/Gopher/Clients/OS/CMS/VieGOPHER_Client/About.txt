@@ -1,0 +1,17 @@
+VieGOPHER Client and Server
+(ver ?)
+Freeware
+
+
+VieGOPHER was developed by Gerhard Gonter.  The distribution file 
+contains both a Gopher client and Gopher server for the IBM CMS (VM/CMS)
+mainframe operating system (because I have no ability to separate the
+client from the server).
+
+
+The client needs either REXTCPIP or RXSOCKET for network transport 
+and XEDIT for the user interface.
+
+The server is based on REXTCPIP (requires TCP/IP version 1 or 2). 
+
+

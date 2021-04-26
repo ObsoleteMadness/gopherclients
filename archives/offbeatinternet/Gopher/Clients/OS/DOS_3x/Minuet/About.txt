@@ -1,0 +1,28 @@
+Minuet
+(ver 1.0 beta_18A)
+Freeware
+
+
+Minuet is an anacronym for "Minnesota Internet User's Essential Tools".
+Minuet is an interesting program that attempts to provide an integrated
+set of common applets and internet access (similar to the attempt 
+Microsoft made years later with the Windows Active Desktop).  
+
+Some of the included internet clients are Email, NetNews, Telenet, FTP,
+Finger, HTTP, and Gopher.  This program straddles the line between a 
+multi-protocol client (such as many modern Web Browsers), and a stand-
+alone client (which is what I try to offer in the "Clients" selector).
+Even though you cannot separate the clients physically (they are ALL 
+lumped together in the MINUET.EXE file), each client works separately.
+
+When you first start the program, you will need to enter "setup", and 
+add the IP address of your computer, the net mask, the gateway, and 
+the name server.  You will also need to change the default home gopher 
+server, as the one pre-selected for you no longer exists (I suggest 
+either "gopher.floodgap.com" or "home.jumpjet.info").  
+
+Due to its age and being "beta", this software has problems handling 
+some file types such as "h" (html) and "g" (gif), while others such
+as "jpg" are misinterpereted as being text files (and are uselessly 
+opened in the integrated text viewer).  
+

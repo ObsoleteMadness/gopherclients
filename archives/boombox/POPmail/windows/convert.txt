@@ -1,0 +1,7 @@
+Convert.exe is a conversion utility to convert Minuet mail and addresses to a
+format usable by WS_POPMail.
+
+Please send comments or bug reports to:
+     popmail@boombox.micro.umn.edu
+
+

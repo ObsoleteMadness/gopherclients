@@ -1,0 +1,199 @@
+Name=EMBnet: BIOFTP Switzerland
+Type=1
+Port=70
+Path=
+Host=bioftp.unibas.ch
+#
+Name=EMBnet: INN, Weizmann Institute of Science (Israel)
+Type=1
+Port=70
+Path=
+Host=sunbcd.weizmann.ac.il
+#
+#Name=Genes at genes.icgeb.trieste.it (under construction)
+Name=ICGEBnet Int.Center Genet.Engineering & Biotec (Trieste)
+Type=1
+Port=70
+Path=
+Host=genes.icgeb.trieste.it
+#
+Name=PIR Archive, University of Houston
+Type=1
+Port=70
+Path=
+Host=ftp.bchs.uh.edu
+#
+Name=National Science Foundation Gopher
+Type=1
+Port=70
+Path=
+Host=stis.nsf.gov
+#
+Name=University of Wisconsin-Madison, Medical School
+Type=1
+Port=70
+Path=
+Host=msd.medsch.wisc.edu
+#
+Name=EMBnet: BioInformation Resource EMBL Germany
+Type=1
+Path=
+Host=ftp.embl-heidelberg.de
+Port=70
+#
+Name=Plant Genes: Arabidopsis AAtDB Server
+Type=1
+Path=
+Host=weeds.mgh.harvard.edu
+Port=70
+#
+Name=National University of Singapore
+Type=1
+Port=70
+Path=1/BioComputing
+Host=solomon.technet.sg
+#
+Name=Biodiversity and Biological Collections at Harvard
+Type=1
+Port=70
+Path=
+Host=huh.harvard.edu
+#
+Name=EMBnet: SEQNET UK
+Type=1
+Port=70
+Path=
+Host=s-crim1.daresbury.ac.uk
+#
+Name=EMBnet: BioBox Finland
+Type=1
+Port=70
+Path=1/.BioBox
+Host=finsun.csc.fi
+#
+Name=Computational Biology at Johns Hopkins U.
+Host=merlot.welch.jhu.edu
+Port=70
+Type=1
+Path=
+#
+Name=Protein Data Bank ftp Site
+Type=1
+Host=pdb.pdb.bnl.gov
+Port=70
+Path=
+#
+Name=EMBnet: CAOS-CAMM Center, Netherlands
+Host=camms1.caos.kun.nl
+Port=70
+Path=
+Type=1
+#
+Name=CAMIS (Center for Advanced Medical Informatics at Stanford)
+Type=1
+Path=
+Port=70
+Host=camis.stanford.edu
+#
+Name=Microbial Germplasm Database at OSU
+Type=1
+Port=70
+Path=
+Host=gopher.bcc.orst.edu
+#
+Name=National Institutes of Health (NIH) Gopher
+Type=1
+Port=70
+Path=
+Host=gopher.nih.gov
+#
+Name=Molbio databases at Welchlab, JHU
+Type=1
+Port=70
+Path=1/Database-local
+Host=merlot.welch.jhu.edu
+#
+#Name=Forestry & Ecological Data Exchange (EDEX) at Yale
+#Type=1
+#Port=70
+#Path=1/Test/Forestry
+#Host=suncis.ycc.yale.edu
+#
+Name=Forestry & Ecological Data Exchange at Yale
+Type=1
+Host=gopher.yale.edu
+Port=70
+Path=1/Enterprise/Academic/Forestry
+#
+Name=Long-Term Ecological Research Network (LTERnet)
+Type=1
+Port=70
+Path=
+Host=LTERnet.edu
+#
+Name=American Physiological Society
+Type=1
+Port=3300
+Path=1/
+Host=gopher.uth.tmc.edu
+#
+Name=National Institute Allergy & Infectious Disease (NIAID)
+Type=1
+Port=70
+Path=
+Host=gopher.niaid.nih.gov
+#
+Name=U. Western Australia Virology Gopher
+Type=1
+Port=70
+Path=
+Host=virus.microbiol.uwa.edu.au
+#
+Name=Genethon (CEPHB Human Polymorphism Study Center, Paris, France)
+Type=1
+Port=70
+Path=
+Host=gopher.genethon.fr
+#
+Name=DNA Data Bank of Japan, Natl. Inst.  of Genetics, Mishima
+Type=1
+Path=
+Port=70
+Host=gopher.nig.ac.jp
+#
+Name=Caenorhabditis Genetics Center (CGC)
+Type=1
+Path=
+Port=70
+Host=elegans.cbs.umn.edu
+#
+Name=EMBnet: Bioinformation Resource (France)
+Type=1
+Port=70
+Path=1/
+Host=coli.polytechnique.fr
+#
+Name=Plant Genes: GrainGenes, the Triticeae Genome Gopher
+Type=1
+Port=70
+Path=/
+Host=greengenes.cit.cornell.edu
+#
+Name=Plant Genes: Maize Genome Database
+Type=1
+Port=70
+Path=
+Host=teosinte.agron.missouri.edu
+#
+Name=Plant Genes: Dendrome Genome Database
+Type=1
+Port=70
+Path=
+Host=s27w007.pswfs.gov
+#
+Name=Australian National Botanic Gardens 
+Type=1
+Port=70
+Host=155.187.10.12
+Path=
+#

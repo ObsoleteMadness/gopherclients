@@ -1,0 +1,78 @@
+VRweb 0.53 Beta
+===============
+
+This is the Win32s version of VRweb a VRML browser for Microsoft Windows 3.x, 
+Windows 95 without native OpenGL support, and Windows NT 3.1.
+
+VRweb is a joint project between IICM (Hyper-G team), NCSA (mosaic), and the
+Gopher team.
+
+Installation:
+=============
+
+If you have not installed Win32s and WinG yet please install it before 
+running VRweb: Get the Zip archieves win32s.zip and wingbt.zip. Unzip them 
+and run Setup for each of them.
+
+To install VRweb create a directory and unzip the archive with 
+
+unzip vrw_win
+
+Then you can create an icon in the Program Manager. In a later version we
+will supply an install program.
+
+To install VRweb with Mosaic 2.00:
+
+Get a VRML scene from your prefered sever. Mosaic asks you whether to save the
+file to disk or to configure a viewer. Select to configure a viewer and 
+another dialog appears. Press the browse button and select VRweb at the location 
+you did put it to. Press OK and Mosaic is configured for use with VRweb.
+
+Configuration with Netscape is analogous.
+
+Please note, that this version of VRweb does not support compressed scenes. If
+you want to look at them you have to uncompress them first.
+
+System requirements:
+====================
+
+To use VRweb you should have an 486-50 and 8 MB of memory or better. If
+rendering is slow use as interactive mode wireframe (Menue Rendering-
+Interactive-Wireframe)
+
+Beta limitations:
+=================
+
+Because of being Beta some features are not implemented yet (but will in near 
+future):
+
+* Fly to mode is not implemented with VRML scenes
+* No help available
+* The user interface will be fine tuned
+* No standard light source in VRML scenes
+* No network support (hyperg, http)
+* No unzip support
+
+True color support is included in this version but it is slow. If you want to
+look at it though, edit the UseTrueColor option in the INI file and set it to 1.
+In future versions we will tune this part.
+
+Support:
+========
+
+Please send all bug reports to the mail alias vrweb-bugs@iicm.tu-graz.ac.at or
+directly to me: gorasche@iicm.tu-graz.ac.at.
+
+or
+
+subscribe the  VRweb mailing list with a mail to listproc@iicm.tu-graz.ac.at 
+and the message body
+
+subscribe vrweb YourNameHere
+
+To unsubscribe send a mail to the same address and exchange subscribe with
+unsubscribe. Mails to the list then can be sent to vrweb@iicm.tu-graz.ac.at.
+
+
+Gerbert Orasche
+Graz, August 7th 1995

@@ -1,0 +1,207 @@
+README                                                      13 June 95
+                                                         Keith Andrews
+
+
+Harmony is Copyright (c) by IICM, see the full COPYRIGHT notice for
+conditions of use.
+
+
+
+
+	      Harmony -- The Unix/X11 Client for Hyper-G
+	      ------------------------------------------
+
+
+  Thank you for your interest in Harmony. Harmony is the Unix/X11
+client for Hyper-G, the first "second generation", publicly available,
+networked hypermedia information system running over the
+Internet. Hyper-G integrates hyperlinking, hierarchical structuring,
+sophisticated search, and access control facilities into one single
+system, and is interoperable with other network information tools like
+Gopher and WWW. Hyper-G is being developed jointly by the Institute
+for Information Processing and Computer Supported New Media (IICM) of
+Graz University of Technology, Austria and the Institute for
+HyperMedia Systems (IHM) of JOANNEUM RESEARCH, Graz, Austria.
+
+
+The latest release of Harmony is available by anonymous ftp from:
+
+  ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G/Harmony
+
+
+The Harmony FAQ (Frequently Answered Questions) contains pointers to
+further information about Harmony and Hyper-G and an up-to-date list
+of FTP mirror sites. It is available at:
+
+  ftp://ftp.iicm.tu-graz.ac.at/pub/Hyper-G/Harmony/harmony.faq
+
+
+
+
+Harmony Features
+----------------
+
+
+o Hierarchical Browsing
+
+  Harmony's Collection Browser displays the hierarchical membership
+  structure of Hyper-G data, like a graphical file browser.
+
+
+o Search
+
+  Harmony supports both attribute (keyword, title, author, creation
+  time, etc.) and content (full text) searches; search results are
+  presented as a ranked list. The scope of searches is user-definable,
+  ranging from individual collections to all collections on all
+  Hyper-G servers world-wide.
+
+
+o Hyperlinks
+
+  Harmony supports hyperlinks between arbitrary document types,
+  including text, image, film, PostScript, and 3D models. Source and
+  destination anchors can be defined interactively.
+
+
+o Local Map
+
+  Harmony's Local Map presents a dynamically generated graphical
+  overview of the link relationships of a chosen document: *both*
+  incoming and outgoing hyperlinks are represented. Selecting an
+  object toward the edge of the map and generating a new display
+  offers a new means of associative browsing.
+
+
+o Location Feedback
+
+  Selecting a document or collection in the local map, in the search
+  result list, or following a hyperlink, causes the location of the
+  corresponding object to be *automatically* displayed in the
+  collection browser, providing a powerful aid to orientation.
+  
+
+o History
+
+  The History Browser offers a timeline of past interactive waypoints,
+  including previous search panels.
+
+
+o 3D Information Landscape
+
+  The Information Landscape is a three-dimensional graphical overview
+  map of the collection structure. Users can "fly" over the hyperspace
+  landscape looking for salient features, select interesting
+  documents, etc. This feature requires platform support for IrisGL or
+  OpenGL and is currently only available for SGI and DEC Alpha
+  machines.
+
+
+o Multilinguality
+
+  Harmony's user interface adjusts dynamically to the language of
+  first choice, documents available in multiple languages are selected
+  in order of language preference, and searches are optionally
+  language-dependent.
+
+
+
+
+
+Document Viewers
+----------------
+
+  Documents in Harmony are displayed by separate viewer processes in
+windows of their own:
+
+
+o Text
+
+  A generic SGML parser is used to display Hyper-G (HTF) and WWW
+  (HTML) texts. Inline images in GIF, JPEG, and TIFF formats are
+  supported.
+
+
+o Image
+
+  GIF, JPEG, and TIFF images are supported and may be zoomed, panned,
+  etc. A special feature is live display -- when turned on, images are
+  built up progressively on-screen as they are loaded. The autofit
+  option automatically scales images to fit the current image viewer
+  window.
+
+
+o Film
+
+  MPEG-1 video streams are supported. Options include live display
+  while loading, double size display, alternative dithering methods,
+  and gamma correction. After loading, selective portions of the film
+  may be replayed, the frame rate altered, etc.
+
+
+o Audio
+
+  The Audio Player supports both the Network Audio System (NAS) and
+  local audio commands provided on your system.
+
+
+o PostScript
+
+  PostScript files can be displayed page by page, zoomed, printed,
+  etc.
+
+
+o 3D Scene
+
+  3D model descriptions are displayed and can be manipulated or
+  traversed in three dimensions. Hyperlinks are attached to objects in
+  the model. This feature requires platform support for IrisGL or
+  OpenGL and is currently only available for SGI and DEC Alpha
+  machines.
+
+
+
+  *All* native Harmony viewers support both activation and interactive
+definition of incoming and outgoing hyperlinks. Harmony can be
+configured to use external programs to display any document type (but
+without linking capabilities).
+
+
+
+
+
+User Configuration
+------------------
+
+  Most features of Harmony can be configured by X resources, and many
+of them interactively as well. We are working on a mechanism for
+writing interactive configurations to a file and hence saving them
+between Harmony sessions automatically (currently you have to enter
+them into your ~/.Xdefaults file by hand).
+
+
+
+
+
+Upcoming Features
+-----------------
+
+o Annotations.
+
+o Better link manipulation and editing for existing links.
+
+o A drag-and-drop file browser facility for uploading documents.
+
+o Drag-and-drop manipulation of the collection hierarchy.
+
+o Image editing via the Image Viewer.
+
+o Integrated electronic mail facilities.
+
+o 3D visualisation of link relationships and search results.
+
+o Interactive forms.
+
+o A Vector Graphics viewer.
+
+o Online help.

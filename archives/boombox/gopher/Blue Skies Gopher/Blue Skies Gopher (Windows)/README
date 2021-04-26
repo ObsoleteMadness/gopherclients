@@ -1,0 +1,78 @@
+Readme file for Blue Skies 1.0 beta 3a
+
+In this directory you should find the file bs1b3a.exe.  It is a self
+extracting archive.  Following you will find the directions for
+installing this version of Blue Skies. 
+
+0.  You must have WinSock installed and operational on your computer.
+Blue Skies will not install if WinSock is not already installed on your
+computer. 
+
+If you need more information on WinSock, please contact your Internet
+service provider.  They should be well equipped to help you install and
+trouble shoot if necessary. 
+
+1.  Go to your system's temp directory (often this is c:\windows\temp or
+c:\temp; look at the the DOS environment variable TEMP or TMP), or
+create a temporary directory, or even use a blank diskette.  It's a good
+idea to make sure the directory or diskette is empty. 
+
+2.  After you have changed directories or changed drives to the
+diskette, execute the program bs1b3a.exe.  This unpacks into over a
+dozen files. 
+
+3.  Start Windows, or Windows for Workgroups, if you haven't already.
+If you're using NT see the notes below. 
+
+From the Program Manager, or the Windows File Manager, execute the setup.exe.
+
+If you're using File Manager, it's easy to just double click on setup.exe.
+
+If you're using Program Manager, it's easy to select File/Run and type
+a:setup, if the program is on a diskette, or type in the path to the
+setup program.  Then hit the Enter key or click on the OK button. 
+
+4.  The only choice you will need to make now is where to install Blue
+Skies.  If you already have a directory where you install network
+applications (like c:\internet or c:\netapps) then enter the appropriate
+path for the Blue Skies directory when you are asked. 
+
+5.  Blue Skies will now be installed.  If you haven't run Blue Skies
+before now, or another application that uses the Microsoft WinG graphics
+library, you will be asked to reboot your computer.  Be sure to exit the
+other applications (particularly any MSDOS sessions) and reboot. 
+
+6.  If you are not using NT, then when you start Blue Skies, you will be
+treated to several minutes of bouncing graphics. WinG is timing various
+operations on your monitor, for best performance.  Trust me, this only
+happens once!  Well, OK, it will happen again if you change the display
+settings, but WinG is good about keeping track of what it's already
+tested. 
+
+7.  Note to NT users -- experience seems to show that you will have best
+results if you select "Shutdown and restart" from the Shutdown menu.
+So, don't bother to reboot from Blue Skies; it doesn't seem to be
+enough. 
+
+Also, long filename users, I strongly recommend using a "short" filename
+for the Blue Skies directory, even if Blue Skies is installed on an NTFS
+drive.  For now. 
+
+********
+
+Please direct your questions and comments to blueskies@umich.edu.  Be
+sure to ask to be placed on the notification list for updates.  We look
+forward to your comments! 
+
+Blue Skies is a 'work in progress'; it is actively being developed but
+it's not yet a complete implementation of the Interactive Image Format
+specification.  Just the same, we show it publicly and it is quite
+stable.  We welcome your suggestions. 
+
+If you are able to make Blue Skies "crash", please provide us with a Dr.
+Watson log (or something similar) and instructions on how to reproduce
+the error. 
+
+Thanks,
+Dave Brooks
+author of the Windows Blue Skies, and WSGopher

@@ -1,0 +1,15 @@
+19 Feb 1991
+
+Version 1.02 of the Address Finder stack (a Macintosh client for 
+the University of Illinois CSO Nameserver) is located in this directory.
+This version is for use with Hypercard 2.0.
+
+The Address Finder stack is stored in the file addfinder.hqx; this
+file is a BINHEX'ed stuffit archive. You'll need stuffit version 1.5
+to reconstitute the stack. The manual (in both MacWrite II and MS Word
+format) is also stored in the addfinder.hqx file.
+
+Please send comments, questions or feedback about Address Finder to:
+    addfinder@boombox.micro.umn.edu
+
+

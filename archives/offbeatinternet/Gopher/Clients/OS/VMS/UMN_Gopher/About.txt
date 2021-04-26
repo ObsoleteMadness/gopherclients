@@ -1,0 +1,25 @@
+UMN Gopher
+(ver 2.3.1)
+Freeware
+
+
+This is the University of Minnesota's Internet Gopher Server (gopherd)
+and Gopher+ Curses Client for UNIX machines.  A client for VMS is also 
+included in the package.  
+
+
+CAUTION: UMN Gopher has trouble accessing the root directory of some 
+Gopher servers (especially GopherS), and will complain that there is 
+"Nothing available." in the servers root directory.  You can force 
+retrieval of the root menu by using the command: 
+$ gopher -p "" server.tld
+
+
+=====
+
+Note that I am unable to separate out the VMS client from the other 
+"Unix-based" software mixed in with this file.  
+
+
+
+

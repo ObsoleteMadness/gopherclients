@@ -1,0 +1,15 @@
+Rice CMS Gopher Client and Server
+(ver 2.4.2)
+Freeware
+
+
+The Rice Gopher was developed by Rick Troth of Rice University, Texas. 
+The distribution file contains both a Gopher client and Gopher server 
+for the IBM CMS (VM/CMS) mainframe operating system (because I have no
+ability to separate the client from the server).
+
+
+The server is based on RXSOCKET (requires TCP/IP version 2) and 
+CMS Pipelines.  
+
+

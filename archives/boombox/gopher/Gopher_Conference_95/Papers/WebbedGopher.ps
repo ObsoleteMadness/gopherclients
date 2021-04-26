@@ -1,0 +1,3598 @@
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%PageOrder: (atend)
+%%DocumentFonts: (atend)
+%%Creator: Frame 4.0
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginProlog
+%
+% Frame ps_prolog 4.0, for use with Frame 4.0 products
+% This ps_prolog file is Copyright (c) 1986-1993 Frame Technology
+% Corporation.  All rights reserved.  This ps_prolog file may be
+% freely copied and distributed in conjunction with documents created
+% using FrameMaker, FrameBuilder and FrameViewer as long as this 
+% copyright notice is preserved.
+%
+% Frame products normally print colors as their true color on a color printer
+% or as shades of gray, based on luminance, on a black-and white printer. The
+% following flag, if set to True, forces all non-white colors to print as pure
+% black. This has no effect on bitmap images.
+/FMPrintAllColorsAsBlack             false def
+%
+% Frame products can either set their own line screens or use a printer's 
+% default settings. Three flags below control this separately for no 
+% separations, spot separations and process separations. If a flag
+% is true, then the default printer settings will not be changed. If it is
+% false, Frame products will use their own settings from a table based on
+% the printer's resolution.
+/FMUseDefaultNoSeparationScreen      true  def
+/FMUseDefaultSpotSeparationScreen    true  def
+/FMUseDefaultProcessSeparationScreen false def
+%
+% For any given PostScript printer resolution, Frame products have two sets of 
+% screen angles and frequencies for printing process separations, which are 
+% recomended by Adobe. The following variable chooses the higher frequencies
+% when set to true or the lower frequencies when set to false. This is only
+% effective if the appropriate FMUseDefault...SeparationScreen flag is false.
+/FMUseHighFrequencyScreens true def
+%
+% PostScript Level 2 printers contain an "Accurate Screens" feature which can
+% improve process separation rendering at the expense of compute time. This 
+% flag is ignored by PostScript Level 1 printers.
+/FMUseAcccurateScreens true def
+%
+% The following PostScript procedure defines the spot function that Frame
+% products will use for process separations. You may un-comment-out one of
+% the alternative functions below, or use your own.
+%
+% Dot function
+/FMSpotFunction {abs exch abs 2 copy add 1 gt 
+		{1 sub dup mul exch 1 sub dup mul add 1 sub }
+		{dup mul exch dup mul add 1 exch sub }ifelse } def
+%
+% Line function
+% /FMSpotFunction { pop } def
+%
+% Elipse function
+% /FMSpotFunction { dup 5 mul 8 div mul exch dup mul exch add 
+%		sqrt 1 exch sub } def
+%
+%
+/FMversion (4.0) def 
+/FMLevel1 /languagelevel where {pop languagelevel} {1} ifelse 2 lt def
+/FMPColor
+	FMLevel1 {
+		false
+		/colorimage where {pop pop true} if
+	} {
+		true
+	} ifelse
+def
+/FrameDict 400 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in PS 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} bind def
+	} if
+/FMshowpage /showpage load def
+/FMquit /quit load def
+/FMFAILURE { 
+	dup = flush 
+	FMshowpage 
+	/Helvetica findfont 12 scalefont setfont
+	72 200 moveto
+	show FMshowpage 
+	FMquit 
+	} def 
+/FMVERSION {
+	FMversion ne {
+		(Frame product version does not match ps_prolog!) FMFAILURE
+		} if
+	} def 
+/FMBADEPSF { 
+	(PostScript Lang. Ref. Man., 2nd Ed., H.2.4 says EPS must not call X              )
+	dup dup (X) search pop exch pop exch pop length 
+	4 -1 roll 
+	putinterval 
+	FMFAILURE
+	} def
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+/concatprocs
+	{
+	/proc2 exch cvlit def/proc1 exch cvlit def/newproc proc1 length proc2 length add array def
+	newproc 0 proc1 putinterval newproc proc1 length proc2 putinterval newproc cvx
+}def
+FrameDict begin 
+/FMnone 0 def
+/FMcyan 1 def
+/FMmagenta 2 def
+/FMyellow 3 def
+/FMblack 4 def
+/FMcustom 5 def
+/FrameNegative false def 
+/FrameSepIs FMnone def 
+/FrameSepBlack 0 def
+/FrameSepYellow 0 def
+/FrameSepMagenta 0 def
+/FrameSepCyan 0 def
+/FrameSepRed 1 def
+/FrameSepGreen 1 def
+/FrameSepBlue 1 def
+/FrameCurGray 1 def
+/FrameCurPat null def
+/FrameCurColors [ 0 0 0 1 0 0 0 ] def 
+/FrameColorEpsilon .001 def	
+/eqepsilon {		
+	sub dup 0 lt {neg} if
+	FrameColorEpsilon le
+} bind def
+/FrameCmpColorsCMYK { 
+	2 copy 0 get exch 0 get eqepsilon {
+		2 copy 1 get exch 1 get eqepsilon {
+			2 copy 2 get exch 2 get eqepsilon {
+				3 get exch 3 get eqepsilon
+			} {pop pop false} ifelse
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/FrameCmpColorsRGB { 
+	2 copy 4 get exch 0 get eqepsilon {
+		2 copy 5 get exch 1 get eqepsilon {
+			6 get exch 2 get eqepsilon
+		}{pop pop false} ifelse
+	} {pop pop false} ifelse
+} bind def
+/RGBtoCMYK { 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	1 exch sub 
+	3 1 roll 
+	3 copy 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	2 copy 
+	le { pop } { exch pop } ifelse 
+	dup dup dup 
+	6 1 roll 
+	4 1 roll 
+	7 1 roll 
+	sub 
+	6 1 roll 
+	sub 
+	5 1 roll 
+	sub 
+	4 1 roll 
+} bind def
+/CMYKtoRGB { 
+	dup dup 4 -1 roll add 						  
+	5 1 roll 3 -1 roll add 						  
+	4 1 roll add 								  
+	1 exch sub dup 0 lt {pop 0} if 3 1 roll 	  
+	1 exch sub dup 0 lt {pop 0} if exch 	      
+	1 exch sub dup 0 lt {pop 0} if exch	  		  
+} bind def
+/FrameSepInit {
+	1.0 RealSetgray
+} bind def
+/FrameSetSepColor { 
+	/FrameSepBlue exch def
+	/FrameSepGreen exch def
+	/FrameSepRed exch def
+	/FrameSepBlack exch def
+	/FrameSepYellow exch def
+	/FrameSepMagenta exch def
+	/FrameSepCyan exch def
+	/FrameSepIs FMcustom def
+	setCurrentScreen	
+} bind def
+/FrameSetCyan {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 1.0 def
+	/FrameSepIs FMcyan def
+	setCurrentScreen	
+} bind def
+ 
+/FrameSetMagenta {
+	/FrameSepBlue 1.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 1.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMmagenta def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetYellow {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 1.0 def
+	/FrameSepRed 1.0 def
+	/FrameSepBlack 0.0 def
+	/FrameSepYellow 1.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMyellow def
+	setCurrentScreen
+} bind def
+ 
+/FrameSetBlack {
+	/FrameSepBlue 0.0 def
+	/FrameSepGreen 0.0 def
+	/FrameSepRed 0.0 def
+	/FrameSepBlack 1.0 def
+	/FrameSepYellow 0.0 def
+	/FrameSepMagenta 0.0 def
+	/FrameSepCyan 0.0 def
+	/FrameSepIs FMblack def
+	setCurrentScreen
+} bind def
+ 
+/FrameNoSep { 
+	/FrameSepIs FMnone def
+	setCurrentScreen
+} bind def
+/FrameSetSepColors { 
+	FrameDict begin
+	[ exch 1 add 1 roll ]
+	/FrameSepColors  
+	exch def end
+	} bind def
+/FrameColorInSepListCMYK { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsCMYK 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/FrameColorInSepListRGB { 
+	FrameSepColors {  
+       		exch dup 3 -1 roll 
+       		FrameCmpColorsRGB 
+       		{ pop true exit } if
+    	} forall 
+	dup true ne {pop false} if
+	} bind def
+/RealSetgray /setgray load def
+/RealSetrgbcolor /setrgbcolor load def
+/RealSethsbcolor /sethsbcolor load def
+end 
+/setgray { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+		{ RealSetgray } 
+		{ 
+		FrameSepIs FMblack eq 
+			{ RealSetgray } 
+			{ FrameSepIs FMcustom eq 
+			  FrameSepRed 0 eq and
+			  FrameSepGreen 0 eq and
+			  FrameSepBlue 0 eq and {
+			  	RealSetgray
+			  } {
+				1 RealSetgray pop 
+			  } ifelse
+			} ifelse
+		} ifelse
+	end
+} bind def
+/setrgbcolor { 
+	FrameDict begin
+	FrameSepIs FMnone eq
+	{  RealSetrgbcolor }
+	{
+		3 copy [ 4 1 roll ] 
+		FrameColorInSepListRGB
+		{
+				FrameSepBlue eq exch 
+			 	FrameSepGreen eq and exch 
+			 	FrameSepRed eq and
+			 	{ 0 } { 1 } ifelse
+		}
+		{
+			FMPColor {
+				RealSetrgbcolor
+				currentcmykcolor
+			} {
+				RGBtoCMYK
+			} ifelse
+			FrameSepIs FMblack eq
+			{1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		RealSetgray
+	} 
+	ifelse
+	end
+} bind def
+/sethsbcolor {
+	FrameDict begin
+	FrameSepIs FMnone eq 
+	{ RealSethsbcolor } 
+	{
+		RealSethsbcolor 
+		currentrgbcolor  
+		setrgbcolor 
+	} 
+	ifelse
+	end
+} bind def
+FrameDict begin
+/setcmykcolor where {
+	pop /RealSetcmykcolor /setcmykcolor load def
+} {
+	/RealSetcmykcolor {
+		4 1 roll
+		3 { 3 index add 0 max 1 min 1 exch sub 3 1 roll} repeat 
+		setrgbcolor pop
+	} bind def
+} ifelse
+userdict /setcmykcolor { 
+		FrameDict begin
+		FrameSepIs FMnone eq
+		{ RealSetcmykcolor } 
+		{
+			4 copy [ 5 1 roll ]
+			FrameColorInSepListCMYK
+			{
+				FrameSepBlack eq exch 
+				FrameSepYellow eq and exch 
+				FrameSepMagenta eq and exch 
+				FrameSepCyan eq and 
+				{ 0 } { 1 } ifelse
+			}
+			{
+				FrameSepIs FMblack eq
+				{1.0 exch sub 4 1 roll pop pop pop} {
+				FrameSepIs FMyellow eq
+				{pop 1.0 exch sub 3 1 roll pop pop} {
+				FrameSepIs FMmagenta eq
+				{pop pop 1.0 exch sub exch pop } {
+				FrameSepIs FMcyan eq
+				{pop pop pop 1.0 exch sub } 
+				{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+			} ifelse
+			RealSetgray
+		}
+		ifelse
+		end
+	} bind put
+FMLevel1 not { 
+	
+	/patProcDict 5 dict dup begin
+		<0f1e3c78f0e1c387> { 3 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<0f87c3e1f0783c1e> { 3 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+		<8142241818244281> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke
+											-1 -1 moveto 9 9 lineto stroke } bind def
+		<03060c183060c081> { 1 setlinewidth -1 -1 moveto 9 9 lineto stroke 
+											4 -4 moveto 12 4 lineto stroke
+											-4 4 moveto 4 12 lineto stroke} bind def
+		<8040201008040201> { 1 setlinewidth -1 9 moveto 9 -1 lineto stroke 
+											-4 4 moveto 4 -4 lineto stroke
+											4 12 moveto 12 4 lineto stroke} bind def
+	end def
+	/patDict 15 dict dup begin
+		/PatternType 1 def		
+		/PaintType 2 def		
+		/TilingType 3 def		
+		/BBox [ 0 0 8 8 ] def 	
+		/XStep 8 def			
+		/YStep 8 def			
+		/PaintProc {
+			begin
+			patProcDict bstring known {
+				patProcDict bstring get exec
+			} {
+				8 8 true [1 0 0 -1 0 8] bstring imagemask
+			} ifelse
+			end
+		} bind def
+	end def
+} if
+/combineColor {
+    FrameSepIs FMnone eq
+	{
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceCMYK]] setcolorspace
+			FrameCurColors 0 4 getinterval aload pop FrameCurPat setcolor
+		} {
+			FrameCurColors 3 get 1.0 ge {
+				FrameCurGray RealSetgray
+			} {
+				FMPColor graymode and {
+					0 1 3 { 
+						FrameCurColors exch get
+						1 FrameCurGray sub mul
+					} for
+					RealSetcmykcolor
+				} {
+					4 1 6 {
+						FrameCurColors exch get
+						graymode {
+							1 exch sub 1 FrameCurGray sub mul 1 exch sub
+						} {
+							1.0 lt {FrameCurGray} {1} ifelse
+						} ifelse
+					} for
+					RealSetrgbcolor
+				} ifelse
+			} ifelse
+		} ifelse
+	} { 
+		FrameCurColors 0 4 getinterval aload
+		FrameColorInSepListCMYK {
+			FrameSepBlack eq exch 
+			FrameSepYellow eq and exch 
+			FrameSepMagenta eq and exch 
+			FrameSepCyan eq and
+			FrameSepIs FMcustom eq and
+			{ FrameCurGray } { 1 } ifelse
+		} {
+			FrameSepIs FMblack eq
+			{FrameCurGray 1.0 exch sub mul 1.0 exch sub 4 1 roll pop pop pop} {
+			FrameSepIs FMyellow eq
+			{pop FrameCurGray 1.0 exch sub mul 1.0 exch sub 3 1 roll pop pop} {
+			FrameSepIs FMmagenta eq
+			{pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub exch pop } {
+			FrameSepIs FMcyan eq
+			{pop pop pop FrameCurGray 1.0 exch sub mul 1.0 exch sub } 
+			{pop pop pop pop 1} ifelse } ifelse } ifelse } ifelse 
+		} ifelse
+		graymode FMLevel1 or not {
+			
+			[/Pattern [/DeviceGray]] setcolorspace
+			FrameCurPat setcolor
+		} { 
+			graymode not FMLevel1 and {
+				
+				dup 1 lt {pop FrameCurGray} if
+			} if
+			RealSetgray
+		} ifelse
+	} ifelse
+} bind def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+	
+/freq dpi dup 72 div round dup 0 eq {pop 1} if 8 mul div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/dpiranges   [  2540    2400    1693     1270    1200     635      600      0      ] def
+/CMLowFreqs  [ 100.402  94.8683 89.2289 100.402  94.8683  66.9349  63.2456 47.4342 ] def
+/YLowFreqs   [  95.25   90.0    84.65    95.25   90.0     70.5556  66.6667 50.0    ] def
+/KLowFreqs   [  89.8026 84.8528 79.8088  89.8026 84.8528  74.8355  70.7107 53.033  ] def
+/CLowAngles  [  71.5651 71.5651 71.5651 71.5651  71.5651  71.5651  71.5651 71.5651 ] def
+/MLowAngles  [  18.4349 18.4349 18.4349 18.4349  18.4349  18.4349  18.4349 18.4349 ] def
+/YLowTDot    [  true    true    false    true    true     false    false   false   ] def
+/CMHighFreqs [ 133.87  126.491 133.843  108.503 102.523  100.402   94.8683 63.2456 ] def
+/YHighFreqs  [ 127.0   120.0   126.975  115.455 109.091   95.25    90.0    60.0    ] def
+/KHighFreqs  [ 119.737 113.137 119.713  128.289 121.218   89.8026  84.8528 63.6395 ] def
+/CHighAngles [  71.5651 71.5651 71.5651  70.0169 70.0169  71.5651  71.5651 71.5651 ] def
+/MHighAngles [  18.4349 18.4349 18.4349  19.9831 19.9831  18.4349  18.4349 18.4349 ] def
+/YHighTDot   [  false   false   true     false   false    true     true    false   ] def
+/PatFreq     [	10.5833 10.0     9.4055  10.5833 10.0	  10.5833  10.0	   9.375   ] def
+/screenIndex {
+	0 1 dpiranges length 1 sub { dup dpiranges exch get 1 sub dpi le {exit} {pop} ifelse } for
+} bind def
+/getCyanScreen {
+	FMUseHighFrequencyScreens { CHighAngles CMHighFreqs} {CLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getMagentaScreen {
+	FMUseHighFrequencyScreens { MHighAngles CMHighFreqs } {MLowAngles CMLowFreqs} ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get /FMSpotFunction load
+} bind def
+/getYellowScreen {
+	FMUseHighFrequencyScreens { YHighTDot YHighFreqs} { YLowTDot YLowFreqs } ifelse
+		screenIndex dup 3 1 roll get 3 1 roll get { 3 div
+			{2 { 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch} repeat
+			FMSpotFunction } } {/FMSpotFunction load } ifelse
+			0.0 exch
+} bind def
+/getBlackScreen  {
+	FMUseHighFrequencyScreens { KHighFreqs } { KLowFreqs } ifelse
+		screenIndex get 45.0 /FMSpotFunction load 
+} bind def
+/getSpotScreen {
+	getBlackScreen
+} bind def
+/getCompositeScreen {
+	getBlackScreen
+} bind def
+/FMSetScreen 
+	FMLevel1 { /setscreen load 
+	}{ {
+		8 dict begin
+		/HalftoneType 1 def
+		/SpotFunction exch def
+		/Angle exch def
+		/Frequency exch def
+		/AccurateScreens FMUseAcccurateScreens def
+		currentdict end sethalftone
+	} bind } ifelse
+def
+/setDefaultScreen {
+	FMPColor {
+		orgrxfer cvx orggxfer cvx orgbxfer cvx orgxfer cvx setcolortransfer
+	}
+	{
+		orgxfer cvx settransfer
+	} ifelse
+	orgfreq organgle orgproc cvx setscreen
+} bind def
+/setCurrentScreen {
+	FrameSepIs FMnone eq {
+		FMUseDefaultNoSeparationScreen {
+			setDefaultScreen
+		} {
+			getCompositeScreen FMSetScreen
+		} ifelse
+	} {
+		FrameSepIs FMcustom eq {
+			FMUseDefaultSpotSeparationScreen {
+				setDefaultScreen
+			} {
+				getSpotScreen FMSetScreen
+			} ifelse
+		} {
+			FMUseDefaultProcessSeparationScreen {
+				setDefaultScreen
+			} {
+				FrameSepIs FMcyan eq {
+					getCyanScreen FMSetScreen
+				} {
+					FrameSepIs FMmagenta eq {
+						getMagentaScreen FMSetScreen
+					} {
+						FrameSepIs FMyellow eq {
+							getYellowScreen FMSetScreen
+						} {
+							getBlackScreen FMSetScreen
+						} ifelse
+					} ifelse
+				} ifelse
+			} ifelse
+		} ifelse
+	} ifelse 
+} bind def
+end
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgrxfer FMLOCAL
+	/orggxfer FMLOCAL
+	/orgbxfer FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/orgrproc FMLOCAL
+	/orggproc FMLOCAL
+	/orgbproc FMLOCAL
+	/organgle FMLOCAL
+	/orgrangle FMLOCAL
+	/orggangle FMLOCAL
+	/orgbangle FMLOCAL
+	/orgfreq FMLOCAL
+	/orgrfreq FMLOCAL
+	/orggfreq FMLOCAL
+	/orgbfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/edown FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne /manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	0 ne /FrameNegative exch def 
+	0 ne /edown exch def 
+	/yscale exch def
+	/xscale exch def
+	FMLevel1 {
+		manualfeed {setmanualfeed} if
+		/FMdicttop countdictstack 1 add def 
+		/FMoptop count def 
+		setpapername 
+		manualfeed {true} {papersize} ifelse 
+		{manualpapersize} {false} ifelse 
+		{desperatepapersize} {false} ifelse 
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		count -1 FMoptop {pop pop} for
+		countdictstack -1 FMdicttop {pop end} for 
+		}
+		{{1 dict dup /PageSize [paperwidth paperheight]put setpagedevice}stopped
+		{ (Can't select requested paper size for Frame print job!) FMFAILURE } if
+		 {1 dict dup /ManualFeed manualfeed put setpagedevice } stopped pop }
+	ifelse 
+	
+	FMPColor {
+		currentcolorscreen
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+			cvlit /orgbproc exch def
+				  /orgbangle exch def 
+				  /orgbfreq exch def
+			cvlit /orggproc exch def
+				  /orggangle exch def 
+				  /orggfreq exch def
+			cvlit /orgrproc exch def
+				  /orgrangle exch def 
+				  /orgrfreq exch def
+			currentcolortransfer 
+			FrameNegative {
+				1 1 4 { 
+					pop { 1 exch sub } concatprocs 4 1 roll
+				} for
+				4 copy
+				setcolortransfer
+			} if
+			cvlit /orgxfer exch def
+			cvlit /orgbxfer exch def
+			cvlit /orggxfer exch def
+			cvlit /orgrxfer exch def
+	} {
+		currentscreen 
+			cvlit /orgproc exch def
+				  /organgle exch def 
+				  /orgfreq exch def
+				  
+		currenttransfer 
+		FrameNegative {
+			{ 1 exch sub } concatprocs
+			dup settransfer
+		} if 
+		cvlit /orgxfer exch def
+	} ifelse
+	end 
+} def 
+/pagesave FMLOCAL
+/orgmatrix FMLOCAL
+/landscape FMLOCAL
+/pwid FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch dup /pwid exch def neg translate pop 
+	}{
+		pop /pwid exch def
+	} ifelse
+	edown { [-1 0 0 1 pwid 0] concat } if
+	0 0 moveto paperwidth 0 lineto paperwidth paperheight lineto 
+	0 paperheight lineto 0 0 lineto 1 setgray fill
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin dup
+	array /fillvals exch def
+	dict /patCache exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+% See Adobe's "PostScript Language Reference Manual, 2nd Edition", page 714.
+% "...the following operators MUST NOT be used in an EPS file:" (emphasis ours)
+	/banddevice {(banddevice) FMBADEPSF} def
+	/clear {(clear) FMBADEPSF} def
+	/cleardictstack {(cleardictstack) FMBADEPSF} def 
+	/copypage {(copypage) FMBADEPSF} def
+	/erasepage {(erasepage) FMBADEPSF} def
+	/exitserver {(exitserver) FMBADEPSF} def
+	/framedevice {(framedevice) FMBADEPSF} def
+	/grestoreall {(grestoreall) FMBADEPSF} def
+	/initclip {(initclip) FMBADEPSF} def
+	/initgraphics {(initgraphics) FMBADEPSF} def
+	/initmatrix {(initmatrix) FMBADEPSF} def
+	/quit {(quit) FMBADEPSF} def
+	/renderbands {(renderbands) FMBADEPSF} def
+	/setglobal {(setglobal) FMBADEPSF} def
+	/setpagedevice {(setpagedevice) FMBADEPSF} def
+	/setshared {(setshared) FMBADEPSF} def
+	/startjob {(startjob) FMBADEPSF} def
+	/lettertray {(lettertray) FMBADEPSF} def
+	/letter {(letter) FMBADEPSF} def
+	/lettersmall {(lettersmall) FMBADEPSF} def
+	/11x17tray {(11x17tray) FMBADEPSF} def
+	/11x17 {(11x17) FMBADEPSF} def
+	/ledgertray {(ledgertray) FMBADEPSF} def
+	/ledger {(ledger) FMBADEPSF} def
+	/legaltray {(legaltray) FMBADEPSF} def
+	/legal {(legal) FMBADEPSF} def
+	/statementtray {(statementtray) FMBADEPSF} def
+	/statement {(statement) FMBADEPSF} def
+	/executivetray {(executivetray) FMBADEPSF} def
+	/executive {(executive) FMBADEPSF} def
+	/a3tray {(a3tray) FMBADEPSF} def
+	/a3 {(a3) FMBADEPSF} def
+	/a4tray {(a4tray) FMBADEPSF} def
+	/a4 {(a4) FMBADEPSF} def
+	/a4small {(a4small) FMBADEPSF} def
+	/b4tray {(b4tray) FMBADEPSF} def
+	/b4 {(b4) FMBADEPSF} def
+	/b5tray {(b5tray) FMBADEPSF} def
+	/b5 {(b5) FMBADEPSF} def
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fw 2 div add fy fh 2 div add  translate
+	rotate
+	fw 2 div neg fh 2 div neg translate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count def 
+	} bind def
+/FMENDEPSF {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} bind def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} bind def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} bind def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	statusdict begin stopped end 
+	} bind def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} bind def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped 
+		end
+		} {true} ifelse 
+	} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+FMPColor 
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	}
+ifelse
+/K { 
+	FMPrintAllColorsAsBlack {
+		dup 1 eq 2 index 1 eq and 3 index 1 eq and not
+			{7 {pop} repeat 0 0 0 1 0 0 0} if
+	} if 
+	FrameCurColors astore 
+	pop combineColor
+} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setPatternMode {
+	FMLevel1 {
+		/bwidth  exch def
+		/bpside  exch def
+		/bstring exch def
+		/onbits 0 def  /offbits 0 def
+		freq sangle landscape {90 add} if 
+			{/y exch def
+			 /x exch def
+			 /xindex x 1 add 2 div bpside mul cvi def
+			 /yindex y 1 add 2 div bpside mul cvi def
+			 bstring yindex bwidth mul xindex 8 idiv add get
+			 1 7 xindex 8 mod sub bitshift and 0 ne FrameNegative {not} if
+			 {/onbits  onbits  1 add def 1}
+			 {/offbits offbits 1 add def 0}
+			 ifelse
+			}
+			setscreen
+		offbits offbits onbits add div FrameNegative {1.0 exch sub} if
+		/FrameCurGray exch def
+	} { 
+		pop pop
+		dup patCache exch known {
+			patCache exch get
+		} { 
+			dup
+			patDict /bstring 3 -1 roll put
+			patDict 
+			9 PatFreq screenIndex get div dup matrix scale
+			makepattern
+			dup 
+			patCache 4 -1 roll 3 -1 roll put
+		} ifelse
+		/FrameCurGray 0 def
+		/FrameCurPat exch def
+	} ifelse
+	/graymode false def
+	combineColor
+} bind def
+/setGrayScaleMode {
+	graymode not {
+		/graymode true def
+		FMLevel1 {
+			setCurrentScreen
+		} if
+	} if
+	/FrameCurGray exch def
+	combineColor
+} bind def
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	
+/PFill {
+	graymode FMLevel1 or not {
+		gsave 1 setgray eofill grestore
+	} if
+} bind def
+/PStroke {
+	graymode FMLevel1 or not {
+		gsave 1 setgray stroke grestore
+	} if
+	stroke
+} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setPatternMode} 
+	{setGrayScaleMode}
+	ifelse
+	} bind def
+/V { 
+	PFill gsave eofill grestore
+	} bind def
+/Vclip {
+	clip
+	} bind def
+/Vstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/N { 
+	PStroke
+	} bind def
+/Nclip {
+	strokepath clip newpath
+	} bind def
+/Nstrk {
+	currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+	/rad FMLOCAL
+/rarc 
+	{rad 
+	 arcto
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	mark
+	newpath
+	{
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rarc
+	x2 y2 x2 y1 rarc
+	x2 y1 x1 y1 rarc
+	x1 y1 x1 y2 rarc
+	closepath
+	} stopped {x1 y1 x2 y2 R} if 
+	cleartomark
+	} bind def
+/RRR { 
+	/rad exch def
+	normalize /y4 exch def /x4 exch def
+	normalize /y3 exch def /x3 exch def
+	normalize /y2 exch def /x2 exch def
+	normalize /y1 exch def /x1 exch def
+	newpath
+	normalize moveto 
+	mark
+	{
+	x2 y2 x3 y3 rarc
+	x3 y3 x4 y4 rarc
+	x4 y4 x1 y1 rarc
+	x1 y1 x2 y2 rarc
+	closepath
+	} stopped
+	 {x1 y1 x2 y2 x3 y3 x4 y4 newpath moveto lineto lineto lineto closepath} if
+	cleartomark
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	setCurrentScreen
+} bind def
+/CP { 
+	grestore
+	gsave
+	Y 
+	clip
+	setCurrentScreen
+} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	PFill fill
+	grestore
+	} bind def
+/Gstrk {
+	savematrix
+    newpath
+    2 index 2 div add exch 3 index 2 div sub exch 
+    normalize 2 index 2 div sub exch 3 index 2 div add exch 
+    translate
+    scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+    } bind def
+/Gclip { 
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	clip newpath
+	restorematrix
+	} bind def
+/GG { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	rotate 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath
+	PFill
+	fill
+	grestore
+	} bind def
+/GGclip { 
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	clip newpath
+	restorematrix
+	} bind def
+/GGstrk { 
+	savematrix
+    newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath 
+	restorematrix
+    currentlinewidth exch setlinewidth PStroke setlinewidth
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/Aclip {
+	newpath
+	savematrix
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath 
+	strokepath clip newpath
+	restorematrix
+} bind def
+/Astrk {
+	Gstrk
+} bind def
+/AA { 
+	gsave
+	savematrix
+	newpath
+	
+	3 index 2 div add exch 4 index 2 div sub exch 
+	
+	normalize 3 index 2 div sub exch 4 index 2 div add exch
+	translate 
+	rotate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	PStroke
+	grestore
+	} bind def
+/AAclip {
+	savematrix
+	newpath
+    normalize translate 0.0 0.0 moveto 
+    rotate 
+    dnormalize scale 
+    0.0 0.0 1.0 5 3 roll arc 
+    closepath
+	strokepath clip newpath
+	restorematrix
+} bind def
+/AAstrk {
+	GGstrk
+} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 7 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/rip { 
+	   
+	  
+	  bis ris copy pop 
+      is
+      0
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop 
+	  ris gis copy pop 
+	  dup is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+	  pop pop
+	  gis bis copy pop 
+	  dup add is exch 
+	  
+      cf cs readline pop 
+      {       ic exch get exec 
+              add 
+              } forall 
+      pop 
+      
+      } bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+      dup dup
+      24 eq { pop pop 3 mul }
+      { 8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse } ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+		 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+FMLevel1 {
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+%		/u 0 def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+}
+{
+/colorSetup2 {
+	[ /Indexed /DeviceRGB 255 
+		{dup red exch get 255 div 
+		 exch dup green exch get 255 div 
+		 exch blue exch get 255 div}
+	] setcolorspace
+} bind def
+} ifelse
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch concatprocs settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/bitmapsave save def
+	FMLevel1 {	
+		colorsetup
+		/is w d wbytes string def
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	} {
+		colorSetup2
+		/is w d wbytes string def
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {cf is readhexstring pop} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	FMLevel1 {	
+		colorsetup
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		w h d [w 0 0 h neg 0 h] 
+		{ip} {is} {is} true 3 colorimage
+	} {
+		colorSetup2
+		/is im 0 lb getinterval def 
+		ws 0 lb getinterval is copy pop 
+		/cf currentfile def 
+		7 dict dup begin
+			/ImageType 1 def
+			/Width w def
+			/Height h def
+			/ImageMatrix [w 0 0 h neg 0 h] def
+			/DataSource {ip} bind def
+			/BitsPerComponent d def
+			/Decode [0 255] def
+		end image	
+	} ifelse
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+	/d 24 def
+        gsave
+ 	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris} {gis} {bis} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+	/d 24 def
+        gsave
+	
+	3 index 2 div add exch	
+	4 index 2 div add exch	
+	translate		
+	rotate			
+	1 index 2 div neg	
+	1 index 2 div neg	
+	translate		
+	scale			
+	/h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+        /bitmapsave save def 
+        
+	/is im 0 lb getinterval def	
+	/ris im 0 w getinterval def	
+	/gis im w w getinterval def	
+	/bis im w 2 mul w getinterval def 
+        ws 0 lb getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {w rip pop ris gis bis w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+		
+		3 index 2 div add exch	
+		4 index 2 div add exch	
+		translate		
+		rotate			
+		1 index 2 div neg	
+		1 index 2 div neg	
+		translate		
+		scale			
+		/h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+/I { setdash } bind def
+/J { [] 0 setdash } bind def
+%%EndProlog
+%%BeginSetup
+(4.0) FMVERSION
+1 1 0 0 612 792 0 1 14 FMDOCUMENT
+0 0 /Helvetica-Bold FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Times-Italic FMFONTDEFINE
+3 0 /Times-Roman FMFONTDEFINE
+4 0 /Courier-Bold FMFONTDEFINE
+5 0 /Helvetica FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 0.1 FMFILL
+2 0.3 FMFILL
+3 0.5 FMFILL
+4 0.7 FMFILL
+5 0.9 FMFILL
+6 0.97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 0.9 FMFILL
+18 0.7 FMFILL
+19 0.5 FMFILL
+20 0.3 FMFILL
+21 0.1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "1" 1
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+J
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 750.68 198 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 9 Q
+(June 6, 1995) 72 737.28 T
+72 444.68 558 444.68 2 L
+2 Z
+N
+72 75.33 558 75.33 2 L
+N
+1 12 Q
+(1) 552 59.86 T
+2 36 Q
+-1.33 (U) 207 659 S
+2 24 Q
+-0.88 (sing Gopher with the) 231.66 659 S
+-0.88 (W) 207 629 S
+-0.88 (orld-W) 223.9 629 S
+-0.88 (ide-W) 285.27 629 S
+-0.88 (eb) 335.96 629 S
+0 12 Q
+(Paul Lindner) 207 577 T
+(lindner@boombox.micro.umn.edu) 207 561 T
+(GopherCon 95) 207 545 T
+1 10 Q
+(Hypertext Markup Language \050HTML\051 is) 207 423.32 T
+(now a common document format viewable) 207 411.32 T
+(with a W) 207 399.32 T
+(orld W) 245.34 399.32 T
+(ide W) 275.44 399.32 T
+(eb \050WWW\051 Br) 300.17 399.32 T
+(owser) 362.76 399.32 T
+(.) 386.83 399.32 T
+(Gopher hierar) 207 387.32 T
+(chies ar) 268.76 387.32 T
+(e fast to navigate and) 301.63 387.32 T
+(let you associate abstracts, alternate views,) 207 375.32 T
+-0.4 (and other meta information with any type of) 207 363.32 P
+(document. This paper looks at combining) 207 351.32 T
+(the str) 207 339.32 T
+(engths of Gopher and WWW to) 234.31 339.32 T
+-0.17 (cr) 207 327.32 P
+-0.17 (eate a better) 215.7 327.32 P
+-0.17 (, mor) 267.18 327.32 P
+-0.17 (e integrated information) 289.6 327.32 P
+-0.02 (system. W) 207 315.32 P
+-0.02 (e\325ll look at how to publish HTML) 250.31 315.32 P
+(documents fr) 207 303.32 T
+(om Gopher servers, point) 263.2 303.32 T
+(Gopher links at documents on WWW) 207 291.32 T
+(servers, and customize the appearance of) 207 279.32 T
+(your Gopher server using HTML.) 207 267.32 T
+FMENDPAGE
+%%EndPage: "1" 1
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 750.68 540 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Introduction) 189 737 T
+54 75.33 540 75.33 2 L
+2 Z
+N
+1 12 Q
+(2) 54 59.86 T
+2 10 Q
+(Using Gopher with the W) 189 59.86 T
+(orld-W) 290.3 59.86 T
+(ide-W) 318.08 59.86 T
+(eb) 341.04 59.86 T
+54 672.98 540 675.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+189 675.13 540 675.13 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+2 14 Q
+0 X
+0 0 0 1 0 0 0 K
+(Intr) 189 680.64 T
+(oduction) 209.48 680.64 T
+3 10 Q
+(In the past year we\325ve seen an explosive growth in the number of W) 189 656.31 T
+(orld W) 461.19 656.31 T
+(ide W) 488.84 656.31 T
+(eb) 512.2 656.31 T
+(\050WWW\051 software clients that use the HyperT) 189 644.31 T
+(ext Markup Language \050HTML\051.) 370.47 644.31 T
+-0.43 (Most of these WWW client programs have rudimentary Gopher support. However) 189 620.31 P
+-0.43 (, most) 513.92 620.31 P
+(of these clients do not support the Gopher+ protocol. T) 189 608.31 T
+(o remedy this the University of) 408.36 608.31 T
+(Minnesota Gopher T) 189 596.31 T
+(eam made many modi\336cations to the Unix Gopher server to sup-) 271.62 596.31 T
+(port direct HTML and HyperT) 189 584.31 T
+(ext T) 311.05 584.31 T
+(ransport Protocol \050HTTP\051 access. Many of these) 331.53 584.31 T
+(modi\336cations were re\336ned over time with the help of the Internet community) 189 569.64 T
+(.) 497.48 569.64 T
+3 8 Q
+(1) 499.98 573.64 T
+3 10 Q
+(The modi\336cations fall into three broad areas:) 189 545.64 T
+4 F
+(\245) 189 527.64 T
+3 F
+(Storage of HTML Documents.) 202.74 527.64 T
+4 F
+(\245) 189 512.64 T
+3 F
+(Internal Changes to support Uniform Resource Locators.) 202.74 512.64 T
+4 F
+(\245) 189 497.64 T
+3 F
+(Automatic HTML generation for Gopher Directories) 202.74 497.64 T
+54 441.31 540 444.31 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+189 443.46 540 443.46 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+2 14 Q
+0 X
+0 0 0 1 0 0 0 K
+(The W) 189 448.98 T
+(orld W) 223.87 448.98 T
+(ide W) 261.6 448.98 T
+(eb) 292.59 448.98 T
+3 10 Q
+(A review of the basic syntax and terms used in the W) 189 420.64 T
+(orld W) 401.77 420.64 T
+(ide W) 429.42 420.64 T
+(eb \050WWW\051 will be) 452.78 420.64 T
+(helpful in understanding the changes to the Gopher software. The three de\336nitions that) 189 408.64 T
+(you must know about are URLs, HTML, and HTTP) 189 396.64 T
+(.) 395.65 396.64 T
+0 9 Q
+(2.1 Uniform Resource) 54 367.31 T
+(Locators) 54 356.31 T
+3 10 Q
+(The \322Uniform Resource Locator\323 \050URL\051 was \336rst used by WWW software to describe) 189 367.31 T
+(the servers it could connect to in a uniform way) 189 355.31 T
+(. It has since become popular outside) 379.15 355.31 T
+(WWW software as a simple, standard way to locate resources. URLs are now internet) 189 343.31 T
+(standards. The Internet Engineering T) 189 331.31 T
+(ask Force \050IETF\051 has codi\336ed the URL standard) 340.21 331.31 T
+(in RFC 1630.) 189 319.31 T
+(A Gopher item can be represented in URL form as) 189 295.31 T
+5 9 Q
+(gopher://<host>:<port>/<type><path>) 207 276.98 T
+3 10 Q
+(If the port is the gopher default of 70, the URL can optionally be shortened to:) 189 253.31 T
+5 9 Q
+(gopher://<host>/<type><path>) 207 234.98 T
+3 10 Q
+-0.22 (The \322root level\323 of a gopher server has always been de\336ned as a menu of type 1 with no) 189 211.31 P
+(path required, and it can be represented as:) 189 199.31 T
+5 9 Q
+(gopher://<host>:<port>/ \050or without the :<port> if the port is 70\051) 207 180.98 T
+54 114.29 540 134.29 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+189 122.29 321 122.29 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+3 9 Q
+0 X
+0 0 0 1 0 0 0 K
+(1.) 189 108.29 T
+(W) 201 108.29 T
+(e\325d especially like to thank Alan Coopersmith for spearheading a number of these modi\336ca-) 208.78 108.29 T
+(tions and providing some of the text of this document.) 201 97.29 T
+FMENDPAGE
+%%EndPage: "2" 2
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 750.68 558 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(The W) 207 737 T
+(orld W) 230.86 737 T
+(ide W) 255.67 737 T
+(eb) 276.86 737 T
+72 75.33 558 75.33 2 L
+2 Z
+N
+2 10 Q
+(Using Gopher with the W) 207 59.86 T
+(orld-W) 308.3 59.86 T
+(ide-W) 336.08 59.86 T
+(eb) 359.04 59.86 T
+1 12 Q
+(3) 552 59.86 T
+3 10 Q
+(The popular Unix gopher server software from the University of Minnesota uses path) 207 683.31 T
+-0.37 (strings with the type as the \336rst character) 207 671.31 P
+-0.37 (, which results in a URL that looks like the type) 368.17 671.31 P
+(character has been doubled.) 207 659.31 T
+-0.15 (In order to make URL) 207 635.31 P
+-0.15 (\325) 294.33 635.31 P
+-0.15 (s more transportable, spaces and other special characters in paths) 297.11 635.31 P
+(are \322escaped\323 into the form \322%XX\323, where XX is the hexadecimal ASCII/ISO-8859-1) 207 623.31 T
+(character code. For more details, see the URL de\336nitions on the W) 207 611.31 T
+(eb at) 473.65 611.31 T
+5 9 Q
+(http://www) 225 592.98 T
+(.w3.org/hypertext/WWW/Addressing/Addressing.html) 266.52 592.98 T
+3 10 Q
+( or in Internet RFC 1630.) 207 569.31 T
+0 9 Q
+(HyperT) 72 539.98 T
+(ext Markup Language) 102.34 539.98 T
+3 10 Q
+(HyperT) 207 539.98 T
+(ext Markup Language \050HTML\051 is a data format used to create hypertext docu-) 237.4 539.98 T
+-0.22 (ments that are portable from one platform to another) 207 527.98 P
+-0.22 (. HTML documents are SGML doc-) 414.67 527.98 P
+(uments with general semantics that are appropriate for representing information from a) 207 515.98 T
+(wide variety of domains.) 207 503.98 T
+(Here\325) 207 479.98 T
+(s an example HTML \336le:) 229.21 479.98 T
+72 439.64 558 452.64 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+214.74 449.64 558 449.64 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 1.) 220.74 455.98 T
+1 10 Q
+(Sample HTML File) 263.86 455.98 T
+3 F
+(HTML document can be written by hand, or generated automatically using a variety of) 207 265.33 T
+(utility programs.) 207 253.33 T
+0 9 Q
+(HyperT) 72 224 T
+(ext T) 102.34 224 T
+(ransfer Protocol) 122.85 224 T
+3 10 Q
+(The HyperT) 207 224 T
+(ext T) 255.45 224 T
+(ransfer Protocol \050HTTP\051 is the method whereby most WWW clients) 275.93 224 T
+(move information from servers. HTTP uses many of the same concepts as the Gopher) 207 212 T
+(Protocol. Both of them use TCP-IP streams to transmit data, both have a command-) 207 200 T
+(response method of operation.) 207 188 T
+-0.02 (There are currently two \337avors of HTTP being used actively) 207 164 P
+-0.02 (, HTTP/0.9 and HTTP/1.0.) 448.07 164 P
+(HTTP/0.9 is slowly being phased out. They are mostly upward compatible however) 207 152 T
+(.) 541.69 152 T
+72 89.29 558 689.98 C
+216 288 558 439.64 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+216 286.64 558 439.64 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+(<HTML>) 234 433.64 T
+(<HEAD>) 234 419.64 T
+(<LINK rev=made href=\323mailto:gopher@boombox.micro.umn.edu\323>) 234 405.64 T
+(</HEAD>) 234 391.64 T
+(<BODY>) 234 377.64 T
+( <H1>My Home Page</H1>) 234 363.64 T
+( <P> Click <A HREF=http://www) 234 349.64 T
+(.w3.org/>Here</A> for more information.) 362.55 349.64 T
+( </BODY> </HTML>) 234 335.64 T
+72 89.29 558 689.98 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "3" 3
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 750.68 540 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Adding HTML documents to your Server) 189 737 T
+(.) 341.91 737 T
+54 75.33 540 75.33 2 L
+2 Z
+N
+1 12 Q
+(4) 54 59.86 T
+2 10 Q
+(Using Gopher with the W) 189 59.86 T
+(orld-W) 290.3 59.86 T
+(ide-W) 318.08 59.86 T
+(eb) 341.04 59.86 T
+54 672.98 540 675.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+189 675.13 540 675.13 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+2 14 Q
+0 X
+0 0 0 1 0 0 0 K
+(Adding HTML documents to your Server) 189 680.64 T
+(.) 415.7 680.64 T
+0 9 Q
+(Simple HTML Files) 54 646.98 T
+3 10 Q
+-0 (Adding HTML documents is as simple as copying them to your server) 189 646.98 P
+-0 (\325) 471.23 646.98 P
+-0 (s data directory) 474.02 646.98 P
+-0 (.) 535.01 646.98 P
+(Y) 189 634.98 T
+(ou just need to make sure that the document ends with the \336le extension) 195.22 634.98 T
+2 F
+(.html) 485.75 634.98 T
+3 F
+(.) 506.03 634.98 T
+-0.14 (For example, if you had an HTML document in the \336le) 189 610.98 P
+2 F
+-0.14 (moo.html) 410.73 610.98 P
+3 F
+-0.14 ( you could give access) 448.23 610.98 P
+(to this \336le by copying it to the Gopher Server) 189 598.98 T
+(\325) 370.75 598.98 T
+(s data directory) 373.53 598.98 T
+(.) 434.53 598.98 T
+(Gopher clients will see this as a HTML document. Gopher clients cannot view these) 189 574.98 T
+-0.32 (\336les directly) 189 562.98 P
+-0.32 (, they must spawn a separate viewer) 237.75 562.98 P
+-0.32 (. However) 379.41 562.98 P
+-0.32 (, W) 420.34 562.98 P
+-0.32 (orld W) 433.66 562.98 P
+-0.32 (ide W) 460.99 562.98 P
+-0.32 (eb clients can) 484.03 562.98 P
+(directly view these \336les.) 189 550.98 T
+0 9 Q
+(Using Multiple V) 54 497.64 T
+(iews) 123.85 497.64 T
+3 10 Q
+(The Unix Gopher+ server supports the concept of multiple representations of a docu-) 189 497.64 T
+-0.08 (ment. W) 189 485.64 P
+-0.08 (e call this concept \324multiple views\325 of the same document. Thus we could have) 222.56 485.64 P
+(a picture available in a number of dif) 189 473.64 T
+(ferent graphics formats.) 336.84 473.64 T
+-0.32 (W) 189 449.64 P
+-0.32 (e can use this feature for HTML documents as well. Since most Gopher clients cannot) 197.64 449.64 P
+(interpret HTML we can make a text version of our HTML documents available by add-) 189 437.64 T
+(ing another \336le to our server) 189 425.64 T
+(.) 302.04 425.64 T
+-0.22 (T) 189 401.64 P
+-0.22 (o make this text version available we create a \336le without the HTML extension. In this) 194.41 401.64 P
+(\336le we put the simple text version. For instance, the HTML in \336gure 1 above could be) 189 389.64 T
+(represented as:) 189 377.64 T
+5 9 Q
+(          MY HOME P) 207 359.31 T
+(AGE) 282.86 359.31 T
+(Click Here for more information.) 207 327.31 T
+(Comments? Send Email to gopher@boombox.micro.umn.edu) 207 313.31 T
+3 10 Q
+( Note that the text version will lose the ability to connect to the hyperlinks in your) 189 289.64 T
+(HTML document.) 189 277.64 T
+-0.3 (W) 189 253.64 P
+-0.3 (e did this conversion by hand. What if we had a lot of lar) 197.64 253.64 P
+-0.3 (ge documents that we needed) 421.26 253.64 P
+(to convert? W) 189 241.64 T
+(e don\325) 244.85 241.64 T
+(t want to do this by hand, that\325) 269.94 241.64 T
+(s much too tedious. Instead we can) 391.61 241.64 T
+(use the) 189 229.64 T
+2 F
+(lynx) 219.55 229.64 T
+3 F
+( WWW browser software to automatically convert our HTML \336les to text.) 236.21 229.64 T
+(Y) 189 217.64 T
+(ou can get lynx by accessing the following URL:) 195.22 217.64 T
+5 9 Q
+(<URL:) 207 199.31 T
+(ftp://ftp2.cc.ukans.edu/pub/lynx>) 232.76 199.31 T
+3 10 Q
+(Here\325) 189 175.64 T
+(s an example of using lynx to convert an HTML \336le to text:) 211.21 175.64 T
+5 9 Q
+(lynx -dump moo.html >moo) 207 157.31 T
+3 10 Q
+-0.33 (If you expect your HTML \336le to change often you can make the \324moo\325 \336le a shell script.) 189 133.64 P
+(The following \336gure provides an example of using a shell script to automatically con-) 189 121.64 T
+(vert HTML to text:) 189 109.64 T
+FMENDPAGE
+%%EndPage: "4" 4
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 750.68 558 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Adding HTML documents to your Server) 207 737 T
+(.) 359.91 737 T
+72 75.33 558 75.33 2 L
+2 Z
+N
+2 10 Q
+(Using Gopher with the W) 207 59.86 T
+(orld-W) 308.3 59.86 T
+(ide-W) 336.08 59.86 T
+(eb) 359.04 59.86 T
+1 12 Q
+(5) 552 59.86 T
+72 666.98 558 679.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+214.74 676.98 558 676.98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 2.) 220.74 683.31 T
+1 10 Q
+(moo shell script) 263.86 683.31 T
+3 F
+(When the client user selects the moo \336le as text the shell script \324moo\325 is executed. This) 207 607.33 T
+(automatically converts the HTML \336le to text.) 207 595.33 T
+-0.13 (Note that you can do this in reverse. Y) 207 571.33 P
+-0.13 (ou could write your own shell script that automat-) 359.08 571.33 P
+(ically converted text \336les into HTML.) 207 559.33 T
+0 9 Q
+(Linking to Remote HTML) 72 530 T
+(documents and other URL) 72 519 T
+(\325) 184.01 519 T
+(s) 186.18 519 T
+3 10 Q
+(Now that we\325ve put HTML documents on our server we might want to link to remote) 207 530 T
+(servers. This is easy enough for Gopher servers, we can use the standard link mecha-) 207 518 T
+(nism.) 207 506 T
+(HTTP servers on the other hand, are a dif) 207 482 T
+(ferent beast. There is currently no of) 372.61 482 T
+(\336cially) 518.22 482 T
+-0.36 (de\336ned way to create a Gopher or Gopher+ link pointing at a HTTP server) 207 470 P
+-0.36 (. However) 500.34 470 P
+-0.36 (, by) 541.23 470 P
+(what seems to be a fortunate accident, the HTTP 1.0 protocol and the Gopher protocol) 207 458 T
+-0.39 (are very similar) 207 446 P
+-0.39 (. In fact, most Gopher clients can be faked into thinking they\325re speaking) 268.43 446 P
+(gopher0 when they connect to an HTTP 1.0 server) 207 434 T
+(. The primary dif) 408.35 434 T
+(ference is that a) 476.49 434 T
+(Gopher request consists of just the path, while HTTP requests are of the form \322GET /) 207 422 T
+(path\323. Y) 207 410 T
+(ou can use this similarity to create gopher links that look like the following \336g-) 239.88 410 T
+(ure:) 207 398 T
+72 357.67 558 370.67 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+214.74 367.67 558 367.67 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 3.) 220.74 374 T
+1 10 Q
+(Sample Link to a HTTP Server) 263.86 374 T
+3 F
+( which fool clients into retrieving the \336le normally known by the URL) 207 253.02 T
+5 9 Q
+(http://www) 225 234.69 T
+(.foo.net/\336le.txt) 266.52 234.69 T
+3 10 Q
+(One problem with trying to fool clients like this is that HTTP and Gopher have both) 207 211.02 T
+(been upgraded, and the resultant HTTP/1.0 and Gopher+ protocols are not similar) 207 199.02 T
+(enough for this trick to work. Fortunately) 207 187.02 T
+(, most HTTP servers still support the old pro-) 372.17 187.02 T
+(tocol, so this method still has some life left in it. \050And in fact, there are those who) 207 175.02 T
+(believe this method should become the of) 207 163.02 T
+(\336cially de\336ned way to link gopher to http.\051) 373.47 163.02 T
+-0.05 (Older versions of the gopherd 2.0x server can use the \322GET /\323 trick described earlier to) 207 139.02 P
+(make links http servers from their menus. W) 207 127.02 T
+(ith newer versions however) 384.91 127.02 T
+(, the following) 494.76 127.02 T
+(link format is preferred:) 207 115.02 T
+72 89.29 558 689.98 C
+216 630 558 666.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+216 594.98 558 666.98 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+(#!/bin/sh) 234 660.98 T
+(/usr/local/bin/lynx -dump ${xxxx}.html) 234 646.98 T
+72 89.29 558 689.98 C
+0 0 612 792 C
+72 89.29 558 689.98 C
+216 275.69 558 357.67 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+216 276.67 558 357.67 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+(Name=My Home Page) 234 351.67 T
+(T) 234 337.67 T
+(ype=h) 239 337.67 T
+(Path=GET /myhomepage.html) 234 323.67 T
+(Host=www) 234 309.67 T
+(.foo.org) 276.76 309.67 T
+(Port=80) 234 295.67 T
+72 89.29 558 689.98 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "5" 5
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 750.68 540 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Adding HTML documents to your Server) 189 737 T
+(.) 341.91 737 T
+54 75.33 540 75.33 2 L
+2 Z
+N
+1 12 Q
+(6) 54 59.86 T
+2 10 Q
+(Using Gopher with the W) 189 59.86 T
+(orld-W) 290.3 59.86 T
+(ide-W) 318.08 59.86 T
+(eb) 341.04 59.86 T
+54 666.98 540 679.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+196.74 676.98 540 676.98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 4.) 202.74 683.31 T
+1 10 Q
+(Sample URL link to a HTTP Server) 245.87 683.31 T
+3 F
+(The current software will generate the \322GET /\323 Gopher0 link from this, and it will also) 189 593.31 T
+(send the unmodi\336ed URL in Gopher+ menus to Gopher+ clients.) 189 581.31 T
+(The) 189 557.31 T
+2 F
+(URL=) 207.05 557.31 T
+3 F
+( link line can also be used with gopher) 232.69 557.31 T
+(, ftp, telnet, and tn3270 URL) 386.16 557.31 T
+(\325) 500.79 557.31 T
+(s. The) 503.57 557.31 T
+(software will take what information it can from the URL to \336ll in empty spots in the) 189 545.31 T
+-0.23 (gopher link information. Y) 189 533.31 P
+-0.23 (ou can explicitly specify any part of the link tuple to override) 295.07 533.31 P
+(the URL information. The exact conversions are in the gopher source code, but the cur-) 189 521.31 T
+(rent URL handling code translates as follows:) 189 509.31 T
+54 468.98 540 481.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+196.74 478.98 540 478.98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 5.) 202.74 485.31 T
+1 10 Q
+(Default URL Conversion) 245.87 485.31 T
+54 89.29 540 689.98 C
+198 615.98 540 666.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+198 585.98 540 666.98 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+(T) 216 660.98 T
+(ype=h) 221 660.98 T
+(Name=T) 216 646.98 T
+(urnip Lovers of America \050TLA\051 Home Page) 250.43 646.98 T
+(URL=http://www) 216 632.98 T
+(.turnip.com/~tla/index.html) 280.77 632.98 T
+54 89.29 540 689.98 C
+0 0 612 792 C
+54 89.29 540 689.98 C
+198 108 540 468.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+198 108.98 549 468.98 R
+7 X
+0 0 0 1 0 0 0 K
+V
+339.52 462.02 216 462.02 2 L
+0 X
+V
+0.66 H
+0 Z
+N
+0 9 Q
+(http://<host>[:<port>]/<path>) 216 462.98 T
+5 F
+(T) 216 448.98 T
+(ype=h) 221 448.98 T
+(Host=<host>) 216 434.98 T
+(Port=<port>) 216 420.98 T
+([or 80 if unspeci\336ed]) 266.28 420.98 T
+(Path=GET /<path>) 216 406.98 T
+388.04 388.02 216 388.02 2 L
+V
+N
+0 F
+(gopher://<host>[:<port>]/[<type><path>]) 216 388.98 T
+5 F
+(T) 216 374.98 T
+(ype=<type>) 221 374.98 T
+([1 if type & path are missing]) 268.29 374.98 T
+(Host=<host>) 216 360.98 T
+(Port=<port>) 269.78 360.98 T
+([70 if not given]) 317.57 360.98 T
+(Path=<path>) 216 346.98 T
+([blank \050for \322root menu\323\051 if not given]) 267.8 346.98 T
+348.29 328.02 216 328.02 2 L
+V
+N
+0 F
+(telnet://[<user>@]<host>[:port]) 216 328.98 T
+5 F
+(T) 218.5 314.98 T
+(ype=8) 223.51 314.98 T
+(Host=<host>) 218.5 300.98 T
+(Port=<port>) 216 286.98 T
+([23 if not given]) 263.78 286.98 T
+(Path=<user>) 216 272.98 T
+355.3 254.02 216 254.02 2 L
+V
+N
+0 F
+(tn3270://[<user>@]<host>[:port]) 216 254.98 T
+5 F
+(T) 216 240.98 T
+(ype=T) 221 240.98 T
+(Host=<host>) 216 226.98 T
+(Port=<port>) 216 212.98 T
+([23 if not given]) 263.78 212.98 T
+(Path=<user>) 216 198.98 T
+299.52 180.02 216 180.02 2 L
+V
+N
+0 F
+(ftp://<host>/<path>) 216 180.98 T
+5 F
+(T) 216 166.98 T
+(ype=[1 if path ends in \324/\325, 0 otherwise]) 221 166.98 T
+(Host=+) 216 152.98 T
+(Port=+) 216 138.98 T
+(Path=ftp:<host>@<path>) 216 124.98 T
+54 89.29 540 689.98 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "6" 6
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 750.68 558 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Customizing Gopher Directories for HTML) 207 737 T
+72 75.33 558 75.33 2 L
+2 Z
+N
+2 10 Q
+(Using Gopher with the W) 207 59.86 T
+(orld-W) 308.3 59.86 T
+(ide-W) 336.08 59.86 T
+(eb) 359.04 59.86 T
+1 12 Q
+(7) 552 59.86 T
+3 10 Q
+(Remember) 207 683.31 T
+(, you can override any of these guesses, like this:) 250.48 683.31 T
+72 642.98 558 655.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+214.74 652.98 558 652.98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 6.) 220.74 659.31 T
+1 10 Q
+(Overriding Guesses) 263.86 659.31 T
+72 509.98 558 512.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+207 512.13 558 512.13 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+2 14 Q
+0 X
+0 0 0 1 0 0 0 K
+(Customizing Gopher Dir) 207 517.64 T
+(ectories for HTML) 345.71 517.64 T
+3 10 Q
+-0 (In addition to simple HTML documents, we can use the Unix Gopher Server to display) 207 489.31 P
+(Gopher Directories as HTML documents. The conversion is automatically done by the) 207 477.31 T
+(server) 207 465.31 T
+(, no special scripts are required.) 231.03 465.31 T
+(The HTML pages generated in this fashion support many nice features:) 207 441.31 T
+(They look nicer much nicer) 207 417.31 T
+(.   Abstracts and other Gopher meta-information are view-) 316.98 417.31 T
+(able.   http: URLs speci\336ed in link \336les are passed correctly) 207 405.31 T
+(.) 445.21 405.31 T
+0 9 Q
+(Accessing Custom HTML) 72 375.98 T
+(pages.) 72 364.98 T
+3 10 Q
+(Most WWW clients can connect to gopher servers and display gopher menus. The) 207 375.98 T
+(URL) 207 363.98 T
+(\325) 226.08 363.98 T
+(s used when retrieving a Gopher menu from the Unix gopherd look like:) 228.86 363.98 T
+5 9 Q
+(gopher://<host>:<port>/1) 225 345.64 T
+(1/<path>) 323.41 345.64 T
+3 10 Q
+(Since these menus are just text/html views of a gopher+ object, the above method can) 207 321.98 T
+(be used to access these menus by merely changing the \3221) 207 309.98 T
+(1\323 in the URL to a \322hh\323. \050The) 435.47 309.98 T
+(\336rst h tells the client what to expect, the second h is part of the request sent to the) 207 297.98 T
+(server) 207 285.98 T
+(.\051 For instance, some server administrators use links like this:) 230.88 285.98 T
+5 9 Q
+(T) 225 267.64 T
+(ype=h) 230 267.64 T
+(Name=WWW Hypertext version of this gopher server) 225 253.64 T
+(Path=h/) 225 239.64 T
+(Host=+) 225 225.64 T
+(Port=+) 225 211.64 T
+(#) 254.52 211.64 T
+3 10 Q
+(which allows you to switch to the HTML versions of menus when you select that item.) 207 187.98 T
+-0 (The 2.1.4 release of the University of Minnesota Unix Server also supports more direct) 207 163.98 P
+-0.13 (access via a URL that starts with) 207 151.98 P
+2 F
+-0.13 (http://) 339.69 151.98 P
+3 F
+-0.13 ( It does this by listening on both the Gopher and) 364.14 151.98 P
+(HTTP ports \050by default 70 and 80\051) 207 139.98 T
+(T) 207 115.98 T
+(o con\336gure this in your server you can add the following line to your gopherd.conf) 212.41 115.98 T
+(\336le:) 207 103.98 T
+72 89.29 558 689.98 C
+216 588.98 558 642.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+216 588.98 567 642.98 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+( T) 234 636.98 T
+(ype=g) 241.51 636.98 T
+(Name=Miss T) 236.5 622.98 T
+(urnip Festival 1994) 291.92 622.98 T
+(URL=ftp://ftp.turnip.com/pub/miss-turnip.gif) 234 608.98 T
+72 89.29 558 689.98 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "7" 7
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 750.68 540 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Customizing Gopher Directories for HTML) 189 737 T
+54 75.33 540 75.33 2 L
+2 Z
+N
+1 12 Q
+(8) 54 59.86 T
+2 10 Q
+(Using Gopher with the W) 189 59.86 T
+(orld-W) 290.3 59.86 T
+(ide-W) 318.08 59.86 T
+(eb) 341.04 59.86 T
+5 9 Q
+(HTTPport: 80) 207 683.98 T
+3 10 Q
+(This will tell the server that you want to listen for HTTP requests on port 80 \050the stan-) 189 660.31 T
+(dard HTTP port.\051) 189 648.31 T
+(Y) 189 624.31 T
+(ou could then put a link on your server like this:) 195.22 624.31 T
+5 9 Q
+( Name=This server viewed as HTML) 207 605.98 T
+( URL=http://thishost/) 207 591.98 T
+0 F
+(Default Representation of) 54 562.98 T
+(Gopher Directories) 54 551.98 T
+3 10 Q
+-0.13 (The default representation of a Gopher directory in HTML is very similar to the normal) 189 562.98 P
+(Gopher directory) 189 550.98 T
+(. The documents are listed in the same linear fashion, one per line.) 256.94 550.98 T
+-0.26 (This, by itself, is nothing to jump up and down about. There are some extra features that) 189 538.98 P
+(you might not notice right away:) 189 526.98 T
+0 8 Q
+(1.) 189 508.98 T
+3 10 Q
+(The Server will put any abstract information directly below the text.) 202.74 508.98 T
+0 8 Q
+(2.) 189 493.98 T
+3 10 Q
+-0.27 (For the top level Gopher directory the server puts up a banner that includes the name) 202.74 493.98 P
+(of the site and or) 202.74 481.98 T
+(ganization.) 269.77 481.98 T
+0 8 Q
+(3.) 189 466.98 T
+3 10 Q
+(The 2.1.4 release puts an icon to the left of each object. These icons can be custom-) 202.74 466.98 T
+(ized.) 202.74 454.98 T
+0 8 Q
+(4.) 189 439.98 T
+3 10 Q
+-0.12 (Gopher type \324i\325 info items are added as inline text. Gopher and HTML users can see) 202.74 439.98 P
+(these text items.) 202.74 427.98 T
+(The following \336gure is an example Gopher directory viewed as HTML.) 189 403.98 T
+FMENDPAGE
+%%EndPage: "8" 8
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+72 750.68 558 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Customizing Gopher Directories for HTML) 207 737 T
+72 75.33 558 75.33 2 L
+2 Z
+N
+2 10 Q
+(Using Gopher with the W) 207 59.86 T
+(orld-W) 308.3 59.86 T
+(ide-W) 336.08 59.86 T
+(eb) 359.04 59.86 T
+1 12 Q
+(9) 552 59.86 T
+72 666.98 558 679.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+214.74 676.98 558 676.98 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 7.) 220.74 683.31 T
+1 10 Q
+(Simple HTML Gopher Dir) 263.86 683.31 T
+(ectory) 378.42 683.31 T
+0 9 Q
+(Customizing with Abstracts) 72 347.27 T
+3 10 Q
+(Y) 207 347.27 T
+(ou can edit \336les that end with) 213.22 347.27 T
+2 F
+(.abstract) 330.99 347.27 T
+3 F
+( to add text below a directory entry in the) 366.27 347.27 T
+(HTML page. Abstracts are automatically inserted underneath the directory entry in the) 207 335.27 T
+(HTML page.) 207 323.27 T
+-0.18 (For instance, if we have a \336le called) 207 299.27 P
+2 F
+-0.18 (moo) 352.48 299.27 P
+3 F
+-0.18 ( we can put the information about moo in a \336le) 369.7 299.27 P
+(called) 207 287.27 T
+2 F
+(moo.abstract) 233.38 287.27 T
+3 F
+(. This automatically maps to the Gopher+ ABSTRACT block.) 285.88 287.27 T
+(Y) 207 263.27 T
+(ou can also add abstracts \050and text in the HTML page\051 by adding) 213.22 263.27 T
+2 F
+(Abstract=) 475.67 263.27 T
+3 F
+( lines to) 516.31 263.27 T
+(your links \336les. This even works for remote servers.   Here\325) 207 251.27 T
+(s an example:) 445.01 251.27 T
+72 210.94 558 223.94 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+214.74 220.94 558 220.94 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 8.) 220.74 227.27 T
+1 10 Q
+(Abstracts in a Links \336le) 263.86 227.27 T
+3 F
+(T) 207 123.96 T
+(o get multiple line abstracts you have to put a backslash at the end of the line.) 212.41 123.96 T
+72 89.29 558 689.98 C
+140.62 371.27 558 666.98 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 X
+0 0 0 1 0 0 0 K
+%%BeginBinary:  40306    
+563 394 405.36 283.68 0 146.62 377.3
+/red <
+4C700900420000000000000044EFFFEF14AC0800100A09000000000000000000
+0000000000002E3006000000060000000600000001000000FCFFFF7F00000000
+FFFFFF7FEBDC0A000000000000000000FF070000FFFFFFFF90EEFFEF80EEFFEF
+E09F0200E0EEFFEF00C408004200000001000000030000000300000003000000
+00C408000400000003000000030000000000000000000000200A0900BCEEFFEF
+0100000090EEFFEF94EEFFEFFBFFFF7F30EFFFEF09000000000000005AF20800
+FFFFFF7F00000000FFFFFF7F00000000E01B020018EEFFEFE5DC0A007CEFFFEF
+100A09000000F03F02000000730000000000000074EFFFEF0100E1C065400000
+> store
+/green <
+05000000000000000000000027B1D043A8F0FFEFA8F0FFEF0000000000000000
+0100000000000000000000000000000000000000A4F0FFEFA8F0FFEF06000000
+00000000000000000000000038F50800B839090020010000440100000E000000
+0900000038F508000000000038F50800000000000000000000F808004C700900
+420000000000000044EFFFEF0000000078B30800C4EFFFEF1CE3010048EFFFEF
+48700900A9FC08006B000000630000000078070038F508000078070038F50800
+0078070038F508000078070038F5080000000000000000000700000007000000
+070000000100000000000000EDDC0A000700000000C4080078B3E1C065000000
+> store
+/blue <
+0F0000009CF9090038F5080000780700A4FC080000780700B4F0FFEF3C120900
+20CD0100B8F0FFEFA8F0FFEF74000000ECD20100B8F0FFEF0000000070000000
+700000000000000054AA080001000000B839090020010000440100000E000000
+0900000038F508000000803F08F508002E0000000000008000F8080000000000
+000000005100000010B2080058F0FFEF5CDF010048F0FFEFC6F8090001000000
+01000000A4FC080060A90800A8F0FFEF00000000000000000000000000000000
+00000000EDDC0A00BCEEFFEF00C40800A4F0FFEF59F10800100A090001000000
+100A0900CDDC0A000400000000C4080010B20800E8EFFFEFA879E1C06580FF00
+> store
+ BEGINBITMAPCOLORc
+"z
+FCZ*FAz
+Z+FB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JS;$J)J%AP$J$J'J$
+5FFFFFF8FFFFFFFBFFFFFFFFDFFFFFFFFFBFFFFO'FFFFFF=FFFFFFFFFBFF;FFFFFFJ"9'J"J"B)J"8&
+5FBFBFBFBFFFFFFBFBGFBFFFFFFFBFBFBFFFFOHFFFBFBFFFFFFJ"8"G"J"J"8"9#J"J"8"8"
+<FBFFFFGFF;FFFBFBFBO%FFAFFFBFBJ":$A"B$J"J"J":$J"J$
+=FBFBFBFBFFFBFBFB8FFEFBO#FFFBFBFBBFB;FBFBFBJP9P$8(R<#9*8#8#9%:#A"8"="8%9)8$9$8#9*8#8Q8$8$;R>":"9%8%S"R:P9%9P
+@FBFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFBFFFFFFFFJ";%9"9%8#8">"8"8":";"9#8'8"8"J'8"9#8$8"8"8#8"8":";"9$;"8#9"8&9";"9#;)8#8"9$8"<"8":,
+AFBFFFFFBFBFBFBFBFBFBFFFBFBFFFFFBFBFBFBFBFFFFFBFBFFFFFFFF7FFFFFBFBFFFFFBFFFBFFFFFBFFFBFFFFFFFBFBFBFBFBFBFBFFFFFFFFFFFFFBFBFBFBFFFFFFFFFBFBFFFFFBFBFFFBFBFBFBFBFBFFFBFFFFFBFBFFFFFBFFFFFBFBJ$D#?#8"I"<#8#J"<";":"@#8"J#J":#8"<";#:"9"<"8":"<"8$
+IFFFBFBFBFBFBFBFFFFFFFFFBFB6FFFFFBFBFBFBFF<FBFB4FBFFFFFFFFFBFBFFFBFFFBFFFFFFFBFBJ$J#J#:":#A":"C#:#<$
+JFFFBFBO%FFFFP7FBFBFFFFFFFBFFFBFBFFFFFFFBFBJ"9"J&J"@#=&J'9"
+GFBFFO&FBFBFBFBFBP+FBFBFBFBFBFBFBFBAFBFBFBFBFBFBFFJ"="9"J"8"J"8%=";"J"8$J"9"
+@FBFBFFO9FBFFO?FBFFFFFBFBFFFB4FBFFFFFB8FBFFJ"?$J#J"8"@"J$
+=FFFFFBFBOFFFFFO8FBFBFFO(FFFBFBJ"8">$>"J";#@$8"8$8"B"8#8&<"J"9";#@"H"8%>"9&8"8#@"8">"8'8"8'
+<FFFBFFFBFBFF5FBFFFFFFFBFBFFFFFFFBFFFBFFFFFFFFFFFBFBFB5FFFBFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFFFFFFBFBFBFFFBFFFFFBFBFFFFFFFFFFFBFBJ"9'8"9"9%8"8%9"8"9"9&9":"8"8"8#8"8'8#8">#8&8'8"9":":";%9":"8"8"8$9$9":"?"<"P"9"8&9"A"9"8"8$8"8%8%
+5FFFFFFFFFFFBFBFFFFFFFFFFFBFBFFFBFBFFFFFFFFFBFFFFFFFBFBFBFFFBFFFBFBFFFFFFFBFBFBFFFBFFFBFBFFFFFFFBFBFBFFFFFFFFFBFFFFFFFFFBFFFFFBFBFBFFFBFFFBFFFFFBFFFFFFFFFBFBFBFFFFFFFBFFFFFFFFFBFFFFFBFBFFFFFFFBFFFFFFFBJs:v:$8&8w;s9$:&9r@&;%9z<#;s9z"8$>r;v<#9&9%:v
+5FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB/FBFBFBFB5FBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ"9"
+R/FBFBJ"8%
+R/FFFFFFFFFBJ"9"J"8#8"
+Q/FFFFGFBFFFFFBJ&J'
+Q/FBFBFBFBFBHFBFBFBFBFBFB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+J%8$?#J#J$:%:%8#
+4FFFFFFFFFFFFFFFFFF=FFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFJ"8"8$J"J$;"@"J"
+4FBFBFBFFFBMFF5FFFFFBFBFBKFFJ#J#8"J"H#J"
+FFBFB=FBFBFF9FBFBFBFFFJ'8-8$828P%;%8"8"=$8#:+8':$9%8%8"8"8%
+=FFFFFFFBFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFBFFFFFFFBFFFBFFFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFJ"8'9"818%8"9"8#8&:)8"H"9"8'8%8+8)8)
+=FBFFFBFFFFFBFBFBFBFBFBFFFBFBFFFBFBFFFFFBFBFFFFFBFFFFFBFBFBFBFBFBFBFBFBFFFBFFFFFBFBFFFFFBFBFBFBFBFFFBFFFFFBFBFFFBFFFFFFFBFBFFFFFBFFFFFBFBFFFFFBFBFFFFFBFBFBFBFFFFFBFBFFFFJ"F"@#8$@$J#B"=":">$C#
+@FBFFFBFBFFFBFBFBFFFF>FFFBFBFBFFFFFBFBFBFBJ'9#?"8"E#J$J#9"8"E$
+JFBFFFFFBFFFBFFFFFBFFFFFB8FBFFFF=FFFFFBFFFFFFFFJ%>"8"?&J%8"8"B&
+O%FBFBFBFBFBFFFFFBFBFFFFO,FBFBFBFBFBFFFFFFFFFBFBJ"8"F%:"8"=$@#J$J"8&C#
+7FFFFFBFFFFFBFFFFFFFBFBFFFB?FBFFFB<FFFFFBFFFBFBFFFBJ"8'<#8">"8&8"9'8$;$<)8";$;"8$8#<#<#8$8,8"9(
+5FBFFFFFFFBFBFFFFFFFFFBFFFFFBFBFFFFFFFFFFFBFBFFFFFBFBFBFFFBFBFFFFFFFFFBFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFBFFFFFFFBFBFBFFFFFFFFFBFBFBFFFFFFFBFFFFJ&8$8r9#:%8%8%8%8#C%8%;$8"8w8'8s8%9%:#8'
+6FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ#
+O@FFFFJ"
+OBFBJ#
+O@FBFB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+J$>#J"F":"J&A"
+4FEFEFEFEFE:FEFEFE5FEFEFEFEFEFEJ$=$J"9"E$I":&
+4FBFEFBFEFBFB6FEFBFEFEFEFEFEFEFBFBFBJ$8$8#8+8#8'8#8$=";#9#8"8&:"9"8#8$9#9'
+8FEFEFEFEFEFEFEFEFEFBFEFBFEFEFEFBFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFBFEFEFEFEFEFEFBFEFEFEFBFBFEFEFEFEFEFEFEFEFEFBFEFBFEJ0918%8$B)<$<)8$8'8#
+9FBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFEFBFEFBFEFEFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFEJ"@"J&J#H#9"
+HFBFE6FEFEFEFEFE:FBFBFEFBFBJ#J$J"J"
+O$FEFB7FBFBFB9FE5FBJ$8"8.8"8"8$9$9%8"8"8(838,8$8"8)
+4FEFEFEFEFEFEFEFEFBFBFEFEFBFBFEFEFEFEFEFEFEFEFBFEFEFBFEFEFBFEFEFEFEFEFBFEFEFEFEFEFBFBFBFEFEFBFBFBFEFEFBFEFBFBFEFEFBFEFEFEFEFBFBFBFEFEFBFEFEFBFEFEFBFEFEFBFEFEFEJw8#8z9%8#8&8v9#9%8#9%9#9#8w
+4FBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJz
+4P4FEJz
+4P4FB
+
+J&J$>#J"
+5FDFDFDFDFDFFDFDFDFDFD:FDJ&J"B$=$J"9"
+4FDFDFBFBFB:FDFBFDFBFDFBFB6FDFBJ"9"8#8'8$8"8&8'=$8$8#8+8#8'8#8$
+5FBFBFDFDFDFDFDFBFDFDFDFDFDFDFDFBFDFDFDFDFDFBFDFBFDFDFDFDFDFDFDFDFDFDFBFDFBFDFDFDFBFDFDFDFDFDFDFDFBFDFDFDFDFDFDFDJ%8'8$<'8#?0918%8$
+;FDFBFBFDFBFBFDFBFBFDFBFBFDFBFDFBFBFDFBFBFDFBFBFDFBFBFDFBFBFDFBFBFDFBFBFDFBFBFDFBFBFDFBFBFBFDFBFBFDFBFBFBFDFBFBFDFBFBFDJ#9"J"@"
+O)FDFBFB7FBFDJ"9"J"J#
+5FDFD=FBFFDFBJ,8"8"859$8"8.8"8"8$9$9%8"8"
+4FBFDFDFDFDFBFBFBFDFDFBFDFD6FDFDFDFDFBFBFBFDFDFBFDFBFBFDFDFBFDFDFBFDFDFDFDFDFDFDFDFDFDFDFBFBFDFDFBFBFDFDFDFDFDFDFDFDFBFDFDFBFDFDFBFDFDJ%9#8s$9%8t9w8#8z9%8#8&
+5FBFBFBFBFBFBFBFDFBFBFBFBFBFBFBFBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBJz
+4P#FDJz
+4P#FB
+
+JP#;">"J"J#C">#J"E#J"D#A)8$9$D#J"
+O.FBFFFFFFJFF<FFFFFFFFFF:FFFFFF6FFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFF9FFJ$>">"8"J"="J"D"=$J"9"D$J$C"B,="D"
+O/FBFFFBFBFBFF?FFFB<FBFBFFFBFB6FFFBFFFBFB5FFFFFFFBFBFFFBFBFBFFFBFBFFFBFBFBFBJ"9"8#8'9'8*;#8#8$8'8'8$9-9#9#8$9'8$8#8+8#8'8#8$:(8#8'=":$8$=#J#8$9#:'9#8$8#
+O.FBFBFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFF<FFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFJ&9#9"8'9'9)8.9$8#:"8$9(8(:"90918%8$9'8%8'B$8$;#C$9&;$8(;/8#
+O5FBFBFFFBFBFBFBFBFBFFFBFBFFFBFBFBFFFBFBFFFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFBFBFFFBFBFBFBFFFBFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFFFBFBFBFFFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFFFBFFFFFBFBFFFBFFFBFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFFFBFBFFFBFBFFFFFBJ$A#J"@$9#:#H"J"@"J"GPG#B$D"J"8#
+O<FBFFFFFFFB>FFFBFFFFFBFFFFFBFB6FBFF;FBFFFBFBFBFFFF=FBFFFBJ"B"J#A"<#8"J#J$H"J$<#J"9"
+O=FBFB>FFFBFBFFFBFBO&FFFBO FBFBFBFB4FBFFFBFFFB@FBFBJ$9"8"9#>'8"8"8"8)8"8(<"8$;"9$8"8/="8.8"8"8$9$9%8"8"8-8"8"8"8(8$8,8"9.9$:"9"8'9"8"8.8"
+O/FFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFBFBFFFFFFFFFBFFFFFBFFFBFFFFFBFBFFFFFFFFFFFFFFFFFBFBFFFFFBFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFFFFFFFBFBFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFBFBFFFFFFFBFBFFFFFFFFFFFFFBFFFFFFFFFBFBFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFBFFFFFBFBFFFFFFFBFBFFFFFFJ$8v:"9y9#8#8&8&8u;"9z8$:u8#8z9%8#8&8r8#8s8r8#9#8$8#<s8t9y8v8$8#8"
+O/FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB0FBFBFBFBFBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ":"
+S5FFFFJ#9#B"
+S4FBFBFBFBFB
+
+J&9"J"D&
+4FEFEFEFEFEFE7FEFEFEFEFEFEJ'8"J"C&
+4FBFEFBFBFEFEFB7FBFEFEFBFBFBJ"8'8%8-8#8$;"9&8#8"8&8$
+8FBFEFEFBFEFEFEFEFEFBFEFEFBFEFEFEFBFEFEFEFBFEFEFEFEFEFEFEFBFBFBFEFBFEFEFEFEFEFBFEFEFEFEFEFEJ"9'=#8%8%8$<'8%=$8#
+;FBFBFBFBFEFBFBFBFBFBFBFBFBFEFBFBFEFBFBFEFEFEFEFBFBFEFEFBFBFEFBFBFEFBFBJ$@(I#:"F$
+>FBFEFEFBFEFEFBFBFEFEFBFBFBFBFEFEJ"<"B"9"H"J"
+8FEFBFBFBFE9FBJ':#8,8#;%8"8"85
+4FEFEFEFEFEFBFEFEFBFEFEFBFBFEFEFBFEFEFEFEFEFBFEFEFBFEFE<FBFEFEFEFEFBFBFEFEFEFBFBFEFEFBFBFBFEFEFBFEFEFEFEFBFBFEFEJ&9&8#8v8"8#8&9%8$8#9(8$
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFEFBFBFBFBFBJz
+4O>FEJz
+4O>FB
+
+J&E#=&
+4FEFEFEFEFEFEFEFEFEFEFEFEJ%E#=&
+4FBFEFBFBFEFBFEFEFBFBFBJ$8&<&:"9%8'9'
+8FBFBFEFEFBFEFEFEFEFBFEFEFEFBFBFBFEFEFEFEFEFBFEFEFEFEFBFEFEFEJ#>$<%<(8*9#
+6FEFEFBFBFEFEFBFEFBFEFEFEFBFBFBFEFBFBFEFBFBFEFBFEFBFBFBJ#D'=#9"A'
+6FBFBFEFBFBFEFEFBFBFBFEFEFBFBFBFEFEJ&9";#A"9"
+IFBFEFEFBFEFEFEFBFBFBJ$9(8"8)8'8"9"8"8(
+4FEFEFEFBFEFEFBFEFEFEFEFBFEFEFEFBFEFEFBFBFEFEFEFEFBFEFEFEFEFBFEFEFBFEFEJ$:t9':%8z
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFB3FBJz
+4O)FEJz
+4O)FB
+
+J$9$B"D%B"J#B"J"J"B#G#9"
+O.FFFFFFFFFFFFFFFFFFFFFFFF>FFFFFFLFFLFFFFFFFFFFFFJ"="B"D&A"J"@"J"A"="J"J$G"
+O.FBFBFBFBFFFBFBFFFB>FBFF;FFFFFB8FF?FFFBFBFBJ#8(8'D#8*9'<#8$9#;#8$8#9':'8$8.8'8'9'8$:&8$;#9#9$8#8"8&9#;#9'8#
+O9FFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFBFFFFFFFFFFFFFFFFFBFFFBFFFBFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFJ&9%8"8#8#9#>$8#8&9'9#<$8(:)8'8#:#9+8#8*9$8*9(9(8$:':)=(;'8#8#
+O0FBFFFBFFFBFFFBFBFFFBFBFBFFFBFBFBFFFFFBFFFBFFFBFBFBFBFBFBFFFBFFFBFBFBFBFBFFFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFBFBFFFBFBFFFBFBFFFBFFFBFBFBFFFBFBFFFBFFFBFBFBFBFBFFFBFBFFFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFFFBFBFFFFFBJ#='>";#D'="J#9":#A#9"<"I#G"E#J#9"8#
+O=FBFFFFFBFBFBFFFFFBFFFBFFFBFBFBFFFFFF=FFFBFBFFFBFFFBFBFFFFFBFFFFFBCFFFBFBFFFBJ$A#;"9"@#9"E"9"=#J"?"B"@#I"G#E"J"="
+O1FBFFFBFFFBFBFBFBFFFBFBFBFFFB=FBFBFBFFFBFBFFFBFBDFBFBJ$9)8"<'9"9$8*;+9":"9"8'8%8&8)9$8"8-8&<"8$8"8%8"8&8$8"9"8"9(918'9"8-8"8"8"
+O.FFFFFFFFFFFFFBFBFFFFFBFBFBFFFFFBFFFFFFFFFFFFFFFBFBFFFFFBFBFFFFFFFFFBFBFBFFFFFBFFFFFFFFFFFFFBFFFFFBFFFBFFFFFBFBFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFFFFFBFBFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFBFFFFFBFFFFFFFFFFFFFFFBFBFBFFFFFFFFFFFBFBFFFFFBFBFBFFFFFBFFFFFFFFFBFFFFFBFFFFFFFBFFFFFBFFFFFFFBFBFFFFFFFFFFJt8#:"9"8'<'8#8#8"8#9'<y9#:y:s8t9&8z8#9w8$9#9$8#9y8w8#8"8"8"
+O.FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB8FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ"
+P7FFJ"J#B"
+P FB5FBFBFB
+
+J$J(J"9#?"@"
+4FEFEFECFEFEFBFEFBFEFEEFEFEFEFEFEJ$="J";(J#8&=#?"8"
+4FBFEFBFE4FEFEFBFBFBFBFBFBEFEFBFEFBFBFBFEFBFEFBFEJ$8$8+9'9'<#9$84=,>+8'
+8FEFEFEFEFEFEFEFEFBFEFBFEFBFEFEFEFEFEFBFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFBFEFBFEFBFEFEFBFEFEFBFEFEFBFEFBFEFEFEFEFBFEFEFEFBFEFEFEFEFEFEFBFEFEFBFEFEFEFEFEFBFEFEFEJ+8#9'8$9&<#;&8#9"8$8#:#8(8$8#:%8'9#
+9FBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFEFBFBFEFBFBFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFEFEFBFBFEFBFBFBFEFBFBFBFEFBFEFBFBFBFBFBFEFBFBFEFBFBFBJ#9"=#I#9$8#9%:#9"J$?'
+BFEFBFBFEFBFEFBFBFEFEFEFBFBFBFBFEFEFBFB:FBFEFEFEFBFBFBFEFEJ"B"J";"9">#8"J"@"9"
+BFBFB4FBFBFBFEFBFB@FBFBFBJ$8"8-8"8%8$8$:(9#8(8"9(9#8$8(8#9#<*
+4FEFEFEFEFEFBFBFEFEFBFEFEFBFEFEFEFEFEFBFEFEFBFEFEFEFEFEFEFEFEFBFBFEFEFEFEFBFEFEFBFEFEFEFBFBFEFEFBFEFEFEFBFEFEFEFEFBFEFEFEFEFEFBFEFBFEFEFBFEFEFBFEFEFBFEFEJt8z9#8$8&8#9$8'9"9'=$9&>$8"9t
+4FB2FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFEFBFBFBFBFBFBFBJz
+4P>FEJz
+4P>FB
+
+JP8">#;#J#J#J"=">#8"J#8P"P&?"
+O.FFFFFFFFFF9FFFFEFFFF7FFFFFFFFFF6FFFFFBFBFFFFFFFFFFJ%9">";$J&J"J">"9"J$8%9$8&>"8"
+O.FBFFFBFBFBFBFFFBFB8FFFBFBFBFFCFB@FBFBFB5FFFBFBFBFFFBFBFBFFFBFBFFFBFBFFFBFFJ)9#:(8#8#9$8#838$8#9#8$9#:$8&8$8#8#:'9#8#8#8':#8$=$9"?+8'
+O2FBFBFFFFFBFFFFFFFFFFFFFFFFFBFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFBFBFBFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFFJ#8"9(:'8#8#;08"8"8(8#:$8(;&8'8$8$9"9(8"8'9#9);#@$:%8'9#
+O0FFFFFBFBFBFFFBFFFBFBFBFFFBFBFBFFFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFBFBFBFBFFFBFBFFFFFBFBFBFFFBFBFFFBFFFBFBFBFBFBFFFBFBFBFFFBFBFFFFFBFBFBFBFFFBFBFBFFFBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFFFBFBFFFBFFFFFFFFFBFBFBFBFBFBFFFBFBFFFBFBFBJ#J"8#8#9$D#9#8":"8#:"D$8#8":"J'F#@#:$?'
+O0FBFB7FBFFFBFFFBFBFFFFFBFFFFFBFFFBFFFBFFFBFFFFFFFBFFFBAFFFBFBFBFFFFFBFBFBFBFBFFFFFFFBFBFBFFFFJ"9";"G$9#=":#E"9"8#J"9"J"@"9"
+OLFBFBFBFFFBFFFFFBFBFFFBFBFBFFFBFFBFBDFBFBFBJ$="8'809#8)8&9"9"8(:"9"8'8#8$8"8(8"8"<"8'9+:)9$:$8$;#<*9"
+O.FFFFFFFFFFFBFFFFFBFFFFFFFFFBFFFFFFFBFBFFFFFBFBFFFFFFFFFBFFFFFBFBFFFFFFFBFFFFFBFBFBFFFFFFFFFBFBFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFFFBFBFFFFFFFFFFFFFBFFFFFBFFFBFFFFFBFBFFFFFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFJ$:w8r8#8#9$8#8$9#8$9r8#9y8$8u8s9y8#8':#8$9$:$8$;$8"9t8"
+O.FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB
+
+
+
+J$:$G"BP#;"J"J"J#9$J#="J#:#<#9"<"J"@$9,90:"J#I#J"
+4FEFEFEFEFBFEFEFBFFFFO"FF7FFCFFFFFFFBFFOEFFFFFF;FFFFFFFFFFFFFFFF9FFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFF4FFFFFFFF<FFJ$:"I"C$>"J"="J"="G"?":"J"J";"J";"=":"H"@"C$9*=(9$9$I"C"<"J";"
+4FBFEFBFBFBFBFFFBFBHFFFB7FBFFFFFBFBGFFMFBFF>FBFBFBFBFFFFFBFFFBFBFFFBFBFBFFFBFBFBFBFBFBFFFBFBFBFBFFFBFFFFFFFBFFFB4FFFFJ#8#8'8'8':"9"8#8'9#8$8&;#8#8$8'8'8$9$9#8'8$8+9$8#>#8#8'8*8P"Q%8*8$9#8$8#8"8&9#:$8#9#9,8$<#A';&9$8#:$8#9#J#="=&8$8#;&8'=#9$9#8$9$8#9#
+:FEFEFEFEFEFBFEFBFEFEFEFBFEFBFEFEFEFEFBFEFEFEFBFBFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFBFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFBFFFFFFFBFFFFFFFBFBFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAFBFFFBFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFJ"9'8'8"8#9#A&9#9'8#8$9)8.9$8#:+9+8#9#9)="9'8)8$9$8.9'8#9'8%=(:$8';"8"8)<$A"9$9#8#9)9$8'J&J+8$:0;*9(9$8'
+:FBFBFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFBFBFBFFFBFBFBFBFBFBFFFBFBFFFFFBFBFBFFFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFBFBFFFBFBFBFBFFFBFFFBFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFFFBFBFFFBFBFBFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFBFBFFFBFBFFFFFBFBFFFBFBFFFBFFFBFBFBFFFBFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFFFBFBFBFBFBFFFFFBFBFBFBFFFBFBFFFBFBFFFBFFFBFBFBFFFBFFFB4FBFFFBFFFB9FFFBFBFBFBFBFFFBFBFFFFFBFBFFFBFBFBFBFBFFFBFBFFFBFBFBFBFFFFFBFBFFFBFFFBFFFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBJ"8":";'H$:":"8#8"J"@$J#9&J"8":"9#9$9'<#?$:":"J#9#9#>"J"9$J#J#:P?":"C"="I"H#
+DFBFEFBFEFBFBFBFEFEFBFFFFFFFBFFFBFF7FFFBFFFF:FFFBFBFBFBFFFF<FBFFFBFFFBFBFFFFFFFBFBFBFFFFFFFBFBFFFFFFFBAFFFBFBFFFFFBFB<FFFBFFFF8FFFBBFBFFFFFBFFFFFFFFFBJ"C#@"9"J":#="8#J#A"J"="J#<#<"8#:"="A":#J"<$J$8"J">"9$<$H$?#G#<#A$:#H"
+8FEFEFBFBFB4FBFFFBFBFFFB6FFFBFB;FBFB?FFFBFBFFFBFBFFFBFBFBFFFBFFBFFFBFFGFBFBFFFB9FBFFFFFBFFFBFFFBFBFBFBFFFBFFFBFFFBFBFFFBFFFBFBJ%<(8"8$:'<$9"8"9#;"8(8":)8"8(<"8$;);"80;(9$;(8"8$9":#:"8#9'8"8"8$;"818'9&8%:"9"859$;"8":$;(:&8%9%9&8$9.9(9$8"8*8$8"9&8)9";"9$9&8%
+4FEFEFEFEFEFEFBFBFEFEFEFEFEFEFEFBFEFEFBFEFEFFFFFFFFFFFFFFFFFFFFFFFBFBFFFFFFFBFFFFFBFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFBFBFBFFFFFBFFFFFBFBFFFFFBFFFFFBFFFFFFFBFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFBFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFBFBFFFFFBFBFBFFFFFBFFFFFFFFFBFFFFFBFFFBFFFFFFFFFFFBFFFFFBFB4FBFFFFFBFBFFFFFFFBFFFFFFFBFBFFFFFBFFFBFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFBFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFBFFFFFFFBFFFFFFFBFBFFFFFFFBFFFFFFFBFFFFFFFFFFFFFBFBFFFFFBFFFBFFFFFFFBFFFFFFFFFFFFFFFBFBFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFFFFJ&8&8v8"8';$8v9r8':#8#8&8&8u:#9#9r8x;&:$8&8w#;'9$9z9r8#9y:u;$:#8r8%;$8s8&;&<u9&9$9z8"8r:u8%9'9t8#8%9$9#:u
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFFFBFBFBFB1FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB1FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFFFBFBFBFBFBFBJzJ"J$
+4EFEO@FFU%FFFFFBJzJ#J"@"J"J$
+4EFBO?FBFBO7FBFBP*FBQ$FBFBFB
+
+J(="I"I#8$9$8"J#9P$J"=%B"
+O.FFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFMFFFFFBFFFF=FFFFFFFFFFFFJ(="I"8"E$8"="8"J"I":%8"B"G"=&
+O.FBFFFBFBFBFFFBFBFBFFFFFBFBFBFBFB9FFFBFBFFFBFBFBFFFBFBFFFBFBFFJ$85P%9#8$C'8$9'8#8':#8$9#>"<#8+8#8$8#8#@#9#;&
+O6FFFFFF7FFFFFBFFFFFBFFFFFBFFFFFBFFFBFFFBFFFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFBFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFJ&9"8$8#9%8%8$8);&9"9$8'909$8(<#<#8+8%8&8$;.9#8#
+O7FBFBFFFBFBFBFBFFFBFBFFFBFBFBFBFBFFFBFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFFFBFBFFFBFFFBFBFFFFFFFBFFFBFBFBFBFFFBFBFBFFFFFBFBFFFBFBFFFBFBFFFBFBFFFFFBFBFFFBFBFFFBFFFBFBFFFFFBFBFBJ#:#9&@#J'A";"F#=#A"J$B"9$
+O>FBFFFFFBFBFBFBFFFFFFFBFFFFBFBFBFFFFFFFFFBFBFFFBFB6FBFBFFFFFBFFFFJ$C#8"="?#I$H"9"A#:#H"<"J$8"
+O0FFFBFFFFFBFBFBFBFFFBFFFBFBFBFFFBFFFBFFFBO$FBFBFFFBJ&9"8":"9+<$8":)9$9$;"8$8(8%8&;"9"8'8%8,8"P&8"8"9$90;$9"
+O/FBFFFFFFFBFFFFFBFBFFFFFBFFFFFFFBFFFFFBFFFFFBFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFBFBFFFFFBFBFFFFFBFBFBFFFFFBFFFFFBFFFFFFFFFFFFFBFBFBFFFFFBFBFBFFFFFBFFFFFFFFJ$9r9"9u8"9%<#8$9t8z8#:&9y8t8#8#9&8#8r8#9%9#9#8"8&8"
+O0FBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB
+J"
+P(FB
+
+J(JP#;"?#8"J"B#9"<"J"I#J#<"I"D">#J"G"@#?#8"C(@"E#:+B"E$E"
+4FEFEFEFBFEFEFEAFBFFFFFFFFFFO*FFFFFFFFFFCFFFFFF>FFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFJ"9$J$>"?"9"D"J"="B":"H"J"H$J$J"D"=$J"9"G"@"@"9"C"9$<"9"E"<*?"G$F"
+4FBFBFEFBBFBFFFBFBFBFBFFAFFFBFBFBFF7FBFFFBFB=FFFBFB:FBFBFFFBFB6FFFBFBFBFBFBFBFBFFFBFFFBFBFBFBFBFFFBFBFBFFFBFFFFFBFBFBJ#;/G"9"8#8':#8'8#8'8#8*9#8#8$8'8'8$=';&9$8#:(8'8#8"8&9$8#8+8$:#8$:#8#8#8$9+9$9'8$8#8+8#8'8#8$='9#;"8"8#8'9$;#:#8'8#8$8#?";"9&8$8#9':$8/8#8#
+6FBFEFEFEFBFEFEFBFEFEFBFEFEFEFEFEFBFBFFFFFFFFFBFFFFFFFFFFFFFFFBFFFBFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFBFFFBFFFFFBFBFFFFFBFFFBFFFBFFFFFBFFFFFFFFFFFFFFFFJ#9"8"8%J&9#9$8"8#8#828$8)8.9$8#="9$9#8#9):"8(8"8%=#9,9'8#9)9$8(8+9)9"90918%8$<"9(@$8"9)A*8%8(="8$8%8(8'8#:$8#8#9"8#8'
+<FEFBFBFBFBFEFBFB8FBFBFFFBFBFBFBFFFBFBFBFBFFFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFFFFFBFBFFFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFBFBFFFBFBFBFBFBFFFFFBFBFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFFFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFBFFFBFBFFFBFFFBFFFBFBFBFBFBFFFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFBFBFBFBFBFFFBFFFBFFFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFFFBFBFFFBFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFBFFFFFFFBFBFFFBFBFBFFFBFBFBFFFBJ#:&9'J$C"8#F"9#J"@$F"9$D#:":"D$D"?$J"J"@"J#:"J"I#8"B#9":$8#9%A#
+7FBFEFEFBFBFBFEFEFBFBFBFEFE?FBFFFFFBFFFBFBFFFB6FFFBFFFFFFFBFFFFFBFFFFFBFBFFFFFBFBFFFF8FFO FBFFO6FBFFFF4FFFFFBFFFFFBFBFBFBFFFFFBFBFBFBFFFFFBJ":$:"J"G"I#J#A"G$8"G&J"J"J#=$@$J#J$B#I#?(9"8#B">";">#?"
+=FBFEFBFEFBAFBFBFBFF7FFFBFBFBFBFFFBFFFBFBFFFB4FB:FB8FFFBFBFFFBFBFFFBAFFFBO,FBFFFBFFFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFFFBFBJ&9$8"9"8#I$9"8"9#:&9,8,9":)8"8(<"8$:$;"8":$;(:":"8$:-:-8"8"8$:)9$8"8$9"8"8"<"8"8">"8.8"8"8$9$9%8"8$="84:"8"8":&:"9$9%8"8$8$C$8"9&8):,8"<(
+4FEFEFEFBFBFBFEFEFBFBFEFEFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFBFBFFFFFBFBFFFFFBFFFFFBFFFFFBFBFFFFFFFBFBFFFFFBFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFBFFFFFFFFFBFFFFFBFBFBFFFFFBFFFFFFFFFFFFFBFBFFFFFBFBFFFFFFFFFFFFFFFFFBFFFFFBFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFFFFFBFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFFFFFFFBFFFFFBFFFFFFFBFBFFFFFBFFFBFFFFFBFFFFFFFFFFFFFFFBFBFFFBFFFFFBFFFFFBFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFBFBFFFFFBFFFFFFFBFBFFFFFBFBFFFFJ$8"9#9$9$H$8v:u8#8#9&8'<#8#8&8&8u9$8s8&;&<"8r8"8#9r9$8#8z:#8$:z%8r%:u8#8z9%8#8&<y8z%9$8"8$9%8#8w;"9":'9y9$9'9"9"8#8#
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB/FBFBFBFBFBFB1FBFFFBFBFFFBFFFBFBFFFBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBFB1FBFFFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJzJ$@$J$
+48FES%FFFFFBFFFFFBP!FFFFFBJzJ"J$@$J"J$
+48FBO7FBQ:FBFBFBFBFBFBO)FBEFBFBFB
+
+J#J":%:PJ(J#="@$9$8"JP=%
+O0FFFFIFFFFFFFFFF:FFFFFFFBFFFFFF>FFFFFFFFFFFFFFFFFFFFBFFFBFFFFJ$J"C$9&:&B"B"9$J";"C"="8"J">'<$
+O/FFFBFB:FFFFFFFFFBFFFBFBFFFBFFFBFBFFFFFBFBFFFB>FBFFFBFBFB9FFFBFFFBFBFFFFFBFBFBJ$8#8$8#8&8,?"A#>%8&8';#;*P9#8$9#:$8#9#C'8$9'8#8'>"8#8#:'
+O.FFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFBFFFFFFFBFFFBFFFFFBFFFFFBFFFFFFFFFFFBFFFBFFFBFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFBFFFFFFJ,8#8(8'8#F$<$8#='8#B#9"8"8%9$8(:$8'<&9"9$8'90@&;"8$
+O.FBFFFBFBFFFBFBFFFBFBFFFFFBFFFBFBFBFBFBFFFBFBFBFBFFFBFBFBFFFFFBFFFFFBFFFBFBFFFBFBFFFBFBFFFFFBFBFBFBFFFBFBFBFBFFFBFBFFFBFFFBFBFBFFFBFBFBFFFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFFFBFBFBFBFFFBJ"8#<"8$;$=P:#=";#A#9"<#:&9':"J#J'A"B"A#
+O9FBFFFBFFFBFFFFFBFFFFFBFBFBFFFBFFFBFBFBFFFFFBFBFBFFFFFBFBFBFFFFFF8FFFB;FFFBFBFBFFFFFFFFFFFBJ"<#9"="?$?#:#9"B"G":$:":#J"=$H"9"A#>"8#?#
+O<FBFFFBFBFBFBFBFBFFFBFBFFFBFBFBFFFBFFFBFFFB8FBFBFFFBFBFBFFFBFFFFFBFBFFJ58"8#9&9"9,<$859&9$8"9"8#;"9"8'9&8%9$9$;"8$8(8%8&:P"8";$9"9"
+O.4FFFFFFFBFBFFFFFBFBFFFFFFFBFBFFFFFBFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFF6FFFBFBFFFFFBFBFFFFFBFFFBFBFFFFFBFFFFFBFFFFFFFFFFFFFBFBFBFFFFFBFBFFFFFFFFFFFBFFFFFBFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFBFFFFFFFFFBFFFFFFFFFBFFJ$8#8$8#8u9&<v9"8'8#8%8t9$8"9#9$9$9y:u9t8z8#:&9&8$8):"
+O.FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFB
+J"J"
+P&FBQAFB
+
+J%<"E&A"J#9$>#J"D$
+5FEFEFEFEFEFEFEFEFEFEFE9FEFEFEFEFEFEFE:FEFEFEFEJ'8"G&J":$=$J"9"C$
+4FEFEFBFBFEFEFEFEFEFBFBFBFFBFBFEFBFEFBFB6FEFBFEFBFBJ"8"8$8#9':"9"8#8$9#9'9#8$9#>$8$8#8+8#8'8#8$;$85
+5FBFBFEFEFEFEFEFEFEFBFEFBFEFBFBFEFEFEFEFEFEFEFEFEFBFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFBFEFBFEFEFEFBFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFB7FEFEFBFEFBFEFBFEFEFBFEFEFBFEFEFBFEFBFEFBFEFEFEJ$8'8#=)8$8'8#:$8(?0918%8$9$8#8#9"8$8#9#
+;FBFEFBFBFBFEFBFEFBFBFEFEFEFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFEFBFEFEFEFBFBFEFBFBFEFBFBFEFBFBJ#9"<#H#9":"J"@"J$8#9%:#9&
+EFEFBFBFBFBFEFBFBFEBFBFE6FBFBFEFEFBFBFBFBFEFEFBFBFBFBFEFEJ"8"B"?"J">#J#J";">#8"="
+5FEFEFBFE5FBFEFBLFEFB5FEFBFEFBFBFBJ'8&8)9,8$8"8):"9"8'8$8"8.8"8"8$9$9%8"8"9,8"9+
+4FBFEFEFEFEFBFBFEFEFEFEFEFBFEFEFBFEFEFEFBFEFEFEFEFBFBFBFEFEFBFEFEFBFEFEFBFEFEFBFEFEFEFEFEFEFBFEFEFBFEFEFEFEFEFEFEFEFEFBFBFEFEFBFBFEFEFEFEFEFEFEFEFBFEFEFBFEFEFBFEFEFEFEFBFBFBFEFEFBFEFEFEFBFBFEFEFBFEFEFEFBFEFEJ%:y:%9#9#8w9y8w8#8z9%8#8&8$9'9"9u
+5FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJz
+4Q3FEJz
+4Q3FB
+
+JP#;">"A"J"?#:#9"@"J#<#8#>"J"J#:PA"E$J$8"J"J"J#
+O.FBFFFFFFFFBFFFFFFFFFFFFFF4FFFFFFFFFFFFFF8FF7FFFFFFFFFFFF@FFFFFFFFMFFO,FFO9FFFFJ$>">">"J"?";":"<"9"I$<"9"<"J"<"F":&J$J$9"J"8"J"J"
+O/FBFFFBFBFBFFEFBFBFBFBFFFBFFFBFBFBFBFF;FBFFFBFFFFFBFBFB;FFFBFB@FFFBFBFBMFBFFO&FFO<FBJ"9"8#8'9'9$8#9#:&8$9#8$8#8&B29$:#8$9#B$8#9#9$8#8/8'8#8#;"9"8#8$9#9':$85=+9#8#9'8#8+8+8'9&8&:'9#8$8#9$8#8#8$;#8$9#9$84:#8$:#9#
+O.FBFBFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFBFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFBFFFBFFFFFFFFFFFBFBFFFFFFFFFFFFFFFFFFFBFFFBFFFFFBFB7FFFFFBFFFBFFFBFFFFFBFFFFFBFFFFFBFFFBFFFBFFFFFFFFFBFBFBFFFFFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFFFFFBFFFBFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFBFFFBFFFFFBFFFFFBFFFFFBFFFBFFFFFFFFFBFFFFFFFFFFJ&9#9"9#9$8':(8)8&8(A"9)9)9)9$A$8':#8#8'9*8#8#8$=)8$8'8#:$8#8#9"8$8#9#<$8"9+;+8%8$9%8'9#9#>$:/8#:$8(8$9%8';&8#9"8$8#:(:$8%
+O5FBFBFFFBFBFBFBFBFBFBFBFFFBFBFBFFFBFFFBFFFBFBFBFBFBFFFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFBFBFBFBFFFBFBFBFBFBFFFBFBFBFBFBFFFBFFFBFFFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFBFFFBFFFBFBFFFFFBFFFBFFFBFBFBFBFBFBFBFFFBFBFFFBFBFFFFFBFFFBFBFFFFFFFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFFFBFFFFFFFBFBFFFBFBFFFBFBFFFBFBFBFFFFFBFBFBFFFBFFFBFBFBFFFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFBFBFBFBFFFBFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFFFBFBFFFFFBFBFFFBFBFBFFFBFBFBFFFBFBFFFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFFFFFBFBFFFBFBFFFFFBFBFFFBFBFFJ$<$C#>"J"E$J"J#;"8#?$<#9"8#A#H#9":$8#9%:#9&=$D#B"?#9$?';"J"8#C"J#9$8#9%:#9"@"
+O<FBFFFFFBFFFFFFFBFF9FFFBFFFF@FF6FFFBFBFFFBFBFFFFFFFBFBFFFBFBFBFFFBFBFBFBFFFFFBFBFBFBFFFFFBFBFBFBFFFFFBFBFFFFFBFFFFFBFBFFFFFFFBFBFBFFFFFB<FBFFFBFF4FFFBFBFFFFFFFBFBFBFBFFFFFBFBFBJ">"D">#J#F"D$E#J"?"8$<"="="@"J">";">#8"="="G"B#=#<"@"9"J"C#J";"9">#8"
+O=FBFBFBFFFB8FFFBFBFBFFFBFFFB6FBFBFBFFFBFBFBFBFF5FBFFFBFFFBFBFBFFFBFFFBFBFFFBFBFBFFBFFFB4FBFBFBFFFBFBJ$9"8"9#=#;&8%9$8"9"8&8"8"9$8"8$9$:#9$:"8"8":):"8(:&8%9(9";#958,8$8"8):,8"9+9":$;"8):"8"8$9"8"8":#<*:,8"9"8"8.:&8$9"8"8%8"8%9#8(8"9(9)9*
+O/FFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFBFBFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFBFBFFFFFFFFFF4FBFFFFFBFFFFFBFFFFFFFBFBFFFFFBFBFFFFFBFFFBFFFFFFFFFBFBFBFFFFFBFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFBFBFFFFFBFFFFFFFBFBFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFBFFFFFBFFFFFFFFFFFFFFFBFFFFFBFBFFFFFFFBFBFFFFFBFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFBFFFFFBFFFFFFFBFBFFFFFBFFFFFFFBFFFFFBFBFFFFFFFBFFFFFBFFFBFFFFFBJ$8v:&;u:z8r8u9$8&9u%:#8$9v;u9$8(8&9t8#8%9%9#9#8w9$9'9"9u8"9$9u8#9z#;$8"9t9$8t8v8$8#;z9#8s9$8'9"9':#8$:r
+O/FBFBFBFBFBFBFBFBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB1FBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB0FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ$J$J"
+Q>FFFFFBO&FFFFFBLFFJ$J$J#J"
+Q=FBFBFBO&FBFBFBLFBFBP!FB
+
+J"C"J"J"?"J";">"J#F#9"
+O>FFFFGFF7FFFFMFFFFFFO%FFFFFFFFFFJ"E"H"J"<"C"B"J">">"H"J">">":"<"
+O9FFFFFF7FBFFFFFBJFFFBFBFF@FBFFFBFBFFJ$9#8$:#9#8$8#9'9$8#:$8#8/8'9$8#9*9$85<$8#8'9'9$9#8$9#;#8#8'8$='8#=+
+O.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFBFFFBFFFFFFFFFFFFFFFFFBFFFFFBFFFBFFFFFFFF7FFFFFBFFFBFFFBFFFFFBFFFFFBFFFFFBFFFBFFFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFJ-:-8'8#:)9#8#8'9*8#:$8'8"8#;&8#9"8$8#9#<$8&9#9"9#:-9$9)8'8$;#8'>"9'
+O/FBFBFFFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFBFFFBFBFFFBFBFFFBFFFFFBFFFBFFFBFBFBFBFBFBFBFFFBFBFFFBFBFFFBFFFBFBFBFFFBFFFBFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFBFBFFFBFBFBFBFBFBFBFBFBFFFBFFFBFBFFFBFBFFFBFBFBFFFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFFFBFBFFFBFBFFFBFBFBFBFBFBFFFBJ#9"F"8#?$<#9"C#<"9$8#9%:#9&H$<$J"J#<#@$
+P$FFFBFBFBFFFBFBFFFFFFFBFBFFFBFBFBFFFFFFFBFBFBFBFFFFFBFBFBFBFFFFFBFFFFFBFFFF4FF?FFFBFFFBFBFFFFJ"J"8$<"="H"B"9">#8"="J">"J#J"="B"
+P$FB8FBFBFFFBFBFBFBFBFBFFFBFBFB4FBFB4FFFB?FBFBFBJ"8&8$9)8&8):(9(9";#9+:&8%:$9#8(8"9+9":&8"9#=#;"8&8$9":)8"8"8.8'9$:#9&
+O/FFFFFBFFFFFBFBFFFFFFFFFBFBFBFFFFFBFBFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFBFFFFFBFFFFFFFBFBFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFBFBFFFFFBFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFBFFFFFFFBFFFFFBFBFFFFFBFFFFFFFFFFFFFBFBFFFFFFFBFBFFFFFBFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFJs:#8$9#:y;&:$8(8&9t;u8&9$8'9"9u>x:&9s:#8$:#8#8s$8$8#9&9$8&9%
+O.FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ$J"
+PAFFFFFBQ'FFJ$J"J#
+P@FBFBFBO=FBO7FBFB
+
+J%8"J%B"
+4FEFEFEFEFE4FEFEFEFEFEJ&J&
+4FBFEFBFBFE6FBFEFBFBFEJ#9#8$9#@#9#;&
+;FEFEFEFEFEFEFEFEFEFEFEFEFEFEFBFEFEFEJ$8)8'<.9#8#
+6FEFEFBFBFBFEFBFEFBFBFEFBFBFEFBFEFBFEFEFBFBFEFBFBFEFBFEFBFBFEFEFBFBFBJ#H#;$B"9$
+6FBFBFEFBFBFBFEFEFBFEFEJ"J$8"
+JFB5FBFBFEFBJ$:"8&8"8%90;$
+4FEFEFEFEFEFBFEFEFBFEFEFBFEFEFEFEFEFEFBFBFBFEFEFBFBFBFEFEFBFEFEFEJ$9s8s9%9#9#8"8&
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJz
+4O&FEJz
+4O&FB
+
+JP#;"J"C"J"J%8#:">#J%>#J#H"G"@$J(A&8#<%>#9#9"<"J%8"J%B"
+O.FBFFFFO"FFFF;FF7FFFBFFFFFFFFFFFFFF<FFFFFBFFFFFF6FFFFFFFFFFFFFFDFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFF5FFFFFFFFFF4FFFFFFFFFFJ$>"J"="C"8"J"B"C$9"D"J&>"J"I"D"C$="J"=(A"8"9"<&>":":"H"?&J&
+O/FBFFFBFBHFFFBFBFF5FFFFFBFBFBFBFB<FFFBFBFBFBFB7FBFBFFFBFFFBFF4FFFBFFFBFBFBFFFBFBFBFBFFFBFBFBFBFBFBFBFFFBFFFBFBFF6FBFFFBFBFFJ"9"8#8'9#8$8&;#8#8$8'8'8$9'8*8$9$8#8#8$9+B#9#;$9*8"8"9+9#:$9#8#8$=#9"8-9$9$8#9#=$8$8+9'=&9#8"8"8"A+9#>';&9$8#A#9#8$9#@#9#;&
+O.FBFBFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFBFFFBFFFFFFFFFFFBFFFFFFFBFFFBFFFBFFFFFFFFFBFFFFFFFBFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFJ&9#9'8#8$9)8.9$8#9"8'9'8#9$8,:"8"8#C'=$8"8(>&9(;'8%8$;#@%9)9$8'?+8#9'8$D%I&9(>"9$9#8#9);$8)8'<.9#8#
+O5FBFBFFFBFBFBFBFBFBFFFBFBFFFFFBFBFBFFFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFBFFFBFBFBFBFFFBFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFFFBFBFBFBFBFBFBFFFBFFFBFBFBFFFBFBFFFBFFFBFBFFFBFFFBFBFBFBFBFFFBFFFBFBFBFBFFFBFFFBFFFBFBFFFBFBFFFFFBFBFBFBFBFBFBFFFBFFFBFFFBFBFFFBFBFBFFFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFFFBFFFBFBFFFBFFFBFBFBFBFBFFFBFFFBFBFBFBFBFFFFFBFBFBFBFFFBFBFFFBFBFFFFFFFBFBFBFFFBFFFBFBFFFBFBFFFBFFFBFFFFFBFBFFFBFBFFFBFFFBFBFFFFFBFBFBJ$:":"8#8"J"@$A#?$C">#9#J#D#J#F#>$J#G#9"=#B$J"9$F#H#;$B"9$
+O<FBFFFFFFFBFFFBFF7FFFBFFFFFFFBFBFFFFFFFBFFFFFB4FFFBFFFBFFFFBFFFBFBFFFF:FFFBFFFBFBFFFBFBFFFBO,FFFBFFFFFBFBFFFBFBFBFFFFFBFFFFJ":#="8#J#A"B"A"C#@$J"C#J"G"@"@$D"H"B"J$8"J"J$8"
+O=FBFFFBFBFFFB6FFFBFBFBFBFFFBFFFBFF6FBFBFFHFBFBFBFBFFFBFBFBFBO<FBFBFFFBEFB5FBFBFFFBJ$9"8"9#;"8(8":)8"8(<"8$>'8"8"8$;&8$9$9"9";(:"8)8$;"8+8$;"8'9-8,9(<"8"8";&8%9$8"8-8"8%8&;$9+9(9$;"8'8$;"8":$;(9$:"8&8"8%90;$
+O/FFFFFFFFFFFFFFFFFFFFFFFBFBFFFFFFFBFFFFFBFBFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFBFFFFFFFBFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFBFBFFFFFBFBFBFFFFFBFFFFFFFFFFFFFBFFFFFBFFFFFFFBFBFBFFFFFBFBFFFFFBFFFFFBFBFFFFFFFBFBFFFFFBFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFBFBFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFBFFFFFBFBFBFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFFFFFFFBFBFBFFFFFBFBFBFFFFFBFFFFFFJ$8v9r8':#8#8&8&8u:"9z;u9#:$:t9w8#:#:#9%8$8w9#9#8#9#8$8#:r8r%;u9t8z9%;$:#9%9r9$8w8$8s8&;&:$9s8s9%9#9#8"8&
+O/FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB1FBFBFBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFFFBFB2FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBJ"J"C"J$
+R=FFJFFFF?FFFFFBJ#;"J#B#J$
+R<FBFBFBCFBFBFBFB>FBFBFB
+
+J#="J#:#9"
+OGFFFFFF;FFFFFFFFFFJ";"J";"
+OGFBFF>FBFBJ#8$8#8"8&9#:$8#9#9,8$<#;#9'8#
+O.FFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFFFBFFFFFFFFFFFFFFFBFFFBFFFFFFJ'8%=(:$8';"8"8)<$;'8#8#
+O.FBFBFFFBFBFFFFFBFBFFFBFBFFFBFFFBFBFBFFFBFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFFFBFBFBFBFFFBFFFBFBFFFFFBJ":"J#9#9#>"H#9"8#
+O/FFFBAFFFBFBFFFFFBFBFFFBFBFFFBJ#J"<$J"="
+O.FFFBFFBFFFBFF=FBFBJ"818'9&8%:"9"839"8-8"
+O/FFFFFFFFFBFBFFFFFBFBFBFFFFFBFFFFFFFFFBFFFFFBFFFBFFFFFFFFFFFBFFFFFBFBFBFFFFFBFBFFFFFFFBFFFFFFFBFBFFFFFBFFFFFFFBFFFFFBFFFFFFFBFBFFFFFFJr8#9y:u;$:#8r8%8w8#8"
+O.FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFB
+
+
+
+J$G"=&A"D&8";#J"@(="I"I#8$9$8"
+5FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE:FEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEJ$J&J$9"8"8"H";"C(="I"8"E$8"="8"J"
+4FEFBFB9FEFEFBFBFB<FBFEFBFBFEFBFEFEFBFEFBFBFBFEFBFBFBFEFEFBFBFBFBFB9FEJ$8&8$8#8#;"9"8#8$9#9'9"9)<'9#8$9$8#9#A$859#8$C'8$9'8#8'
+5FEFBFBFEFEFBFEFEFEFBFEFEFEFEFEFBFBFEFEFEFEFEFEFEFEFEFBFEFBFEFBFBFBFEFEFBFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE@FEFEFBFEFEFBFEFEFBFEFEFBFEFBFEFBFEFEFEFBFEFEFBFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFEFEJ$8#8'8$8$<)8$8'8#@"8$;#9#9(9$8'C&9"8$8#9%8%8$8);&9"9$8'90
+4FBFEFEFEFBFBFBFEFBFBFEFEFBFBFBFBFEFEFEFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFEFBFBFEFBFEFBFBFBFBFBFEFBFBFEFBFBFEFBFBFBFEFBFEFBFBFBFEFBFBFBFBFEFBFBFEFBFBFBFBFBFEFBFBFBFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFBFBFEJ$8#8":"E#H#9"J':"H#I#:#9&@#J'A"
+5FBFBFEFEFBFEFBFBFBFEFBFB5FEFBFBFBFEFEFEFEFBFBFEFEFBFBFBFBFEFEFEFBFFEFBFBFBFEFEFEJ";"8#H"J"J"9":#H"<$C#8"="?#I$H"9"A#
+4FEFBFEFBFE5FB:FBFBFEFBFBFEFBFEFEFBFBFBFBFEFBFEFBFBFBFEFBJ(8"8(8"8"8,8$8"8):$<.;"9$9&8%:&9"8":"9+<$8":)9$9$;"8$8(8%8&
+5FEFEFBFBFBFEFEFEFEFEFEFBFBFEFEFEFEFBFEFEFEFEFBFBFBFEFEFBFEFEFBFEFEFBFEFEFBFEFEFEFEFEFEFBFEFEFEFEFEFBFBFEFEFBFEFEFEFBFEFEFBFEFEFEFEFEFBFEFEFBFEFEFEFBFEFEFBFBFEFEFBFEFEFEFBFEFEFBFEFEFBFBFEFEFBFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFBFEFEFBFEFEFBFEFEFBFBFEFEFEFEJ$9u8s9%9#9#8w:$9"9&8'9$9#:u;$9r9"9u8"9%<#8$9t8z8#:&
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFEFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBJz
+4R>FEJz
+4R>FB
+
+JP#;">"I">#J#<"J";#J"@(="I"I#8$9$8"
+O.FBFFFFFFFFFFFF4FFFFFFGFFFFFF:FFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFJ$>">"I">"J$9"J"9"8"8"H";"C(="I"8"E$8"="8"J"
+O/FBFFFBFBFBFBFB4FFFBFBFFFFFFBFFFBFFFFFBFFFBFBFBFFFBFBFBFFFFFBFBFBFBFB9FFJ"9"8#8'9'9#8$:'9#9):#8$9$8#9#9'9'8"8"9+<'9#8$9$8#9#A$85P%9#8$C'8$9'8#8'
+O.FBFBFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7FFFFFBFFFFFBFFFFFBFFFFFBFFFBFFFBFFFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFJ&9#9"9#9$8$9"9(8#8"9"9)9$8';*9$>&8$;#9#9(9$8'C&9"8$8#9%8%8$8);&9"9$8'90
+O5FBFBFFFBFBFBFBFBFBFBFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFBFFFBFBFFFBFFFBFBFBFFFBFFFBFBFBFBFFFBFFFBFBFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFBFFFBFBFBFBFFFBFBFFFBFBFBFBFBFFFBFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFBFBFFJ$<$:"J#8$J#B#J':"H#I#:#9&@#J'A"
+O<FBFFFFFBFFFFFF7FFFBFBFFFB9FFFBFFFB=FFFBFBFBFFFFFFFFFBFBFFFFFBFBFBFBFFFFFFFBFFFFBFBFBFFFFFFJ">":#J"9$J"C"J"9":#H"<$C#8"="?#I$H"9"A#
+O=FBFBFFFB7FBFFFBFF9FBFB>FBFBFFFBFBFFFBFFFFFBFBFBFBFFFBFFFBFBFBFFFBJ$9"8"9#=#;"9"8"<"8,9"9):&8%:"8"8%8"8'9$:"P(;"9$9&8%:&9"8":"9+<$8":)9$9$;"8$8(8%8&9"
+O/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFBFFFFFBFFFFFBFFFFFBFBFFFFFFFBFFFFFFFFFFFBFFFFFFFFFFFBFFFFFFFFFBFFFFFBFFFBFFFFFBFBFBFFFFFBFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFBFBFFFFFBFFFFFFFBFFFFFBFFFFFBFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFBFFFFFFFFFFJ$8v:&9t9z:#8$;u9z:%9&8'9$9#:u;$9r9"9u8"9%<#8$9t8z8#:&8"
+O/FBFBFBFBFBFBFBFBFBFB5FBFBFBFBFBFBFB6FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBFB
+J"
+SCFB
+
+J$G"<#J#=#J"@(="I"I#8$9$8"
+5FEFEFEFEFEFE8FEFEFEFEBFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEJ$J"?"D$="J";"C(="I"8"E$8"="8"J"
+4FEFBFB9FBFEFEFBFBFB:FEFEFBFEFBFBFBFEFBFBFBFEFEFBFBFBFBFB9FEJ$8&8$8#8#?#8(:#8$9$<#9#8'9#8$9$8#9#A$859#8$C'8$9'8#8'
+5FEFBFBFEFEFBFEFEFEFBFEFEFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE@FEFEFBFEFEFBFEFEFBFEFEFBFEFBFEFBFEFEFEFBFEFEFBFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFEFEJ$8#8'8$8$=)8#9):$;+9#9(9$8'C&9"8$8#9%8%8$8);&9"9$8'90
+4FBFEFEFEFBFBFBFEFBFBFEFEFBFBFBFBFEFEFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFEFBFBFBFEFBFBFEFBFEFBFBFBFEFBFBFBFBFBFEFBFBFEFBFBFEFBFBFBFEFBFEFBFBFBFEFBFBFBFBFEFBFBFEFBFBFBFBFBFEFBFBFBFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFBFBFEJ$8#8":"J$J"=':"H#I#:#9&@#J'A"
+5FBFBFEFEFBFEFB9FBFEFE8FEFEFBFBFBFEFEFEFEFBFBFEFEFBFBFBFBFEFEFEFBFFEFBFBFBFEFEFEJ";"8#J"J#="9":#H"<$C#8"="?#I$H"9"A#
+4FEFBFEFB?FB8FEFBFBFBFEFBFBFEFBFEFEFBFBFBFBFEFBFEFBFBFBFEFBJ(8"8(8"8"8)8&:):(8"8+;"9$9&8%:&9"8":"9+<$8":)9$9$;"8$8(8%8&
+5FEFEFBFBFBFEFEFEFEFEFEFBFBFEFEFEFEFEFEFEFBFBFEFEFBFBFEFEFEFEFBFEFEFBFBFEFEFEFEFEFBFBFEFEFEFEFBFEFEFBFBFEFEFBFEFEFEFBFEFEFBFEFEFEFEFEFBFEFEFBFEFEFEFBFEFEFBFBFEFEFBFEFEFEFBFEFEFBFEFEFBFBFEFEFBFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFBFEFEFBFEFEFBFEFEFBFBFEFEFEFEJ$9u8s8$8#:&:#8$:#8r8#8'9$9#:u;$9r9"9u8"9%<#8$9t8z8#:&
+4FBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFEFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBJz
+4R>FEJz
+4R>FB
+
+J"B">#G"J"J"E">#8"J"@(="I"I#8$9$8"
+O1FFFFFFFFFFBFFO!FFFFFFFFFF=FFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFJ$A">"E"B"J"H">"9"J";"C(="I"8"E$8"="8"J"
+O0FFFFFFFBFBFFFFO7FFFBFBFB4FFFFFBFFFBFBFBFFFBFBFBFFFFFBFBFBFBFB9FFJ":$:'9#9)9$8#8#8$9$8&8$8#8#9'9'8#8+9#8$8#9'9'9#8#8#8'9#8$9$8#9#A$85P%9#8$C'8$9'8#8'
+O1FBFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFBFFFBFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7FFFFFBFFFFFBFFFFFBFFFFFBFFFBFFFBFFFFFFFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFFFFFFFFFFFFFFBFFFFJ$9"9(8#8"9"9$8,:&8'8$8'9#:+8%8$8)8'8#:"9(8"8'9#9(9$8'C&9"8$8#9%8%8$8);&9"9$8'90
+O7FBFBFFFBFBFBFFFBFFFBFBFFFBFBFBFBFFFBFBFBFFFBFBFBFFFBFBFFFBFBFBFBFFFBFBFBFFFBFBFFFFFBFBFBFBFFFBFFFBFBFBFBFBFFFBFBFFFBFBFBFFFBFBFFFBFBFFFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFFFBFBFBFFFBFFFBFBFBFFFBFBFBFFFBFBFBFBFBFFFBFBFFFBFBFFFBFBFBFFFBFFFBFBFBFFFBFBFBFBFFFBFBFFFBFBFBFBFBFFFBFBFBFFFBFFFBFBFFFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFFFBFBFBFBFFFBFBFFFBFBFFFBFBFBFBFFJPJ#8$D">$8#8":"A'B"?#H#9"J':"H#I#:#9&@#J'A"
+O/7FFFBFBFFFBFFFBFFFFFFFBFFFBFFFBFBFBFFFFFFFFFBFFFBFB8FFFBFBFBFFFFFFFFFBFBFFFFFBFBFBFBFFFFFFFBFFFFBFBFBFFFFFFJ$J"9$C#?"9"8#F"9"B#=#J"J"9":#H"<$C#8"="?#I$H"9"A#
+O0FBFBFB8FBFFFBFFFFFBFBFBFFFBFBFBFFFBFBFF4FB=FBFBFFFBFBFFFBFFFFFBFBFBFBFFFBFFFBFBFBFFFBJ(8"8"<"8,9":&8$9$8#8$8"8(8"8(;"8"8$9"8"8":%8&8)="8'9+;"9$9&8%:&9"8":"9+<$8":)9$9$;"8$8(8%8&9"
+O.FFFFFFFBFFFFFFFFFFFFFFFBFFFFFBFFFBFFFFFBFFFFFBFFFFFFFFFFFFFFFBFFFFFFFFFBFFFFFFFFFFFFFBFBFFFFFFFFFBFFFFFBFFFFFFFFFFFFFFFFFFFBFBFFFFFBFBFFFFFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFFFBFFFFFBFBFFFFFBFFFFFFFBFFFFFBFFFFFFFFFFFBFFFFFBFFFFFFFBFFFFFBFBFFFFFBFFFFFFFBFFFFFBFFFFFBFBFFFFFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFFFBFFFFFBFFFFFBFBFFFFFFFFFFJx9z;u9#8$8u8z9z#<#:y:y8#8'9$9#:u;$9r9"9u8"9%<#8$9t8z8#:&8"
+O.FB5FBFBFBFBFBFBFBFB/FB1FBFFFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFFFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBFB
+J"J"
+QAFBPAFB
+
+J(="I"I#8$9$8"J&J$>#J"
+4FEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFEFECFEFEFEFEFE=FEFEFEFEFE:FEJ(="I"8"E$8"="8"J">&J$=$J"9"
+4FBFEFBFBFBFEFBFBFBFEFEFBFBFBFBFB9FEFEFEFBFBFB>FBFEFBFEFBFB6FEFBJ$859#8$C'8$9'8#8';"9%8'8$8"8&=$8$8#8+8#8'8#8$
+<FEFEFE@FEFEFBFEFEFBFEFEFBFEFEFBFEFBFEFBFEFEFEFBFEFEFBFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFBFEFEFBFBFBFEFEFEFEFEFBFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEFEFEFEFEFEFBFEFBFEFEFEFBFEFEFEFEFEFEFEFBFEFEFEFEFEFEFEJ&9"8$8#9%8%8$8);&9"9$8'90@$8'8$=#>0918%8$
+=FBFBFEFBFBFBFBFEFBFBFEFBFBFBFBFBFEFBFBFBFEFBFEFBFBFEFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFBFEFBFBFEFBFBFEJ#:#9&@#J'A"B"J$J"@"
+DFBFEFEFBFBFBFBFEFEFEFBFFEFBFBFBFEFEFEFE4FBFEFE7FBFEJ$C#8"="?#I$H"9"A#;"9%J"J#
+6FEFBFEFEFBFBFBFBFEFBFEFBFBFBFEFBFEFEFBFEFB5FBBFEFBJ&9"8":"9+<$8":)9$9$;"8$8(8%8&:'8"9"8"8.:$8"8.8"8"8$9$9%8"8"
+5FBFEFEFEFBFEFEFBFBFEFEFBFEFEFEFBFEFEFBFEFEFBFBFEFEFBFBFEFEFEFEFEFEFEFEFEFEFEFEFEFEFBFEFEFBFEFEFBFEFEFBFBFEFEFEFEFBFEFEFEFEFBFEFEFEFEFEFEFEFBFBFBFEFEFBFEFEFEFEFEFEFEFEFEFEFEFBFBFEFEFBFBFEFEFEFEFEFEFEFEFBFEFEFBFEFEFBFEFEJ$9r9"9u8"9%<#8$9t8z8#:&:%8w$9r9w8#8z9%8#8&
+6FBFBFBFBFBFBFBFBFBFEFBFBFBFBFBFBFB3FBFBFBFBFBFBFBFBFBFBFBFBFBFEFBFBFBFBFBFB/FBFBFBFBFBFBFBFBFBFBFBFBJz
+4R&FEJz
+4R&FB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ENDBITMAP
+%%EndBinary
+72 89.29 558 689.98 C
+0 0 612 792 C
+72 89.29 558 689.98 C
+216 146.63 558 210.94 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+216 138.94 558 210.94 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+(Name=Remote Server) 234 204.94 T
+(Abstract=The main repository of W) 234 190.94 T
+(eb information\134) 372.64 190.94 T
+(at MIT) 234 176.94 T
+( URL=http://www) 234 162.94 T
+(.w3.org/) 301.27 162.94 T
+72 89.29 558 689.98 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "9" 9
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+[0 0 0 1 0 0 0]
+[ 0 1 1 0 1 0 0]
+[ 1 0 1 0 0 1 0]
+[ 1 1 0 0 0 0 1]
+[ 1 0 0 0 0 1 1]
+[ 0 1 0 0 1 0 1]
+[ 0 0 1 0 1 1 0]
+ 7 FrameSetSepColors
+FrameNoSep
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+54 750.68 540 750.68 2 L
+0.25 H
+0 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 8 Q
+(Customizing Gopher Directories for HTML) 189 737 T
+54 75.33 540 75.33 2 L
+2 Z
+N
+1 12 Q
+(10) 54 59.86 T
+2 10 Q
+(Using Gopher with the W) 189 59.86 T
+(orld-W) 290.3 59.86 T
+(ide-W) 318.08 59.86 T
+(eb) 341.04 59.86 T
+0 9 Q
+(Customizing Icons.) 54 683.98 T
+3 10 Q
+(The Unix Gopher server checks for special icon \336les in the \324lib\325 directory inside the) 189 683.98 T
+(gopher) 189 671.98 T
+(-data directory) 216.57 671.98 T
+(. These \336les start with the word htmlicon followed by a period) 274.51 671.98 T
+(with the Gopher item type afterwards like this:) 189 659.98 T
+5 9 Q
+(htmlicon.<gophertype>) 207 641.64 T
+3 10 Q
+-0.35 (The server checks this data directory for each \336le it puts in a directory) 189 617.98 P
+-0.35 (. If the server \336nds) 463.99 617.98 P
+(a \336le that matches the item type it inserts and inline image in the HTML pages it gener-) 189 605.98 T
+(ates.) 189 593.98 T
+(The icons can be any graphic format supported by WWW clients. W) 189 569.98 T
+(e suggest using) 462.58 569.98 T
+(GIF) 189 557.98 T
+(, since it\325) 204.31 557.98 T
+(s the most widely supported.) 240.7 557.98 T
+(T) 189 533.98 T
+(o change the icons used by your pages simply change edit or create new images using) 194.41 533.98 T
+(any graphics program.) 189 521.98 T
+0 9 Q
+(Adding Fancy HTML) 54 492.64 T
+(headers) 54 481.64 T
+3 10 Q
+(These features do dress up a page, but there\325) 189 492.64 T
+(s more you can do to customize your) 366.45 492.64 T
+(HTML directories.) 189 480.64 T
+(If you know something about HTML you can create a HTML header that will be) 189 456.64 T
+(inserted before the directory listing. This can contain anything you want: text, graphics) 189 444.64 T
+(links, etc.) 189 432.64 T
+-0.21 (T) 189 408.64 P
+-0.21 (o add your own HTML to the top of a directory edit the \336le.about.html in the directory) 194.41 408.64 P
+(you wish to customize.) 189 396.64 T
+(For instance, if you add the following HTML code to the.about.html \336le:) 189 372.64 T
+54 332.31 540 345.31 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+196.74 342.31 540 342.31 2 L
+0.25 H
+2 Z
+0 X
+0 0 0 1 0 0 0 K
+N
+0 0 612 792 C
+0 8 Q
+0 X
+0 0 0 1 0 0 0 K
+(FIGURE 9.) 202.74 348.64 T
+1 10 Q
+(Sample .about.html HTML \336le) 245.87 348.64 T
+(This) 377.83 348.64 T
+3 F
+(This HTML code will result in a page that looks like the following \336gure:) 189 137.67 T
+54 89.29 540 689.98 C
+153 160.33 540 332.31 C
+0 0 0 1 0 0 0 K
+0 0 0 1 0 0 0 K
+153 161.31 540 332.31 R
+7 X
+0 0 0 1 0 0 0 K
+V
+5 9 Q
+0 X
+(<H1>) 171 326.31 T
+(<iMG SRC=\323gopher://gopher) 171 312.31 T
+(.legislate.com/I9/lib/smallcapitol.gif\323>) 285.55 312.31 T
+(Legi-Slate Inc.) 171 298.31 T
+(</H1>) 171 284.31 T
+(<H2>Internet Information Center</H2>) 171 270.31 T
+(<P>W) 171 256.31 T
+(elcome to the <I>Legi-Slate</I> Gopher Service -- the \336rst combined federal) 195.85 256.31 T
+(legislative and regulatory service available over the Internet using) 171 242.31 T
+(the Gopher protocol) 171 228.31 T
+(<P>If you have questions or comments about this service please send them to) 171 214.31 T
+(<A HREF=mailto:legislate@gopher) 17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

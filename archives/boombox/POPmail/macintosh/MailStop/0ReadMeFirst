@@ -1,0 +1,43 @@
+This is the MailStop distribution directory.
+
+MailStop is a mail-server application for the Mac.  You should use
+POPmail II (or the current version of PC POPmail) to work with this 
+server; look in the POPmail directory.
+Use the newest version in either case.
+
+This directory contains the following files:
+
+MailStop.hqx        Current version of MailStop (1.1.6).
+Doc*MacWriteII.hqx  Documentation in MacWrite II format, binhexed (preferred).
+Doc*Word.hqx        Documentation in Messy Word format, binhexed.
+
+All the documentation is set in the Palatino font (if you don't have
+Palatino, the documentation will look ugly.)
+Older versions of MailStop are in the directory OldVersions.
+
+The MailStop manual refers to a document called "Setting Up MacTCP", which
+is also included in the documentation.  This document was written for the
+needs of the University of Minnesota Campus and talks about pre-configured
+MacTCP prep files.  These pre-configured files are available to folks on
+campus (via the HelpLine and online via the Mac Information Server) but
+are not in this distribution for anonymous ftp.  Obtaining MacTCP and
+configuring it is something you folk in netland will have to do yourself.
+
+Single copies of MacTCP are available from APDA.  Apple also has site
+licenses available.  The document "Setting up MacTCP" should have enough
+information to help you get things configured right.
+
+If you have questions or other problems, please send email to:
+
+     popmail@boombox.micro.umn.edu
+
+Or paper mail to:
+
+     The POPmail development team
+     Microcomputer and Workstation Networks Research Center
+     University of Minnesota
+     132 Shepherd Labs
+     100 Union Street SE.
+     Minneapolis, MN 55455
+
+

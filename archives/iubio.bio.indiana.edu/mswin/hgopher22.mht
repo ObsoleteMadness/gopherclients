@@ -1,0 +1,140 @@
+>From usenet.ucs.indiana.edu!vixen.cso.uiuc.edu!uwm.edu!cs.utexas.edu!usc!elroy.jpl.nasa.gov!decwrl!doc.ic.ac.uk!cc.ic.ac.uk!rimmer.cc.ic.ac.uk!mjh Thu Aug 19 14:45:04 1993
+Xref: usenet.ucs.indiana.edu comp.protocols.nfs:3038 comp.infosystems.gopher:5907
+Newsgroups: comp.protocols.nfs,comp.infosystems.gopher,alt.winsock
+Path: usenet.ucs.indiana.edu!vixen.cso.uiuc.edu!uwm.edu!cs.utexas.edu!usc!elroy.jpl.nasa.gov!decwrl!doc.ic.ac.uk!cc.ic.ac.uk!rimmer.cc.ic.ac.uk!mjh
+From: mjh@ic.ac.uk (Martyn Hampson )
+Subject: HGopher Beta 2.2 Now Available.
+Message-ID: <1993Aug9.110117.4033@cc.ic.ac.uk>
+Keywords: gopher winsock pc-nfs
+Nntp-Posting-Host: rimmer
+Organization: Imperial College
+Date: Mon, 9 Aug 93 11:01:17 BST
+Lines: 126
+
+
+
+	       ANNOUNCING THE AVAILABILITY OF HGOPHER Beta 2.2
+                              and HNGOPHER Beta 2.2
+
+	                A Gopher+ Client For Windows 3.1 
+
+PLEASE NOTE: in order to work this version must have hgopher.ini (part of the zip
+file) installed in your WINDOWS DIRECTORY (this was not made very clear in the
+documentation and has caused some early testers problems - I guess its a bug as well!)
+
+Changes since Beta 1.0
+
+	* Product is now a Gopher+ client.
+            I believe most if not all gopher+ related features are
+             supported including 
+		* Alternative views
+                * Abstracts
+                * Admin information
+                * Ask processing
+
+        * HGopher now supports a large and extensible number of viewers
+          both for gopher+ and gopher0 servers
+
+        * Alternative view preference selection
+          Based on machine; view type; size and language
+
+        * Windows interface re-vamped with  bitmaps and such
+
+        * Gopher+ book mark support
+
+        * On Line Help
+
+        * Many fixes and changes based on user feed back
+
+        * Support for all known (to me) gopher0 base types 
+          (including gif and cso)
+
+
+NOTE: CSO fan's I should qualify that last statement - HGopher will recognize
+      a CSO item and spawn off a viewer of your choice with parameters of your
+      choice -- Unfortunately there is no CSO application for windows that I
+      know about  -- This is the next thing I am going to write - hopefully should 
+      not take long.
+
+Requirements
+	
+    WINSOCK VERSION
+
+	* MS Windows 3.1  (not tested with Windows 3.0)
+	  Or Windows NT.
+	* Winsock DLL and TCP/IP+Packet support layer.
+
+    PC NFS VERSION
+	
+	* MS Windows 3.1 (not tested with Windows 3.0)
+	* PC NFS Version 4 or version 5 (may work with other versions)
+
+Installation
+
+	Available for ANON FTP from lister.cc.ic.ac.uk
+        
+	Change to directory pub/wingopher and collect one of the files
+
+	hgopher2.2.zip   [Winsock Version]      (Binary mode required)
+	hngopher2.2.zip  [Sun PC NFS Version]   (Binary mode required)
+
+
+        Unzip the package you have chosen to get 
+        hgopher.exe / hngopher.exe
+        hgopher.hlp
+        hgopher.ini
+        readme.txt
+
+        Then read the readme.txt.
+
+
+        Install these files in your windows directory.
+        ( well infact only HGOPHER.INI HAS to be installed there)
+
+	You should also be able to get this product
+        from the following archives
+
+	sunsite.unc.edu:<somewhere>
+        microdyne.com:/pub/winsock/apps
+        boombox.micro.umn.edu:/pub/gopher/Windows
+        ftp.york.ac.uk:<somewhere>
+
+        But make sure that you are getting the new 2.2 version (ie hgopher2.2.zip)
+
+
+
+*************************** Latest Breaking News ****************************
+Please note the following, which is not included in any other documentation
+
+1) It is important to install the hgopher.ini file in your windows directory
+   You can install HGopher and Help where you like but hgopher.ini MUST go
+   in the default windows directory.
+
+2) Beta 2.2 may have a problem with Gopher+ index items. I am not sure what 
+   view type these should be as I'd never seen one until just now. I presumed
+   it would be application/gopher-index or application/gopher+-index But maybe
+   not (any one got an idea).
+
+3) When talking to gopher+ servers that don't follow the MIME compatible
+   view types (eg use Directory rather than application/gopher-menu) there
+   is an error in the hgopher.ini file
+
+
+   replace all occurrences of
+
+	Internal-directory   with internal-directory   (Change in case)
+        Internal-index       with internal-index       (change in case)
+
+   
+
+Martyn
+
+
+
+
+-- 
+------------------------------------------------------------------------
+ Martyn Hampson                                   m.hampson@ic.ac.uk 
+ lmperial College Computer Centre.
+-------------------------------------------------------------------------
+

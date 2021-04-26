@@ -1,0 +1,15 @@
+The source for the POP2 server written at
+the University of Minnesota is located in this directory
+in the file popd.c. Note that there are loads of comments
+at the beginning of the popd.c file that explain how to 
+compile and test the POP2 daemon. 
+
+HP9000 users will probably want to use the HP9000 version
+(hp9000_popd.c). This version was contributed by
+
+		David Stevenson
+		Unix Support Manager
+		Spacecraft Engineering Dept.
+		Naval Research Laboratory
+												dpsteve@stress2.nrl.navy.mil
+

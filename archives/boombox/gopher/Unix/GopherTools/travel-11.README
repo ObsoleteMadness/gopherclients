@@ -1,0 +1,135 @@
+Traveller
+=========
+
+The traveller programs help users find their way around gopher servers,
+by enabling them to search for an title (much like veronica) and to
+know what is new in a gopher graph (much like whatsnewd).  The information
+is updated automatically, and that does pose some limitations to the tool:
+if some part of the gopherspace is updated very often, it tends to shadow
+the less frequent updates to other parts of the gopherspace.
+
+The system can be explained better with the help of a metaphor.  Imagine
+yourself in the old medieval days, when there were no newspapers, no
+TV news, nor, in fact, any organized way to difuse information.  In those
+times, the travellers carried the news.  When going from place to place,
+they would hear and repeat stories at each stop.
+
+That is very much what the traveller programs do.  A set of specialised
+programs can travel through gopherspace, including ftp servers and local
+filesystems, ommiting uninteresting items.  A different program
+accumulates the results, and creates a memory of what items exist, and
+when were they first seen.  Finally, a go4gw daemon answers questions.
+The query language allows queries on the name, type, path, host, and
+port, and also on depth and age of the item.
+
+You can take a look at a running server in:
+
+Type=1
+Name=Traveller memories
+Host=gopher.fct.unl.pt
+Port=4320
+Path=travel
+
+DISTRIBUTION:
+
+This is a first attempt to a documentation for the traveller programs.
+Most files have vestigial manpages at their beginning. Refer to them
+or, as a last resort, to the code, to solve the details.
+
+The traveller programs are distributed in a tar file with the following
+structure:
+
+README     -- this file
+LEGAL      -- just to lighten your heart
+TODO       -- some indication of things that could be done
+data       -- the data directory, plus miscelaneous scripts and kill files
+daemon     -- the server programs
+lib        -- libraries for the use of the server and the travellers
+travellers -- the traveller programs
+
+INSTALLATION:
+
+Create a data directory somewhere, and give it the right permissions.
+Copy the travellers to some bin directory;
+Copy the g2travel daemon to where you have the other go4gw gateways,
+and install it in go4gw.conf
+Copy the libraries to some common place, accessible for both the daemon
+and the travellers.
+
+Edit g2travel: change $travel_dir to point to your travel data directory;
+Edit the travel.conf file in the data directory.
+... Now the server should be up and running, but it has no data to show!
+
+ORGANIZATION OF THE DATA DIRECTORY:
+
+travel.conf -- describes the existing travellers (as the user will see them).
+               Assigns a file prefix to each one.
+
+about -- global help file
+
+For each "user" traveller, with prefix "pref", the daemon will use the
+following files, if they exist:
+
+pref.about  -- help file for the "pref" traveller (optional)
+pref.gtimes -- the travel results, created by gtimes and the travellers
+pref.pretty -- the road map created by gpretty (optional)
+
+By convention, the following files may also exist, but are ignored by the
+server:
+
+pref.bak    -- backup of the last pref.gtimes, should something go wrong
+pref.travel -- the last travel of some traveller
+pref.kill   -- kill file for the "pref" traveller
+pref.sh     -- shell script to run the "pref" traveller and update its
+               corresponding pref.gtimes file
+
+RUNNING THE TRAVELLERS:
+
+Take a look at some ".sh" files to see how it runs.  The method depends
+from how the data is to be collected.
+
+The easiest way is to run gtravel.  It will walk through a gopher server,
+and see exactly what the server sees.  If you don't use a good kill file,
+however, you may try to explore the whole gopherspace, so please be
+careful, and watch it run the first time.
+
+ftravel is useful if you are serving a large file system; gtravel may
+be too slow.
+
+lstravel is useful if you connect to ftp servers; it will take an "ls -lR"
+and turn it into a travel file.
+
+All these programs create travel files.  After that, you run gtimes to
+produce the final gtimes file.
+
+THE KILL FILES:
+
+These where somewhat inherited from whatsnewd.  Each line can start with
+either "kill" or "keep" or "kill-subs-of" or "kill-subs-of". An item
+is kept if it matches at least one "keep" line and does not match any
+"kill" line; a menu link is explored (recursed into) if it matches at
+least one "keep-subs-of" line and does not match any "kill-subs-of" line.
+
+The expressions afterwords can make reference to the variables:
+type, name, path, host, port, depth ... of the item
+type0, name0, path0, host0, port0, depth0 .. of the item's father (but note
+                                             that these ane not always
+                                             available).
+Operands include
+= eq   -- equal
+!= ne  -- not equal
+~ =~   -- matches regular expression
+!~     -- does not match regular expression
+
+The values can be a single word (no white space), or something inside "".
+
+Here are some useful examples:
+
+keep name = my.host.address    --- only keep things at my host
+keep name0 = my.host.address   --- my server plus things one hop away
+kill path ~ ^./tmp/            --- kill everything under the top directory tmp
+
+CHANGES:
+
+v1.1 - 02-Dec-93:  Compressed *.gtimes files, added missing file.
+v1.0 - 21-Sep-93:  First release.

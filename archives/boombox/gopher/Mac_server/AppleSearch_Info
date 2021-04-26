@@ -1,0 +1,161 @@
+January 12, 1995
+
+Gopher Surfer 1.1b1 will only work with AppleSearch version 1.5 or
+later.
+
+Here is a short blurb about GopherSurfer & AppleSearch.  Followed
+by some setup instructions so those who have AppleSearch can try it
+with their Gopher Surfer software.
+
+AppleSearch is a commercial product of Apple Computer Co, Inc.
+
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+Macintosh Gopher+ server with full-text search capability
+
+The University of Minnesota Gopher Development team is pleased to announce 
+a new version of the Macintosh Gopher Surfer application (version 1.1b1). 
+
+Gopher Surfer is a Gopher+ server that runs under the Macintosh operating 
+system and makes it possible for people who do not want to run a Unix 
+Gopher server to publish information in gopherspace. 
+
+This is an updated version of Gopher Surfer that works with Apple
+Computer's AppleSearch software to provide full-text search capabilities
+for Mac-based Gopher servers. This means that there is an alternative to 
+running WAIS search engines on Unix systems for those that want to avoid 
+Unix or take advantage of the setup and administration utilities that Apple
+includes as part of AppleSearch. If you are already running an AppleSearch 
+server, you might also use gopher client software and Gopher Surfer to make 
+the information on the AppleSearch server accessible to non-Macintosh
+systems (or available via a TCP/IP network).
+
+
+How it works
+------------
+Gopher Surfer acts as both a Gopher document server and a gateway to translate 
+between AppleSearch's client-server protocol and the Internet Gopher protocol . 
+To do this, Gopher Surfer acts as an AppleSearch client. When you tell Gopher 
+Surfer to run with AppleSearch, you make a PPC connection to either a local or 
+remote AppleSearch server, and the AppleSearch server appears as a Gopher 
+search engine to gopher clients. Because Gopher Surfer is using PPC to connect 
+to the AppleSearch server you can either run the AppleSearch software on the 
+same Macintosh as Gopher Surfer, or have Gopher Surfer connect to the 
+AppleSearch software via an AppleTalk network. Note that AppleSearch is 
+software that you purchase from Apple, and AppleSearch servers require a 
+68040-based Macintosh.
+
+
+Other Features
+--------------
+Gopher Surfer supports Gopher+ features such as electronic forms and alternate 
+representations for data documents. Gopher Surfer also has an integral Gopher 
+link editor and preview mode that you can easily reference items on other 
+gopher servers.
+
+
+Caveats
+-------
+This is a beta-test version of Gopher Surfer. Please e-mail bug reports, 
+comments, or even compliments to <gopher@boombox.micro.umn.edu>
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+Instructions
+=============
+
+1.  You should have installed the AppleSearch server on a 68040 macintosh.
+    Those are the AppleSearch limitations, not mine.  :-)
+
+2.  Install the AppleSearch Client software on the machine which will have
+    the GopherSurfer application running on it.
+
+    NOTE:  The AppleSearch server and the GopherSurfer applications do not
+    need to be running on the same macintosh.
+
+3.  If the AppleSearch server and the GopherSurfer application are running
+    on the same computer skip to #4.
+
+    If you have AppleSearch server running on a different computer there
+    are some things that must be set up correctly.  They are:
+
+    a.  The AppleSearch server machine must have File Sharing & Program
+        Linking turned on.  Do this in the Sharing Setup Control Panel.
+
+    b.  I strongly recommend you set up a specific account for the
+        GopherSurfer application.  Then it is easy to check if the
+        GopherSurfer is currently connected.  Do this in the
+        Users & Group Control Panel.
+
+    c.  The Information server up by AppleSearch server will be present
+        in folders on the AppleSearch server machine.  For instance, on my
+        computer I have two folders named 'AppleSearch Indexes' &
+        'AppleSearch Information Sources'.
+
+        These names are determined when you set up the raw data files and
+        index them.
+
+        NOTE:  You must allow the username you set up permission to see
+        the Data folder (and its contents) & the Index folder (and its
+        contents).
+
+4.  After you start up the GopherSurfer application locate the
+    'Other Preferences' menu in the Configuration window.  Choose
+    'AppleSearch Configuration' from this menu.  Now click on the
+    'Select' button to choose an AppleSearch server to utilize.  This
+    will bring up the Program Linking dialog.  It looks remarkably like
+    the Chooser.
+
+    There are 3 boxes in the window.  Top left shows any Macintoshes
+    allowing Program-to-Program Communication in the currently selected
+    zone.  Bottom left shows the zones on your AppleTalk network.
+    Top right shows the programs available on the currently selected machine.
+
+    Select the AppleTalk zone containing the machine running an AppleSearch
+    server.  Then select the name of the Macintosh you wish to connect to.
+    Then select AppleSearch server.  Now click on the OK button.
+
+    This selects which AppleSearch server to use.  Now we must enter the username
+    and password for connecting to this AppleSearch server.  So click on the
+    'Auto Connect on startup' checkbox.  This will prompt you to enter a username
+    and password.
+    
+    If the AppleSearch server you are connecting to is the same machine running
+    GopherSurfer leave both fields blank.  Otherwise enter the username
+    & password you created/setup in step 3.
+    
+    NOTE:  Re-read 3c if the AppleSearch server and the GopherSurfer
+    applications are not running on the same machine.  It is possible
+    to successfully log in but still not have access to the data because
+    you have not set the permissions correctly on the folders where the
+    data & Index files reside.
+
+
+5.  If you successfully log in the 'Auto Connect on startup' option will
+    show an 'X' in the checkbox.  Otherwise check your username/password
+    combination to be sure it is correct.
+
+6.  To make an AppleSearch query (search) engine visible to clients
+    connecting to your server do the following.
+    
+    a.  Choose 'Preview Gopher Tree' from the Gopher menu.  Navigate to
+    the location/directory to contain the search engine.  Now choose
+    'Place AppleSearch Database' from the 'Gopher' menu.
+    
+    This prompts you to select the database you are placing.  Also to enter
+    a user visible title for clients to see.
+    
+
+If you use AppleSearch and GopherSurfer I would be interested in
+hearing your comments.
+
+Caveats
+-------
+This is a beta-test version of Gopher Surfer. Please e-mail bug reports, 
+comments, questions, or even compliments to <gopher@boombox.micro.umn.edu>
+
+Enjoy,
+Dave Johnson
+Gopher Development Team
+University of Minnesota

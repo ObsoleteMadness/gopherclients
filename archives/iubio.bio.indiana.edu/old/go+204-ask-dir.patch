@@ -1,0 +1,79 @@
+Only in go+204/object: BLblock.o
+Only in go+204/object: DAarray.o
+Only in go+204/object: Debug.o
+diff -bwcr gopher2.04/object/GDgopherdir.c go+204/object/GDgopherdir.c
+*** gopher2.04/object/GDgopherdir.c	Thu Jul 29 15:02:16 1993
+--- go+204/object/GDgopherdir.c	Sun Oct 10 08:50:46 1993
+***************
+*** 405,411 ****
+  	  if (result == SOFTERROR)
+  	       continue;
+  
+! 	  if (*GSgetPath(gs) == '.')
+  	       GDaddGSmerge(gd, gs);
+  	  else
+  	       GDaddGS(gd, gs);
+--- 405,412 ----
+  	  if (result == SOFTERROR)
+  	       continue;
+  
+! 	  if ((*GSgetPath(gs) == '.')
+! 	   || (*GSgetPath(gs) == '!')) /* +dgg  hack for ask directory*/
+  	       GDaddGSmerge(gd, gs);
+  	  else
+  	       GDaddGS(gd, gs);
+Only in go+204/object: GDgopherdir.o
+diff -bwcr gopher2.04/object/GSgopherobj.c go+204/object/GSgopherobj.c
+*** gopher2.04/object/GSgopherobj.c	Thu Jul 29 15:02:55 1993
+--- go+204/object/GSgopherobj.c	Sun Oct 10 08:53:03 1993
+***************
+*** 847,855 ****
+--- 847,858 ----
+  	       /* Just setting Type wont work, since they interelated with Path
+  	        * so set first char of path as well */
+  		GSsetType(gs, GSgetType(overlay));
++ /* dgg hack for ASK directory type -- leave orig. path type as is */
++ 		if (*GSgetPath(overlay) != '!') { /* +dgg */
+  		tempstr = GSgetPath(gs);
+  		tempstr[0] = GSgetType(overlay);
+  		GSsetPath(gs, tempstr);
++ 		} /* +dgg */
+  	  }
+  	  if (GSgetTitle(overlay) != NULL)
+  	       GSsetTitle(gs, GSgetTitle(overlay));
+***************
+*** 1170,1180 ****
+  	       doneflags |= G_NAME;
+  	  }
+  
+! 	  else if (strncmp(buf, "Path=", 5)==0) {
+  	       if (strncmp(buf+5, "~/",2) == 0 ||
+  		   strncmp(buf+5, "./",2) == 0) {
+  		    char tmpstr[256];
+  		    
+  		    *tmpstr = '.';
+  		    strcpy(tmpstr+1, directory);
+  		    if (directory[strlen(directory)-1] == '/')
+--- 1173,1185 ----
+  	       doneflags |= G_NAME;
+  	  }
+  
+! 	  else if ((strncmp(buf, "Path=", 5)==0) 
+! 	   || (strncmp(buf, "Pask=", 5)==0)) {  /* +dgg */
+  	       if (strncmp(buf+5, "~/",2) == 0 ||
+  		   strncmp(buf+5, "./",2) == 0) {
+  		    char tmpstr[256];
+  		    
++    		    if (strncmp(buf, "Pask=", 5)==0) *tmpstr = '!'; else  /* +dgg */
+  		    *tmpstr = '.';
+  		    strcpy(tmpstr+1, directory);
+  		    if (directory[strlen(directory)-1] == '/')
+Only in go+204/object: GSgopherobj.o
+Only in go+204/object: STRstring.o
+Only in go+204/object: Sockets.o
+Only in go+204/object: VIews.o
+Only in go+204/object: compatible.o
+Only in go+204/object: iubio-home.gif
+Only in go+204/object: libgopher.a
+Only in go+204/object: shared
+Only in go+204/object: util.o

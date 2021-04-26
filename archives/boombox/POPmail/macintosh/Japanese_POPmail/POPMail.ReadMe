@@ -1,0 +1,53 @@
+POPmail 2.2                               February 5, 1995
+
+Haikei,
+
+  David Johnson de gozaimasu.  Doozo yoroshiku.
+
+    This version of POPmail is based on the English 2.2 version and includes
+    some features that will interest people with a love of the Japanese
+    Language.  The only new features added were those needed to support
+    Japanese.
+
+    This includes the ability to:
+
+1.  Select a font and font size.
+2.  Turn on the Japanese Filter option.  This runs the text through a filter
+    to determine if there are Japanese codes present which need to be converted.
+3.  Send Japanese as - which allows the user to choose which code set to send
+    Japanese characters in.  Some of the code sets are 7 bit and some are 8 bit.
+
+
+    These same features are also implemented in TurboGopher, a Gopher client for
+the macintosh.
+
+    Those who have visited the Gopher Servers in Japan will have noticed
+that files often have a JIS extension (Japanese Industrial Standard),
+SJIS extension (Shift-JIS, also called MS-Kanji), or an EUC extension
+(Extended UNIX Code).  These signify different methods of encoding
+Japanese on computer systems.
+
+    The KanjiTalk System (available in Japan), or System 7.1 with the
+Japanese Language Kit provide the ability to handle the SJIS encoding.
+
+    The other two encoding schemes JIS, and EUC if retrieved display as
+a jumble of unreadable characters no matter which font is selected.
+
+    Fortunately, I had heard of some nice algorithms for converting JIS,
+and EUC encodings into SJIS which the Macintosh can display.
+
+    Recently an excellent book by Ken Lunde, Understanding Japanese
+Information Processing (Nihongo Joho Shori) was published by
+O'Reilly & Associates.  At a very reasonable cover
+price of approximately $29.95.  This book is a very valuable
+reference.  For those interested the ISBN is 1-56592-043-0.
+
+    The combination of the book and some code samples, provided
+the necessary knowledge to add to POPmail & TurboGopher the abiltiy to
+correctly display and send Japanese.
+
+    So give it a whirl and send comments/bug reports to:
+    
+          dmj@boombox.micro.umn.edu
+
+Jaa Mata

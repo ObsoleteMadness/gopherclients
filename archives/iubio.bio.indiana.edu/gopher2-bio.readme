@@ -1,0 +1,60 @@
+Source location:
+   ftp://iubio.bio.indiana.edu/util/gopher/gopher2-bio.tar.gz
+
+Example server at:
+   http://iubio.bio.indiana.edu/
+   gopher://iubio.bio.indiana.edu:71/
+
+This is a variant of U.Minnesota's gopherd server, version 2.014.
+It includes changes applied by Don Gilbert, gilbertd@bio.indiana.edu.
+These include basic HTTP/HTML server support, so this server can
+be run as a dual gopher+/http server;  it includes support for freewais-sf
+variant of wais search software; it includes various gopher+ patches
+and other changes used at IUBio archive (gopher/http to iubio.bio.indiana.edu)
+
+This server provides one view of the same file system to gopher+ and http 
+clients.  It includes a few special features for modifying that: 
+  the filename.abstract block adds descriptions to html directories,
+  the filename.nohtml block hides an item like gopher+ ask dialog from
+    html clients
+  the filename.onlyhtml block hides an item like html forms from
+    gopher clients
+
+The "linkdir" addition adds a symbolic linked folder to the current
+server folder (e.g., to link in an ftp file system w/o putting gopher/http
+forms in the ftp area):
+
+Add this kind of item to gopherd.conf:
+#
+# any sub-folder with this name will be automagically listed in current folder
+# use w/ symbolic linked ftp-area folders into gopher-area folders
+# to avoid putting gopher-junk in ftp area (dgg addition)
+#
+linkdir: link.dir
+
+Then add symbolic links with name "link.dir" to server folders.
+
+There is an "exec+" server type (gopher type) that I use extensively
+with any kind of form, because it expands the "exec:" type to include
+gopher+ view parsing and a few other additions. Consider it like HTTP's
+CGI subprograms.
+
+Link format is 
+  0Title<tab>exec+:some commandline params here:/path/to/handler<tab>host<tab>port
+or
+  1Title<tab>exec+:....
+
+The exec+ responds to gopher+ "!" and "$" and also can return type 1 (folder)
+
+Note: this is not an official distribution, and I don't have much time
+to spare providing support for it at present.  I've used it on SunOS 4.1.2
+and DEC Alpha OSF/1 systems.  
+
+This is the call that I use to run the http variant of this
+server from SunOS inetd (-H forces http/html services, it supports
+basic GET and POST variants of http, including http forms):
+
+/usr/local/etc/gopherd -HIcu gopher -o /usr/local/etc/gopherd2.conf \
+  -l /usr/tmp/http.log /bio/gopher/public2 80
+
+-- Don Gilbert, March 1995

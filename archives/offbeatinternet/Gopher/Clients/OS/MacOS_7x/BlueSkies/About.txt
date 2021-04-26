@@ -1,0 +1,12 @@
+BlueSkies
+(ver 1.1)
+Freeware
+
+
+BlueSkies is intended primarily as a multimedia Gopher Weather client. 
+
+
+68k client = blue-skies-11.hqx
+PPC client = blue-skies-11-ppc.hqx
+
+

@@ -1,0 +1,877 @@
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then unpack
+# it by saving it into a file and typing "sh file".  To overwrite existing
+# files, type "sh file -c".  You can also feed this as standard input via
+# unshar, or by typing "sh <file", e.g..  If this archive is complete, you
+# will see the following message at the end:
+#		"End of shell archive."
+# Contents:  README linkmerge linkmerge-weekly
+# Wrapped by riddle@rio-grande on Thu Apr 15 18:44:35 1993
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+if test -f 'README' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'README'\"
+else
+echo shar: Extracting \"'README'\" \(1391 characters\)
+sed "s/^X//" >'README' <<'END_OF_FILE'
+XNewsgroups: comp.infosystems.gopher
+XFrom: riddle@ruf.rice.edu (Prentiss Riddle)
+XSubject: linkmerge: a tool to merge remote Gopher directories
+XMessage-ID: <C4Guvw.4yx@rice.edu>
+XSender: news@rice.edu (News)
+XOrganization: Ministry of Information, William's Marsh
+XDate: Thu, 25 Mar 1993 22:38:19 GMT
+X
+XProblem: I want to offer a "subject tree" of Internet resources
+Xcategorized by subject area but I don't have time to develop my own.
+XThere are a number of useful efforts to categorize Gopher resources by
+Xsubject area, but none of them has yet emerged as a comprehensive
+Xstandard.
+X
+XSolution: The perl script below.  By merging carefully selected
+Xsubdirectories of other sites' subject area trees, I was able to come
+Xup with a pretty fair union of several of them.  The result is far from
+Xperfect, but it will do until something better comes along.  This
+Xapproach also allows me to put my own local resources into the same
+Xtree.  To see this in action, take a look at:
+X
+XName=Information by Subject Area
+XType=1
+XPort=70
+XPath=1/Subject
+XHost=riceinfo.rice.edu
+X
+XI'm interested in what other people think of this idea.
+X
+X-- Prentiss Riddle ("aprendiz de todo, maestro de nada") riddle@rice.edu
+X-- Unix Systems Programmer, Office of Networking and Computing Systems
+X-- Rice University, POB 1892, Houston, TX 77251 / Mudd 208 / 713-285-5327
+X-- Opinions expressed are not necessarily those of my employer.
+END_OF_FILE
+if test 1391 -ne `wc -c <'README'`; then
+    echo shar: \"'README'\" unpacked with wrong size!
+fi
+# end of 'README'
+fi
+if test -f 'linkmerge' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'linkmerge'\"
+else
+echo shar: Extracting \"'linkmerge'\" \(14022 characters\)
+sed "s/^X//" >'linkmerge' <<'END_OF_FILE'
+X#!/usr/local/bin/perl
+X#
+X# linkmerge 0.1 -- merge a group of links to gopher resources
+X#
+X# usage: linkmerge < links-to-dirs-to-be-merged > .merged-links
+X#
+X# Linkmerge is intended as a way to make use of efforts elsewhere in
+X# Gopherspace to gather collections of Internet resources organized
+X# by subject.  Linkmerge examines a specified set of Gopher directories
+X# and produces a merged list of links to their contents.  It makes an
+X# attempt to eliminate duplicate links and to resolve WAIS and go4gw
+X# resources to use local servers.  Linkmerge also allows for a "stop
+X# list" of resources which it should suppress in its output.
+X#
+X#
+X# INPUT FORMAT:
+X# The input consists of gopher links to the directories to be merged,
+X# as well as individual resources to be suppressed, in the following
+X# format (note that the tabs are essential):
+X#
+X#	merge <tab> path <tab> host <tab> port
+X#	stop  <tab> path <tab> host <tab> port
+X#
+X# OUTPUT FORMAT:
+X# The output is in the format of a gopherd .links file with comments to
+X# help in debugging, e.g.:
+X#
+X#	# Merging 1/.dir/ams.taes.ag.resource tamuts.tamu.edu 70
+X#	# Merging 1/catalog/Agriculture flubber.ciesin.org 70
+X#	# Merging 1/Selected/Agriculture hunter.unr.edu 70
+X#	
+X#	Name=CYFER-net USDA ES Gopher Server.
+X#	#     from tamuts.tamu.edu
+X#	Path=
+X#	Host=cyfer.esusda.gov
+X#	Port=70
+X#	Type=1
+X#	#Also CYFER-net USDA ES Gopher Server.
+X#	#     from flubber.ciesin.org
+X#	
+X#	Name=Agricola
+X#	#     from tamuts.tamu.edu
+X#	Path=
+X#	Host=isn.iastate.edu
+X#	Port=0
+X#	Type=8
+X#	#Also Agricola
+X#	#     from flubber.ciesin.org
+X#	
+X#	Name=QUERRI (Database for North Central States)
+X#	#     from hunter.unr.edu
+X#	Path=
+X#	Host=isn.rdns.iastate.edu
+X#	Port=0
+X#	Type=8
+X#
+X#
+X# RESOURCE RESOLUTION:
+X# When two or more of the input directories list the same resource, the
+X# name in the output will be taken from the first input directory which
+X# contained it.  For this reason, more trustworthy or better-designed
+X# input directories should be listed first.
+X#
+X# If the following configuration variables are defined below, this program
+X# will try to resolve links to WAIS indexes to a local copy:
+X#	$waisdir $waishost $waispath $waisport
+X#
+X# If the following configuration variables are defined below, this program
+X# will resolve remote go4gw links to use a local go4gw server:
+X#	$go4gwhost $go4gwport @go4gwserv
+X#
+X# Note that "stop" operations take place *after* the above resolutions.
+X#
+X#
+X# EXAMPLE:
+X# Here is a simple shell script using linkmerge which could be called from
+X# crontab.
+X#
+X#	#!/bin/csh -f
+X#	#
+X#	# Script to use linkmerge to merge several collections of
+X#	# agriculture resources.
+X#	#
+X#	set MERGE="/foo/cwis/bin/linkmerge"
+X#	set SUBJDIR="/foo/cwis/gopher/world/BySubject"
+X#	
+X#	if ( -f $SUBJDIR/Agriculture/.mergelinks ) then
+X#		/bin/mv -f $SUBJDIR/Agriculture/.mergelinks \
+X#			$SUBJDIR/.oldlinks/Agriculture
+X#	endif
+X#	$MERGE > $SUBJDIR/Agriculture/.mergelinks <<'EOF'
+X#	merge	1/.dir/ams.taes.ag.resource	tamuts.tamu.edu	70
+X#	merge	1/catalog/Agriculture	flubber.ciesin.org	70
+X#	stop	1/.data/owl-eradication	tamuts.tamu.edu	70
+X#	'EOF'
+X#
+X#----------------------------------------------------------------------------
+X# History:
+X# 03/18/93 PASR  Original version by Prentiss Riddle (riddle@rice.edu), but
+X#                based on gopherclone by Bob Alberti
+X#                (alberti@boombox.micro.umn.edu) and friends:
+X#                   original NNTP client suggested by eci386!clewis
+X#                   socket code by cmf@obie.cis.pitt.edu (Carl M. Fongheiser)
+X#                   adaptation for gopher by emv@msen.com (Edward Vielmetti)
+X#                   mods to indexer by Bob Alberti
+X# 03/25/93 PASR  Declared this version 0.1 and posted it to the net.
+X#----------------------------------------------------------------------------
+X#
+X# CONFIGURATION -- set these variables to suit your site
+X
+X$debug = 1;		# Turn off for fewer comments in output
+X
+X# Local Gopher/WAIS configuration information.  Define these variables
+X# if a Gopher server on the local machine contains an extensive directory
+X# of WAIS sources and you'd rather make WAIS queries via your local Gopher
+X# server than a remote Gopher server.  If you do not wish to use this
+X# feature, leave these variables undefined.
+X#
+X# Note that the program will *look* for a matching WAIS ".src" file on
+X# the local machine and only transform the link to use it if a match is
+X# found.  It will look in two places: (1) the directory $dir and (2) a
+X# subdirectory  of $dir consisting of the first letter of the name of
+X# the WAIS source (e.g., "$dir/Foobar.src" and "$dir/f/Foobar.src").
+X#
+X# Variables:
+X#   $waishost   hostname of your Gopher server (should be this machine)
+X#   $waisport   port number of your Gopher server
+X#   $waisdir    full Unix directory in which to look for WAIS sources
+X#   $waispath   Gopher path (i.e., relative to the top of your Gopher tree)
+X#                  of your WAIS sources
+X# Example:
+X#   $waishost = "gopher.foobar.edu";
+X#   $waisport = 70;
+X#   $waisdir = "/usr/gopher/Other/WAIS";
+X#   $waispath = "/Other/WAIS";
+X$waishost = "riceinfo.rice.edu";
+X$waisport = 70;
+X$waisdir = "/chico-b/cwis/gopher/world/OtherGophers/WAIS";
+X$waispath = "/OtherGophers/WAIS";
+X
+X# Host and port of your local go4gw gateway and the services which it
+X# provides.  Define these if you run a go4gw gateway and you wish for
+X# links to be translated to use it instead of remote go4gw gateways.
+X# (Note: this could backfire if there are non-go4gw paths which look
+X# like go4gw ones.)
+X#
+X# If you do not wish to use this feature (or if you don't know what go4gw
+X# does :-) ), leave these variables undefined.
+X#
+X# Variables:
+X#   $go4gwhost   hostname of host where your go4gw gateway runs
+X#   $go4gwport   port number of your go4gw gateway
+X#   @go4gwserv   list of go4gw services you wish to have translated
+X#
+X# Example:
+X#   $go4gwhost = "gopher.foobar.edu";
+X#   $go4gwport = 9999;
+X#   @go4gwserv = ("areacode", "ftp", "geo", "nntp");
+X$go4gwhost = "riceinfo.rice.edu";
+X$go4gwport = 1103;
+X@go4gwserv = ("areacode", "geo", "nntp");
+X
+X# END OF CONFIGURATION SECTION 
+X#----------------------------------------------------------------------------
+X#
+X#Data structures:
+X#
+X# @merge	A list of links to Gopher directories to be merged.
+X#		Its values consist of tab-separated Gopher links in the
+X#		form "path<tab>host<tab>port".
+X#
+X# %stop		A table of links to resources to be suppressed.  Its
+X#               indexes consist of tab-separated Gopher links in the
+X#               form "path<tab>host<tab>port".  It returns "1"
+X#		for any resource which appeared in a "stop" line on
+X#		input.  Gopher links used to index it should be forced
+X#               to lowercase prior to insertion or lookup in order to
+X#               eliminate mismatches caused by case distinction.
+X#
+X# %links	A table of all of the Gopher links we've seen so far.  Its
+X#		indexes consist of tab-separated Gopher links in the
+X#		form "path<tab>host<tab>port<tab>type".  The values it
+X#		returns are the numeric indices of the other tables
+X#		here.  Gopher links used to index it should be forced
+X#		to lowercase prior to insertion or lookup in order to
+X#		eliminate false duplicates caused by case distinction.
+X#
+X# @paths	The path of each link, indexed by a value returned by
+X#		$links[].
+X#
+X# @hosts	The host of each link, indexed by a value returned by
+X#		$links[].
+X#
+X# @ports	The port of each link, indexed by a value returned by
+X#		$links[].
+X#
+X# @types	The type of each link, indexed by a value returned by
+X#		$links[].
+X#
+X# @names	The names associated with each link, indexed by a value
+X#		returned by $links[].  Each value returned by $names[]
+X#		can have multiple tab-separated names, but only the
+X#		first is used to generate a "live" link in the output;
+X#		the others are available for debugging purposes.
+X#
+X# @viahosts	The hosts where each link was found, indexed by a value
+X#		returned by $links[].  Each value returned by $viahosts[]
+X#		can have multiple tab-separated hostnames.  This
+X#		information is kept for debugging purposes.
+X#
+X# $nlinks	Number of entries (starting with 1) in the lists indexed
+X#		by %links.
+X#----------------------------------------------------------------------------
+X
+X# Here's how to make your own socket.ph:
+X#	cp /usr/include/sys/socket.h socket.h
+Xrequire 'socket.ph';  # h2ph socket
+X
+X# Read the input and save it into @merge and %stop.
+Xwhile (<STDIN>) {
+X	chop;
+X	$op = "";
+X	($op, $path, $host, $port) =
+X		/^(\S*) *\t([^\t]*)\t(\S+)\t(\d+)$/;
+X	if ($op eq "stop") {
+X		# Add it to the stop list.
+X		$link = "$path\t$host\t$port";
+X		$link =~ tr/A-Z/a-z/;
+X		$stop{$link} = 1;
+X		print("# Stop  $link\n");
+X		next;
+X	}
+X	unless ($op eq "merge") {
+X		print("# UNRECOGNIZED INPUT: $_\n");
+X		next;
+X	}
+X	push(@merge, "$path\t$host\t$port");
+X	print("# Merge $path $host $port\n");
+X}
+Xprint("#\n");
+X
+X# Step through the links in @merge.
+X$nlinks = 0;
+Xwhile ($mergelink = shift(@merge)) {
+X	print("# Merging $mergelink\n");
+X	($path, $viahost, $port) = split(/\t/, $mergelink);
+X
+X	# Make sure the path has an initial type selector (default "1/").
+X	$path =~ s#^/#1/#;
+X	unless ($path =~ m#^1/#) {
+X		print("#         ^ BAD PATH -- IGNORED!\n");
+X		next;
+X	}
+X	unless ($viahost && $port && $path) {
+X		print("#         ^ INCOMPLETE PATH/HOST/PORT -- IGNORED!\n");
+X		next;
+X	}
+X	
+X	chop($hostname = `hostname`);	# get host name in variable
+X	($N) = &tcpconnect($viahost, $hostname);
+X	unless ($N) {
+X		# bad connection
+X		print("#         ^ COULDN'T OPEN TCP CONNECTION $N!\n");
+X		next;
+X	}
+X	send(N,"$path\r\n", 0)
+X		|| die "Send $d to $viahost barfed with: $!\n";
+X	while (<N>) {
+X		last if /^\.\r\n$/;	# loop til lone period
+X		if (m#^(.)(.*)\t([^\t]*)\t([^\t]+)\t(\d+)\s*$#) {
+X			# We have a link to process.
+X			$type = $1;
+X			$name = $2;
+X			$path = $3;
+X			$host = $4;
+X			$port = $5;
+X			$host =~ s/^\s*//;
+X			$host =~ s/\s*$//;
+X			$name =~ s/^\s*//;
+X			$name =~ s/\s*$//;
+X			&normalize();
+X
+X			# Is this on our stop list?
+X			$link = "$path\t$host\t$port";
+X			$link =~ tr/A-Z/a-z/;
+X			#print ("# Checking \"$link\"\n") if $debug;
+X			if ($stop{$link}) {
+X				print("# STOPPED $name: $path\t$host\t$port\t$type\n") if $debug;
+X				next;
+X			}
+X
+X			# Re-make the link the way %links needs it. :-(
+X			$link = "$path\t$host\t$port\t$type";
+X			$link =~ tr/A-Z/a-z/;
+X
+X			# Have we seen this one before?
+X			if ($links{$link}) {
+X				# Save all names & viahosts, even for
+X				# links we've seen.
+X				$l = $links{$link};
+X				$names[$l] .= "$name\t";
+X				$viahosts[$l] .= "$viahost\t";
+X			} else {
+X				# Nope -- save it.
+X				$links{$link} = ++$nlinks;
+X				$paths[$nlinks] = $path;
+X				$hosts[$nlinks] = $host;
+X				$ports[$nlinks] = $port;
+X				$types[$nlinks] = $type;
+X				$names[$nlinks] = "$name\t";
+X				$viahosts[$nlinks] = "$viahost\t";
+X			}
+X			print("#         $name: $path\t$host\t$port\t$type\n") if $debug;
+X		} else {
+X			print("#         ^ BAD MATCH: $_\n");
+X		}
+X	}
+X	close(N);
+X}
+Xundef(%links);		# don't need this any more...
+X
+X# Now unroll our data structures and generate a report in the form of
+X# a Gopher ".links" file.
+Xfor ($l = 1; $l <= $nlinks; $l++ ) {
+X	@thesenames = split(/\t/, $names[$l]);
+X	@theseviahosts = split(/\t/, $viahosts[$l]);
+X	print("\nName=$thesenames[0]\n#     from $theseviahosts[0]\n");
+X	print("Path=$paths[$l]\n");
+X	print("Host=$hosts[$l]\n");
+X	print("Port=$ports[$l]\n");
+X	print("Type=$types[$l]\n");
+X	for ($i = 1; $i <= $#thesenames; $i++) {
+X		print("#Also $thesenames[$i]\n");
+X		print("#     from $theseviahosts[$i]\n");
+X	}
+X}
+X
+X#----------------------------------------------------------------------------
+X# Normalize a gopher link prior to saving it in %linktab.
+X# Our goal here is largely to resolve duplicates, but we also translate
+X# some links to remote servers to use local ones if possible.
+X#
+X# Global variables used:
+X#	$host $name $path $port $type
+X#	$go4gwhost $go4gwport @go4gwserv
+X#	$waisdir $waishost $waispath $waisport
+X
+Xsub normalize {
+X	local($firstchar, $service, $waissrc);
+X
+X	# Try to resolve WAIS sources to something available locally.
+X	# Look in both $waisdir and subdirectories based on its first char.
+X	if ($type eq "7" && $path =~ m#waissrc:.*/([^/*]+.src)#) {
+X		# WAIS source -- is this available locally?
+X		$waissrc = $1;
+X		$firstchar = substr($waissrc, 0, 1);
+X		$firstchar =~ tr/A-Z/a-z/;
+X		if (-d $waisdir && -f "$waisdir/$waissrc") {
+X			$host = $waishost;
+X			$port = $waisport;
+X			$path = "waissrc:$waispath/$waissrc";
+X		} elsif (-d "$waisdir/$firstchar" &&
+X				-f "$waisdir/$firstchar/$waissrc") {
+X			$host = $waishost;
+X			$port = $waisport;
+X			$path = "waissrc:$waispath/$firstchar/$waissrc";
+X		}
+X	}
+X
+X	# Try to resolve remote go4gw gateways to the local one.
+X	# (Note: this could backfire if there are non-go4gw paths which
+X	# look like go4gw ones.)
+X	if ($go4gwhost) {
+X		($service) = $path =~ /^(\w*)/;
+X		if ($service && grep(/$service/, @go4gwserv)) {
+X			$host = $go4gwhost;
+X			$port = $go4gwport;
+X		}
+X	}
+X	if ($path =~ /^nntp / && $nntphost && $nntpport) {
+X		$host = $nntphost;
+X		$port = $nntpport;
+X	}
+X
+X	# TO DO: substitute a local g2ftp gateway.
+X}
+X
+X#----------------------------------------------------------------------------
+Xsub tcpconnect {                    #Get TCP info in place
+X   local($host, $hostname) = @_;
+X   $sockaddr = 'S n a4 x8';
+X
+X
+X   ($name,$aliases,$proto) = getprotobyname('tcp');
+X   ($name,$aliases,$port) = getservbyname($port, 'tcp')
+X        unless $port =~ /^\d+$/;
+X   ($name,$aliases,$type,$len,$thisaddr) = gethostbyname($hostname);
+X   ($name,$aliases,$type,$len,$thataddr) = gethostbyname($host);
+X
+X   $this = pack($sockaddr, &AF_INET, 0, $thisaddr);
+X   $that = pack($sockaddr, &AF_INET, $port, $thataddr);
+X
+X   sleep(2);
+X
+X   #socket(N, &PF_INET, &SOCK_STREAM, $proto) || die "socket: $!";
+X   #bind(N, $this)                            || die "bind: $!";
+X   #connect(N, $that)                         || die "connect: $!";
+X   socket(N, &PF_INET, &SOCK_STREAM, $proto) || return 0;
+X   bind(N, $this)                            || return 0;
+X   connect(N, $that)                         || return 0;
+X
+X   return(N);
+X}
+X#----------------------------------------------------------------------------
+X# end of linkmerge
+END_OF_FILE
+if test 14022 -ne `wc -c <'linkmerge'`; then
+    echo shar: \"'linkmerge'\" unpacked with wrong size!
+fi
+chmod +x 'linkmerge'
+# end of 'linkmerge'
+fi
+if test -f 'linkmerge-weekly' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'linkmerge-weekly'\"
+else
+echo shar: Extracting \"'linkmerge-weekly'\" \(15240 characters\)
+sed "s/^X//" >'linkmerge-weekly' <<'END_OF_FILE'
+X#!/bin/csh -f
+X#
+X# linkmerge-weekly -- weekly run of linkmerge from cron to generate
+X#                     RiceInfo's "Information by Subject Area" subtree
+X#
+X# THIS IS JUST A MODEL!!  You should re-write it considerably to meet
+X# your own site's needs.
+X#
+X# History:
+X# 03/18/93  PASR  Original version.
+X# 04/09/93  PASR  Added some directories from the Well.
+X#
+X#---------------------------------------------------------------------
+X
+Xset MERGE="/chico-b/cwis/bin/linkmerge"
+Xset SUBJDIR="/chico-b/cwis/gopher/world/Subject"
+X
+Xif ( -f $SUBJDIR/Aerospace/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Aerospace/.mergelinks $SUBJDIR/.oldlinks/Aerospace
+Xendif
+X$MERGE > $SUBJDIR/Aerospace/.mergelinks <<'EOF'
+Xmerge	1/catalog/aero	flubber.ciesin.org	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Agriculture/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Agriculture/.mergelinks $SUBJDIR/.oldlinks/Agriculture
+Xendif
+X$MERGE > $SUBJDIR/Agriculture/.mergelinks <<'EOF'
+Xmerge	1/.dir/ams.taes.ag.resource	tamuts.tamu.edu	70
+Xmerge	1/catalog/Agriculture	flubber.ciesin.org	70
+Xmerge	1/catalog/Forestry	flubber.ciesin.org	70
+Xmerge	1/Wide Area Information Services databases/Agriculture	pinus.slu.se	70
+Xmerge	1/Selected/Agriculture	hunter.unr.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Anth/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Anth/.mergelinks $SUBJDIR/.oldlinks/Anth
+Xendif
+X$MERGE > $SUBJDIR/Anth/.mergelinks <<'EOF'
+Xmerge	1/.dir/ethnic.dir	tamuts.tamu.edu	70
+Xmerge	1/Wide Area Information Services databases/Anthropology	pinus.slu.se	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Arts/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Arts/.mergelinks $SUBJDIR/.oldlinks/Arts
+Xendif
+X$MERGE > $SUBJDIR/Arts/.mergelinks <<'EOF'
+Xmerge	1/.dir/fineart.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/music.dir	tamuts.tamu.edu	70
+Xmerge	1/Subject Tree/Arts	sunic.sunet.se	70
+Xmerge	1/library/disciplines/arts	dewey.lib.ncsu.edu	70
+Xmerge	1/art	nkosi.well.sf.ca.us	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Astronomy/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Astronomy/.mergelinks $SUBJDIR/.oldlinks/Astronomy
+Xendif
+X$MERGE > $SUBJDIR/Astronomy/.mergelinks <<'EOF'
+Xmerge	1/.dir/astronomy.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Astronomy	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/astronomy	dewey.lib.ncsu.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Biology/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Biology/.mergelinks $SUBJDIR/.oldlinks/Biology
+Xendif
+X# The helix stop entry is for Current Contents.
+X$MERGE > $SUBJDIR/Biology/.mergelinks <<'EOF'
+Xmerge	1/topic	weeds.mgh.harvard.edu	70
+Xmerge	1/.dir/biology.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/botany.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Biology	flubber.ciesin.org	70
+Xmerge	1/Wide Area Information Services databases/Biology	pinus.slu.se	70
+Xstop	1/	helix.nih.gov	72
+X'EOF'
+X
+X#if ( -f $SUBJDIR/Census/.mergelinks ) then
+X#	/bin/mv -f $SUBJDIR/Census/.mergelinks $SUBJDIR/.oldlinks/Census
+X#endif
+X#$MERGE > $SUBJDIR/Census/.mergelinks <<'EOF'
+X#merge	1/.dir/census.dir	tamuts.tamu.edu	70
+X#'EOF'
+X
+Xif ( -f $SUBJDIR/Chemistry/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Chemistry/.mergelinks $SUBJDIR/.oldlinks/Chemistry
+Xendif
+X$MERGE > $SUBJDIR/Chemistry/.mergelinks <<'EOF'
+Xmerge	1/.dir/chemistry.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Chemistry	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/chemistry	dewey.lib.ncsu.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Computing/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Computing/.mergelinks $SUBJDIR/.oldlinks/Computing
+Xendif
+X$MERGE > $SUBJDIR/Computing/.mergelinks <<'EOF'
+Xmerge	1/Computer	chico.rice.edu	70
+Xmerge	1/.dir/compsci.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/computing.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/computers	flubber.ciesin.org	70
+Xmerge	1/catalog/computing	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/computer	dewey.lib.ncsu.edu	70
+Xmerge	1/Wide Area Information Services databases/computers-and-software	pinus.slu.se	70
+Xmerge	1/Selected/Computing	hunter.unr.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Economics/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Economics/.mergelinks $SUBJDIR/.oldlinks/Economics
+Xendif
+X$MERGE > $SUBJDIR/Economics/.mergelinks <<'EOF'
+Xmerge	1/.dir/economics.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Economics	flubber.ciesin.org	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Education/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Education/.mergelinks $SUBJDIR/.oldlinks/Education
+Xendif
+X$MERGE > $SUBJDIR/Education/.mergelinks <<'EOF'
+Xmerge	1/.dir/education.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Education	flubber.ciesin.org	70
+Xmerge	1/Wide Area Information Services databases/Education	pinus.slu.se	70
+Xmerge	1/Subject Tree/Learning Sciences	sunic.sunet.se	70
+Xmerge	1/Selected/Schools	hunter.unr.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Environment/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Environment/.mergelinks $SUBJDIR/.oldlinks/Environment
+Xendif
+X$MERGE > $SUBJDIR/Environment/.mergelinks <<'EOF'
+Xmerge	1/.dir/material.safety.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Environment	flubber.ciesin.org	70
+Xmerge	1/Wide Area Information Services databases/envsci	pinus.slu.se	70
+Xmerge	1/Environment	nkosi.well.sf.ca.us	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Geography/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Geography/.mergelinks $SUBJDIR/.oldlinks/Geography
+Xendif
+X$MERGE > $SUBJDIR/Geography/.mergelinks <<'EOF'
+Xmerge	1/catalog/Geography	flubber.ciesin.org	70
+Xmerge	1/catalog/earth	flubber.ciesin.org	70
+Xmerge	1/Selected/Geography	hunter.unr.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Geology/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Geology/.mergelinks $SUBJDIR/.oldlinks/Geology
+Xendif
+X$MERGE > $SUBJDIR/Geology/.mergelinks <<'EOF'
+Xmerge	1/catalog/geology	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/earth	dewey.lib.ncsu.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Government/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Government/.mergelinks $SUBJDIR/.oldlinks/Government
+Xendif
+X$MERGE > $SUBJDIR/Government/.mergelinks <<'EOF'
+Xmerge	1/.dir/polsci.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/law.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/govt.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Government	flubber.ciesin.org	70
+Xmerge	1/catalog/Law	flubber.ciesin.org	70
+Xmerge	1/catalog/Politics	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/government	dewey.lib.ncsu.edu	70
+Xmerge	1/English/Topics/Civil-liberties	otax.tky.hut.fi	70
+Xmerge	1/Subject Tree/Law	sunic.sunet.se	70
+Xmerge	1/Subject Tree/Politics	sunic.sunet.se	70
+Xmerge	1/Politics	nkosi.well.sf.ca.us	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Grants/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Grants/.mergelinks $SUBJDIR/.oldlinks/Grants
+Xendif
+X$MERGE > $SUBJDIR/Grants/.mergelinks <<'EOF'
+Xmerge	1/ogp	ricevm1.rice.edu	70
+Xmerge	1/osr	ricevm1.rice.edu	70
+Xmerge	1/.dir/research.opport.dir	tamuts.tamu.edu	70
+Xmerge	1/Subject Tree/Grants and Funding	sunic.sunet.se	70
+Xmerge	1/Selected/Funding	hunter.unr.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/History/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/History/.mergelinks $SUBJDIR/.oldlinks/History
+Xendif
+X$MERGE > $SUBJDIR/History/.mergelinks <<'EOF'
+Xmerge	1/catalog/History	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/history	dewey.lib.ncsu.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Language/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Language/.mergelinks $SUBJDIR/.oldlinks/Language
+Xendif
+X$MERGE > $SUBJDIR/Language/.mergelinks <<'EOF'
+Xmerge	1/Wide Area Information Services databases/Linguistic	pinus.slu.se	70
+Xmerge	1/Subject Tree/Linguistics	sunic.sunet.se	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/LibSci/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/LibSci/.mergelinks $SUBJDIR/.oldlinks/LibSci
+Xendif
+X$MERGE > $SUBJDIR/LibSci/.mergelinks <<'EOF'
+Xmerge	1/.dir/librsubj.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/infoscience	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/library	dewey.lib.ncsu.edu	70
+Xmerge	1/Subject Tree/Library Science	sunic.sunet.se	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/LitBooks/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/LitBooks/.mergelinks $SUBJDIR/.oldlinks/LitBooks
+Xendif
+X$MERGE > $SUBJDIR/LitBooks/.mergelinks <<'EOF'
+Xmerge	1/Ebooks/By Title	joeboy.micro.umn.edu	70
+Xmerge	1/.dir/journalism.dir	tamuts.tamu.edu	70
+Xmerge	1/library/disciplines/literature	dewey.lib.ncsu.edu	70
+Xmerge	1/Wide Area Information Services databases/Literature	pinus.slu.se	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Math/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Math/.mergelinks $SUBJDIR/.oldlinks/Math
+Xendif
+X$MERGE > $SUBJDIR/Math/.mergelinks <<'EOF'
+Xmerge	1/.dir/math.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Mathematics	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/math	dewey.lib.ncsu.edu	70
+Xmerge	1/Subject Tree/Mathematics	sunic.sunet.se	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Medicine/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Medicine/.mergelinks $SUBJDIR/.oldlinks/Medicine
+Xendif
+X$MERGE > $SUBJDIR/Medicine/.mergelinks <<'EOF'
+Xmerge	1/.dir/medicine.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/nutrition.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Health	flubber.ciesin.org	70
+Xmerge	1/catalog/Nutrition	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/medicine	dewey.lib.ncsu.edu	70
+Xmerge	1/Wide Area Information Services databases/Medicine	pinus.slu.se	70
+Xmerge	1/Subject Tree/Medicine	sunic.sunet.se	70
+Xmerge	1/Selected/Biomedical	hunter.unr.edu	70
+Xstop	1/med/AM-J-FOREN	next1.acs.umn.edu	3333
+Xstop	1/med/AM-J-IND-M	next1.acs.umn.edu	3333
+Xstop	1/ag/ANAT-HISTOL	next1.acs.umn.edu	3333
+Xstop	1/lif/B-EXP-B-MED	next1.acs.umn.edu	3333
+Xstop	1/med/CENT-AFR-J	next1.acs.umn.edu	3333
+Xstop	1/lif/DEVELOP-MED	next1.acs.umn.edu	3333
+Xstop	1/lif/J-INTERN-M	next1.acs.umn.edu	3333
+Xstop	1/med/J-INTERN-M	next1.acs.umn.edu	3333
+Xstop	1/soc/J-PUBL-H-M	next1.acs.umn.edu	3333
+Xstop	1/med/J-PUBL-H-M	next1.acs.umn.edu	3333
+Xstop	1/med/J-SPORT-MED	next1.acs.umn.edu	3333
+Xstop	1/med/J-ROY-S-MED	next1.acs.umn.edu	3333
+Xstop	1/lif/J-ROY-S-MED	next1.acs.umn.edu	3333
+Xstop	1/ag/J-VET-MED-B	next1.acs.umn.edu	3333
+Xstop	1/med/MT-SINAI-J	next1.acs.umn.edu	3333
+Xstop	1/med/N-ENG-J-MED	next1.acs.umn.edu	3333
+Xstop	1/lif/N-ENG-J-MED	next1.acs.umn.edu	3333
+Xstop	1/lif/NUCL-MED-BI	next1.acs.umn.edu	3333
+Xstop	1/lif/STAT-MED	next1.acs.umn.edu	3333
+Xstop	0/med/CENT-AFR-J/0/TRADITIONAL-MEDICINE	next1.acs.umn.edu	3333	0
+Xstop	1/lif/TREND-CARD	next1.acs.umn.edu	3333
+Xstop	1/lif/YALE-J-BIOL	next1.acs.umn.edu	3333
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Networks/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Networks/.mergelinks $SUBJDIR/.oldlinks/Networks
+Xendif
+X$MERGE > $SUBJDIR/Networks/.mergelinks <<'EOF'
+Xmerge	1/Computer/AroundTheNet/Networks	chico.rice.edu	70
+Xmerge	1/catalog/network	flubber.ciesin.org	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Oceanography/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Oceanography/.mergelinks $SUBJDIR/.oldlinks/Oceanography
+Xendif
+X$MERGE > $SUBJDIR/Oceanography/.mergelinks <<'EOF'
+Xmerge	1/catalog/Oceanography	flubber.ciesin.org	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Physics/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Physics/.mergelinks $SUBJDIR/.oldlinks/Physics
+Xendif
+X$MERGE > $SUBJDIR/Physics/.mergelinks <<'EOF'
+Xmerge	1/.dir/physics.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/Physics	flubber.ciesin.org	70
+Xmerge	1/library/disciplines/physics	dewey.lib.ncsu.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/RelPhil/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/RelPhil/.mergelinks $SUBJDIR/.oldlinks/RelPhil
+Xendif
+X$MERGE > $SUBJDIR/RelPhil/.mergelinks <<'EOF'
+Xmerge	1/.dir/religion.dir	tamuts.tamu.edu	70
+Xmerge	1/.dir/philosophy.dir	tamuts.tamu.edu	70
+Xmerge	1/library/disciplines/religion	dewey.lib.ncsu.edu	70
+Xmerge	1/Subject Tree/Philosophy	sunic.sunet.se	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/SocPsy/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/SocPsy/.mergelinks $SUBJDIR/.oldlinks/SocPsy
+Xendif
+X$MERGE > $SUBJDIR/SocPsy/.mergelinks <<'EOF'
+Xmerge	1/.dir/psychology.dir	tamuts.tamu.edu	70
+Xmerge	1/library/disciplines/social	dewey.lib.ncsu.edu	70
+Xstop	nntp ls soc 	riceinfo.rice.edu	1103
+Xstop	1/soc	msuinfo.cl.msu.edu	70
+X'EOF'
+X
+Xif ( -f $SUBJDIR/Weather/.mergelinks ) then
+X	/bin/mv -f $SUBJDIR/Weather/.mergelinks $SUBJDIR/.oldlinks/Weather
+Xendif
+X$MERGE > $SUBJDIR/Weather/.mergelinks <<'EOF'
+Xstop	0/Weather/About	chico.rice.edu	70
+Xmerge	1/Weather	chico.rice.edu	70
+Xmerge	1/.dir/weather.dir	tamuts.tamu.edu	70
+Xmerge	1/catalog/weather	flubber.ciesin.org	70
+Xmerge	1/catalog/climate	flubber.ciesin.org	70
+X'EOF'
+X
+Xexit
+X
+X##########################################################################
+X#
+X# Leftovers -- subject directories from various sources which couldn't be
+X# fit into the above scheme
+X
+X# ciesin leftovers
+X1Energy 1/catalog/Energy	flubber.ciesin.org	70
+X1Humanities	1/catalog/Humanities	flubber.ciesin.org	70
+X1Libraries	1/catalog/Libraries	flubber.ciesin.org	70
+X1Molecular Biology	1/catalog/molecular	flubber.ciesin.org	70
+X1Science	1/catalog/Science	flubber.ciesin.org	70
+X1Social Science 1/catalog/social	flubber.ciesin.org	70
+X1Society and Culture	1/catalog/society	flubber.ciesin.org	70
+X
+X# ncsu leftovers
+X1Agriculture and Biology	1/library/disciplines/agriculture	dewey.lib.ncsu.edu	70
+X1Earth Science	1/library/disciplines/earth	dewey.lib.ncsu.edu	70
+X
+X# pinus leftovers
+X#1Archie databases	1/Wide Area Information Services databases/archie-dbs	pinus.slu.se	70
+X#1Bibliographies 1/Wide Area Information Services databases/Bibliographies	pinus.slu.se	70
+X#1FTP archives	1/Wide Area Information Services databases/ftp-archives pinus.slu.se	70
+X#1Graphics	1/Wide Area Information Services databases/Graphics	pinus.slu.se	70
+X#1Library catalogues	1/Wide Area Information Services databases/library-catalogues	pinus.slu.se	70
+X#1Miscellaneous	1/Wide Area Information Services databases/Miscellaneous	pinus.slu.se	70
+X#1Newsgroup and Mailing-list archives	1/Wide Area Information Services databases/newsgroup-archives	pinus.slu.se	70
+X#1Pacific Studies	1/Wide Area Information Services databases/pacstud	pinus.slu.se	70
+X#1Social Science 1/Wide Area Information Services databases/socsci	pinus.slu.se	70
+X#1Whois	1/Wide Area Information Services databases/Whois	pinus.slu.se	70
+X
+X# sunet leftovers
+X#0A_List_of_Contents	0/Subject Tree/A_List_of_Contents	sunic.sunet.se	70
+X#0About the Subject Tree 0/Subject Tree/About the Subject Tree	sunic.sunet.se	70
+X#1Biology subject tree	1/	gopher.embnet.unibas.ch	70
+X#1Conferences, (from Norway)	1/Subject Tree/Conferences, (from Norway)	sunic.sunet.se	70
+X#1Drugs	1/English/Topics/Drugs	otax.tky.hut.fi	70
+X#1Geography and Oceanography	1/Subject Tree/Geography and Oceanography	sunic.sunet.se	70
+X#1LPF	1/English/Topics/LPF	otax.tky.hut.fi	70
+X#1Linux	1/English/Topics/Linux	otax.tky.hut.fi	70
+X#1Networking and Computing	1/Subject Tree/Networking and Computing sunic.sunet.se	70
+X#1On Usenet	1/Subject Tree/On Usenet	sunic.sunet.se	70
+X#1WAIS Subject Tree (via SLU, Sweden)	1/Wide Area Information Services databases	pinus.slu.se	70
+X#1Weather-Astronomy-Navigation	1/Subject Tree/Weather-Astronomy-Navigation	sunic.sunet.se	70
+X
+X# unr leftovers
+X#1Humanities	1/Selected/Humanities	hunter.unr.edu	70
+X#1Science	1/Selected/Science	hunter.unr.edu	70
+X#1Social Sciences	1/Selected/Social	hunter.unr.edu	70
+X
+X# tamu leftovers
+X#1Bulletin Boards	1/.dir/bbs.dir	tamuts.tamu.edu	70
+X#	1/.dir/census.dir	tamuts.tamu.edu	70
+X#1Comics 1/.dir/comics.dir	tamuts.tamu.edu	70
+X#1Disability Information 1/.dir/disability.dir	tamuts.tamu.edu	70
+X#1Earth Science	1/.dir/earthsci.dir	tamuts.tamu.edu	70
+X#1Images 1/.dir/images.dir	tamuts.tamu.edu	70
+X#1Software	1/.dir/software.dir	tamuts.tamu.edu	70
+X#1Sounds 1/.dir/sounds.dir	tamuts.tamu.edu	70
+X#1Subject Listings from other Gopher Servers	1/.dir/subject.gophers.dir	tamuts.tamu.edu	70
+X#1Transportation 1/.dir/transportation.dir	tamuts.tamu.edu	70
+X#1Travel 1/.dir/travel.dir	tamuts.tamu.edu	70
+X
+X# end of linkmerge-weekly script
+END_OF_FILE
+if test 15240 -ne `wc -c <'linkmerge-weekly'`; then
+    echo shar: \"'linkmerge-weekly'\" unpacked with wrong size!
+fi
+chmod +x 'linkmerge-weekly'
+# end of 'linkmerge-weekly'
+fi
+echo shar: End of shell archive.
+exit 0

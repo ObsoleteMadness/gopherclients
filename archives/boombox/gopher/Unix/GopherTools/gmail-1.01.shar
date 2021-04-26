@@ -1,0 +1,1782 @@
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then unpack
+# it by saving it into a file and typing "sh file".  To overwrite existing
+# files, type "sh file -c".  You can also feed this as standard input via
+# unshar, or by typing "sh <file", e.g..  If this archive is complete, you
+# will see the following message at the end:
+#		"End of shell archive."
+# Contents:  gmail.8 gmailcal.8 gmail gmailcal gmailbatch
+# Wrapped by riddle@chico on Mon Mar 29 20:39:39 1993
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+if test -f 'gmail.8' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gmail.8'\"
+else
+echo shar: Extracting \"'gmail.8'\" \(7341 characters\)
+sed "s/^X//" >'gmail.8' <<'END_OF_FILE'
+X.TH GMAIL 8 Local
+X.SH NAME
+Xgmail - mail-to-Gopherspace interface
+X.RE
+X.SH SYNOPSIS
+X.B gmail
+X.B [-c]
+X.RE
+X.SH DESCRIPTION
+X.I Gmail
+Xis a perl(1) script which interprets an incoming mail message and,
+Xif it is acceptable, uses it to manipulate data in a Gopher data tree.
+X
+X.I Gmail
+Xexpects a Unix-style mail message on standard input.
+XIt uses the sender of the message (as determined from the From line)
+Xto determine whether the user is authorized to manipulate Gopher
+Xdata and, if so, the directory where their operations are to take place.
+X
+XAn authorized user can submit an item to Gopher by mailing it to
+X.I gmail
+Xwith the title on the Subject line and the data itself in the body of the
+Xmessage.  
+X.I Gmail
+Xwill map its title into a well-formed Unix filename (with no special
+Xcharacters to confuse the shell) and copy the data into that file.  It
+Xwill also create an associated
+X.B .cap
+Xfile to allow
+Xgopherd(8) to map the filename back to the title.
+XIf the file already exists,
+X.I gmail
+Xwill overwrite it.
+X
+XIf the first word of the subject is
+X.I delete
+X(or 
+X.I DELETE
+Xor some mixed-case
+Xequivalent), 
+X.I gmail
+Xwill generate a filename from the rest of the Subject line and delete it
+X(as well as the associated ``.cap'' file).
+X
+X.I Gmail
+Xperforms some stylistic checking: Gopher data submitted via
+X.I gmail
+Xmust consist entirely of printable ASCII characters and
+Xno lines in the message body may be over 80 characters long.
+X
+XWhen
+X.I gmail
+Xputs submitted data into a file in the Gopher data tree, it
+Xinserts the title as the first line of the file (this should make it easier
+Xto index data submitted by
+X.I gmail
+Xusing WAIS or some other full-text index software).
+X.I Gmail
+Xalso appends a byline in the form:
+X.nf
+X
+X   [Submitted by: Mojo Nixon (mojo@foo.edu)
+X                  Sun, 3 Jan 93 13:00:09 CST]
+X
+X.fi
+X.SH CALENDAR MODE
+XIf
+X.I gmail
+Xis invoked with a
+X.I -c
+Xoption, it will operate in ``calendar'' mode
+Xand will expect messages to be items for an events
+Xcalendar.  All operations
+Xperformed in calendar mode take place in a
+Xsingle directory within the Gopher data tree, defined by the
+X.B $caldir
+Xvariable in the
+X.I gmail
+Xscript.
+X
+XIn calendar mode,
+X.I gmail
+Xwill attempt to parse
+Xthe beginning of the Subject line (after an optional ``delete'' keyword)
+Xas a date, force it into a standard
+Xform, and use that together with the rest of the Subject line as
+Xa title.
+XDates are expected to be in the format
+X.I yy-mm-dd
+Xor
+X.I yyyy-mm-dd
+Xwhere
+X.I yy
+Xor
+X.I yyyy
+Xis the year,
+X.I mm
+Xis the month and
+X.I dd
+Xis the day.
+X.I Gmail
+Xhas a certain amount of flexibility in parsing dates; all
+Xof the following examples are equivalent:
+X.nf
+X
+X   93-01-04: Course registration begins
+X   93-1-4 Course registration begins
+X   1993/01/04 (Mon) : Course registration begins
+X
+X.fi
+XAll of these would be turned into the following Gopher title:
+X.nf
+X
+X   1993-01-04 (Mon): Course registration begins
+X
+X.fi
+X.RE
+X.SH DIAGNOSTICS
+X.I Gmail
+Xattempts to provide ample feedback to users and administrators
+Xentirely by electronic mail.
+XAll successful and unsuccessful operations result in mail being sent
+Xback to the sender, including both an explanatory
+Xmessage and the sender's original submission.
+XIn the case of delete operations, the deleted data is returned as well.
+XThis gives the sender a chance to catch mistakes and also
+Xto check for possible mail forgeries.
+XThe
+X.I gmail
+Xadministrator receives a copy in the event of errors and
+Xunauthorized admissions and, if the
+X.B $debug_admin
+Xvariable in the
+X.I gmail
+Xscript is defined, in normal successful operations as well.
+X
+XIn order to avoid mail loops,
+X.I gmail
+Xwill exit silently if it receives mail from root, postmaster or
+Xthe mailer-daemon or if the subject line appears to be an error message.
+X.RE
+X.SH ACCESS CONTROL
+X.I Gmail
+Xuses a static file (defined by the
+X.B $gmailers
+Xvariable at the beginning of the perl(1) script)
+Xto determine who is authorized to use the gmail interface and
+Xwhere their data is to go.  Each line of this ``gmailers'' file is
+Xin the following format:
+X
+X   sender's-email-address [calendar] [directory]
+X
+XIf the ``calendar'' keyword is present, the user is authorized to
+Xsubmit calendar events via a gmail process running in calendar mode.
+XIf a directory is specified, the user is authorized to submit
+Xdata to that directory.  Only one directory may be specified per user.
+XThe format of the file also allows for blank lines and comments beginning
+Xwith ``#''.  Example:
+X.nf
+X
+X   # This is a sample gmailers file.
+X   tjones@foo.edu /foo1/gopher-data/policy         # directory only
+X   nsinatra@bar.edu calendar                       # calendar only
+X   mojo@foo.edu calendar /foo1/gopher-data/policy  # both
+X
+X.fi
+X.RE
+X.SH INSTALLATION
+X.I Gmail
+Xis best installed by being invoked from a
+X.B .forward
+Xfile in the home directory of a pseudo-user with write permission
+Xin the portions of the Gopher data tree where
+X.I gmail
+Xis to deliver data.
+X(The
+X.B .forward
+Xfile must be owned by the pseudo-user or the mail system will ignore it.)
+X
+XFor example, consider the following /etc/passwd entries for
+Xthe machine foo.edu:
+X.nf
+X
+X   cwis:*:999:20:CWIS Operator:/foo/cwis:/bin/csh
+X   cwis-mail:*:999:20:CWIS Operator:/foo/cwis/cwis-mail:/bin/csh
+X   cwis-cal:*:999:20:CWIS Operator:/foo/cwis-cal:/bin/csh
+X
+X.fi
+XIf ~cwis-mail/.forward contains the following (the quotes are necessary):
+X.nf
+X
+X   "| /usr/local/etc/gmail"
+X
+X.fi
+Xand ~cwis-cal/.forward contains the following:
+X.nf
+X
+X   "| /usr/local/etc/gmail -c"
+X
+X.fi
+Xthen authorized users can submit ordinary Gopher items
+Xby mailing them to ``cwis-mail@foo.edu''
+Xand submit calendar items by mailing them to ``cwis-cal@foo.edu''.
+X.RE
+X.SH CONFIGURATION
+XThe following perl(1) variables must be set according to the needs of
+Xyour site at the beginning of the
+X.I gmail
+Xscript (see the comments in the script for more details):
+X.TP
+X.B @safedir
+XA list of directories under which it is acceptable to deliver data
+X(usually just the root of your Gopher data tree).
+X.TP
+X.B $caldir
+XThe directory where calendar data is to be placed.
+X.TP
+X.B $gmailers
+XThe name of the file containing authorized users
+Xand their target directories.
+X.TP
+X.B $publiccal
+XA switch to determine whether people submitting calendar items
+Xmust be authorized and listed in the $gmailers file.
+X.TP
+X.B $prob_admin
+XThe electronic mail address of the Gopher administrator to be notified
+Xin case of errors and unathorized submissions.
+X.TP
+X.B $debug_admin
+XThe electronic mail address of the Gopher administrator to be notified
+Xin case of normal, successful submissions.
+X.TP
+X.B $MAIL
+XThe preferred mail program on your system (probably /bin/mail).
+X.TP
+X.B $server_name
+XA short descriptive name of your Gopher server.
+X.TP
+X.B $sig
+XGopher administrator contact info.
+X.TP
+X.B $disclaimer
+XAn optional disclaimer to be appended to each item saved in Gopherspace.
+X.TP
+X.B $UMASK
+XThe Unix file permissions mask.  Use 002 if you wish to have
+Xfiles created by gmail be group-writeable, 022 otherwise.
+X.RE
+X.SH "BUGS"
+XReturns a copy of deleted data but not overwritten data; doesn't save
+Xa copy of either one.
+X
+XAccepts a single date in calendar mode but not a range of dates.
+X
+XRelies on mail to inform administrator of problems; has no logging.
+X.RE
+X.SH "SEE ALSO"
+Xgmailcal(8),
+Xgopherd(8),
+Xperl(1)
+X.SH AUTHORS
+XPrentiss Riddle (riddle@rice.edu)
+X
+XSome code gratefully borrowed from the
+X.I audit.pl
+Xpackage by Martin Streicher (strike@convex.com).
+END_OF_FILE
+if test 7341 -ne `wc -c <'gmail.8'`; then
+    echo shar: \"'gmail.8'\" unpacked with wrong size!
+fi
+# end of 'gmail.8'
+fi
+if test -f 'gmailcal.8' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gmailcal.8'\"
+else
+echo shar: Extracting \"'gmailcal.8'\" \(4290 characters\)
+sed "s/^X//" >'gmailcal.8' <<'END_OF_FILE'
+X.TH GMAIL-CAL 8 Local
+X.SH NAME
+Xgmailcal - organize an events calendar maintained with gmail(8l)
+X.RE
+X.SH SYNOPSIS
+X.B gmailcal
+X.RE
+X.SH DESCRIPTION
+X.I Gmailcal
+Xis a perl(1) script which organizes a calendar of events submitted
+Xvia the mail-to-Gopherspace interface gmail(8).
+X
+X.I Gmailcal
+Xis intended to be run shortly after midnight each night from crontab.
+XIt performs maintenance functions on a directory of calendar event files
+Xcreated by
+X.I gmail
+Xand creates Gopher links constituting alternate views of the upcoming
+Xevents organized by date.  The result should be a Gopher menu structure
+Xwhich looks like this:
+X.nf
+X
+X   Foobar University events schedule/
+X      About the Foobar University events schedule
+X      Today/
+X      Tomorrow/
+X      This week/
+X      Next week/
+X      January, 1993/
+X      February, 1993/
+X      March, 1993/
+X      April, 1993/
+X      May, 1993/
+X      All upcoming events/
+X      Past events/
+X
+X.fi
+XThe ``All upcoming events'' directory contains the actual events files
+Xstored by
+X.I gmail.
+XEvents for dates which have already taken place are moved by 
+X.I gmailcal
+Xinto the ``Past events'' directory, where they are kept for a configurable
+Xnumber of days and then deleted.
+XThe other directories (``Today'', ``Tomorrow'', etc.) contain
+XGopher links to the appropriate events in the ``All upcoming events''
+Xdirectory.
+X
+X.I Gmailcal
+Xalso creates a Gopher link in each directory to the
+X``About'' file in the parent directory, which should contain a
+Xdescription of the events calendar and how to submit items to it.
+X.RE
+X.SH CONFIGURATION
+XThe following perl(1) variables must be set according to the needs of
+Xyour site at the beginning of the
+X.I gmailcal
+Xscript (see the comments in the script for more details):
+X.TP
+X.B $caldir
+XThe directory where
+X.I gmail
+Xplaces events calendar data
+X(the same variable must be set in the
+X.I gmail
+Xscript).  It should probably end in
+Xthe word ``Upcoming'' (for example, ``/foo/gopher/events/Upcoming'').
+XThe alternate views created by
+X.I gmailcal
+Xwill go into sibling
+Xdirectories relative to $caldir (for example, ``../Today'').
+X.TP
+X.B $Host
+XThe hostname of the host running the Gopher server which will serve out
+Xthe events calendar.
+X.TP
+X.B $Port
+XThe TCP/IP port number of the Gopher server.
+X.TP
+X.B $Path
+XThe Gopher's-eye view of the same directory specified in $caldir, including
+Xthe initial type specifier ``1''.
+XExample: ``1/events/Upcoming''.
+X.TP
+X.B $keepold
+XThe number of days to keep old events in the ``Past'' directory
+Xbefore deleting them.
+X.TP
+X.B $weekbreak
+XThe day of the week on which the week begins (0 for Sunday, 1 for Monday).
+X.TP
+X.B $monthviews
+XThe number of months ahead to maintain month-by-month views.
+X.TP
+X.B $description
+XA short description of the events calendar
+X(e.g., ``the Foobar University events schedule'').
+X.TP
+X.B $debug
+XSet to 1 to receive extensive debug output, 0 to
+Xreceive only serious error messages.
+X.TP
+X.B $UMASK
+XThe Unix file permissions mask.  Use 002 if you wish to have
+Xfiles created by gmailcal be group-writeable, 022 otherwise.
+X.RE
+X.SH "FULL-TEXT INDEXES"
+X.I Gmailcal
+Xdoes not create a full-text index of the events data, but you can
+Xuse WAIS or your favorite software to do so.
+X.I Gmail
+Xinserts the title of each item as the first line of each file it
+Xputs into Gopherspace, so the WAIS "-t first_line" should be useful.
+X.RE
+X.SH DIAGNOSTICS
+X.I Gmailcal
+Xproduces error messages on stderr.  It will operate silently if there
+Xare no errors, unless the
+X.B $debug
+Xperl variable in the
+X.I gmailcal
+Xscript is turned on, in which
+Xcase it will produce copious information about everything it does.
+X.RE
+X.SH "FILES"
+XThe actual filenames of the various files and
+Xdirectories (relative to $caldir) are:
+X.nf
+X
+X   ../About
+X   ../Today
+X   ../Tomorrow
+X   ../This_week
+X   ../Next_week
+X   ../yyyy-mm (for the month-by-month views)
+X   ../Past
+X
+X.fi
+XWithin each directory,
+X.I gmailcal
+Xcreates ``.links'' files and/or ``.cap'' subdirectories.
+X.RE
+X.SH "BUGS"
+XThe gopherd(8) Gopher server can easily become very confused about the
+Xorder of items if there are problems with ``Numb='' entries in .cap files.
+X
+XIf there are no events in a given month, it would be nice if that directory
+Xdid not appear at all.
+X.RE
+X.SH "SEE ALSO"
+Xgmail(8),
+Xgopherd(8),
+Xperl(1),
+Xcrontab(1),
+Xcrontab(5).
+X.SH AUTHOR
+XPrentiss Riddle (riddle@rice.edu)
+END_OF_FILE
+if test 4290 -ne `wc -c <'gmailcal.8'`; then
+    echo shar: \"'gmailcal.8'\" unpacked with wrong size!
+fi
+# end of 'gmailcal.8'
+fi
+if test -f 'gmail' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gmail'\"
+else
+echo shar: Extracting \"'gmail'\" \(26490 characters\)
+sed "s/^X//" >'gmail' <<'END_OF_FILE'
+X#!/usr/local/bin/perl
+X#
+X#  gmail: mail-to-Gopherspace interface
+X#
+X#  usage:  gmail [-c]
+X#
+X#  PASR 12/28/92  Rough draft.
+X#  PASR 12/31/92  Initial test installation.
+X#  PASR 01/03/93  Added DELETE function.
+X#  PASR 01/05/93  Reworded authorization rejection message.
+X#  PASR 01/05/93  Forced sender's address to lowercase for easy matching.
+X#  PASR 01/08/93  Declared this release 0.1 for beta testing.
+X#  PASR 01/15/93  Fixed bug caused by perl's inability to write to long
+X#                 paths; removed $caldir_by_date; made year in output
+X#                 format be yyyy instead of yy to facilitate sorting.
+X#  PASR 02/02/93  Added the title line to the body of each file saved
+X#                 to facilitate WAIS indexing.
+X#  PASR 02/03/93  Changed "From" lines to ">From" in header in order
+X#                 to avoid confusing mailers when we send out feedback.
+X#                 Reversed the logic of the test in &check_target (it was
+X#                 bogus).
+X#                 Declared this release 0.2 for further beta testing.
+X#  PASR 02/04/93  Force addresses in $gmailers file to lower case since
+X#                 the gmail administrator can't be counted on to remember
+X#                 to do so. :-)
+X#  PASR 02/05/93  Added "$publiccal" mode: if it is turned on, submissions
+X#                 in calendar mode require no authorization in the $gmailers
+X#                 file (although deletions still do).
+X#                 Added an optional "$disclaimer".
+X#  PASR 02/22/93  Declared this release 1.0 for general use.
+X#  PASR 03/07/93  Fixed security problem by quoting $sender in mail pipe.
+X#                 Attempt to prevent mail loops when error messages bounce
+X#                 back to gmail.
+X#                 Fixed whitespace cleanup in &normalize.
+X#                 Don't allow tabs in Name= fields in .cap files
+X#                 (reportedly gopherd can be confused by them).
+X#                 Unlink data file if corresponding .cap file can't be made.
+X#  PASR 03/09/93  Create .cap files only when necessary.
+X#                 Moved misplaced unlink() calls to take place before &abends.
+X#  PASR 03/12/93  Removed unnecessary &initialize call; just use &parse_message.
+X#  PASR 03/29/93  Declared this version 1.01.
+X#
+X#  TODO: Think about cleaning up &delete_it() (should move aside old
+X#        data rather than just gobbling it into memory).
+X#  TODO: Think about screening for binhex and other ASCIIfied binary formats.
+X#  TODO: Think about extending the "public calendar" mode to cover
+X#        non-calendar items as well (a "public" mode which puts data into
+X#        a "$publicdir" directory).
+X#  TODO: Think about including a command-line option which causes header
+X#        info to be read from a file, allowing a single installation to
+X#        be used in multiple configurations (in particular, to allow
+X#        multiple events calendars).
+X#  TODO: Think about a reasonable way to specify multiple target directories
+X#        per sender.  (Hairball!)
+X#  TODO: Think about notifying the original submitter if someone else
+X#        deletes or overwrites her data.
+X#  TODO: Think about using $address instead of/in addition to $sender
+X#        for address matching.
+X#  TODO: Think about a way to handle directory names in the gmailers file
+X#	 containing whitespace or # signs.
+X#  TODO: Add better date checking (eliminate "Feb 30", etc.).
+X
+X#--------------------------------------------------------------------------
+X# CONFIGURATION: modify these to suit your site!
+X
+X# All targets must live under a directory in this list.
+X# (EXAMPLE: @safedir = ("/foo/bar/dir1", "/foo/bar/dir2");
+X@safedir = ("/foo/cwis/gopher/world", "/foo/cwis/gopher/rice",
+X            "/foo/cwis/gopher/test");
+X
+X# Calendar data live under here (only needed if calendar mode is turned on)
+X$caldir = "/foo/cwis/gopher/world/Calendars/Events/Upcoming";
+X
+X# File which lists authorized users and their target directories:
+X$gmailers = "/foo/cwis/gopher/etc/gmailers";
+X
+X# Public calendar switch: if this is set to 1, items submitted in calendar
+X# mode (the "-c" flag) will not require authorization in the $gmailers file.
+X# Deletions and non-calendar items will still require authorization.
+X# This option is irrelevant if you are not running in calendar mode.
+X$publiccal = 0;
+X
+X# Administrator to notify in case of errors or unauthorized submissions:
+X$prob_admin = "jdoe@foobar.edu";
+X
+X# Administrator to notify of *every* submission (leave this undefined if
+X# you only want to hear about problems):
+X$debug_admin = "jdoe@foobar.edu";
+X
+X# Preferred mailer program.  Must accept recipients' addresses on command
+X# line and "Subject:" line on standard input.
+X$MAIL = "/bin/mail";
+X
+X# A short descriptive name of your Gopher server for use in feedback and
+X# error messages.  It should be under 40 characters for best results.
+X$server_name = "the FooInfo Gopher server";
+X
+X# Gopher administrator contact info and signature for use in feedback and
+X# error messages.
+X$sig =
+X"To contact the FooInfo Gopher administrator with questions, problems
+Xor suggestions, send mail to fooinfo@foobar.edu or call the Consulting
+XCenter at 527-4983.
+X
+X-- FooInfo Gopher Administrator, Information Systems, fooinfo@foobar.edu
+X-- This message was automatically generated.
+X";
+X
+X# Optional disclaimer to be appended to each item saved in Gopherspace.
+X# Leave it blank if you don't need a ubiquitous disclaimer.
+X#$disclaimer = "[Foobar University is not responsible for this stuff.]";
+X$disclaimer = "";
+X
+X# Umask: the Unix file permissions mask.  Use 002 if you wish to have
+X# files created by gmail be group-writeable, 022 otherwise.
+X$UMASK = 022;
+X
+X#--------------------------------------------------------------------------
+X# Feedback and error messages.  You can tinker with these if you like,
+X# but it shouldn't be necessary.
+X
+X# Acceptance message.
+X$accept_msg =
+X"Your submission was posted to $server_name.
+XPlease use Gopher to check it and make sure it looks as you
+Xintended.  If it does not, please submit it again.
+X
+XIf you did *not* submit this request, it may mean that someone has been
+Xforging electronic mail in your name.  Please contact the Gopher
+Xadministrator immediately.
+X";
+X
+X# Authorization message.
+X$auth_msg =
+X"Your submission was not accepted for $server_name
+Xbecause you have not been authorized to submit data by mail from this
+Xe-mail address.  If you would like to sign up to do so, please contact
+Xthe Gopher administrator.
+X";
+X
+X# Date message.
+X$date_msg =
+X"Your announcement was not accepted for $server_name
+Xbecause the subject line did not contain an appropriately formatted
+Xdate.  The subject line must begin with a date in the format
+X\"yy-mm-dd\" or \"yyyy-mm-dd\".  For example:
+X
+X     Subject: 92-10-31: Institutional Halloween Party
+X
+X     Subject: 2001-01-10: Twenty-first Century Lecture
+X
+XPlease reformat the date in your subject line and resubmit your
+Xannouncement.
+X";
+X
+X# Deletion acknowledgement.
+X$del_ack_msg =
+X"Your request to delete data in $server_name
+Xwas accepted.  Please check the data below and make sure that it was
+Xwhat you intended to delete.
+X
+XIf you did *not* request that this item be deleted, it may mean that
+Xsomeone has been forging electronic mail in your name.  Please save
+Xthis message and contact the Gopher administrator immediately.
+X";
+X
+X# Deletion error message.
+X$del_err_msg =
+X"Your deletion request for data in $server_name
+Xwas not processed because of the following error:
+X";
+X
+X# Error message.
+X$error_msg =
+X"Your submission was not accepted for $server_name
+Xbecause of the following error:
+X";
+X
+X# Style message.
+X$style_msg =
+X"Your submission was not accepted for $server_name
+Xbecause either (1) it is not strictly printable ASCII text or (2) it
+Xcontains lines which are greater than 80 columns in length.  Please
+Xreformat your data appropriately and resubmit it.
+X";
+X
+X# Separators for displaying the submitted item.
+X$subsep = "-------------------- Submitted request follows --------------------";
+X$subend = "-------------------- End of submitted request ---------------------";
+X$delsep = "---------------------- Deleted item follows -----------------------";
+X$delend = "---------------------- End of deleted item ------------------------";
+X
+X#--------------------------------------------------------------------------
+X
+X# Further initialization.  Don't mess with this.
+Xrequire("ctime.pl");
+Xrequire("timelocal.pl");
+X$auth = 0;			# Is the sender authorized?
+X$calendar = 0;			# Are we in calendar mode? ("-c" option)
+X$delete = 0;			# Are we in delete mode? ("DELETE" keyword)
+X$usage = "usage: gmail [-c]";
+Xumask $UMASK;
+X$loopsenders = '^(root|mailer-daemon|postmaster)\b';
+X				# senders who may mean we're in a mail loop
+X
+X# Now we're rolling...
+X
+X# Refuse to run as root.
+X&abend("Data not accepted for Gopher due to gmail error",
+X	$error_msg . "gmail should not be run as root.\n")
+X	if ($> == 0);
+X
+X# Process command-line options.
+XARGS:
+Xwhile ($#ARGV >= 0) {
+X	$arg = $ARGV[0];
+X	shift;
+X	if ($arg eq "-c") {
+X		$calendar = 1;
+X		next ARGS;
+X	}
+X	&abend("Data not accepted for Gopher due to gmail error",
+X		$error_msg . "Unrecognized command-line option: $arg\n\n"
+X		. $usage);
+X}
+X
+X# Parse the incoming message.  Global variables returned which we will use:
+X#   $body  $friendly  @headers  $header  $sender  $subject
+X&parse_message(STDIN);
+X$header =~ s/^From/>From/;	# Don't want to confuse mailer in feedback
+X$subject =~ tr/\t/ /;		# Tabs could confuse gopherd.
+X$sender =~ s/'//g;		# We'll want to enclose $sender in 's later.
+X&abend("Data not accepted for Gopher due to gmail error",
+X	$error_msg . "Sender not defined in mail header.\n")
+X	unless ($sender);
+Xif ($sender =~ /$loopsenders/io || 
+X    $subject =~ /(returned mail|user unknown)/i) {
+X	# We may be in a mail loop.  We can't abend the normal way because
+X	# that could perpetuate the loop.  We try to signal our distress
+X	# via other methods, then exit without acknowledging the message.
+X	system("/usr/ucb/logger -i -p mail.error gmail in possible mail loop with '$sender'")
+X		 if (-x "/usr/ucb/logger");
+X	exit(0);
+X}
+X
+X# Try to match the sender in the list of authorized users.
+X$target = &check_auth();
+X
+X# See if this is a delete request.
+X# If so, this will modify the $subject accordingly.
+X$delete = &parse_delete();
+X
+X# If we're in calendar mode, parse the subject line for a date.
+X# This will modify the $subject and $target accordingly.
+X&parse_date() if ($calendar);
+X
+X# Check $target to make sure it safely falls within @safedir.
+X&check_target($target);
+X
+X# Carry out the deletion and exit if we're in delete mode.
+X$filename = &normalize($subject);
+X&delete_it() if $delete;
+X
+X# Check style of title and data.
+X&check_style($subject, $body);
+X
+X# Write the file and the associated .cap file.
+X$byline = "\n[Submitted by: $friendly ($sender)\n               $headers{'date'}]\n";
+X&write_it();
+X
+X# Give the user some positive feedback.
+X&feedback();
+X
+X# Normal end.
+Xexit 0;
+X
+X#--------------------------------------------------------------------------
+X# abend -- mail an error message to the sender and administrator and exit
+X#
+X# This will alert the administrator even if $sender has not yet been
+X# defined...
+X#
+X# usage:  &abend($shortmsg, $longmsg);
+X# Global variables used:
+X#	  $body $header $sender $MAIL $subend $subsep $prob_admin
+X
+Xsub abend {
+X	local($shortmsg, $longmsg) = @_;
+X	if ($sender && sender !~ /$loopsenders/io) {
+X		open (MAIL, "| $MAIL $prob_admin '$sender'");
+X	} else {
+X		open (MAIL, "| $MAIL $prob_admin");
+X	}
+X	print MAIL "Subject: $shortmsg\n\n";
+X	print MAIL "$longmsg\n$sig\n\n";
+X	print MAIL "$subsep\n";
+X	print MAIL "$header";
+X	print MAIL "$body";
+X	print MAIL "$subend\n";
+X	close(MAIL);
+X	# We'd like to exit here with an error but it confuses sendmail...
+X	exit 0;
+X}
+X#--------------------------------------------------------------------------
+X# check_auth -- look up user in list of authorized gmailers
+X#
+X# usage:    $target = &check_auth()
+X# returns:  target directory ($caldir if we are in calendar mode)
+X#
+X# side effect: forces $sender to lower case
+X# global variables used:
+X#	  $calendar $caldir $error_msg $gmailers $auth_msg $sender $target
+X#         $delete $publiccal
+X
+Xsub check_auth {
+X	local($auth, $targ, $matchaddr);
+X
+X	# If we are in calendar mode and *not* in delete mode and the
+X	# "$publiccal" switch is turned on, no further authorization is
+X	# necessary.
+X	return ($caldir) if ($calendar && !$delete && $publiccal);
+X
+X	$sender =~ tr/A-Z/a-z/;		# ignore case for easy matching
+X	open (GMAIL, $gmailers) ||
+X		&abend("Data not accepted for Gopher due to gmail error",
+X			$error_msg . "Can't open gmailers file $gmailers\n$@");
+X	while (<GMAIL>) {
+X		($matchaddr) = /^(\S*)/;
+X		$matchaddr =~ tr/A-Z/a-z/;	# ignore case
+X		if ($matchaddr eq $sender) {
+X			# carve what we want out of the current line
+X			s/\s*#.*//;	# remove comments;
+X			s/\s+$//;	# remove final whitespace;
+X			s/^\s*\S*\s+//;	# remove initial whitespace
+X					# and sender's address
+X			if ($calendar) {
+X				# Look for the "calendar" keyword
+X				$auth = (/\bcalendar\b/);
+X				$targ = $caldir;
+X			} else {
+X				# Remove the "calendar" keyword
+X				s/\s*calendar\s*//;
+X				$auth = $targ = $_;
+X			}
+X			last;
+X		}
+X	}
+X	close(GMAIL);
+X	unless ($auth) {
+X		if ($calendar) {
+X			&abend("Not authorized to submit data to Gopher events calendar", $auth_msg);
+X		} else {
+X			&abend("Not authorized to submit data to Gopher", $auth_msg);
+X		}
+X	}
+X	return($targ);
+X}
+X#--------------------------------------------------------------------------
+X# check_style -- check to make sure that the style is acceptable 
+X#                (i.e., that the subject and body consist of printable ASCII
+X#                characters and the lines in the body are all <80 chars wide).
+X#                Exit with an error message if it is not.
+X#
+X# usage:   &check_style($subject, $body)
+X
+Xsub check_style {
+X	local($subject, $body) = @_;
+X	local($line, $okay, $unprintables);
+X	$unprintables = "[\000-\010\012-\037]";
+X
+X	$okay = 1;
+X	$okay = 0 if ($subject =~ /$unprintables/o);
+X	foreach $line (split(/\n/, $body)) {
+X		if ((length($line) >= 80) || ($line =~ /$unprintables/o)) {
+X			$okay = 0;
+X			last;
+X		}
+X	}
+X	&abend("Data not accepted for Gopher: style problems", $style_msg)
+X		unless $okay;
+X}
+X#--------------------------------------------------------------------------
+X# check_target -- check to make sure target directory is legitimate,
+X#                 exit with an error message if it is not.
+X#
+X# usage:   &check_target($target)
+X# Global variables used:  @safedir
+X
+Xsub check_target {
+X	local($target) = @_;
+X	local($okay, $safe);
+X
+X	$okay = 0;
+X	# Disallow ".." to keep from climbing up out of @safedir.
+X	$okay = 0 if ($target =~ m#(^|/)\.\.(/|$)#);
+X	# Require that $target falls within @safedir.
+X	$target .= "/";
+X	SAFELOOP:
+X	foreach $safe (@safedir) {
+X		if ($target =~ m#^$safe/#) {
+X			$okay = 1;
+X			last SAFELOOP;
+X		}
+X	}
+X	&abend("Data not accepted for Gopher: bad target directory",
+X	 		$error_msg . "Bad target directory: $target\n")
+X		unless $okay;
+X}
+X#--------------------------------------------------------------------------
+X# delete_it -- perform requested deletion of an item in Gopherspace
+X#
+X# usage:  &delete_it()
+X# Global variables used:
+X#	  $filename $subject $target
+X
+Xsub delete_it {
+X	local(@deldata);
+X
+X	# Does the file even exist?
+X	&abend("Data not deleted from Gopher due to error",
+X		$del_err_msg . "File does not exist: $target/$filename\n")
+X		unless ( -f "$target/$filename" );
+X
+X	# Slurp up a copy of data to be deleted.  Yes, this is potentially
+X	# a big waste of memory.  We should probably copy it or move it
+X	# instead (maybe even keep a backup), but we're feeling simple-minded
+X	# today.
+X	open (DATA, "< $target/$filename");
+X	@deldata = <DATA>;
+X	close(DATA);
+X
+X	# Nuke it, and its .cap file too.
+X	unlink("$target/.cap/$filename");
+X	&abend("Data not deleted from Gopher due to error",
+X		$del_err_msg . "Could not delete file $target/$filename\n$@")
+X		unless (unlink("$target/$filename"));
+X
+X	# Success -- give positive feedback and exit.
+X	open (MAIL, "| $MAIL $debug_admin '$sender'");
+X	print MAIL "Subject: Data deleted from Gopher: \"$subject\"\n\n";
+X	print MAIL "$del_ack_msg\n$sig\n";
+X	print MAIL "$delsep\n";
+X	print MAIL "Title:  $subject\n";
+X	print MAIL "File:   $target/$filename\n\n";
+X	print MAIL "@deldata";
+X	print MAIL "$delend\n\n";
+X	print MAIL "$subsep\n";
+X	print MAIL "$header";
+X	print MAIL "$body";
+X	print MAIL "$subend\n";
+X	close(MAIL);
+X	exit(0);
+X}
+X#--------------------------------------------------------------------------
+X# Subroutine expand
+X# 	expand a line (To, Cc, etc.) into a list of addressees.
+X#
+X# [Borrowed with thanks from the "audit.pl" package by Martin Streicher
+X#  (strike@convex.com), revision 1.9, 92/05/01.]
+X#
+Xsub expand {
+X    local($_) = @_;
+X    local(@fccs) = ( );
+X
+X    return(@fccs) if /^$/;
+X
+X    for (split(/\s*,\s*/)) {
+X	s/.*<([^>]+)>.*/$1/;
+X	s/@.*//;
+X	s/.*!//;
+X	s/\(.*\)//;
+X	s/\s//g;
+X	push(@fccs,$_) unless $seen{$_}++;
+X    } 
+X
+X    return(@fccs);
+X} 
+X#--------------------------------------------------------------------------
+X# feedback -- mail the accepted item back to the user
+X#             (and to the $debug_admin, if defined)
+X#
+X# usage:  &feedback()
+X# Global variables used:
+X#	  $accept_msg $body $byline $diclaimer $debug_admin $filename
+X#         $header $MAIL $sender $subend $subsep $target
+X
+Xsub feedback {
+X	open (MAIL, "| $MAIL $debug_admin '$sender'");
+X	print MAIL "Subject: Data submitted to Gopher: \"$subject\"\n\n";
+X	print MAIL "$accept_msg\n$sig\n";
+X	print MAIL "$subsep\n";
+X	print MAIL "Title:  $subject\n";
+X	print MAIL "File:   $target/$filename\n\n";
+X	print MAIL "$header";
+X	print MAIL "$body";
+X	print MAIL "$byline";
+X	print MAIL "$disclaimer\n" if ($disclaimer);
+X	print MAIL "$subend\n";
+X	close(MAIL);
+X}
+X#--------------------------------------------------------------------------
+X# normalize -- convert a title to something good for a filename
+X
+Xsub normalize {
+X        local($str) = @_;
+X        $str =~ s/\s/_/g;			 # change white space to _
+X        $str =~ tr/\/&\\/+/;			 # change ands and slashes to +
+X        $str =~ tr/#%+,\-.0-9:;=@A-Z[]_a-z~/#/c; # change trouble to #
+X        $str;
+X}
+X#--------------------------------------------------------------------------
+X# parse_delete -- see if the subject line specifies a deletion request
+X#
+X# Check whether the subject line begins with "delete" or "DELETE".
+X# If not, return 0; if so, remove the "delete" keyword from the $subject
+X# variable and return 1.
+X#
+X# usage:  $delete = &parse_delete()
+X# Global variables used: $subject
+X
+Xsub parse_delete {
+X	local($firstword, $rest);
+X	($firstword, $rest) = split(/\s+/, $subject, 2);
+X	$firstword =~ tr/A-Z/a-z/;
+X	if ($firstword eq "delete") {
+X		$subject = $rest;
+X		return 1;
+X	}
+X	return 0;
+X}
+X#--------------------------------------------------------------------------
+X# parse_date -- parse a date on the subject line
+X#
+X# This has a side effect: it inserts a weekday into $subject.
+X# It also abends with a message in case of error.
+X#
+X# We try to be flexible in parsing dates.  Here are some formats accepted:
+X#	92-12-30: This is the preferred format
+X#	92/12/30 : (Wed) : But we can handle other separators and a weekday
+X#       1992-12-30: We accept the year with or without the century
+X#	1-1-1 This is a minimalist January 1, 2001
+X#
+X# These will all result in a new subject like this:
+X#	1992-12-30 (Wed): The way things will look in Gopher
+X#
+X# usage:  &parse_date()
+X# Global variables used: $caldir $caldir_by_date $date_msg $subject $target
+X
+Xsub parse_date {
+X	local($date, $gooddate, $yy, $mm, $dd, $title);
+X	$gooddate = 0;
+X	if ($subject =~ /^\s*(\d?\d?\d?\d)\D(\d?\d)\D(\d?\d)\s*:?\s*(.*)/) {
+X		$year = $1;
+X		$mm = $2;
+X		$dd = $3;
+X		$title = $4;
+X	}
+X
+X	# Force the portions of the date into (at least) two-digit form.
+X	$year = "0" . $year if (length($year) == 1);
+X	$mm = "0" . $mm if (length($mm) == 1);
+X	$dd = "0" . $dd if (length($dd) == 1);
+X
+X	# Add a century if it is missing.
+X	if ($year < 100) {
+X		if ($year > 70) {
+X			# We're in the waning years of the 20th century
+X			$year += 1900;
+X		} else {
+X			# You mean somebody's still using this program?
+X			$year += 2000;
+X		}
+X	} 
+X
+X	# Don't accept ancient history or Martian calendars
+X	&abend("Data not accepted for Gopher: bad date", $date_msg)
+X		unless ($year >= 1970 && $mm >= 1 && $mm <= 12 && 
+X			$dd >= 1 && $dd <=31);
+X
+X	# Discard a weekday if one followed the date on the subject line.
+X	# Note the final whitespace in the pattern: we don't want to mess up
+X	# a subject like "93-06-01 Wedding bells for Sarah and Jim"!
+X	$title =~ s/^\(?(Mon|mon|Tue|tue|Wed|wed|Thu|thu|Fri|fri|Sat|sat|Sun|sun)\)?\s*:?\s+//;
+X
+X	# Set the global $subject and $target.
+X	$date = "$year-$mm-$dd";
+X	$weekday = &weekday($year, $mm, $dd);
+X	$subject = "$date ($weekday): $title";
+X}
+X#--------------------------------------------------------------------------
+X# Subroutine parse_email_address
+X#	Parse an email address into address, from, organization
+X#	address is full Internet address, from is just the login
+X#	name and organization is Internet hostname (without final domain)
+X#
+X# [Borrowed with thanks from the "audit.pl" package by Martin Streicher
+X#  (strike@convex.com), revision 1.9, 92/05/01.]
+X#
+Xsub parse_email_address {
+X    local($_) = @_;
+X    local($friendly, $address, $from, $organization);
+X
+X    $organization = "local";
+X    $friendly = "unknown";
+X
+X# From: Disk Monitor Daemon (/usr/adm/bin/dfbitch) <daemon@hydra.convex.com>?
+X
+X    s/^\s*//;
+X    s/\s*$//;
+X    if (/(.*)\s*<[^>]+>$|<[^>]+>\s*(.*)$/) {
+X	$friendly = $+;
+X	$friendly =~ s/\"//g;
+X    } elsif (/\(([^\)]+)\)/) {
+X	$friendly = $1;
+X    };
+X
+X    s/.*<([^>]+)>.*/$1/;
+X    s/\(.*\)//;
+X    s/\s*$//;
+X    $address = $_;
+X
+X    s/@.*//;
+X    s/%.*//;
+X    s/.*!//;
+X    s/\s//g;
+X    $from = $_;
+X
+X    $_ = $address;
+X    tr/A-Z/a-z/;
+X    if (/!/ && /@/) {
+X        s/\s//g;
+X        s/!.*//;
+X        $organization = $_;
+X    } elsif (/!/) {
+X        s/\s//g;
+X        s/![A-Za-z0-9_@]*$//;
+X        s/.*!//;
+X        s/\..*//;
+X        $organization = $_;
+X    } elsif (/@/) {
+X        s/.*@//;
+X        s/\s//g;
+X        if (! /\./) {
+X            $organization = "unknown";
+X        } else {
+X            if (/\.(com|edu)$/) {
+X                s/\.[A-Za-z0-9_]*$//;
+X                s/.*\.//;
+X            } else {
+X                s/\.[A-Za-z0-9_]*$//;
+X                s/\.[A-Za-z0-9_]*$//;
+X                s/.*\.//;
+X            };
+X            $organization = $_;
+X        };
+X    };
+X
+X    return ($friendly, $address, $from, $organization);
+X};
+X#--------------------------------------------------------------------------
+X# Subroutine parse_message
+X#	Parse a message into headers, body and special variables
+X#
+X# [Borrowed with thanks from the "audit.pl" package by Martin Streicher
+X#  (strike@convex.com), revision 1.9, 92/05/01.]
+X#
+Xsub parse_message {
+X    local(*INFILE) = @_;
+X
+X    $/ = '';		# read input in paragraph mode
+X    %headers = ( );
+X    @received = ( );
+X
+X    $header = <INFILE>;
+X
+X    $* = 1;
+X    while (<INFILE>) { 
+X	s/^From />From /g;
+X	$body = "" if !defined($body);
+X	$body .= $_; 
+X    };
+X    $/ = "\n";		
+X    $* = 0;
+X
+X
+X    ;# -----
+X    ;# $sender comes from the UNIX-style From line (From strike...)
+X    ;#
+X    ($sender) = ($header =~ /^From\s+(\S+)/); 
+X
+X
+X    ;# -----
+X    ;# fill out the headers associative array with fields from the mail
+X    ;# header.
+X    ;#
+X    $_ = $header;
+X    s/\n\s+//g;
+X    @lines = split('\n');
+X    for ( @lines ) {
+X	/^(\w*):\s*(.*)/ && do {
+X	    $mheader = $1;
+X	    $mheader =~ tr/A-Z/a-z/;
+X	    if (($mheader eq "cc" || $mheader eq "to") && $headers{$mheader}) {
+X		$headers{$mheader} .= ", $2";
+X	    } elsif ($mheader eq "received") {
+X		push(@received, $2);
+X	    } else {
+X		$headers{$mheader} = $2;
+X	    };
+X	};
+X    }
+X    @received = reverse(@received);
+X
+X
+X    ;# -----
+X    ;# for convenience, $subject is $headers{'subject'} and $precedence is
+X    ;# $headers{'precedence'}
+X    ;#
+X    $subject = $headers{'subject'};
+X    $subject = "(No subject)" unless $subject;
+X    $subject =~ s/\s+$//;
+X    $precedence = $headers{'precedence'};
+X
+X
+X    ;# -----
+X    ;# $from comes from From: line. $address is their email address.
+X    ;# $organization is their site. for example, strike@pixel.convex.com 
+X    ;# yields an organization of convex.
+X    ;#
+X    $_ = $headers{'from'} ||
+X         $headers{'resent-from'} ||
+X         $headers{'sender'} ||
+X         $headers{'resent-sender'} ||
+X         $headers{'return-path'} ||
+X         $headers{'reply-to'};
+X
+X    if ($_ eq "") {
+X       $from = $address = $organization = "unknown";
+X       return;
+X    };
+X
+X    ($friendly, $address, $from, $organization) = &parse_email_address($_);
+X
+X    ;# -----
+X    ;# create arrays for who was on the To, Cc lines
+X    ;#
+X    @to = &expand($headers{'to'}); 
+X    push(@to, &expand($headers{'apparently-to'}));
+X    @cc = &expand($headers{'cc'});
+X}
+X#--------------------------------------------------------------------------
+X# weekday -- given a date, return the three-letter name of a weekday
+X#
+X# usage:  &weekday($year, $mm, $dd)
+X
+Xsub weekday {
+X	local($year, $mm, $dd) = @_;
+X	local($datestr);
+X	$year -= 1900;			# tz structure expects years - 1900
+X	$mm -= 1;			# tz struct expects months to be 0-11;
+X	$datestr = &ctime(&timelocal(1, 1, 1, $dd, $mm, $year, "", "", 0));
+X	return(substr($datestr, 0, 3));
+X}
+X#--------------------------------------------------------------------------
+X# write_it -- write the data to Gopherspace (along with a .cap file)
+X#
+X# usage:  &write_it()
+X# Global variables used:
+X#	  $body $byline $disclaimer $error_msg $filename $subject $target
+X#
+X# SIDE EFFECT: We chdir() to the $target directory.
+X# Thanks to Fred Barrie (barrie@futique.scs.unr.edu) for supplying the fix
+X# for a peculiar perl bug: it can't open a file with a fully-defined path
+X# longer than 64 characters.
+X
+Xsub write_it {
+X
+X	chdir($target) ||
+X		&abend("Data not accepted for Gopher due to gmail error",
+X			$error_msg . "Can't chdir to directory $target\n$@");
+X	open (FILE, "> $filename") ||
+X		&abend("Data not accepted for Gopher due to gmail error",
+X			$error_msg . "Can't open file $target/$filename\n$@");
+X	print FILE "$subject\n\n";
+X	print FILE $body;
+X	print FILE "$byline";
+X	print FILE "$disclaimer\n" if ($disclaimer);
+X	close(FILE);
+X
+X	# Make a .cap file only if one is needed.
+X	if ($subject ne $filename) {
+X		unless (-d ".cap") {
+X			mkdir(".cap", 0755);
+X		}
+X		unless (open (FILE, "> .cap/$filename")) {
+X			# Can't create .cap file -- complain and clean up
+X			unlink("$filename");
+X			&abend("Data not accepted for Gopher due to gmail error",
+X				$error_msg . "Can't open file $target/.cap/$filename\n$@");
+X		}
+X		print FILE "Name=$subject\n";
+X		close(FILE);
+X	}
+X}
+X#--------------------------------------------------------------------------
+X
+X# end of gmail script
+END_OF_FILE
+if test 26490 -ne `wc -c <'gmail'`; then
+    echo shar: \"'gmail'\" unpacked with wrong size!
+fi
+chmod +x 'gmail'
+# end of 'gmail'
+fi
+if test -f 'gmailcal' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gmailcal'\"
+else
+echo shar: Extracting \"'gmailcal'\" \(12517 characters\)
+sed "s/^X//" >'gmailcal' <<'END_OF_FILE'
+X#!/usr/local/bin/perl
+X#
+X#  gmailcal: nightly process to generate alternate views of events
+X#             submitted with gmail(8)
+X#
+X#  usage:  gmailcal
+X#
+X#  PASR 01/29/93  Original version (Prentiss Riddle, riddle@rice.edu).
+X#  PASR 02/03/93  Declared this release 0.2 and sent it out for beta
+X#                 testing.
+X#  PASR 02/22/93  Declared this release 1.0 for general use.
+X#  PASR 02/24/93  Portability fix: match year in ctime() results with a
+X#                 pattern rather than a substr() call.
+X#  PASR 03/07/93  Defined umask in the configuration section.
+X#  PASR 03/29/93  Fixed bug in calculation of week cuts.
+X#                 Declared this version 1.01.
+X#
+X#  TODO: Make sure all old .cache files get deleted when gmailcal is run.
+X#  TODO: Think about including a command-line option which causes header
+X#        info to be read from a file, allowing a single installation to
+X#        be used in multiple configurations (in particular, to allow 
+X#        multiple events calendars).
+X#  TODO: Think about putting a chmod in &fixcap.
+X
+X#--------------------------------------------------------------------------
+X# CONFIGURATION: modify these to suit your site!
+X
+X# Raw calendar data live under here.  Note that the alternate views will
+X# be *sibling* directories to this one!
+X$caldir = "/foo/cwis/gopher/world/Calendars/Events/Upcoming";
+X
+X# Gopher link information: a Gopher's-eye view of the same directory
+X# specified in $caldir.
+X$Host = "cwis.foobar.edu";
+X$Port = 70;
+X$Path = "1/Calendars/Events/Upcoming";
+X
+X# How many days will we keep old events around in the "../Past" directory?
+X$keepold = 183;
+X
+X# On which day does the week begin?  (0=Sunday, 1=Monday)
+X$weekbreak = 1;
+X
+X# How many months ahead will we maintain month-by-month views?
+X$monthviews = 5;
+X
+X# Short description of this events calendar
+X# (e.g., "the Foobar University events schedule")
+X$description = "the Foobar University events calendar";
+X
+X# Turn on for noisy output, off for only serious error messages.
+X$debug = 0;
+X
+X# Umask: the Unix file permissions mask.  Use 002 if you wish to have
+X# files created by gmailcal be group-writeable, 022 otherwise.
+X$UMASK = 022;
+X
+X#--------------------------------------------------------------------------
+X# Further initialization (you should probably leave this alone):
+X
+Xrequire "ctime.pl";
+X
+X@monthnames =
+X     ("January", "February", "March", "April", "May", "June",
+X      "July", "August", "September", "October", "November", "December");
+X
+X# Recursive "rm" command (very scary!)
+X$rm = "/bin/rm -r -f";
+X
+Xumask $UMASK;
+X
+X# Master "About" file.  We will put a link to this in each of the alternate
+X# view subdirectories.
+X$about = $caldir;
+X$about =~ s#(.*)/.*#$1/About#;
+Xprint(STDERR "Warning: \"About\" file $about missing\n") unless (-f $about);
+X
+X#--------------------------------------------------------------------------
+X#
+X# Here's the directory structure we're shooting for:
+X#
+X# Foobar Events/
+X#    About the Foobar events schedule
+X#    Search the Foobar events schedule <?>
+X#    Today/
+X#    Tomorrow/
+X#    This week/
+X#    Next week/
+X#    January, 1993/
+X#    February, 1993/
+X#    March, 1993/
+X#    ...
+X#    All upcoming events/
+X#    Past events/
+X
+X# We do all of our work relative to $chdir.
+Xchdir($caldir) || die("Couldn't chdir to $caldir: $!");
+X
+X# Get various date information relative to today's date.
+X$daysec = 24 * 60 * 60;
+X$clocktime = time;
+X$weekday = substr(&ctime($clocktime), 0, 3);
+X$wkdint = index("SunMonTueWedThuFriSat", $weekday) / 3;
+Xdie("Unrecognized weekday: $weekday") if ($wkdint < 0);
+X
+X$today = &yyyymmdd($clocktime);
+X$tomorrow = &yyyymmdd($clocktime + $daysec);
+X$pastcut = &yyyymmdd($clocktime - $keepold * $daysec);
+X$thisweekcut = &yyyymmdd($clocktime + (6 - $wkdint + $weekbreak) * $daysec);
+X$nextweekcut = &yyyymmdd($clocktime + (13 - $wkdint + $weekbreak) * $daysec);
+X
+X$mm = substr($today, 5, 2);
+X$yyyy = substr($today, 0, 4);
+X$monthcuts[0] = substr($today, 0, 7);
+Xfor ($i = 1 ; $i < $monthviews ; $i++) {
+X	#$mm .= "";	# Force into a string context!
+X	$mm++;
+X	if ($mm gt "12") {
+X		$mm = "01";
+X		$yyyy++;
+X	}
+X	$monthcuts[$i] = $yyyy . "-" . $mm;
+X}
+X
+X# Delete old month directories and corresponding .cap files.
+Xopendir(PARENT, "..") || die("Couldn't open parent directory: $!");
+Xforeach $dir (grep(/^\d\d\d\d-\d\d$/, readdir(PARENT))) {
+X	print("Deleting: ../$dir ../cap/$dir\n") if $debug;
+X	system("$rm ../$dir");
+X	unlink("../.cap/$dir");
+X}
+Xclosedir(PARENT);
+X
+X# Arrange the directories where the alternate views will go.
+X&fixcap("../About", "About " . $description, 1);
+X$todaydir = "../Today";        &fixdir($todaydir, "Today", 2);
+X$tomorrowdir = "../Tomorrow";  &fixdir($tomorrowdir, "Tomorrow", 3);
+X$thisweekdir = "../This_week"; &fixdir($thisweekdir, "This week", 4);
+X$nextweekdir = "../Next_week"; &fixdir($nextweekdir, "Next week", 5);
+Xfor ($i = 0 ; $i < $monthviews ; $i++) {
+X	$monthdirs[$i] = "../" . $monthcuts[$i];
+X	$monthtitles[$i] = $monthnames[substr($monthcuts[$i], 5, 2) - 1]
+X	                   . ", " . substr($monthcuts[$i], 0, 4);
+X	&fixdir($monthdirs[$i], $monthtitles[$i], $i + 6);
+X}
+X&fixcap($caldir, "All upcoming events", $monthviews + 6);
+X$pastdir = "../Past"; &fixdir($pastdir, "Past events", $monthviews + 7);
+X
+X# Open .links files and put a link to the "About" file in each one.
+X&openlink("UPCOMING", "$caldir/.links"); close(UPCOMING);
+X&openlink("PAST", "$pastdir/.links"); close(PAST);
+X&openlink("TODAY", "$todaydir/.links");
+X&openlink("TOMORROW", "$tomorrowdir/.links");
+X&openlink("THISWEEK", "$thisweekdir/.links");
+X&openlink("NEXTWEEK", "$nextweekdir/.links");
+X$month = 0;
+X&openlink("MONTH", "$monthdirs[$month]/.links");
+X
+X# MAIN LOOP: Step through the calendar events in $caldir, creating links
+X#            to them as necessary.
+Xopendir(CALDIR, ".") || die("Couldn't open $caldir: $!");
+XMAINLOOP:
+Xforeach $event sort(grep(/^\d\d\d\d-\d\d-\d\d/, readdir(CALDIR))) {
+X	print("Processing event: \"$event\"\n") if $debug;
+X	$matchdate = substr($event, 0, 10);
+X	if ($matchdate lt $today) {
+X		# Move this event to $pastdir, including its .cap file.
+X		print "Moving past event: \"$event\"\n" if $debug;
+X		rename($event, "$pastdir/$event") || 
+X			die("Can't move $event to $pastdir: $!");
+X		rename(".cap/$event", "$pastdir/.cap/$event");
+X	} else {
+X		# Does the event match today, tomorrow, this or next week?
+X		if ($matchdate eq $today) {
+X			&makelink($event, "TODAY");
+X		} elsif ($matchdate eq $tomorrow) {
+X			&makelink($event, "TOMORROW");
+X		}
+X		if ($matchdate le $thisweekcut) {
+X			&makelink($event, "THISWEEK");
+X		} elsif ($matchdate gt $thisweekcut && $matchdate le $nextweekcut) {
+X			&makelink($event, "NEXTWEEK");
+X		}
+X		# Match "../yyyy-mm" against the current $monthdirs[].
+X		$matchdate = "../" . substr($event, 0, 7);
+X		while ($matchdate gt $monthdirs[$month] && $month < $monthviews - 1) {
+X			# New month.
+X			$month++;
+X			close(MONTH);
+X			&openlink("MONTH", "$monthdirs[$month]/.links");
+X		}
+X		if ($matchdate eq $monthdirs[$month]) {
+X			&makelink($event, "MONTH");
+X		}
+X	}
+X}
+Xclosedir(CALDIR);
+Xclose(TODAY);
+Xclose(TOMORROW);
+Xclose(THISWEEK);
+Xclose(NEXTWEEK);
+Xclose(MONTH);
+X
+X# Remove ancient events from the "Past events" directory (including
+X# their .cap files).
+Xopendir(PAST, $pastdir) || die("Couldn't open directory $pastdir: $!");
+XPASTLOOP:
+Xforeach $event (grep(/^\d\d\d\d-\d\d-\d\d/, readdir(PAST))) {
+X	if ($event lt $pastcut) {
+X		print("Deleting old event: $pastdir/$event\n") if $debug;
+X		unlink("$pastdir/$event");
+X		unlink("$pastdir/.cap/$event");
+X	}
+X}
+Xclosedir(PAST);
+X
+X#--------------------------------------------------------------------------
+X# fixcap -- fill out a ".cap" file, given a filename, title and position
+X#
+X# usage:  &fixcap($filename, $title, $position);
+X
+Xsub fixcap {
+X	local($filename, $title, $position) = @_;
+X	local($dirname);
+X
+X	print "fixcap(\"$filename\", \"$title\", $position);\n" if $debug;
+X	# Insert ".cap/" in the filename.
+X	$filename =~ s#(.*)/(.*)#$1/.cap/$2#;
+X	$dirname = $filename;
+X	$dirname =~ s#(.*/\.cap)/.*#$1#;
+X	unless (-d $dirname) {
+X		mkdir($dirname, 0755) ||
+X			die("Can't create .cap directory $dirname: $!");
+X	}
+X	open (CAP, "> $filename") || die("Can't open .cap file $filename: $!");
+X	print(CAP "Name=$title\nNumb=$position\n");
+X	close (CAP);
+X}
+X#--------------------------------------------------------------------------
+X# fixdir -- prepare a directory which is to contain an alternate view
+X#
+X# Side effects:
+X# -- creates the named directory, if necessary
+X# -- creates a ".cap" subdirectory within the named directory, if necessary
+X# -- deletes a ".links" file within the named directory, if necessary
+X# -- calls &fixcap to set the title and position of the named directory
+X#    within its parent directory
+X#
+X# usage: &fixdir($directory, $title, $position);
+X
+Xsub fixdir {
+X	local($directory, $title, $position) = @_;
+X
+X	unless (-d $directory) {
+X		mkdir($directory, 0755) || 
+X			die("Can't create directory $directory: $!");
+X	}
+X	unless (-d "$directory/.cap") {
+X		mkdir("$directory/.cap", 0755) || 
+X			die("Can't create directory $directory/.cap: $!");
+X	}
+X	unlink("$directory/.links") if (-f "$directory/.links");
+X	print "fixdir(\"$directory\", \"$title\", $position);\n" if $debug;
+X	&fixcap($directory, $title, $position);
+X}
+X#--------------------------------------------------------------------------
+X# makelink -- make a link to a given event in a given .links file
+X#
+X# usage: &makelink($event, $filehandle);
+X#
+X# global variables used: $caldir $Host $Port $Path $eventpath $debug
+X
+Xsub makelink {
+X	local($event, $fh) = @_;
+X	local($name);
+X
+X	print "makelink(\"$event\", \"$fh\");\n" if $debug;
+X
+X	# Read the name from the .cap file corresponding to the event.
+X	open(CAP, "< $caldir/.cap/$event");
+X	CAPLOOP:
+X	while (<CAP>) {
+X		if (/^Name=/) {
+X			$name = $_;
+X			$name =~ s/^Name=//;
+X			last CAPLOOP;
+X		}
+X	}
+X	close(CAP);
+X
+X	# Complain and exit if we couldn't read it.
+X	unless ($name) {
+X		print(STDERR "Error: Couldn't read .cap file for $event\n");
+X		return;
+X	}
+X
+X	print($fh "#\n");
+X	print($fh "Name=$name");
+X	print($fh "Host=$Host\n");
+X	print($fh "Type=0\n");
+X	print($fh "Port=$Port\n");
+X	unless ($eventpath) {
+X		$eventpath = $Path;
+X		$eventpath =~ s/^1/0/;
+X	}
+X	print($fh "Path=$eventpath/$event\n");
+X}
+X#--------------------------------------------------------------------------
+X# monthindex -- given a three-character month abbreviation, return the
+X#               corresponding integer "01" (January) to "12" (December)
+X#
+X# usage: $mm = &monthindex($monthstr);
+X# error: return -1 in case of error;
+X
+Xsub monthindex {
+X	local($monthstr) = @_;
+X	local($mm);
+X	$monthstr =~ tr/A-Z/a-z/;
+X	$mm = index("janfebmaraprmayjunjulaugsepoctnovdec", $monthstr) / 3 + 1;
+X	$mm = -1 if ($mm <= 0 || $mm > 12);
+X	$mm = "0" . $mm if ($mm > 0 && $mm < 10);
+X	return $mm;
+X}
+X#--------------------------------------------------------------------------
+X# openlink -- open a ".links" file
+X#
+X# usage:  &openlink($filehandle, $filename);
+X#
+X# Global variables used:  $about $description $Host $Port $Path $aboutpath
+X#
+X# Side effects:
+X# -- Opens the .links file specified by $filename
+X# -- Writes to it a link to the "About" file
+X
+Xsub openlink {
+X	local($fh, $filename) = @_;
+X
+X	print "openlink(\"$fh\", \"$filename\");\n" if $debug;
+X	open($fh, "> $filename") || 
+X		die("Can't open .links file $filename: $!");
+X	print($fh "# This file is automatically generated. Don't touch!\n");
+X	print($fh "#\n");
+X	# Kluge alert: for some reason "Numb=1" doesn't work here, so
+X	# we resort to the old initial-space-in-a-Name trick. :-(
+X	print($fh "Name= About $description\n");
+X	#print($fh "Numb=1\n");
+X	print($fh "Type=0\n");
+X	print($fh "Host=$Host\n");
+X	print($fh "Port=$Port\n");
+X	unless ($aboutpath) {
+X		$aboutpath = $Path;
+X		$aboutpath =~ s#(.*)/.*#$1/About#;
+X		$aboutpath =~ s/^1/0/;
+X	}
+X	print($fh "Path=$aboutpath\n");
+X}
+X#--------------------------------------------------------------------------
+X# yyyymmdd -- given a clocktime (in seconds since the epoch), return the
+X#             corresponding date in the format "yyyy-mm-dd"
+X#
+X# usage: $date = &yyyymmdd($clocktime);
+X#
+X#
+X# Portability issue: we count on &ctime() to return the date in one of
+X# the two following formats:
+X#
+X#	Wed Feb 24 10:42:22 1993
+X#	Wed Feb 24 10:42:22 CST 1993
+X#
+X# If it doesn't, we're in trouble...
+X
+Xsub yyyymmdd {
+X	local($clocktime) = @_;
+X	local($date, $yyyy, $mm, $dd);
+X	$date = &ctime($clocktime);
+X	($yyyy) = $date =~ /\s(\d\d\d\d)\s*$/;
+X	$mm = &monthindex(substr($date, 4, 3));
+X	$dd = substr($date, 8, 2);
+X	$dd =~ s/ /0/;
+X	return($yyyy . "-" . $mm . "-" . $dd);
+X}
+X#--------------------------------------------------------------------------
+X# end of gmailcal script
+END_OF_FILE
+if test 12517 -ne `wc -c <'gmailcal'`; then
+    echo shar: \"'gmailcal'\" unpacked with wrong size!
+fi
+chmod +x 'gmailcal'
+# end of 'gmailcal'
+fi
+if test -f 'gmailbatch' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gmailbatch'\"
+else
+echo shar: Extracting \"'gmailbatch'\" \(2594 characters\)
+sed "s/^X//" >'gmailbatch' <<'END_OF_FILE'
+X#!/usr/local/bin/perl
+X#  Change the above to point to your site's perl installation.
+X#
+X#  gmailbatch -- script to aid in batch submissions to gmail
+X#
+X#
+X#  usage:   gmailbatch destination < inputfile
+X#
+X#  where "destination" is the email alias of a gmail server
+X#
+X#        "inputfile" is a collection of messages to be sent to gmail,
+X#	 separated by lines beginning with "%%".  The remainder of a
+X#	 "%%" line is taken to be the subject of the following message.
+X#	 If the remainder of the "%%" line is blank, then the first
+X#	 line of the message is also used as the subject.
+X#
+X#  Examples:
+X#
+X#  gmailbatch cwis@foobar.edu <<EOF
+X#  %%About apples and oranges
+X#  This directory contains information on apples and oranges.
+X#  %%Apples
+X#  Apples are red or green on the outside and white on the inside.
+X#  Johnny Appleseed used to plant them.
+X#  %%
+X#  Oranges
+X#
+X#  Oranges are orange on the outside and divided into sections on the
+X#  inside.  Anita Bryant used to sing about them.
+X#  EOF
+X#
+X#
+X#  gmailbatch events@foobar.edu <<EOF
+X#  %%1993-03-17 St. Patrick's Day at the Coffeehouse
+X#  Drink green near-beer and sing along with Toby O'Brien at the
+X#  Coffeehouse, 8:00 p.m.
+X#  %%1993-07-04 Independence Day fireworks at Town Lake
+X#  Fireworks for the whole family on the lake.  Sponsored by the
+X#  Volunteer Fire Brigade.
+X#  EOF
+X#
+X#
+X#-------------------------------------------------------------------------
+X#
+X#  Author: Prentiss Riddle (riddle@rice.edu).
+X#
+X#  History:
+X#  02/15/93  PASR  Original version based on smug 0.1.
+X#  
+X#-------------------------------------------------------------------------
+X
+X$separator = '%%';
+X$sendmail = "/usr/lib/sendmail";
+X$usage = "usage: gmailbatch destination\n";
+X
+Xunless ($#ARGV == 0) {
+X	print STDERR "$usage";
+X	exit(1);
+X}
+X$mailto = $ARGV[0];
+Xprint "Mailing the following items to $mailto:\n";
+X
+X$error = 0;
+X$skip = 1;
+XMAINLOOP:
+Xwhile (<STDIN>) {
+X	chop;
+X	if (/^$separator/) {
+X		close (CURFILE) unless $skip;
+X		s/^$separator//;
+X		if ($_ eq "") {
+X			# no title -- cannibalize first line of text block
+X			$_ = <STDIN>;	# don't chop yet!
+X			if (/^$separator/) {
+X				# uh-oh -- null text block
+X				print "Error: missing title in $dir\n";
+X				$error = 1;
+X				redo MAINLOOP;
+X			}
+X			chop;
+X		}
+X		open (CURFILE, "| $sendmail $mailto") || 
+X			die("Couldn't open pipe to $sendmail: $!");
+X		$skip = 0;
+X		print CURFILE "Subject: $_\n\n";
+X		print "$_\n";
+X	} else {
+X		print CURFILE $_, "\n" unless $skip;
+X	}
+X	
+X} # end MAINLOOP
+Xclose (CURFILE) unless $skip;
+X
+Xexit $error;
+X
+X#------------------------------------------------------------------------
+X
+X# end of gmailbatch script
+END_OF_FILE
+if test 2594 -ne `wc -c <'gmailbatch'`; then
+    echo shar: \"'gmailbatch'\" unpacked with wrong size!
+fi
+chmod +x 'gmailbatch'
+# end of 'gmailbatch'
+fi
+echo shar: End of shell archive.
+exit 0

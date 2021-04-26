@@ -1,0 +1,109 @@
+                      GN Release 1.0beta
+        A Free Multi-protocol Server for Gopher and HTTP
+
+
+FEATURES:       ( *  means new in version 1.0)
+
+     o  HTTP support -- GN now serves two protocols gopher and HTTP,
+        the protocol used by WWW clients.  GN recognizes the protocol
+        from the request and responds appropriately. This allows the
+        use of WWW browsers like Mosaic in their native mode. (*)
+
+     o  Per Directory Access control.
+
+     o  Support for structured files.
+
+     o  Support for compressed files.
+
+     o  Builtin menu hierarchy searches.
+
+     o  Free for any use, commercial or otherwise! (GNU license)
+
+     o  Capability to decouple menus from filesystem.
+
+AVAILABLE VIA GOPHER:
+
+    Server: hopf.math.nwu.edu     port 70
+    Get file:  gn-1.0beta.tar.Z
+
+    You can also browse the source and documentation here.
+
+OR BY ANONYMOUS FTP:
+    FTP to: hopf.math.nwu.edu 
+    Get file pub/gn/gn-1.0beta.tar.Z
+
+
+Gn is a gopher/HTTP server which is written in C and runs under
+UNIX.  It is freely available for any use, commercial or otherwise.
+The software is freely redistributable under the terms of the GNU
+public license.  There is good documentation -- three man pages and an
+installation and maintenance guide.
+
+Gn has "per directory" access control.  You can have different access
+(by IP address or subnet) to every directory if you want to. You don't
+need to run different servers on different ports to have different
+levels of access!  
+
+Gn supports the standard text and binary types, including sound and
+image.  Index types are limited.  There is not yet support for
+WAIS indices, only for programs (or shell scripts) which return
+"virtual directories" and also for the "grep" type searches.  There is
+no ftp daemon support.  GN runs only under inetd.  See the man page
+for details.
+
+Starting with release 1.0, the GN sever is becoming a multi-protocol
+server. It will accept either gopher requests or HTTP requests and
+respond appropriately.  To the maintainer this takes place
+automatically with no action necessary or his or her part.
+
+For those not familiar with it, HTTP stands for Hyper Text Transfer
+Protocol and it is the underlying protocol used by WWW (World Wide
+Web) browsers such as the Mosaic family or Cello.  Gopher and HTTP
+each have some advantages not shared by the other.  Making GN a
+multi-protocol server is an attempt to let us have our cake and eat it
+too.  To see this in action try gopher://gopher.math.nwu.edu/ with a
+gopher client and http://gopher.math.nwu.edu/ with a WWW client and
+compare the two.  This is one server with one data directory.
+
+One of the biggest advantages of HTTP is in the presentation layer
+provided by the NCSA Mosaic browsers.  With GN release 1.0 or later it
+is a fairly trivial matter to put nicely formatted text or images in
+any of several formats into menus viewed by Mosaic.  Gopher client
+users will not see the images.  The text can be converted to type 'i'
+or ommitted at the GN maintainer's discretion.  The inlined images in
+documents available from HTTP servers are more than just a cute
+feature. They add functionality which is just not available from
+gopher.  For example, there is a server which provides a campus maps
+in text about the campus and has the feature that if you click a
+building you get a new document containing describing the building and
+containing a photo of it.  A Michigan State server offers a campus map
+with the feature that clicking on a location in it gives an enlarged
+map of that area.  These are not GN servers but these features could
+be implemented using GN 1.0.
+
+On the other hand gopher has some advantages too.  At present the
+gopher protocol is much more widely used if you count the number of
+servers.  Measured by network traffic the difference is smaller. Also
+gopher has Veronica indexing.  Indexing is somewhat harder for
+HTTP servers.
+
+As of release 1.0 the interactive forms facility has been withdrawn
+from GN.  The intent is to replace it in a future release with a
+mechanism for doing forms which is compatible with what is being
+done with other servers.  For GN what this will mean is a single 
+simple form syntax which will result in GN using ASK blocks when
+serving a gopher+ client and HTML+ forms when serving an HTTP client,
+This should be done in a way that is transparent to the maintainer.
+
+
+THANKS
+
+I would like to thank the many people who have aided in the creation
+of the gn package, either through writing code or finding and fixing
+bugs.  They include Earle Ake, Henry Cejtin, Paul DuBois, Jishnu
+Mukerji, Marko Nordberg, Stephen Trier, Ed Vielmetti, and Rico Tudor.
+
+
+John Franks 	Dept of Math. Northwestern University
+		john@math.nwu.edu
+

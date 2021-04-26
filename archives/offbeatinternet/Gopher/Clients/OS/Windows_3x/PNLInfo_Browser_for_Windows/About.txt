@@ -1,0 +1,9 @@
+PNLInfo Browser for Windows
+(ver 1.05)
+Freeware
+
+
+There is no installer.  All files must be manually placed into their 
+individual required directories.
+
+

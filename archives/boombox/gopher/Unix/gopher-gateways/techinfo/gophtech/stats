@@ -1,0 +1,37 @@
+#!/bin/csh -f
+
+set logfile = "$1"
+set tmp     = /tmp/connections.$$
+set tmp2     = /tmp/connections.$$.2
+
+if ("$logfile" == "") then
+	echo "Usage: $0 <logfilename>"
+	exit -1
+endif
+
+echo -n "GophTech Gateway requests: "
+grep -c :Request: $logfile 
+
+exit
+
+awk -F: '{print $3}' | grep -vi '^localhost$' | grep -vi '^stdin$' | grep -vi '^getpeername' > $tmp
+
+set numconn   = `wc -l $tmp | awk '{print $1}'`
+set upennconn = `grep -ic 'upenn.edu$' $tmp`
+set nonupenn  = `grep -vic 'upenn.edu$' $tmp`
+
+echo "Number of connections: $numconn"
+echo "    UPENN connections: $upennconn"
+echo "Non UPENN connections: $nonupenn"
+
+
+set quote = '"'
+set dollar = '$'
+
+echo "\
+Count of requests from non-UPENN hosts:"
+
+sort -f -u $tmp  | grep -vi 'upenn.edu$' | awk "{ printf (${quote}echo -n %s: ; grep -ic ^%s${dollar} $tmp\n${quote}, ${dollar}0, ${dollar}0 ) }" | csh -f | sort -r -t: -n +1 -2 | awk -F: '{printf ("%6d  %s\n", $2, $1) }'
+
+rm -f $tmp
+

@@ -1,0 +1,1655 @@
+---- Cut Here and feed the following to sh ----
+#!/bin/sh
+# This is part 03 of a multipart archive
+# ============= Gopher.cc ==============
+if test -f 'Gopher.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping Gopher.cc (File already exists)'
+else
+echo 'x - extracting Gopher.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Gopher.cc' &&
+//
+// Gopher.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the Gopher class
+//
+#include "Gopher.h"
+#include "String.h"
+#include "Connection.h"
+#include "GWindow.h"
+#include "Response.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <xview/notify.h>
+#include <fcntl.h>
+#include <time.h>
+X
+#define	LINE_COUNT_INCREMENT	20
+#define	MAX_LIST_LINES			1023
+X
+X
+//***************************************************************************
+// Gopher::Gopher(GWindow *gwin)
+//
+Gopher::Gopher(GWindow *gwin)
+{
+X	fd = -1;
+X	gwindow = gwin;
+X	*filename = '\0';
+X	connection = (Connection *) 0;
+}
+X
+X
+//***************************************************************************
+// Gopher::~Gopher()
+//
+Gopher::~Gopher()
+{
+X	if (connection->isopen())
+X		(void) notify_set_input_func((Notify_client) this, NOTIFY_FUNC_NULL, connection->get_socket());
+X	fd = -1;
+X	if (*filename)
+X		unlink(filename);
+X	if (connection)
+X		delete connection;
+}
+X
+X
+//***************************************************************************
+// Gopher::Gopher(char *server, int port, GWindow *gwin)
+//
+Gopher::Gopher(char *server, int port, GWindow *gwin)
+{
+X	fd = -1;
+X	gwindow = gwin;
+X	*filename = '\0';
+X	if (open(server, port) == NOTOK)
+X		exit(1);
+}
+X
+X
+//***************************************************************************
+// int Gopher::open(server, port)
+// PURPOSE:
+//    Build a connection with the gopher server.
+//
+int Gopher::open(char *server, int port)
+{
+X	connection = new Connection;
+X
+X	if (connection->open() == NOTOK)
+X		return NOTOK;
+X	if (connection->assign_port(port) == NOTOK)
+X		return NOTOK;
+X	if (connection->assign_server(server) == NOTOK)
+X		return NOTOK;
+X	if (connection->connect() == NOTOK)
+X		return NOTOK;
+X
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// int Gopher::read(char type, char *cmd)
+// PURPOSE:
+//    Send cmd to the server and receive the information until the
+//    connection is closed by the server
+//
+int Gopher::read(char type, char *cmd)
+{
+X	gwindow->status("Retrieving information...");
+X
+X	//
+X	// First send the command.  We need to terminate the command with
+X	// a return.  Since we do not know how big cmd is, we will just make
+X	// it into two writes.
+X	//
+X	if (cmd == NULL)
+X		cmd = "";
+X	connection->write(cmd, strlen(cmd));
+X	connection->write("\r\n", 2);
+X
+X	//
+X	// Now we are ready to receive the information.  The type of information
+X	// depends on the command we sent to the server, so we will use it
+X	// to determine where this information will be stored.
+X	//
+X	switch (type)
+X	{
+X		case GOPHER_FILE:
+X			//
+X			// Plain ASCII file coming through...  Save it someplace
+X			//
+X			read_ascii();
+X			break;
+X		case GOPHER_DIRECTORY:
+X		case '\0':
+X			//
+X			// We are getting a directory listing.  Read it into our List
+X			//
+X			read_list();
+X			break;
+X		case GOPHER_CSO:
+X			break;
+X		case GOPHER_ERROR:
+X			break;
+X		case GOPHER_UU:
+X			break;
+X		case GOPHER_INDEX:
+X			break;
+X		case GOPHER_TELNET:
+X			break;
+X		case GOPHER_BINHEX:
+X		case GOPHER_DOS:
+X		case GOPHER_BIN:
+X			//
+X			// Some binary file coming in.  Read until connection closes
+X			//
+X			read_binary();
+X			break;
+X		case GOPHER_SOUND:
+X			//
+X			// Some binary file coming in.  Read until connection closes
+X			//
+X			read_binary();
+X			datatype = TYPE_SOUND;
+X			break;
+X		case GOPHER_IMAGE:
+X		case GOPHER_GIF:
+X			//
+X			// Some binary file coming in.  Read until connection closes
+X			//
+X			read_binary();
+X			datatype = TYPE_IMAGE;
+X			break;
+X		case GOPHER_REDUNDANT:
+X			break;
+X		default:
+X			printf("Hmm.  The I don't know how to read data of type '%c'\n", type);
+X			break;
+X	}
+X	return OK;
+}
+X
+X
+//***************************************************************************
+// void Gopher::start_get()
+// PURPOSE:
+//    Set up the list of data so we can retrieve data in order
+//
+void Gopher::start_get()
+{
+X	list.start_get();
+}
+X
+X
+//***************************************************************************
+// char *Gopher::get_next()
+// PURPOSE:
+//    Get the next item from our list
+//
+char *Gopher::get_next()
+{
+X	String	*str = (String *) list.get_next();
+X
+X	if (str)
+X		return str->get();
+X	else
+X		return NULL;
+}
+X
+X
+//***************************************************************************
+// void Gopher::read_list()
+//
+void Gopher::read_list()
+{
+X	//
+X	// In order not to block on a read, we will use the xview read notify
+X	// to tell us when data is actually available.
+X	//
+X	datatype = TYPE_LIST;
+X	length = 0;
+X	(void) notify_set_input_func((Notify_client) this, (Notify_func) read_list_proc, connection->get_socket());
+}
+X
+#define	INPUT_BUF_SIZE	50000
+X
+//***************************************************************************
+// void Gopher::read_list_proc(Gopher *gopher, int ifd)
+//
+void Gopher::read_list_proc(Gopher *gopher, int ifd)
+{
+X	char			buffer[INPUT_BUF_SIZE];
+X	static time_t	last = 0;
+X	char			*p;
+X
+X	if (gopher->connection->read_line(buffer, INPUT_BUF_SIZE) == NULL || gopher->length > MAX_LIST_LINES)
+X	{
+X		//
+X		// End of file reached.
+X		//
+X		(void) notify_set_input_func((Notify_client) gopher, NOTIFY_FUNC_NULL, ifd);
+X		gopher->connection->close();
+X		gopher->gwindow->display();
+X		sprintf(buffer, "Total of %d item%s", gopher->length, gopher->length == 1 ? "" : "s");
+X		gopher->gwindow->status(buffer);
+X
+X		if (gopher->length == 0)
+X		{
+X			//
+X			// Nothing was found.  Let the user know...
+X			//
+X			gopher->gwindow->nothing_found();
+X		}
+X	}
+X	else
+X	{
+X		if (*buffer == '.' && buffer[1] == '\0')
+X			return;
+X		p = buffer;
+X		while (*p == '-' || *p > 126 || *p < 32)
+X			p++;
+X		gopher->list.add(new String(p));
+X
+X		//
+X		// Keep a running count and display the results every second
+X		//
+X		gopher->length++;
+X		if (gopher->length > MAX_LIST_LINES)
+X			gopher->gwindow->list_full();
+X
+X		if (last < time(NULL))
+X		{
+X			char str[20];
+X			sprintf(str, "%d line%s...", gopher->length, gopher->length == 1 ? "" : "s");
+X			gopher->gwindow->status(str);
+X			last = time(NULL);
+X		}
+X	}
+}
+X
+X
+//***************************************************************************
+// void Gopher::read_ascii()
+//
+void Gopher::read_ascii()
+{
+X	datatype = TYPE_ASCII;
+X	strcpy(filename, "/tmp/gophXXXXXX");
+X	fd = mkstemp(filename);
+X	length = 0;
+X	(void) notify_set_input_func((Notify_client) this, (Notify_func) read_ascii_proc, connection->get_socket());
+}
+X
+X
+//***************************************************************************
+// void Gopher::read_ascii_proc(Gopher *gopher, int ifd)
+//
+void Gopher::read_ascii_proc(Gopher *gopher, int ifd)
+{
+X	char			buffer[INPUT_BUF_SIZE];
+X	static time_t	last = 0;
+X
+X	if (gopher->connection->read_line(buffer, INPUT_BUF_SIZE) == NULL)
+X	{
+X		//
+X		// End of file reached.
+X		//
+X		::close(gopher->fd);
+X		(void) notify_set_input_func((Notify_client) gopher, NOTIFY_FUNC_NULL, ifd);
+X		gopher->connection->close();
+X		gopher->gwindow->display();
+X		char str[30];
+X		sprintf(str, "Total of %d lines", gopher->length);
+X		gopher->gwindow->status(str);
+X	}
+X	else
+X	{
+X		if (*buffer == '.' && buffer[1] == '\0')
+X			return;
+X		write(gopher->fd, buffer, strlen(buffer));
+X		write(gopher->fd, "\n", 1);
+X		gopher->length++;
+X		if (last < time(NULL))
+X		{
+X			char str[20];
+X			sprintf(str, "%d line%s...", gopher->length, gopher->length == 1 ? "" : "s");
+X			gopher->gwindow->status(str);
+X			last = time(NULL);
+X		}
+X	}
+}
+X
+X
+//***************************************************************************
+// void Gopher::read_binary()
+//
+void Gopher::read_binary()
+{
+X	datatype = TYPE_BINARY;
+X	strcpy(filename, "/tmp/gophXXXXXX");
+X	fd = mkstemp(filename);
+X	length = 0;
+X	gwindow->status("Waiting for first data to arrive...");
+X	(void) notify_set_input_func((Notify_client) this, (Notify_func) read_binary_proc, connection->get_socket());
+}
+X
+X
+//***************************************************************************
+// void Gopher::read_binary_proc(Gopher *gopher, int ifd)
+//
+void Gopher::read_binary_proc(Gopher *gopher, int ifd)
+{
+X	char			buffer[INPUT_BUF_SIZE];
+X	static time_t	last = 0;
+X
+X	int n = gopher->connection->read_partial(buffer, INPUT_BUF_SIZE);
+X	if (n <= 0)
+X	{
+X		//
+X		// End of file reached.
+X		//
+X		::close(gopher->fd);
+X		(void) notify_set_input_func((Notify_client) gopher, NOTIFY_FUNC_NULL, ifd);
+X		gopher->connection->close();
+X		gopher->gwindow->display();
+X		sprintf(buffer, "Total of %d bytes", gopher->length);
+X		gopher->gwindow->status(buffer);
+X	}
+X	else
+X	{
+X		::write(gopher->fd, buffer, n);
+X		gopher->length += n;
+X		if (last < time(NULL))
+X		{
+X			char status[40];
+X			sprintf(status, "%d byte%s...", gopher->length, gopher->length == 1 ? "" : "s");
+X			gopher->gwindow->status(status);
+X			last = time(NULL);
+X		}
+X	}
+}
+X
+X
+SHAR_EOF
+chmod 0664 Gopher.cc ||
+echo 'restore of Gopher.cc failed'
+Wc_c="`wc -c < 'Gopher.cc'`"
+test 8621 -eq "$Wc_c" ||
+	echo 'Gopher.cc: original size 8621, current size' "$Wc_c"
+fi
+# ============= List.cc ==============
+if test -f 'List.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping List.cc (File already exists)'
+else
+echo 'x - extracting List.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'List.cc' &&
+//
+// List.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the List class
+//
+#include "List.h"
+X
+#define	NULL	((void *) 0)
+X
+X
+//***************************************************************************
+// List::List()
+//
+List::List()
+{
+X	first = last = current = (Object *) 0;
+X	size = 0;
+}
+X
+X
+//***************************************************************************
+// List::~List()
+//
+List::~List()
+{
+X	if (first)
+X	{
+X		Object	*obj;
+X		start_get();
+X		while (obj = get_next())
+X		{
+X			delete obj;
+X		}
+X	}
+}
+X
+X
+//***************************************************************************
+// void List::add(Object *obj)
+// PURPOSE:
+//    Add an object to the list.  The adding will be done at the end of the
+//    list.
+void List::add(Object *obj)
+{
+X	if (!first)
+X	{
+X		//
+X		// The list is empty.  Easy!  Just put the object in it.
+X		//
+X		first = last = obj;
+X		obj->Next((Object *) 0);
+X		obj->Previous((Object *) 0);
+X	}
+X	else
+X	{
+X		//
+X		// There is something already in the list.  Just append it
+X		//
+X		last->Next(obj);
+X		obj->Previous(last);
+X		obj->Next((Object *) 0);
+X		last = obj;
+X	}
+X	size++;
+}
+X
+X
+//***************************************************************************
+// void List::start_get()
+// PURPOSE:
+//    Prepare the list for itteration.  This needs to be called so that
+//    get_next() will return the first element of the list
+//
+void List::start_get()
+{
+X	current = first;
+}
+X
+X
+//***************************************************************************
+// Object *List::get_next()
+// PURPOSE:
+//    Return the next object in the list
+//
+Object *List::get_next()
+{
+X	if (current)
+X	{
+X		Object	*temp = current;
+X		current = current->Next();
+X		return temp;
+X	}
+X	else
+X		return (Object *) 0;
+}
+X
+SHAR_EOF
+chmod 0644 List.cc ||
+echo 'restore of List.cc failed'
+Wc_c="`wc -c < 'List.cc'`"
+test 1821 -eq "$Wc_c" ||
+	echo 'List.cc: original size 1821, current size' "$Wc_c"
+fi
+# ============= Preferences.cc ==============
+if test -f 'Preferences.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping Preferences.cc (File already exists)'
+else
+echo 'x - extracting Preferences.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Preferences.cc' &&
+//
+// Preferences.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the Preferences class
+//
+#include "Preferences.h"
+#include "xvgopher.h"
+#include <stdlib.h>
+#include <fstream.h>
+#include <xview/xview.h>
+#include <xview/defaults.h>
+X
+X
+//***************************************************************************
+// Preferences::Preferences()
+//
+Preferences::Preferences()
+{
+X	//
+X	// Get the path to the .xvgopher-defaults file in the user's home directory
+X	//
+X	char		*home = getenv("HOME");
+X	if (!home)
+X		home = ".";
+X	char		filename[100];
+X	sprintf(filename, "%s/.xvgopher-defaults", home);
+X
+X	//
+X	// Read in any values from it
+X	//
+X	defaults_load_db(filename);
+X
+X	//
+X	// Now get the values we are interested in.
+X	//
+X	remove_children = defaults_get_boolean("xvgopher.removeclients", "XvGopher.RemoveClients", FALSE);
+X	popup_bookmarks = defaults_get_boolean("xvgopher.popupbookmarks", "XvGopher.PopupBookmarks", FALSE);
+X	mail_filter = strdup(defaults_get_string("xvgopher.mailfilter", "XvGopher.MailFilter", DEFAULT_MAILER));
+X	print_filter = strdup(defaults_get_string("xvgopher.printfilter", "XvGopher.PrintFilter", DEFAULT_PRINT_FILTER));
+X	play_filter = strdup(defaults_get_string("xvgopher.playfilter", "XvGopher.PlayFilter", DEFAULT_PLAYER));
+X	image_filter = strdup(defaults_get_string("xvgopher.imagefilter", "XvGopher.ImageFilter", DEFAULT_IMAGER));
+X	telnet_command = strdup(defaults_get_string("xvgopher.telnetcommand", "XvGopher.TelnetCommand", DEFAULT_TELNET));
+}
+X
+X
+//***************************************************************************
+// Preferences::~Preferences()
+//
+Preferences::~Preferences()
+{
+X	//
+X	// Get the path to the .xvgopher-defaults file in the user's home directory
+X	//
+X	char		*home = getenv("HOME");
+X	if (!home)
+X		home = ".";
+X	char		filename[100];
+X	sprintf(filename, "%s/.xvgopher-defaults", home);
+X
+X	ofstream	out(filename);
+X	if (out.fail())
+X		return;
+X
+X	static char *truth[2] = {"False", "True"};
+X
+X	//
+X	// Write the things we know about to the file
+X	//
+X	out << "XvGopher.RemoveClients:\t" << truth[remove_children] << "\n";
+X	out << "XvGopher.PopupBookmarks:\t" << truth[popup_bookmarks] << "\n";
+X	out << "XvGopher.MailFilter:\t" << mail_filter << "\n";
+X	out << "XvGopher.PrintFilter:\t" << print_filter << "\n";
+X	out << "XvGopher.PlayFilter:\t" << play_filter << "\n";
+X	out << "XvGopher.ImageFilter:\t" << image_filter << "\n";
+X	out << "XvGopher.TelnetCommand:\t" << telnet_command << "\n";
+X	out.close();
+X
+X	//
+X	// For good measures, we should delete the storage used by the preferences
+X	//
+X	delete mail_filter;
+X	delete print_filter;
+X	delete play_filter;
+X	delete image_filter;
+X	delete telnet_command;
+}
+X
+X
+//***************************************************************************
+// int Preferences::get_remove_children()
+//
+int Preferences::get_remove_children()
+{
+X	return remove_children;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_remove_children(int x)
+//
+void Preferences::set_remove_children(int x)
+{
+X	 remove_children = x != 0;
+}
+X
+X
+//***************************************************************************
+// int Preferences::get_popup_bookmarks()
+//
+int Preferences::get_popup_bookmarks()
+{
+X	return popup_bookmarks;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_popup_bookmarks(int x)
+//
+void Preferences::set_popup_bookmarks(int x)
+{
+X	 popup_bookmarks = x != 0;
+}
+X
+X
+//***************************************************************************
+// char *Preferences::get_mail_filter()
+//
+char *Preferences::get_mail_filter()
+{
+X	return mail_filter;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_mail_filter(char *s)
+//
+void Preferences::set_mail_filter(char *s)
+{
+X	delete mail_filter;
+X	 mail_filter = strdup(s);
+}
+X
+X
+//***************************************************************************
+// char *Preferences::get_print_filter()
+//
+char *Preferences::get_print_filter()
+{
+X	return print_filter;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_print_filter(char *s)
+//
+void Preferences::set_print_filter(char *s)
+{
+X	delete print_filter;
+X	 print_filter = strdup(s);
+}
+X
+X
+//***************************************************************************
+// char *Preferences::get_play_filter()
+//
+char *Preferences::get_play_filter()
+{
+X	return play_filter;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_play_filter(char *s)
+//
+void Preferences::set_play_filter(char *s)
+{
+X	delete play_filter;
+X	 play_filter = strdup(s);
+}
+X
+X
+//***************************************************************************
+// char *Preferences::get_image_filter()
+//
+char *Preferences::get_image_filter()
+{
+X	return image_filter;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_image_filter(char *s)
+//
+void Preferences::set_image_filter(char *s)
+{
+X	delete image_filter;
+X	 image_filter = strdup(s);
+}
+X
+X
+//***************************************************************************
+// char *Preferences::get_telnet_command()
+//
+char *Preferences::get_telnet_command()
+{
+X	return telnet_command;
+}
+X
+X
+//***************************************************************************
+// void Preferences::set_telnet_command(char *s)
+//
+void Preferences::set_telnet_command(char *s)
+{
+X	delete telnet_command;
+X	telnet_command = strdup(s);
+}
+X
+X
+SHAR_EOF
+chmod 0664 Preferences.cc ||
+echo 'restore of Preferences.cc failed'
+Wc_c="`wc -c < 'Preferences.cc'`"
+test 5632 -eq "$Wc_c" ||
+	echo 'Preferences.cc: original size 5632, current size' "$Wc_c"
+fi
+# ============= Response.cc ==============
+if test -f 'Response.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping Response.cc (File already exists)'
+else
+echo 'x - extracting Response.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Response.cc' &&
+//
+// Response.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Implementation of the Response class
+//
+#include "Response.h"
+#include <string.h>
+#include <stdio.h>
+X
+X
+//***************************************************************************
+// Response::Response()
+//
+Response::Response()
+{
+X	words[0] = NULL;
+X	wordcount = 0;
+}
+X
+X
+//***************************************************************************
+// Response::Response(Response *r)
+//
+Response::Response(Response *r)
+{
+X	for (wordcount = 0; wordcount < r->wordcount; wordcount++)
+X		words[wordcount] = strdup(r->words[wordcount]);
+X	type = r->type;
+}
+X
+X
+//***************************************************************************
+// Response::Response(char *str)
+//
+Response::Response(char *str)
+{
+X	words[0] = NULL;
+X	wordcount = 0;
+X
+X	set(str);
+}
+X
+X
+//***************************************************************************
+// Response::~Response()
+//
+Response::~Response()
+{
+X	for (int i = 0; i < wordcount; i++)
+X		if (words[i])
+X			delete words[i];
+}
+X
+X
+//***************************************************************************
+// int Response::set(char *str)
+//
+int Response::set(char *str)
+{
+X	extern char *good_strtok(char *, char *);
+X	char	*temp = strdup(str);
+X
+X	type = *temp;
+X	char *token = good_strtok(temp + 1, "\t\r\n");
+X	if (!token)
+X	{
+X		delete temp;
+X		return 0;
+X	}
+X	words[0] = strdup(token);
+X	for (wordcount = 1; (token = good_strtok((char *) 0, "\t\r\n")); wordcount++)
+X		words[wordcount] = strdup(token);
+X	delete temp;
+X	return wordcount;
+}
+X
+X
+//***************************************************************************
+// char *Response::get_nth(int n)
+//
+char *Response::get_nth(int n)
+{
+X	if (n >= wordcount || n < 0)
+X		return (char *) 0;
+X	else
+X		return words[n];
+}
+X
+X
+//***************************************************************************
+// void Response::set_nth(int n, char *str)
+//
+void Response::set_nth(int n, char *str)
+{
+X	if (n >= MAX_WORDS || n < 0)
+X		return;
+X	else
+X	{
+X		words[n] = strdup(str);
+X		if (n >= wordcount)
+X			wordcount = n + 1;
+X	}
+}
+X
+X
+//***************************************************************************
+// void Response::set_nth(int n, int x)
+//
+void Response::set_nth(int n, int x)
+{
+X	if (n >= MAX_WORDS || n < 0)
+X		return;
+X	else
+X	{
+X		char buffer[20];
+X		sprintf(buffer, "%d", x);
+X		words[n] = strdup(buffer);
+X		if (n >= wordcount)
+X			wordcount = n + 1;
+X	}
+}
+X
+X
+SHAR_EOF
+chmod 0644 Response.cc ||
+echo 'restore of Response.cc failed'
+Wc_c="`wc -c < 'Response.cc'`"
+test 2479 -eq "$Wc_c" ||
+	echo 'Response.cc: original size 2479, current size' "$Wc_c"
+fi
+# ============= cursor.cc ==============
+if test -f 'cursor.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping cursor.cc (File already exists)'
+else
+echo 'x - extracting cursor.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'cursor.cc' &&
+//
+// cursor.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This file deals with the different cursors which may be used
+//
+#include <xview/xview.h>
+#include <xview/svrimage.h>
+#include <xview/cursor.h>
+#include <xview/notify.h>
+X
+X
+static Cursor		busy_cursor[2];
+static Server_image	busy_image[2];
+static Cursor		old_cursor;
+static int			current_cursor = 0;
+X
+#define	BLINK_DELAY	200000
+X
+static unsigned short busy1_bits[] = {
+#include "icons/gopher1"
+};
+X
+static unsigned short busy2_bits[] = {
+#include "icons/gopher2"
+};
+X
+//***************************************************************************
+// void init_cursors()
+//
+static void init_cursors()
+{
+X	static int	had_init = FALSE;
+X
+X	if (had_init)
+X		return;
+X
+X	had_init = TRUE;
+X
+X	busy_image[0] = (Server_image) xv_create(NULL, SERVER_IMAGE,
+X		XV_WIDTH,					64,
+X		XV_HEIGHT,					64,
+X		SERVER_IMAGE_BITS,			busy1_bits,
+X		NULL);
+X	busy_cursor[0] = (Cursor) xv_create(NULL, CURSOR,
+X		CURSOR_IMAGE,				busy_image[0],
+X		CURSOR_XHOT,				32,
+X		CURSOR_YHOT,				32,
+X		NULL);
+X	busy_image[1] = (Server_image) xv_create(NULL, SERVER_IMAGE,
+X		XV_WIDTH,					64,
+X		XV_HEIGHT,					64,
+X		SERVER_IMAGE_BITS,			busy2_bits,
+X		NULL);
+X	busy_cursor[1] = (Cursor) xv_create(NULL, CURSOR,
+X		CURSOR_IMAGE,				busy_image[1],
+X		CURSOR_XHOT,				32,
+X		CURSOR_YHOT,				32,
+X		NULL);
+}
+X
+X
+//***************************************************************************
+// Server_image get_gopher(int n)
+//
+Server_image get_gopher(int n)
+{
+X	return busy_image[n];
+}
+X
+X
+static int	isbusy = FALSE;
+X
+//***************************************************************************
+// static Notify_value blink_cursor(Frame frame, int which)
+//
+Notify_value blink_cursor(Frame frame, int which)
+{
+X	which = which;
+X
+X	current_cursor ^= 1;
+X
+X	Xv_opaque	sub;
+X	int			n = 1;
+X	while ((sub = (Xv_opaque) xv_get(frame, FRAME_NTH_SUBWINDOW, n)) != NULL)
+X	{
+X		xv_set(sub,
+X			WIN_CURSOR,					busy_cursor[current_cursor],
+X			NULL);
+X		n++;
+X	}
+X	return (Notify_value) 0;
+}
+X
+X
+//***************************************************************************
+// void frame_busy(Frame frame)
+//
+void frame_busy(Frame frame)
+{
+X	notify_dispatch();
+X	if (isbusy)
+X		return;
+X	isbusy = TRUE;
+X	init_cursors();
+X	old_cursor = (Cursor) xv_get(frame, WIN_CURSOR);
+X	xv_set(frame,
+X		FRAME_BUSY,					TRUE,
+X		NULL);
+X
+X	//
+X	// Now go through all sub windows and change their cursor
+X	//
+X	Xv_opaque	sub;
+X	int			n = 1;
+X	while ((sub = (Xv_opaque) xv_get(frame, FRAME_NTH_SUBWINDOW, n)) != NULL)
+X	{
+X		xv_set(sub,
+X			WIN_CURSOR,					busy_cursor[0],
+X			NULL);
+X		n++;
+X	}
+X
+X	//
+X	// Start the timer to change the cursor icon every once in a while
+X	//
+X	struct itimerval	timer;
+X	timer.it_value.tv_usec = BLINK_DELAY;
+X	timer.it_value.tv_sec = 0;
+X	timer.it_interval.tv_usec = BLINK_DELAY;
+X	timer.it_interval.tv_sec = 0;
+X	notify_set_itimer_func(frame, (Notify_func) blink_cursor, ITIMER_REAL, &timer, NULL);
+}
+X
+X
+//***************************************************************************
+// void frame_unbusy(Frame frame)
+//
+void frame_unbusy(Frame frame)
+{
+X	//
+X	// First stop the interval timer which is blinking the cursor
+X	//
+X	notify_set_itimer_func(frame, NOTIFY_FUNC_NULL, ITIMER_REAL, NULL, NULL);
+X
+X	notify_dispatch();
+X	if (!isbusy)
+X		return;
+X	isbusy = FALSE;
+X	init_cursors();
+X	xv_set(frame,
+X		FRAME_BUSY,					FALSE,
+X		NULL);
+X
+X	//
+X	// Now go through all sub windows and change their cursor
+X	//
+X	Xv_opaque	sub;
+X	int			n = 1;
+X	while ((sub = (Xv_opaque) xv_get(frame, FRAME_NTH_SUBWINDOW, n)) != NULL)
+X	{
+X		xv_set(sub,
+X			WIN_CURSOR,					old_cursor,
+X			NULL);
+X		n++;
+X	}
+}
+X
+X
+SHAR_EOF
+chmod 0644 cursor.cc ||
+echo 'restore of cursor.cc failed'
+Wc_c="`wc -c < 'cursor.cc'`"
+test 3627 -eq "$Wc_c" ||
+	echo 'cursor.cc: original size 3627, current size' "$Wc_c"
+fi
+# ============= icons.cc ==============
+if test -f 'icons.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping icons.cc (File already exists)'
+else
+echo 'x - extracting icons.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'icons.cc' &&
+//
+// icons.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This file defines all the glyphs used in the xvgopher program
+//
+#include <xview/xview.h>
+#include <xview/svrimage.h>
+#include "icons.h"
+X
+static unsigned short bin_bits[] = {
+#include "icons/bin"
+};
+static unsigned short cso_bits[] = {
+#include "icons/cso"
+};
+static unsigned short dir_bits[] = {
+#include "icons/dir"
+};
+static unsigned short doc_bits[] = {
+#include "icons/doc"
+};
+static unsigned short dos_bits[] = {
+#include "icons/dos"
+};
+static unsigned short error_bits[] = {
+#include "icons/error"
+};
+static unsigned short idx_bits[] = {
+#include "icons/idx"
+};
+static unsigned short mac_bits[] = {
+#include "icons/mac"
+};
+static unsigned short tel_bits[] = {
+#include "icons/tel"
+};
+static unsigned short unknown_bits[] = {
+#include "icons/unknown"
+};
+static unsigned short uu_bits[] = {
+#include "icons/uu"
+};
+static unsigned short sound_bits[] = {
+#include "icons/sound"
+};
+static unsigned short image_bits[] = {
+#include "icons/image"
+};
+static unsigned short info_bits[] = {
+#include "icons/info"
+};
+static unsigned short info_dragging_bits[] = {
+#include "icons/info_dragging"
+};
+X
+X
+struct
+{
+X	unsigned char	type;
+X	Server_image	image;
+X	unsigned short	*bits;
+} icons[] =
+{
+X	{'.', NULL, unknown_bits},
+X	{'0', NULL, doc_bits},
+X	{'1', NULL, dir_bits},
+X	{'2', NULL, cso_bits},
+X	{'3', NULL, error_bits},
+X	{'4', NULL, mac_bits},
+X	{'5', NULL, dos_bits},
+X	{'6', NULL, uu_bits},
+X	{'7', NULL, idx_bits},
+X	{'8', NULL, tel_bits},
+X	{'9', NULL, bin_bits},
+X	{'s', NULL, sound_bits},
+X	{'I', NULL, image_bits},
+X	{'g', NULL, image_bits},
+X
+X	//
+X	// The following are images used by other parts of xvgopher.  They are
+X	// identified by characters with the high bit set.
+X	//
+X	{'i' | 0x80, NULL, info_bits},
+X	{'d' | 0x80, NULL, info_dragging_bits},
+X	{'\0', NULL, NULL}
+};
+X
+X
+//***************************************************************************
+// void icon_init()
+//
+void icon_init()
+{
+X	static int	had_init = FALSE;
+X	if (had_init)
+X		return;
+X	had_init = TRUE;
+X
+X	for (int i = 0; icons[i].type; i++)
+X	{
+X		icons[i].image = (Server_image) xv_create(NULL, SERVER_IMAGE,
+X			XV_WIDTH,					16,
+X			XV_HEIGHT,					16,
+X			SERVER_IMAGE_BITS,			icons[i].bits,
+X			NULL);
+X	}
+}
+X
+X
+//***************************************************************************
+// Server_image get_image(char type)
+//
+Server_image get_image(char type)
+{
+X	icon_init();
+X
+X	//
+X	// Search through the list of icons to find the right one...
+X	//
+X	for (int i = 0; icons[i].type; i++)
+X	{
+X		if (icons[i].type == (unsigned char) type)
+X			return icons[i].image;
+X	}
+X
+X	//
+X	// Nothing found.  Return the unknown icons
+X	//
+X	return icons[0].image;
+}
+X
+SHAR_EOF
+chmod 0664 icons.cc ||
+echo 'restore of icons.cc failed'
+Wc_c="`wc -c < 'icons.cc'`"
+test 2754 -eq "$Wc_c" ||
+	echo 'icons.cc: original size 2754, current size' "$Wc_c"
+fi
+# ============= main.cc ==============
+if test -f 'main.cc' -a X"$1" != X"-c"; then
+	echo 'x - skipping main.cc (File already exists)'
+else
+echo 'x - extracting main.cc (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'main.cc' &&
+//
+// main.cc
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// Main program for xvgopher
+//
+#include "xvgopher.h"
+#include "GWindow.h"
+#include "Preferences.h"
+#include <xview/xview.h>
+X
+X
+Preferences	preferences;
+X
+static int error_proc()
+{
+X	abort();
+X	return XV_OK;
+}
+X
+X
+//***************************************************************************
+// main(int ac, char **av)
+//
+main(int ac, char **av)
+{
+X	char		*server = GOPHER_SERVER;
+X	char		*port = "70";
+X
+X	xv_init(XV_INIT_ARGC_PTR_ARGV,		&ac, av,
+X		XV_ERROR_PROC,			error_proc,
+X		NULL);
+X
+X	switch (ac)
+X	{
+X		case 2:	// A machine was specified
+X			server = av[1];
+X			break;
+X		case 3:	// A machine and port were specified
+X			server = av[1];
+X			port = av[2];
+X			break;
+X	}
+X
+X	Response	*r = new Response("1");
+X	r->set_server(server);
+X	r->set_port(port);
+X	GWindow	*main_window = CreateWindow(r);
+X
+X	if (main_window)
+X		main_window->main_loop();
+X
+X	return 0;
+}
+SHAR_EOF
+chmod 0664 main.cc ||
+echo 'restore of main.cc failed'
+Wc_c="`wc -c < 'main.cc'`"
+test 996 -eq "$Wc_c" ||
+	echo 'main.cc: original size 996, current size' "$Wc_c"
+fi
+# ============= Config.h ==============
+if test -f 'Config.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping Config.h (File already exists)'
+else
+echo 'x - extracting Config.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Config.h' &&
+//
+// Config.h
+//
+// This class deals with configuration.  All configurable options are kept in this class
+//
+#ifndef	_Config_h_
+#define	_Config_h_
+X
+#include "List.h"
+X
+X
+class Config
+{
+public:
+X	//
+X	// Constructor
+X	//
+X							Config();
+X
+X	//
+X	// Configuration file access
+X	//
+X	void					read();
+X	int						write();
+X
+X	//
+X	// Configuration parameters.  These are directly accessible to make it easier.
+X	//
+X	List					bookmarks;
+X	String					server;
+X	int						port;
+private:
+};
+X
+#endif	_Config_h_
+SHAR_EOF
+chmod 0644 Config.h ||
+echo 'restore of Config.h failed'
+Wc_c="`wc -c < 'Config.h'`"
+test 486 -eq "$Wc_c" ||
+	echo 'Config.h: original size 486, current size' "$Wc_c"
+fi
+# ============= Connection.h ==============
+if test -f 'Connection.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping Connection.h (File already exists)'
+else
+echo 'x - extracting Connection.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Connection.h' &&
+//
+// Connection.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class forms a easy to use interface to the berkeley tcp socket library.
+// All the calls are basically the same, but the parameters do not have any
+// stray _addr or _in mixed in...
+//
+X
+#if !defined(_Connection_h_)
+# define	_Connection_h_
+X
+#include "xvgopher.h"
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+X
+class Connection
+{
+public:
+X	// Constructors & Destructors
+X					Connection();
+X					Connection(int socket);
+X					~Connection();
+X
+X	// (De)initialization
+X	int				open(int priv = 0);
+X	int				close();
+X
+X	// Port stuff
+X	int				assign_port(int port = 0);
+X	int				assign_port(char *service);
+X	int				get_port();
+X	int				is_privileged();
+X
+X	// Host stuff
+X	int				assign_server(char *name);
+X	int				assign_server(dword addr = INADDR_ANY);
+X
+X	// Connection establishment
+X	int				connect();
+X	Connection		*accept(int priv = 0);
+X	Connection		*accept_privileged();
+X
+X	// Registration things
+X	int				bind();
+X	int				listen(int n = 5);
+X
+X	// IO
+X	int				write(char *buffer, int length);
+X	int				write(char *buffer);
+X	int				read(char *buffer, int length);
+X	char			*read_line(char *buffer, int length);
+X	int				read_partial(char *buffer, int maxlength);
+X	int				bytes_available();
+X	int				get_char();
+X
+X	// Access to socket number
+X	char			*socket_as_string();
+X	int				get_socket();
+X	int				isopen();
+X
+private:
+X	enum
+X	{
+X		BUFFER_SIZE = 1024,
+X	};
+X	int				sock;
+X	struct sockaddr_in	server;
+X	char			buffer[BUFFER_SIZE];
+X	int				pos, pos_max;
+};
+X
+X
+//*************************************************************************
+// inline int Connection::is_privileged()
+// PURPOSE:
+//   Return whether the port is priveleged or not.
+//
+inline int Connection::is_privileged()
+{
+X	return server.sin_port < 1023;
+}
+X
+X
+#endif
+SHAR_EOF
+chmod 0644 Connection.h ||
+echo 'restore of Connection.h failed'
+Wc_c="`wc -c < 'Connection.h'`"
+test 1949 -eq "$Wc_c" ||
+	echo 'Connection.h: original size 1949, current size' "$Wc_c"
+fi
+# ============= GWAbout.h ==============
+if test -f 'GWAbout.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWAbout.h (File already exists)'
+else
+echo 'x - extracting GWAbout.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWAbout.h' &&
+//
+// GWAbout.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class produces a popup window describing the who, what, and where of
+// xvgopher.
+//
+#ifndef	_GWAbout_h_
+#define	_GWAbout_h_
+X
+#include "GWindow.h"
+X
+class GWAbout : public GWindow
+{
+public:
+X							GWAbout(Frame par);
+X	int						open(Response *resp);
+private:
+X	static void				done_proc(Frame);
+X	static void				dismiss_proc(Panel_item, Event *);
+X	static Notify_value		panel_events(Xv_window, Event *, Notify_arg, Notify_event_type);
+};
+X
+#endif	_GWAbout_h_
+SHAR_EOF
+chmod 0644 GWAbout.h ||
+echo 'restore of GWAbout.h failed'
+Wc_c="`wc -c < 'GWAbout.h'`"
+test 620 -eq "$Wc_c" ||
+	echo 'GWAbout.h: original size 620, current size' "$Wc_c"
+fi
+# ============= GWBinary.h ==============
+if test -f 'GWBinary.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWBinary.h (File already exists)'
+else
+echo 'x - extracting GWBinary.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWBinary.h' &&
+//
+// GWBinary.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class deals with the getting and saving of ASCII files from
+// a gopher server.
+//
+#ifndef	_GWBinary_h_
+#define	_GWBinary_h_
+X
+#include "GWDownload.h"
+X
+class GWBinary : public GWDownload
+{
+public:
+X							GWBinary(Frame par);
+};
+X
+#endif	_GWBinary_h_
+SHAR_EOF
+chmod 0644 GWBinary.h ||
+echo 'restore of GWBinary.h failed'
+Wc_c="`wc -c < 'GWBinary.h'`"
+test 417 -eq "$Wc_c" ||
+	echo 'GWBinary.h: original size 417, current size' "$Wc_c"
+fi
+# ============= GWBookmarks.h ==============
+if test -f 'GWBookmarks.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWBookmarks.h (File already exists)'
+else
+echo 'x - extracting GWBookmarks.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWBookmarks.h' &&
+//
+// GWBookmarks.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class deals with bookmarks and the window that displays them.
+//
+#ifndef	_GWBookmarks_h_
+#define	_GWBookmarks_h_
+X
+#include "GWList.h"
+X
+class GWBookmarks : public GWList
+{
+public:
+X	//
+X	// Constructor/Destructor
+X	//
+X							GWBookmarks(Frame);
+X							~GWBookmarks();
+X
+X	//
+X	// Window creation
+X	//
+X	int						open(Response *resp);
+X	void					show();
+X
+X	//
+X	// Bookmarks access
+X	//
+X	void					add(Response *r);
+X
+protected:
+X	void					row_deselect(int, Response *);
+X	void					row_select(int, Response *);
+X
+X	void					read_bookmarks();
+X	void					write_bookmarks();
+X
+X	static void				remove_bookmark_proc(Menu menu, Menu_item mi);
+X	static void				done_proc(Frame);
+X
+X	//
+X	// The following are used to perform certain specific tasks when creating windows.
+X	// They are split up to make the code more readable and modular
+X	//
+X	void					modify_list_menu();
+X
+X	Menu_item				bookmark_mi;
+X	Menu_item				show_info_mi;
+};
+X
+extern GWBookmarks	*bookmarks;
+X
+#endif	_GWBookmarks_h_
+SHAR_EOF
+chmod 0644 GWBookmarks.h ||
+echo 'restore of GWBookmarks.h failed'
+Wc_c="`wc -c < 'GWBookmarks.h'`"
+test 1124 -eq "$Wc_c" ||
+	echo 'GWBookmarks.h: original size 1124, current size' "$Wc_c"
+fi
+# ============= GWDirectory.h ==============
+if test -f 'GWDirectory.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWDirectory.h (File already exists)'
+else
+echo 'x - extracting GWDirectory.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWDirectory.h' &&
+//
+// GWDirectory.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class deals with the getting and saving of ASCII files from
+// a gopher server.
+//
+#ifndef	_GWDirectory_h_
+#define	_GWDirectory_h_
+X
+#include "GWList.h"
+X
+class GWDirectory : public GWList
+{
+public:
+X							GWDirectory(Frame par);
+X	int						open(Response *resp);
+X	void					display();
+X
+protected:
+X	//
+X	// Callbacks for the XView interface
+X	//
+#if		USE_SAVE
+X	static void				save_notify(Panel_item item, Event *);
+#endif	USE_SAVE
+X	static void				menu_proc(Menu menu, Menu_item mi);
+X
+X	//
+X	// The next two callbacks are for the menu attached to the scrolling list
+X	//
+X	static void				set_bookmark_proc(Menu menu, Menu_item mi);
+X
+X	void					row_deselect(int, Response *);
+X	void					row_select(int, Response *);
+X
+X	//
+X	// Various window thingies that we need to keep track of
+X	//
+X	Menu_item				bookmark_mi;
+X	Menu_item				show_info_mi;
+X
+X	//
+X	// The following are used to perform certain specific tasks when creating windows.
+X	// They are split up to make the code more readable and modular
+X	//
+X	void					modify_list_menu();
+};
+X
+#endif	_GWDirectory_h_
+SHAR_EOF
+chmod 0664 GWDirectory.h ||
+echo 'restore of GWDirectory.h failed'
+Wc_c="`wc -c < 'GWDirectory.h'`"
+test 1210 -eq "$Wc_c" ||
+	echo 'GWDirectory.h: original size 1210, current size' "$Wc_c"
+fi
+# ============= GWDownload.h ==============
+if test -f 'GWDownload.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping GWDownload.h (File already exists)'
+else
+echo 'x - extracting GWDownload.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'GWDownload.h' &&
+//
+// GWDownload.h
+//
+// (c) Copyright 1993, San Diego State University -- College of Sciences
+//       (See the COPYRIGHT file for more Copyright information)
+//
+// This class deals with the getting and saving of ASCII files from
+// a gopher server.
+//
+#ifndef	_GWDownload_h_
+#define	_GWDownload_h_
+X
+#include "GWindow.h"
+X
+class GWDownload : public GWindow
+{
+public:
+X							GWDownload(Frame par, int type, char *btn, char *btncmd);
+X							GWDownload(Frame par, int type);
+X	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

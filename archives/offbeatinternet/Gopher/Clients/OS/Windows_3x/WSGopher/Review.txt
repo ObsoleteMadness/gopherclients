@@ -1,0 +1,30 @@
+WSGOPHER is a widely used and well recommended Windows client program 
+from Dave Brooks. It is commonly found as WSG-11.ZIP. Although this 
+program has been around for a while, it tends to break WINSOCK packages.
+You have to use one of the Beta test versions of Trumpet 1.0B to get 
+anything, and make sure to put the latest maintenance on any other 
+WINSOCK package. 
+
+WSGOPHER presents Gopherspace as a sequence of cascading menus nested 
+within the application window. Following current Windows practice, 
+there is a toolbar with options to do things like save, print, and copy 
+to the clipboard. The type of each item is represented by a small icon 
+that allows the menus to be displayed quite compactly. 
+
+To support several menus simultaneously will require extra memory. The 
+one disadvantage of WSGOPHER is that it needs a lot of RAM (an 8 meg 
+machine is required, a 12 meg machine is nicer). 
+
+WSGOPHER is configured through the Configure drop down menus. This 
+allows the user to select an initial home menu, set fonts, determine 
+the programs that view special data types, and select Gopher+ 
+preferences.
+
+This rather massive panel tells WSGOPHER to prefer compressed audio 
+(ulaw) over uncompressed (wav). Similarly JPEG files are more 
+aggressively compressed (especially for photographs) than GIF images. 
+A user would add from the right hand side data types which the client 
+computer can view ("Microsoft-word" for example) and would order them 
+by preference (Word before PostScript). 
+
+

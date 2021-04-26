@@ -1,0 +1,19 @@
+1) check the input line for a file or directory listing to be sure that it
+begins with gopher_root to prevent looking around the system and pulling other
+files that you don't want anyone to have, like the sysuaf.dat file.  This will
+lock the process into files that are in the gopher_root tree.
+**** fixed 1/2/92 ****
+
+
+2) use logical names for the specification of the log file and security file.
+**** fixed 1/28/92 ****
+
+3) create a start_gopher.com procedure to start the gopher server until the
+server will start from the network process.  This can also be used as an option
+to start the server rather than having the network process start the server.
+**** created 1/28/92 - need more work here yet ****
+
+4) fix the server so that it can be started from inetd or some such thing.
+
+
+5) add support for compressed files.

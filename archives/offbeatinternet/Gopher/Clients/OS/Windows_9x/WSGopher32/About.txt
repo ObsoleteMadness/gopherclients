@@ -1,0 +1,25 @@
+WSGopher32
+(ver 2.0)
+Abandonware
+
+
+Written by Lockheed Martin Idaho Technologies for the Idaho National 
+Engineering Laboratory.  You must run the setup program 
+"wsgopher20.exe" to install the software.  By default, the program 
+installs in the "C:\Program Files\WSGopher32" directory (program 
+settings are stored in the "WSGOPHER.INI" file located here).  
+
+WSGopher32 features a  hierarchical interface which shows a structured 
+hierarchy of information.  Navigation is accomplished by simply 
+selecting the appropriate location in a directory tree.
+
+Configuration options are consolidated into a property page dialog to 
+make configuration easier.  The main gopher window can be split into 
+either two or three views, making navigation easier.  Personal 
+bookmarks are organizable and accessable from the main gopher window.  
+
+
+P.S., Don't try to register the software, as Lockheed Martin has 
+abandoned the software and will NOT accept your money.
+
+

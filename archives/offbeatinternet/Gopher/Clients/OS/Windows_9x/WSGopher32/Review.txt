@@ -1,0 +1,13 @@
+WSGopher32
+
+Reviewed 7/29/08 by: Avery M.
+
+
+This client presents gophers in an interesting combination of a tree
+layout and simple display. Folders are extracted from the linear
+display and put into the tree, but the surrounding information text
+isn't. Because i-text is used so heavily on modern Gophers, this makes
+for a disjointed reading. h-type links are not properly followed
+(they're downloaded instead).
+
+

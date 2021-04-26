@@ -1,0 +1,9 @@
+BCGopher
+(ver 0.8[beta]a3)
+Freeware
+
+
+There is no installer.  All files are self-contained within the programs
+own directory (which can be anywhere and named anything).
+
+
