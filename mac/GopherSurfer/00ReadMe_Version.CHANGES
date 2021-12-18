@@ -1,0 +1,187 @@
+January 31, 1994    Latest version is 1.0b5
+
+There are two versions of Gopher Surfer version 1.0b5.  A Lite and a
+Heavy version.  The heavy version includes the AppleSearch support described
+below.  Both Lite & Heavy versions include the bug fix mentioned in #2.
+
+New enhancements/bug fixes include:
+
+1. This is the first version of Gopher Surfer that works with Apple
+   Computer's AppleSearch software to provide full-text search capabilities
+   for Mac-based Gopher servers. This means that there is an alternative to 
+   running WAIS search engines on Unix systems for those that want to avoid 
+   Unix, or take advantage of the setup and administration utilities that Apple
+   includes as part of AppleSearch. If you are already running an AppleSearch 
+   server, you might also use gopher client software and Gopher Surfer to make 
+   the information on the AppleSearch server accessible to non-Macintosh
+   systems (or available via a TCP/IP network).
+
+   For more information on AppleSearch setup and use please read the
+   'AppleSearch Info' file in this directory.
+
+2. Fixed a bug that would cause the server to die if it received
+   some types of requests.
+   
+================================================
+December 22, 1993    Latest version is 1.0b4
+
+
+New enhancements/bug fixes include:
+
+1. The Gopher's Helper stack has been retired.  All of its
+   functionality has been added to the server in the form
+   of a Preview option.  While Previewing it is possible to
+   change the type or display name advertised for an item.
+ 
+   And finally the administrator can create either Gopher or
+   Gopher+ links to other servers.
+
+   By placing the link creation facilities in the application,
+   links no longer require a place holder file.  With Gopher's
+   Helper a place-holder file was required so something would show.
+   Then a link file would be created to contain the information
+   about the remore host.  Such as port number, selector etc.
+	  
+   This is not necessary anymore.  So for a link you will see a
+   file named something like 'filename#'(# = option-<8> character)
+   but the place holder file called 'filename' is not needed.
+			   
+   I am using the term 'link' to mean a reference to something on
+   another gopher server.  Not a connection to your own server.
+				 
+   This is a one-time deal.  A version number has been introduced into
+   the link files to allow for easy upgrades in the future.
+
+WARNING!
+
+   Unfortunately, all links must this once be recreated from scratch.
+   It will be necessary to re-do all links to other servers.
+
+   As well as those items where you used the Gopher's Helper to
+   change the name displayed to a connecting client.  Or the 
+   type displayed to the connecting client.
+
+   In the process of fixing the links problem I decided to add a
+   number to the link files.  In the future this will make it easy to
+   upgrade these files with no user intervention.  For instance when
+   AppleSearch support is added for full-text indexing.  ;-)
+	    
+2. Administrator selection of directory to publish.
+
+3. Logging to a file the following information for
+   each connection:
+
+     Connection number
+     Time/Date
+     Host or IP address where request originated from.
+     Selector string sent from client
+
+  All nicely tab separated so it can be summarized in your favorite
+spread sheet.
+
+4. Tabbing through the configuration fields now correctly selects
+   the full text of the next field.  Also it completely removes the
+   cursor from the previous field.  No more ghost insertion cursors.
+
+
+================================================
+October 6, 1993    Latest Version is 1.0b3
+
+
+As always feature requests and comments/bug 
+reports are welcome.
+
+Also for bug reports please send me the full
+domain name of your host, example - 
+boombox.micro.umn.edu, and what port it is
+running on.  Also which items are causing
+problems.  If I can test your server directly
+it is easier to isolate the bugs remaining.
+
+Which is what we all want.
+
+
+Future enhancements coming soon
+===============================
+
+1.  Logging to a file.
+2.  Warning if you close the configuration window
+    that the server is suspending operation.
+3.  Ability to erase the log window without closing
+    the window or quitting.
+4.  Write your favorite feature here and send me
+    some mail describing it and why it would be a
+    good thing to have.  I'm easy to convince as
+    long as it doesn't require the assitance of
+    an electrician or a plumber.  :-)
+
+
+===================================================
+October 6, 1993
+
+Bug Fixes/Changes in version 1.0b3
+----------------------------------
+
+1.  Long names for directories were not correctly
+advertised to connecting clients.  They showed as
+a file instead of a directory.  Attempts to fetch
+this 'file' resulted in the Gopher Surfer complaining
+and possibly crashing  The client would also display
+an ugly warning (TurboGopher) saying it didn't have
+enough memory.
+
+2.  The Gopher Surfer now works correctly with clients
+that make use of the Gopher+ long views.  The clients
+which I know to rely on this feature include the unix
+client we distribute with the Gopher+ unix distribution
+and also the HGopher client for windows.
+
+3.  The Gophers Helper G+ now correctly selects and
+modifies the line you click on.  There was a bug
+dealing with some file types.
+
+4.  The Gopher's helper treats all files now similar
+to how the Gopher Surfer treats them.  In other words
+if it recognizes the file type it advertises it as the
+appropriate gopher type.  If it is unrecognized but
+has a resource fork it is displayed as a Binhex gopher
+type.  Exactly as the Gopher Surfer application does.  
+Otherwise it advertises it as a text file.
+
+
+==================================================
+September 29, 1993
+
+Changes in version 1.0b2
+---------------------------
+
+WARNING:  You must create new settings documents
+for version 1.0b2.
+
+This is a once only hardship.  I have implemented
+a version number in the settings file for future
+easy upgrades as new information is added to the
+settings document
+
+
+1.  The following is now saved as part of the server
+    document:
+
+    Run gopher server - So it is possible to place an
+    alias or actual settings document in startup folder
+    to have server auto launch on startup.  The directory
+    offered from Gopher Surfer is directory where the
+    application is located.
+
+    ISO Latin-1 characters - Saves this setting
+    between restarts.
+
+    Log by host names - Saves this setting
+    between restarts.
+
+2.  Added support for Video/MPEG files.
+
+3.  Tweaked TurboGopher to also have support for
+    Video/MPEG.  Placed Sparkle 1.6 in the TurboGopher
+    Helper applications folder.  Very nice MPEG
+    player.

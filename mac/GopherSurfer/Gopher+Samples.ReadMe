@@ -1,0 +1,28 @@
+December 21, 1993
+
+The 'GopherSurfer-Examples.sea.hqx' file is a
+binhex'ed self extracting archive that can be
+used for testing the Gopher Surfer application.
+So decode the binhex.  Then double-click the
+self-extracting archive to get a directory
+of about 2 Megabytes.  Just like Shake & Bake.
+
+All of it should just work with the Gopher Surfer
+except the Electronic Forms.  You'll need to
+reset the directory for responses to be stored in.
+
+So consult the documentation on how to Change
+the Item Type in order to use the ASK Electronic
+Form sample.
+
+
+If you have questions, bugs to report, or comments you 
+can e-mail them to the Internet Gopher team at: 
+
+	   gopher@boombox.micro.umn.edu 
+
+You can also subscribe to gopher-announce, an electronic mailing 
+list we keep to inform interested folks of new versions 
+of Gopher software.  Send your subscription request to: 
+
+      gopher-announce-request@boombox.micro.umn.edu
